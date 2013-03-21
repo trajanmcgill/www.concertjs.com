@@ -7,23 +7,35 @@ module.exports = function(grunt)
 			
 			jshint:
 			{
+				options:
+				{
+					bitwise: true,
+					curly: false,
+					eqeqeq: true,
+					forin: true,
+					immed: true,
+					latedef: true,
+					newcap: true,
+					noarg: true,
+					noempty: true,
+					nonew: true,
+					quotmark: "double",
+					strict: true,
+					trailing: true,
+					undef: true,
+					unused: true,
+					validthis: true
+				},
+
 				BaseObject:
 				{
-					options: {},
+					options: { strict: false },
 					src: ["ConcertJS/Components/BaseObject/BaseObject.js"]
 				},
 
-				ConcertJS:
-				{
-					options: {},
-					src: ["ConcertJS/Source/Concert.js"]
-				},
+				ConcertJS: { src: ["ConcertJS/Source/Concert.js"] },
 
-				ConcertJSmin:
-				{
-					options: {},
-					src: ["Build/Concert.min.js"]
-				}
+				ConcertJSmin: { src: ["Build/Concert.min.js"] }
 			},
 
 			uglify:
@@ -42,11 +54,18 @@ module.exports = function(grunt)
 					dest: "Build/Concert.min.js"
 				},
 
-				MinMax:
+				DeUglifyBaseObject:
 				{
 					options: { beautify: true },
 					src: ["Build/Concert.min.js"],
 					dest: "Build/Concert.min.max.js"
+				},
+
+				DeUglifyConcertJS:
+				{
+					options: { beautify: true },
+					src: ["Build/BaseObject.min.js"],
+					dest: "Build/BaseObject.min.max.js"
 				}
 			}
 		});
@@ -59,5 +78,5 @@ module.exports = function(grunt)
 	grunt.registerTask("default", ["uglify:ConcertJS"]);
 
 	// Other tasks
-	grunt.registerTask("minmax", ["uglify:ConcertJS", "uglify:MinMax"]);
+	grunt.registerTask("minmax", ["uglify:ConcertJS", "uglify:BaseObject", "uglify:DeUglifyBaseObject", "uglify:DeUglifyConcertJS"]);
 };
