@@ -7,17 +7,21 @@ module.exports = function(grunt)
 			
 			jshint:
 			{
+				BaseObject:
+				{
+					options: {},
+					src: ["Components/BaseObject/BaseObject.js"]
+				},
+
 				ConcertJS:
 				{
 					options: {},
-
 					src: ["ConcertJS/Source/Concert.js"]
 				},
 
 				ConcertJSmin:
 				{
 					options: {},
-
 					src: ["Build/Concert.min.js"]
 				}
 			},
