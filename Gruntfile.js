@@ -4,7 +4,8 @@ module.exports = function(grunt)
 	grunt.initConfig(
 		{
 			pkg: grunt.file.readJSON("package.json"),
-			
+
+
 			jshint:
 			{
 				options:
@@ -27,6 +28,7 @@ module.exports = function(grunt)
 					validthis: true
 				},
 
+
 				BaseObject:
 				{
 					options: { strict: false, unused: false },
@@ -35,11 +37,22 @@ module.exports = function(grunt)
 
 				ConcertJS: { src: ["ConcertJS/Source/Concert.js"] },
 
-				ConcertJSmin: { src: ["Build/Concert.min.js"] }
+				ConcertJSMin: { src: ["Build/Concert.min.js"] },
+
+				ConcertJSMinMax: { src: ["Build/Concert.min.max.js"] }
 			},
+
 
 			uglify:
 			{
+				options:
+				{
+					sequences: false,
+					verbose: true,
+					warnings: true
+				},
+
+
 				BaseObject:
 				{
 					src: ["ConcertJS/Components/BaseObject/BaseObject.js"],
@@ -78,5 +91,5 @@ module.exports = function(grunt)
 	grunt.registerTask("default", ["uglify:ConcertJS"]);
 
 	// Other tasks
-	grunt.registerTask("minmax", ["uglify:ConcertJS", "uglify:BaseObject", "uglify:DeUglifyBaseObject", "uglify:DeUglifyConcertJS"]);
+	grunt.registerTask("minmax", ["uglify:ConcertJS", "uglify:DeUglifyConcertJS"]);
 };
