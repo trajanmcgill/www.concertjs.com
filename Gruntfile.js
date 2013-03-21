@@ -43,7 +43,9 @@ module.exports = function(grunt)
 
 				ConcertJSMin: { src: ["Build/Concert.min.js"] },
 
-				ConcertJSMinMax: { src: ["Build/Concert.min.max.js"] }
+				ConcertJSMinMax: { src: ["Build/Concert.min.max.js"] },
+
+				RequestAnimationFrame: { src: ["ConcertJS/Components/RequestAnimationFrame/RequestAnimationFrame.js"] }
 			},
 
 
