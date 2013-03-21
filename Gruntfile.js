@@ -29,7 +29,7 @@ module.exports = function(grunt)
 
 				BaseObject:
 				{
-					options: { strict: false },
+					options: { strict: false, unused: false },
 					src: ["ConcertJS/Components/BaseObject/BaseObject.js"]
 				},
 
