@@ -10,7 +10,7 @@ module.exports = function(grunt)
 				BaseObject:
 				{
 					options: {},
-					src: ["Components/BaseObject/BaseObject.js"]
+					src: ["ConcertJS/Components/BaseObject/BaseObject.js"]
 				},
 
 				ConcertJS:
