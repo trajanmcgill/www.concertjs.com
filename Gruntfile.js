@@ -14,10 +14,10 @@ module.exports = function(grunt)
 						dest: "ConcertJS/Build/Concert.full.js"
 					},
 
-				RequestAnimationFrameFull:
+				requestAnimationFrameFull:
 					{
-						src: ["ConcertJS/Components/RequestAnimationFrame/RequestAnimationFrame.js"],
-						dest: "ConcertJS/Build/RequestAnimationFrame.full.js"
+						src: ["ConcertJS/Components/requestAnimationFrame/requestAnimationFrame.js"],
+						dest: "ConcertJS/Build/requestAnimationFrame.full.js"
 					}
 			},
 
@@ -61,7 +61,7 @@ module.exports = function(grunt)
 
 				ConcertJSMinMax: { src: ["ConcertJS/Build/Concert.min.max.js"] },
 
-				RequestAnimationFrame: { src: ["ConcertJS/Components/RequestAnimationFrame/RequestAnimationFrame.js"] }
+				requestAnimationFrame: { src: ["ConcertJS/Components/requestAnimationFrame/requestAnimationFrame.js"] }
 			},
 
 
@@ -103,19 +103,19 @@ module.exports = function(grunt)
 					dest: "ConcertJS/Build/Concert.min.max.js"
 				},
 
-				DeUglifyRequestAnimationFrame:
+				DeUglifyrequestAnimationFrame:
 				{
 					options: { beautify: true },
-					src: ["ConcertJS/Build/RequestAnimationFrame.min.js"],
-					dest: "ConcertJS/Build/RequestAnimationFrame.min.max.js"
+					src: ["ConcertJS/Build/requestAnimationFrame.min.js"],
+					dest: "ConcertJS/Build/requestAnimationFrame.min.max.js"
 				},
 
-				RequestAnimationFrame:
+				requestAnimationFrame:
 				{
-					options: { banner: "/*! RequestAnimationFrame.js */\n" },
+					options: { banner: "/*! requestAnimationFrame.js */\n" },
 
-					src: ["ConcertJS/Components/RequestAnimationFrame/RequestAnimationFrame.js"],
-					dest: "ConcertJS/Build/RequestAnimationFrame.min.js"
+					src: ["ConcertJS/Components/requestAnimationFrame/requestAnimationFrame.js"],
+					dest: "ConcertJS/Build/requestAnimationFrame.min.js"
 				}
 			}
 		});
@@ -126,8 +126,8 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	
 	// Default task
-	grunt.registerTask("default", ["copy:RequestAnimationFrameFull", "copy:ConcertJSFull", "uglify:RequestAnimationFrame", "uglify:ConcertJS"]);
+	grunt.registerTask("default", ["copy:requestAnimationFrameFull", "copy:ConcertJSFull", "uglify:requestAnimationFrame", "uglify:ConcertJS"]);
 
 	// Other tasks
-	grunt.registerTask("minmax", ["uglify:RequestAnimationFrame", "uglify:ConcertJS", "uglify:DeUglifyRequestAnimationFrame", "uglify:DeUglifyConcertJS"]);
+	grunt.registerTask("minmax", ["uglify:requestAnimationFrame", "uglify:ConcertJS", "uglify:DeUglifyrequestAnimationFrame", "uglify:DeUglifyConcertJS"]);
 };
