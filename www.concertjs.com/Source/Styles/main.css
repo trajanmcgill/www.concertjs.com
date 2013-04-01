@@ -1,0 +1,134 @@
+﻿body
+{
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+div#Header
+{
+	position: relative;
+	width: 940px;
+	height: 130px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #1e1e1e;
+	color: #d7ba7d;
+	padding-top: 0px;
+}
+
+	div#HeaderLeft
+	{
+		float: left;
+		width: 450px;
+	}
+
+		h1
+		{
+			font-size: 30px;
+			font-weight: bold;
+			margin-left: 30px;
+			margin-top: 35px;
+		}
+
+		div#MenuBar
+		{
+			width: 870px;
+			height: 24px;
+			position: relative;
+			left: 30px; 
+			clear: both;
+			font-size: 18px;
+		}
+
+			div.MenuItem
+			{
+				height: 24px;
+				float: left;
+				background-color: #569cd6;
+				color: #1e1e1e;
+				padding-left: 5px;
+				padding-right: 5px;
+				margin-left: 1px;
+				margin-right: 1px;
+				cursor: pointer;
+			}
+
+			div.MenuItem.CurrentMenuItem
+			{
+				background-color: #eee;
+				cursor: default;
+			}
+
+			div.MenuItem:hover
+			{
+				background-color: #c8c8c8;
+			}
+
+			div.MenuItem.CurrentMenuItem:hover
+			{
+				background-color: #eee;
+			}
+
+	div#HeaderRight
+	{
+		float: left;
+		width: 450px;
+	}
+
+		div#HeaderTagLine
+		{
+			text-align: center;
+			font-size: 20px;
+			font-weight: bold;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+		div#HeaderDescription
+		{
+			width: 400px;
+			margin-left: auto;
+			margin-right: auto;
+			font-size: 15px;
+			text-align: left;
+			background-color: #1e1e1e;
+			color: #c8c8c8;
+		}
+
+div#MainFrame
+{
+	width: 938px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #eee;
+	border: 1px solid black;
+}
+
+	div.MainContent
+	{
+		margin: 10px 10px 10px 10px;
+	}
+
+		div#ContentDescription
+		{
+			font-size: 20px;
+		}
+
+		div.Divider
+		{
+			height: 5px;
+			width: 100%;
+			background-color: #d7ba7d;
+			margin-top: 10px;
+			margin-bottom: 10px;
+		}
+
+div#Footer
+{
+	color: #c8c8c8;
+	width: 900px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2px;
+	font-size: 14px;
+}

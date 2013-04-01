@@ -1,5 +1,10 @@
 ﻿Sections:
--Main/Index/Demos/About
+-Main/Index/Demos/About:
+	-describe
+	-rotate upper right use case descriptions
+	-mention licensing
+	-feedback email address?
+	-show or rotate between several high quality demos, each demonstrating one of the main imagined uses (video synch, audio synch, interactive element synch, other playback or interactive demo)
 -Downloads/License
 -Walk-through
 -Individual Examples
