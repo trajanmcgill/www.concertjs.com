@@ -1,0 +1,18 @@
+﻿Sections:
+-Main/Index/Demos/About
+-Downloads/License
+-Walk-through
+-Individual Examples
+-Documentation/Reference
+-Forums
+
+Things that ought to be on there:
+-feedback
+-size information
+-description
+-downloads of each version, with verification hashes
+-license info
+-upcoming features
+-known bugs
+-release notes
+-donation button?
