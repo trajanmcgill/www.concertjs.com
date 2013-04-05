@@ -4,7 +4,7 @@
 	font-family: Calibri, "Lucida Grande", sans-serif;
 }
 
-div#Header
+#Header
 {
 	position: relative;
 	width: 940px;
@@ -13,10 +13,10 @@ div#Header
 	margin-right: auto;
 	background-color: #1e1e1e;
 	color: #d7ba7d;
-	padding-top: 0px;
+	padding-top: 0;
 }
 
-	div#HeaderLeft
+	#HeaderLeft
 	{
 		float: left;
 		width: 450px;
@@ -30,7 +30,7 @@ div#Header
 			margin-top: 35px;
 		}
 
-		div#MenuBar
+		#MenuBar
 		{
 			width: 870px;
 			height: 24px;
@@ -40,7 +40,7 @@ div#Header
 			font-size: 18px;
 		}
 
-			div.MenuItem
+			a.MenuItem
 			{
 				height: 24px;
 				float: left;
@@ -53,7 +53,7 @@ div#Header
 				cursor: pointer;
 			}
 
-			div.MenuItem.CurrentMenuItem
+			a.MenuItem.CurrentMenuItem
 			{
 				background-color: #eee;
 				cursor: default;
@@ -69,13 +69,13 @@ div#Header
 				background-color: #eee;
 			}
 
-	div#HeaderRight
+	#HeaderRight
 	{
 		float: left;
 		width: 450px;
 	}
 
-		div#HeaderTagLine
+		#HeaderTagLine
 		{
 			text-align: center;
 			font-size: 20px;
@@ -84,7 +84,7 @@ div#Header
 			margin-bottom: 10px;
 		}
 
-		div#HeaderDescription
+		#HeaderDescription
 		{
 			width: 400px;
 			margin-left: auto;
@@ -95,7 +95,7 @@ div#Header
 			color: #c8c8c8;
 		}
 
-div#MainFrame
+#MainFrame
 {
 	width: 938px;
 	margin-left: auto;
@@ -104,12 +104,12 @@ div#MainFrame
 	border: 1px solid black;
 }
 
-	div.MainContent
+	#AboutContent
 	{
 		margin: 10px 10px 10px 10px;
 	}
 
-		div#ContentDescription
+		#ContentDescription
 		{
 			font-size: 20px;
 		}
@@ -123,7 +123,7 @@ div#MainFrame
 			margin-bottom: 10px;
 		}
 
-div#Footer
+#Footer
 {
 	color: #c8c8c8;
 	width: 900px;

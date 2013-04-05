@@ -1,24 +1,27 @@
 module.exports = function(grunt)
 {
+	function stripMinOrFull(dest, src)
+	{
+		var fullOriginalDest = dest + src,
+			testExp = /(.*)(\.min|\.full)(\..+)/,
+			testResult = testExp.exec(fullOriginalDest),
+			outputFile = (testResult === null) ? fullOriginalDest : (testResult[1] + testResult[3]);
+
+		console.log("copying " + fullOriginalDest + " to " + outputFile);
+
+		return outputFile;
+	}
+
+
 	// Project configuration.
 	grunt.initConfig(
 		{
 			pkg: grunt.file.readJSON("package.json"),
 
 
-			copy:
+			csslint:
 			{
-				ConcertJSFull:
-					{
-						src: ["ConcertJS/Source/Concert.js"],
-						dest: "ConcertJS/Build/Concert.full.js"
-					},
-
-				requestAnimationFrameFull:
-					{
-						src: ["ConcertJS/Components/requestAnimationFrame/requestAnimationFrame.js"],
-						dest: "ConcertJS/Build/requestAnimationFrame.full.js"
-					}
+				www: { src: ["www.concertjs.com/Source/Styles/*.css"] }
 			},
 
 
@@ -26,108 +29,141 @@ module.exports = function(grunt)
 			{
 				options:
 				{
-					bitwise: true,
-					browser: true,
-					curly: false,
-					eqeqeq: true,
-					forin: true,
-					immed: true,
-					latedef: true,
-					laxbreak: true,
-					laxcomma: true,
-					newcap: true,
-					noarg: true,
-					noempty: true,
-					nonew: true,
-					quotmark: "double",
-					smarttabs: true,
-					strict: true,
-					trailing: true,
-					undef: true,
-					unused: true,
-					validthis: true
+					bitwise: true, browser: true, curly: false, eqeqeq: true, forin: true, immed: true, latedef: true, laxbreak: true, laxcomma: true, newcap: true,
+					noarg: true, noempty: true, nonew: true, quotmark: "double", smarttabs: true, strict: true, trailing: true, undef: true, unused: true, validthis: true
 				},
 
+				BaseObject: { options: { strict: false, unused: false }, src: ["ConcertJS/Components/BaseObject/BaseObject.js"] },
 
-				BaseObject:
-				{
-					options: { strict: false, unused: false },
-					src: ["ConcertJS/Components/BaseObject/BaseObject.js"]
-				},
+				requestAnimationFrame: { src: ["requestAnimationFrame/Source/requestAnimationFrame.js"] },
 
 				ConcertJS: { src: ["ConcertJS/Source/Concert.js"] },
 
-				ConcertJSMin: { src: ["ConcertJS/Build/Concert.min.js"] },
+				www: { src: ["www.concertjs.com/Source/Scripts/*.js"] }
+			},
 
-				ConcertJSMinMax: { src: ["ConcertJS/Build/Concert.min.max.js"] },
 
-				requestAnimationFrame: { src: ["ConcertJS/Components/requestAnimationFrame/requestAnimationFrame.js"] }
+			clean:
+			{
+				requestAnimationFrame: ["requestAnimationFrame/Build/**/*"],
+				ConcertJS: ["ConcertJS/Build/**/*"],
+				www: ["www.concertjs.com/Build/**/*"],
+
+				www_Deploy:
+				[
+					"www.concertjs.com/Build/Dev/**/*.full.*",
+					"www.concertjs.com/Build/Dev/**/*.min.*",
+					"www.concertjs.com/Build/Prod/**/*.full.*",
+					"www.concertjs.com/Build/Prod/**/*.min.*"
+				]
+			},
+
+
+			copy:
+			{
+				requestAnimationFrame_Build: { src: ["requestAnimationFrame/Source/requestAnimationFrame.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.full.js" },
+
+				ConcertJS_Import: { expand: true, cwd: "requestAnimationFrame/Build/", src: ["*.js"], dest: "ConcertJS/Components/requestAnimationFrame/" },
+				ConcertJS_Build:
+				{
+					files:
+					[
+						{ src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.full.js" },
+						{ expand: true, cwd: "ConcertJS/Components/requestAnimationFrame/", src: ["*.js"], dest: "ConcertJS/Build/" }
+					],
+				},
+
+				www_Import: { expand: true, cwd: "ConcertJS/Build/", src: ["*.js"], dest: "www.concertjs.com/Components/ConcertJS/" },
+				www_Assemble:
+				{
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Assembly/Components/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html"], dest: "www.concertjs.com/Build/Assembly/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/Scripts/", src: ["*.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".full.js" },
+						{ expand: true, cwd: "www.concertjs.com/Source/Styles/", src: ["*.css"], dest: "www.concertjs.com/Build/Assembly/Styles/", ext: ".full.css" }
+					]
+				},
+				www_Deploy:
+				{
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Dev/" },
+						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Prod/" }
+					]
+				},
+				www_SelectEnvironment:
+				{
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Dev/" },
+						{ expand: true, cwd: "www.concertjs.com/Build/Dev/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Dev/", rename: stripMinOrFull },
+						{ expand: true, cwd: "www.concertjs.com/Build/Dev/", src: "**/*.full.js", dest: "www.concertjs.com/Build/Dev/", rename: stripMinOrFull },
+
+						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Prod/" },
+						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.css", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull },
+						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.js", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull }
+					]
+				},
+			},
+
+
+			cssmin:
+			{
+				www: { expand: true, cwd: "www.concertjs.com/Source/Styles/", src: ["*.css"], dest: "www.concertjs.com/Build/Assembly/Styles/", ext: ".min.css" }
+			},
+
+
+			htmlmin:
+			{
+				www: { expand: true, cwd: "www.concertjs.com/Source/", src: "**/*.html", dest: "www.concertjs.com/Build/Assembly/", ext: ".min.html" }
 			},
 
 
 			uglify:
 			{
-				options:
-				{
-					sequences: false,
-					verbose: true,
-					warnings: true
-				},
+				options: { sequences: false, verbose: true, warnings: true },
 
+				BaseObject: { src: ["ConcertJS/Components/BaseObject/BaseObject.js"], dest: "ConcertJS/Build/BaseObject.min.js" },
+				BaseObject_DeUglify: { options: { beautify: true }, src: ["ConcertJS/Build/BaseObject.min.js"], dest: "ConcertJS/Build/BaseObject.min.max.js" },
 
-				BaseObject:
-				{
-					src: ["ConcertJS/Components/BaseObject/BaseObject.js"],
-					dest: "ConcertJS/Build/BaseObject.min.js"
-				},
-			
-				ConcertJS:
-				{
-					options: { banner: "/*! <%= pkg.name %> <%= pkg.version %> */\n" },
-					
-					src: ["ConcertJS/Source/Concert.js"],
-					dest: "ConcertJS/Build/Concert.min.js"
-				},
+				requestAnimationFrame: { options: { banner: "/*! requestAnimationFrame.js */\n" }, src: ["requestAnimationFrame/Source/requestAnimationFrame.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.min.js" },
+				requestAnimationFrame_DeUglify: { options: { beautify: true }, src: ["requestAnimationFrame/Build/requestAnimationFrame.min.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.min.max.js" },
 
-				DeUglifyBaseObject:
-				{
-					options: { beautify: true },
-					src: ["ConcertJS/Build/BaseObject.min.js"],
-					dest: "ConcertJS/Build/BaseObject.min.max.js"
-				},
+				ConcertJS: { options: { banner: "/*! <%= pkg.name %> <%= pkg.version %> */\n" }, src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.min.js" },
+				ConcertJS_DeUglify: { options: { beautify: true }, src: ["ConcertJS/Build/Concert.min.js"], dest: "ConcertJS/Build/Concert.min.max.js" },
 
-				DeUglifyConcertJS:
-				{
-					options: { beautify: true },
-					src: ["ConcertJS/Build/Concert.min.js"],
-					dest: "ConcertJS/Build/Concert.min.max.js"
-				},
-
-				DeUglifyrequestAnimationFrame:
-				{
-					options: { beautify: true },
-					src: ["ConcertJS/Build/requestAnimationFrame.min.js"],
-					dest: "ConcertJS/Build/requestAnimationFrame.min.max.js"
-				},
-
-				requestAnimationFrame:
-				{
-					options: { banner: "/*! requestAnimationFrame.js */\n" },
-
-					src: ["ConcertJS/Components/requestAnimationFrame/requestAnimationFrame.js"],
-					dest: "ConcertJS/Build/requestAnimationFrame.min.js"
-				}
+				www: { expand: true, cwd: "www.concertjs.com/Source/Scripts/", src: ["*.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.js" },
+				www_DeUglify: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/Scripts/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.max.js" }
 			}
 		});
 	
 	// Load the plugins
+	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-copy");
-	grunt.loadNpmTasks("grunt-contrib-uglify");
+	//grunt.loadNpmTasks("grunt-contrib-csslint");
+	grunt.loadNpmTasks("grunt-contrib-cssmin");
+	//grunt.loadNpmTasks("grunt-contrib-htmlmin");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-contrib-uglify");
 	
-	// Default task
-	grunt.registerTask("default", ["copy:requestAnimationFrameFull", "copy:ConcertJSFull", "uglify:requestAnimationFrame", "uglify:ConcertJS"]);
+	// Define tasks
+	grunt.registerTask("lint_requestAnimationFrame", ["jshint:requestAnimationFrame"]);
+	grunt.registerTask("lint_ConcertJS", ["jshint:ConcertJS"]);
+	grunt.registerTask("lint_www", [/* "csslint:www", */ "jshint:www"]);
+	grunt.registerTask("lint_all", ["lint_requestAnimationFrame", "lint_ConcertJS", "lint_www"]);
 
-	// Other tasks
-	grunt.registerTask("minmax", ["uglify:requestAnimationFrame", "uglify:ConcertJS", "uglify:DeUglifyrequestAnimationFrame", "uglify:DeUglifyConcertJS"]);
+	grunt.registerTask("clean_requestAnimationFrame", ["clean:requestAnimationFrame"]);
+	grunt.registerTask("clean_ConcertJS", ["clean:ConcertJS"]);
+	grunt.registerTask("clean_www", ["clean:www"]);
+	grunt.registerTask("clean_all", ["clean_requestAnimationFrame", "clean_ConcertJS", "clean_www"]);
+
+	grunt.registerTask("build_requestAnimationFrame", ["copy:requestAnimationFrame_Build", "uglify:requestAnimationFrame", "uglify:requestAnimationFrame_DeUglify"]);
+	grunt.registerTask("build_ConcertJS", ["copy:ConcertJS_Import", "copy:ConcertJS_Build", "uglify:ConcertJS", "uglify:ConcertJS_DeUglify"]);
+	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "cssmin:www", /* "htmlmin:www", */ "uglify:www", "uglify:www_DeUglify", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
+	grunt.registerTask("build_all", ["build_requestAnimationFrame", "build_ConcertJS", "build_www"]);
+
+	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
+
+	grunt.registerTask("default", ["lint_all", "rebuild_all"]);
 };
