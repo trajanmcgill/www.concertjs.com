@@ -135,6 +135,11 @@ module.exports = function(grunt)
 
 				www: { expand: true, cwd: "www.concertjs.com/Source/Scripts/", src: ["*.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.js" },
 				www_DeUglify: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/Scripts/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.max.js" }
+			},
+
+			processTemplates:
+			{
+				www: { expand: true, cwd: "www.concertjs.com/Source", src: "**/*.templateData.html", dest: "www.concertjs.com/Build/Assembly/" }
 			}
 		});
 	
@@ -166,4 +171,90 @@ module.exports = function(grunt)
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
 
 	grunt.registerTask("default", ["lint_all", "rebuild_all"]);
+
+	grunt.registerMultiTask(
+		"processTemplates",
+		"Build output from templates",
+		function ()
+		{
+			this.files.forEach(
+				function (file)
+				{
+					var i, j, curInputFileName, fileContents, outputBuffers = [], currentPos, nextOpenTagPos, nextCloseTagPos,
+						curTargetFullName, templateContents, templateVarExp = /{{([^ \t\s\r\n]+?)}}/g, varMatch, targetOutput,
+						openElementStack = [], allTargets = {}, fullTag, newElement, newText, nextTargetDefPos, finishedElement,
+						curDestRootDir = file.dest.substr(0, file.dest.lastIndexOf("/")), curTarget, curSection, curSourceRootDir,
+						templateExp = /\s+template="([^"]*)"/, sectionExp = /\s+section="([^"]*)"/, targetExp = /\s+target="([^"]*)"/;
+
+					for (i = 0; i < file.src.length; i++)
+					{
+						curInputFileName = file.src[i];
+						curSourceRootDir = curInputFileName.substr(0, curInputFileName.lastIndexOf("/"))
+						fileContents = grunt.file.read(curInputFileName);
+
+						currentPos = 0;
+						nextTargetDefPos = fileContents.indexOf("<template:targetDef", currentPos);
+						while (nextTargetDefPos >= 0)
+						{
+							fullTag = fileContents.substring(nextTargetDefPos, fileContents.indexOf(">", nextTargetDefPos) + 1);
+							allTargets[targetExp.exec(fullTag)[1]] = { templateFullName: curSourceRootDir + "/" + templateExp.exec(fullTag)[1], sections: [] };
+							currentPos = nextTargetDefPos + fullTag.length;
+							nextTargetDefPos = fileContents.indexOf("<template:targetDef", currentPos)
+						}
+
+						currentPos = 0;
+						nextOpenTagPos = fileContents.indexOf("<template:data", currentPos);
+						nextCloseTagPos = fileContents.indexOf("</template:data>", currentPos);
+						while (nextOpenTagPos >= 0 || nextCloseTagPos >= 0)
+						{
+							if (nextOpenTagPos < nextCloseTagPos && nextOpenTagPos >= 0)
+								newText = fileContents.substring(currentPos, nextOpenTagPos);
+							else
+								newText = fileContents.substring(currentPos, nextCloseTagPos);
+							for (j = 0; j < openElementStack.length; j++)
+								openElementStack[j].output += newText;
+
+							if (nextOpenTagPos < nextCloseTagPos && nextOpenTagPos >= 0)
+							{
+								fullTag = fileContents.substring(nextOpenTagPos, fileContents.indexOf(">", nextOpenTagPos) + 1);
+								currentPos = nextOpenTagPos + fullTag.length;
+
+								newElement = { target: targetExp.exec(fullTag)[1], section: sectionExp.exec(fullTag)[1], output: "" };
+								openElementStack.push(newElement);
+							}
+							else
+							{
+								fullTag = fileContents.substring(nextCloseTagPos, fileContents.indexOf(">", nextCloseTagPos) + 1);
+								currentPos = nextCloseTagPos + fullTag.length;
+
+								finishedElement = openElementStack.pop();
+								allTargets[finishedElement.target].sections[finishedElement.section] = finishedElement.output;
+							}
+							nextOpenTagPos = fileContents.indexOf("<template:data", currentPos);
+							nextCloseTagPos = fileContents.indexOf("</template:data>", currentPos);
+						} // end while (nextOpenTagPos >= 0 || nextCloseTagPos >= 0)
+
+						grunt.log.writeln("");
+					} // end for (i = 0; i < file.src.length; i++)
+
+					for (curTarget in allTargets) if (allTargets.hasOwnProperty(curTarget))
+					{
+						curTargetFullName = curDestRootDir + "/" + curTarget;
+
+						templateContents = grunt.file.read(allTargets[curTarget].templateFullName);
+						targetOutput =
+							templateContents.replace(
+								templateVarExp,
+								function (match, p1)
+								{
+									if (typeof allTargets[curTarget].sections[p1] !== "string")
+										grunt.fail.warn("No match found for template variable: " + p1);
+									return allTargets[curTarget].sections[p1];
+								});
+
+						grunt.log.writeln("Writing target file: " + curTargetFullName);
+						grunt.file.write(curTargetFullName, targetOutput);
+					}
+				});
+		}); // end call to grunt.registerMultiTask("processTemplates"...)
 };

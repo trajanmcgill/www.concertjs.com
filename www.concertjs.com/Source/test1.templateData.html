@@ -1,0 +1,13 @@
+﻿<template:targetDef target="test1.html" template="test1.template.html"></template:targetDef>
+<template:targetDef target="sample1.html" template="sample.template.html"></template:targetDef>
+
+
+<template:data target="test1.html" section="MainBody">
+	<div>
+		<div>Here is the test 1 page content.</div>
+
+		<template:data target="sample1.html" section="MainBody">
+		<div>Here is a sample</div>
+		</template:data>
+	</div>
+</template:data>
