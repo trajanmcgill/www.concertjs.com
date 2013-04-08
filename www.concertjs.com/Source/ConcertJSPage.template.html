@@ -3,17 +3,17 @@
 <head>
     <title>ConcertJS</title>
 
-	<link rel="stylesheet" type="text/css" href="Styles/Main.css" />
+	<link rel="stylesheet" type="text/css" href="Styles/ConcertJSPage.css" />
 
-	<script type="text/javascript" src="Components/ConcertJS/Concert.js"></script>
+	{{HeadContent}}
 </head>
 <body>
 	<div id="Header">
 		<div id="HeaderLeft">
 			<h1>ConcertJS</h1>
 			<div id="MenuBar">
-				<a class="MenuItem CurrentMenuItem">About</a>
-				<a href="introduction.html" class="MenuItem">Introduction</a>
+				<a href="index.html" class="MenuItem">About</a>
+				<a href="tutorial.html" class="MenuItem">Tutorial</a>
 				<a class="MenuItem">Reference</a>
 				<a class="MenuItem">Downloads</a>
 				<a class="MenuItem">Forums</a>
@@ -40,19 +40,9 @@
 
 			<div class="Divider">&nbsp;</div>
 
+			{{MainContent}}
+
 			<div class="Divider">&nbsp;</div>
-		</div>
-
-		<div id="IntroductionContent">
-		</div>
-
-		<div id="ReferenceContent">
-		</div>
-
-		<div id="DownloadsContent">
-		</div>
-
-		<div id="ForumsContent">
 		</div>
 	</div>
 	<div id="Footer">
