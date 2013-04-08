@@ -19,12 +19,6 @@ module.exports = function(grunt)
 			pkg: grunt.file.readJSON("package.json"),
 
 
-			csslint:
-			{
-				www: { src: ["www.concertjs.com/Source/Styles/*.css"] }
-			},
-
-
 			jshint:
 			{
 				options:
@@ -40,7 +34,7 @@ module.exports = function(grunt)
 				ConcertJS: { src: ["ConcertJS/Source/Concert.js"] },
 
 				www: { src: ["www.concertjs.com/Source/Scripts/*.js"] }
-			},
+			}, // end jshint task definitions
 
 
 			clean:
@@ -56,7 +50,7 @@ module.exports = function(grunt)
 					"www.concertjs.com/Build/Prod/**/*.full.*",
 					"www.concertjs.com/Build/Prod/**/*.min.*"
 				]
-			},
+			}, // end clean task definitions
 
 
 			copy:
@@ -79,9 +73,9 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Assembly/Components/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html"], dest: "www.concertjs.com/Build/Assembly/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/Scripts/", src: ["*.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".full.js" },
-						{ expand: true, cwd: "www.concertjs.com/Source/Styles/", src: ["*.css"], dest: "www.concertjs.com/Build/Assembly/Styles/", ext: ".full.css" }
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html", "!**/*.template.html", "!**/*.templateData.html"], dest: "www.concertjs.com/Build/Assembly/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!**/*.template.js", "!**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.js" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.css", "!**/*.template.css", "!**/*.templateData.css"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.css" }
 					]
 				},
 				www_Deploy:
@@ -105,19 +99,19 @@ module.exports = function(grunt)
 						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.js", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull }
 					]
 				},
-			},
+			}, // end copy task defitions
+
+
+			processTemplates:
+			{
+				www: { expand: true, cwd: "www.concertjs.com/Source", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" }
+			}, // end processTemplates task definitions
 
 
 			cssmin:
 			{
-				www: { expand: true, cwd: "www.concertjs.com/Source/Styles/", src: ["*.css"], dest: "www.concertjs.com/Build/Assembly/Styles/", ext: ".min.css" }
-			},
-
-
-			htmlmin:
-			{
-				www: { expand: true, cwd: "www.concertjs.com/Source/", src: "**/*.html", dest: "www.concertjs.com/Build/Assembly/", ext: ".min.html" }
-			},
+				www: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Assembly/", ext: ".min.css" }
+			}, // end cssmin task definitions
 
 
 			uglify:
@@ -133,45 +127,19 @@ module.exports = function(grunt)
 				ConcertJS: { options: { banner: "/*! <%= pkg.name %> <%= pkg.version %> */\n" }, src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.min.js" },
 				ConcertJS_DeUglify: { options: { beautify: true }, src: ["ConcertJS/Build/Concert.min.js"], dest: "ConcertJS/Build/Concert.min.max.js" },
 
-				www: { expand: true, cwd: "www.concertjs.com/Source/Scripts/", src: ["*.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.js" },
+				www: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
 				www_DeUglify: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/Scripts/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.max.js" }
-			},
-
-			processTemplates:
-			{
-				www: { expand: true, cwd: "www.concertjs.com/Source", src: "**/*.templateData.html", dest: "www.concertjs.com/Build/Assembly/" }
-			}
+			} // end uglify task definitions
 		});
 	
 	// Load the plugins
 	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-copy");
-	//grunt.loadNpmTasks("grunt-contrib-csslint");
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
-	//grunt.loadNpmTasks("grunt-contrib-htmlmin");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	
 	// Define tasks
-	grunt.registerTask("lint_requestAnimationFrame", ["jshint:requestAnimationFrame"]);
-	grunt.registerTask("lint_ConcertJS", ["jshint:ConcertJS"]);
-	grunt.registerTask("lint_www", [/* "csslint:www", */ "jshint:www"]);
-	grunt.registerTask("lint_all", ["lint_requestAnimationFrame", "lint_ConcertJS", "lint_www"]);
-
-	grunt.registerTask("clean_requestAnimationFrame", ["clean:requestAnimationFrame"]);
-	grunt.registerTask("clean_ConcertJS", ["clean:ConcertJS"]);
-	grunt.registerTask("clean_www", ["clean:www"]);
-	grunt.registerTask("clean_all", ["clean_requestAnimationFrame", "clean_ConcertJS", "clean_www"]);
-
-	grunt.registerTask("build_requestAnimationFrame", ["copy:requestAnimationFrame_Build", "uglify:requestAnimationFrame", "uglify:requestAnimationFrame_DeUglify"]);
-	grunt.registerTask("build_ConcertJS", ["copy:ConcertJS_Import", "copy:ConcertJS_Build", "uglify:ConcertJS", "uglify:ConcertJS_DeUglify"]);
-	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "cssmin:www", /* "htmlmin:www", */ "uglify:www", "uglify:www_DeUglify", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
-	grunt.registerTask("build_all", ["build_requestAnimationFrame", "build_ConcertJS", "build_www"]);
-
-	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
-
-	grunt.registerTask("default", ["lint_all", "rebuild_all"]);
-
 	grunt.registerMultiTask(
 		"processTemplates",
 		"Build output from templates",
@@ -184,11 +152,29 @@ module.exports = function(grunt)
 						curTargetFullName, templateContents, templateVarExp = /{{([^ \t\s\r\n]+?)}}/g, varMatch, targetOutput,
 						openElementStack = [], allTargets = {}, fullTag, newElement, newText, nextTargetDefPos, finishedElement,
 						curDestRootDir = file.dest.substr(0, file.dest.lastIndexOf("/")), curTarget, curSection, curSourceRootDir,
-						templateExp = /\s+template="([^"]*)"/, sectionExp = /\s+section="([^"]*)"/, targetExp = /\s+target="([^"]*)"/;
+						templateExp = /\s+template="([^"]*)"/, sectionExp = /\s+section="([^"]*)"/, targetExp = /\s+target="([^"]*)"/,
+						openTargetTagStart, openDataTagStart, closeDataTag, tagEnd;
 
 					for (i = 0; i < file.src.length; i++)
 					{
 						curInputFileName = file.src[i];
+						if (/.*\.js$/i.test(curInputFileName) || /.*\.css$/i.test(curInputFileName))
+						{
+							openTargetTagStart = "/*<template:targetDef";
+							openDataTagStart = "/*<template:data";
+							closeDataTag = "/*</template:data>*/";
+							tagEnd = ">*/";
+						}
+						else if (/.*\.html$/i.test(curInputFileName))
+						{
+							openTargetTagStart = "<template:targetDef";
+							openDataTagStart = "<template:data";
+							closeDataTag = "</template:data>";
+							tagEnd = ">";
+						}
+						else
+							grunt.fail.warn("processTemplates: unknown input file type (" + curInputFileName + ").");
+
 						curSourceRootDir = curInputFileName.substr(0, curInputFileName.lastIndexOf("/"))
 						fileContents = grunt.file.read(curInputFileName);
 
@@ -257,4 +243,23 @@ module.exports = function(grunt)
 					}
 				});
 		}); // end call to grunt.registerMultiTask("processTemplates"...)
+
+	grunt.registerTask("lint_requestAnimationFrame", ["jshint:requestAnimationFrame"]);
+	grunt.registerTask("lint_ConcertJS", ["jshint:ConcertJS"]);
+	grunt.registerTask("lint_www", ["jshint:www"]);
+	grunt.registerTask("lint_all", ["lint_requestAnimationFrame", "lint_ConcertJS", "lint_www"]);
+
+	grunt.registerTask("clean_requestAnimationFrame", ["clean:requestAnimationFrame"]);
+	grunt.registerTask("clean_ConcertJS", ["clean:ConcertJS"]);
+	grunt.registerTask("clean_www", ["clean:www"]);
+	grunt.registerTask("clean_all", ["clean_requestAnimationFrame", "clean_ConcertJS", "clean_www"]);
+
+	grunt.registerTask("build_requestAnimationFrame", ["copy:requestAnimationFrame_Build", "uglify:requestAnimationFrame", "uglify:requestAnimationFrame_DeUglify"]);
+	grunt.registerTask("build_ConcertJS", ["copy:ConcertJS_Import", "copy:ConcertJS_Build", "uglify:ConcertJS", "uglify:ConcertJS_DeUglify"]);
+	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
+	grunt.registerTask("build_all", ["build_requestAnimationFrame", "build_ConcertJS", "build_www"]);
+
+	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
+
+	grunt.registerTask("default", ["lint_all", "rebuild_all"]);
 };
