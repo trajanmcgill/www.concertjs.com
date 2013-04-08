@@ -33,7 +33,7 @@ module.exports = function(grunt)
 
 				ConcertJS: { src: ["ConcertJS/Source/Concert.js"] },
 
-				www: { src: ["www.concertjs.com/Source/Scripts/*.js"] }
+				www: { expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!**/*.template.js"] }
 			}, // end jshint task definitions
 
 
@@ -179,18 +179,18 @@ module.exports = function(grunt)
 						fileContents = grunt.file.read(curInputFileName);
 
 						currentPos = 0;
-						nextTargetDefPos = fileContents.indexOf("<template:targetDef", currentPos);
+						nextTargetDefPos = fileContents.indexOf(openTargetTagStart, currentPos);
 						while (nextTargetDefPos >= 0)
 						{
-							fullTag = fileContents.substring(nextTargetDefPos, fileContents.indexOf(">", nextTargetDefPos) + 1);
+							fullTag = fileContents.substring(nextTargetDefPos, fileContents.indexOf(tagEnd, nextTargetDefPos) + tagEnd.length);
 							allTargets[targetExp.exec(fullTag)[1]] = { templateFullName: curSourceRootDir + "/" + templateExp.exec(fullTag)[1], sections: [] };
 							currentPos = nextTargetDefPos + fullTag.length;
-							nextTargetDefPos = fileContents.indexOf("<template:targetDef", currentPos)
+							nextTargetDefPos = fileContents.indexOf(openTargetTagStart, currentPos)
 						}
 
 						currentPos = 0;
-						nextOpenTagPos = fileContents.indexOf("<template:data", currentPos);
-						nextCloseTagPos = fileContents.indexOf("</template:data>", currentPos);
+						nextOpenTagPos = fileContents.indexOf(openDataTagStart, currentPos);
+						nextCloseTagPos = fileContents.indexOf(closeDataTag, currentPos);
 						while (nextOpenTagPos >= 0 || nextCloseTagPos >= 0)
 						{
 							if (nextOpenTagPos < nextCloseTagPos && nextOpenTagPos >= 0)
@@ -202,7 +202,7 @@ module.exports = function(grunt)
 
 							if (nextOpenTagPos < nextCloseTagPos && nextOpenTagPos >= 0)
 							{
-								fullTag = fileContents.substring(nextOpenTagPos, fileContents.indexOf(">", nextOpenTagPos) + 1);
+								fullTag = fileContents.substring(nextOpenTagPos, fileContents.indexOf(tagEnd, nextOpenTagPos) + tagEnd.length);
 								currentPos = nextOpenTagPos + fullTag.length;
 
 								newElement = { target: targetExp.exec(fullTag)[1], section: sectionExp.exec(fullTag)[1], output: "" };
@@ -210,14 +210,14 @@ module.exports = function(grunt)
 							}
 							else
 							{
-								fullTag = fileContents.substring(nextCloseTagPos, fileContents.indexOf(">", nextCloseTagPos) + 1);
+								fullTag = fileContents.substring(nextCloseTagPos, fileContents.indexOf(tagEnd, nextCloseTagPos) + tagEnd.length);
 								currentPos = nextCloseTagPos + fullTag.length;
 
 								finishedElement = openElementStack.pop();
 								allTargets[finishedElement.target].sections[finishedElement.section] = finishedElement.output;
 							}
-							nextOpenTagPos = fileContents.indexOf("<template:data", currentPos);
-							nextCloseTagPos = fileContents.indexOf("</template:data>", currentPos);
+							nextOpenTagPos = fileContents.indexOf(openDataTagStart, currentPos);
+							nextCloseTagPos = fileContents.indexOf(closeDataTag, currentPos);
 						} // end while (nextOpenTagPos >= 0 || nextCloseTagPos >= 0)
 
 						grunt.log.writeln("");
