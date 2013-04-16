@@ -7,7 +7,7 @@
 #Header
 {
 	position: relative;
-	width: 940px;
+	width: 960px;
 	height: 130px;
 	margin-left: auto;
 	margin-right: auto;
@@ -19,7 +19,7 @@
 	#HeaderLeft
 	{
 		float: left;
-		width: 450px;
+		width: 480px;
 	}
 
 		h1
@@ -72,7 +72,7 @@
 	#HeaderRight
 	{
 		float: left;
-		width: 450px;
+		width: 480px;
 	}
 
 		#HeaderTagLine
@@ -97,7 +97,7 @@
 
 #MainFrame
 {
-	width: 938px;
+	width: 958px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: #eee;
@@ -126,7 +126,7 @@
 #Footer
 {
 	color: #c8c8c8;
-	width: 900px;
+	width: 940px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 2px;

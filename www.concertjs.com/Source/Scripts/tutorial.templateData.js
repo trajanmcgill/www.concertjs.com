@@ -5,6 +5,6 @@
 {
 	"use strict";
 
-	
+
 })();
 /*</template:data>*/
