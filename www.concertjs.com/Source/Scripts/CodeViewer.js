@@ -9,6 +9,13 @@ var CodeViewer = (function ()
 			css: false
 		};
 
+	var fontSizes =
+		{
+			HTMLView: 12,
+			ScriptView: 12,
+			CSSView: 12
+		};
+
 	function getQueryParams()
 	{
 		var i, assignmentHalves, varName, valueString, paramArray, queryParams = {}, queryText = window.location.search;
@@ -35,7 +42,16 @@ var CodeViewer = (function ()
 
 	function setupPage()
 	{
-		var queryParams = getQueryParams(), url = queryParams["url"];
+		var queryParams = getQueryParams(), url = queryParams["url"], preName;
+
+		for (preName in fontSizes) if (fontSizes.hasOwnProperty(preName))
+		{
+			document.getElementById(preName).style.fontSize = fontSizes[preName] + "px";
+			document.getElementById(preName + "LargerFontButton").onclick =
+				(function(preName) { return function () { fontSizes[preName]++; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; })(preName);
+			document.getElementById(preName + "SmallerFontButton").onclick =
+				(function (preName) { return function () { fontSizes[preName]--; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; })(preName);
+		}
 
 		sizeCodePanes();
 		document.getElementById("PageViewFrame").src = url;
@@ -97,11 +113,20 @@ var CodeViewer = (function ()
 				targetViewContainer.innerHTML = document.createElement("pre").appendChild(document.createTextNode(responseText)).parentNode.innerHTML;
 
 				if (viewContainerName === "HTMLView")
+				{
+					document.getElementById("HTMLViewFileName").innerHTML = url;
 					paneLoadStatus.html = true;
+				}
 				else if (viewContainerName === "CSSView")
+				{
+					document.getElementById("CSSViewFileName").innerHTML = url;
 					paneLoadStatus.css = true;
+				}
 				else if (viewContainerName === "ScriptView")
+				{
+					document.getElementById("ScriptViewFileName").innerHTML = url;
 					paneLoadStatus.script = true;
+				}
 
 				if (paneLoadStatus.html && paneLoadStatus.css && paneLoadStatus.script)
 					prettyPrint();
@@ -111,12 +136,20 @@ var CodeViewer = (function ()
 
 	function sizeCodePanes()
 	{
-		var i, elements = ["PageView", "PageViewFrame", "CodeView1", "CodeView2", "CodeView3"],
+		var i, viewWindowElements = ["PageView", "CodeView1", "CodeView2", "CodeView3"],
+			preElements = ["ScriptView", "HTMLView", "CSSView"],
 			titleHeight = document.getElementById("PageTitle").offsetHeight,
-			newPaneHeight = (typeof window.innerHeight === "undefined") ? "300px" : (((window.innerHeight - titleHeight) / 2 - 4) + "px");
+			newPaneHeight = (typeof window.innerHeight === "undefined") ? 300 : ((window.innerHeight - titleHeight) / 2 - 4),
+			viewSectionTopBarHeight = document.getElementById("ScriptViewTopBar").offsetHeight,
+			preHeight = newPaneHeight - 2 - viewSectionTopBarHeight;
 
-		for (i = 0; i < elements.length; i++)
-			document.getElementById(elements[i]).style.height = newPaneHeight;
+		for (i = 0; i < viewWindowElements.length; i++)
+			document.getElementById(viewWindowElements[i]).style.height = newPaneHeight + "px";
+
+		document.getElementById("PageViewFrame").style.height = newPaneHeight - 2 + "px";
+
+		for(i = 0; i < preElements.length; i++)
+			document.getElementById(preElements[i]).style.height = preHeight + "px";
 	}
 
 	
