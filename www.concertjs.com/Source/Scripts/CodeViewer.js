@@ -68,71 +68,85 @@ var CodeViewer = (function ()
 		var request = new XMLHttpRequest();
 		request.open("GET", url, true);
 		request.onreadystatechange =
-			function ()
+			(function(capturedURL, capturedRequest, capturedViewContainerName)
 			{
-				var responseText, styleSheetExp, scriptExp, styleSheetExpResult, scriptExpResult, styleSheetURL, scriptURL,
-					targetViewContainer = document.getElementById(viewContainerName);
-
-				if (request.readyState !== 4)
-					return;
-				if (request.status !== 200 && request.status !== 304)
-				{
-					alert("error: " + request.status + ": " + request.statusText);
-					return;
-				}
-
-				responseText = request.responseText;
-
-				if (viewContainerName === "HTMLView")
-				{
-					styleSheetExp = /<link\s+.*?(?:rel="stylesheet"\s+.*?href="([^"]+)")|(?:href="([^"]+)"\s+.*?rel="stylesheet").*?>/i;
-					styleSheetExpResult = styleSheetExp.exec(responseText);
-					if (styleSheetExpResult)
-						styleSheetURL = styleSheetExpResult[1] ? styleSheetExpResult[1] : styleSheetExpResult[2];
-					loadCode(styleSheetURL, "CSSView");
-
-					scriptExp = /<script\s+.*?(?:type="text\/javascript"\s+.*?src="([^"]+)")|(?:src="([^"]+)"\s+.*?type="text\/javascript").*?>/gi;
-					scriptExpResult = scriptExp.exec(responseText);
-					if (scriptExpResult)
-					{
-						scriptURL = scriptExpResult[1] ? scriptExpResult[1] : scriptExpResult[2];
-						if (/requestanimationframe\.js/i.test(scriptURL))
-						{
-							scriptExpResult = scriptExp.exec(responseText);
-							if (scriptExpResult)
-								scriptURL = scriptExpResult[1] ? scriptExpResult[1] : scriptExpResult[2];
-							else
-								scriptURL = null;
-						}
-
-						if (scriptURL)
-							loadCode(scriptURL, "ScriptView");
-					}
-				}
-
-				targetViewContainer.innerHTML = document.createElement("pre").appendChild(document.createTextNode(responseText)).parentNode.innerHTML;
-
-				if (viewContainerName === "HTMLView")
-				{
-					document.getElementById("HTMLViewFileName").innerHTML = url;
-					paneLoadStatus.html = true;
-				}
-				else if (viewContainerName === "CSSView")
-				{
-					document.getElementById("CSSViewFileName").innerHTML = url;
-					paneLoadStatus.css = true;
-				}
-				else if (viewContainerName === "ScriptView")
-				{
-					document.getElementById("ScriptViewFileName").innerHTML = url;
-					paneLoadStatus.script = true;
-				}
-
-				if (paneLoadStatus.html && paneLoadStatus.css && paneLoadStatus.script)
-					prettyPrint();
-			};
+				return (function () { onLoadCodeStateChange(capturedURL, capturedRequest, capturedViewContainerName); });
+			})(url, request, viewContainerName);
 		request.send();
 	}
+
+
+	function onLoadCodeStateChange(url, request, viewContainerName)
+	{
+		var responseText, styleSheetExp, scriptExp, styleSheetExpResult, scriptExpResult, styleSheetURL, scriptURL,
+			targetViewContainer = document.getElementById(viewContainerName), scriptSearchFinished = false;
+
+		if (request.readyState !== 4)
+			return;
+		if (request.status !== 200 && request.status !== 304)
+		{
+			alert("error: " + request.status + ": " + request.statusText);
+			return;
+		}
+
+		responseText = request.responseText;
+
+		if (viewContainerName === "HTMLView")
+		{
+			styleSheetExp = /<link\s+.*?(?:rel="stylesheet"\s+.*?href="([^"]+)")|(?:href="([^"]+)"\s+.*?rel="stylesheet").*?>/i;
+			styleSheetExpResult = styleSheetExp.exec(responseText);
+			if (styleSheetExpResult)
+			{
+				styleSheetURL = styleSheetExpResult[1] ? styleSheetExpResult[1] : styleSheetExpResult[2];
+				loadCode(styleSheetURL, "CSSView");
+			}
+
+			scriptExp = /<script\s+.*?(?:type="text\/javascript"\s+.*?src="([^"]+)")|(?:src="([^"]+)"\s+.*?type="text\/javascript").*?>/gi;
+			scriptExpResult = scriptExp.exec(responseText);
+			while (scriptExpResult && !scriptSearchFinished)
+			{
+				scriptURL = scriptExpResult[1] ? scriptExpResult[1] : scriptExpResult[2];
+				if (/requestanimationframe\.(?:.*?\.)?js$/i.test(scriptURL)
+					|| /concert\.(?:.*?\.)?js$/i.test(scriptURL))
+				{
+					scriptURL = null;
+					scriptExpResult = scriptExp.exec(responseText);
+				}
+				else
+					scriptSearchFinished = true;
+			}
+			if (scriptURL)
+				loadCode(scriptURL, "ScriptView");
+			else
+			{
+				document.getElementById("ScriptViewFileName").innerHTML = "(no javascript loaded)";
+				document.getElementById("ScriptView").innerHTML = "";
+				paneLoadStatus.script = true;
+			}
+		}
+
+		targetViewContainer.innerHTML = document.createElement("pre").appendChild(document.createTextNode(responseText)).parentNode.innerHTML;
+
+		if (viewContainerName === "HTMLView")
+		{
+			document.getElementById("HTMLViewFileName").innerHTML = url;
+			paneLoadStatus.html = true;
+		}
+		else if (viewContainerName === "CSSView")
+		{
+			document.getElementById("CSSViewFileName").innerHTML = url;
+			paneLoadStatus.css = true;
+		}
+		else if (viewContainerName === "ScriptView")
+		{
+			document.getElementById("ScriptViewFileName").innerHTML = url;
+			paneLoadStatus.script = true;
+		}
+
+		if (paneLoadStatus.html && paneLoadStatus.css && paneLoadStatus.script)
+			prettyPrint();
+	} // end onLoadCodeStateChange()
+
 
 	function sizeCodePanes()
 	{
