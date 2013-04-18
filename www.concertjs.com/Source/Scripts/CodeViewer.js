@@ -1,7 +1,12 @@
 ﻿/// <reference path="../../Components/google-code-prettify/prettify.js" />
 
+/* global prettyPrint */
+/* exported CodeViewer */
+
 var CodeViewer = (function ()
 {
+	"use strict";
+
 	var paneLoadStatus =
 		{
 			html: false,
@@ -42,15 +47,19 @@ var CodeViewer = (function ()
 
 	function setupPage()
 	{
-		var queryParams = getQueryParams(), url = queryParams["url"], preName;
+		var queryParams = getQueryParams(), url = queryParams.url, preName;
+
+		function onLargerClickHandlerCreator(preName)
+		{ return function () { fontSizes[preName]++; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
+
+		function onSmallerClickHandlerCreator(preName)
+		{ return function () { fontSizes[preName]--; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
 
 		for (preName in fontSizes) if (fontSizes.hasOwnProperty(preName))
 		{
 			document.getElementById(preName).style.fontSize = fontSizes[preName] + "px";
-			document.getElementById(preName + "LargerFontButton").onclick =
-				(function(preName) { return function () { fontSizes[preName]++; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; })(preName);
-			document.getElementById(preName + "SmallerFontButton").onclick =
-				(function (preName) { return function () { fontSizes[preName]--; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; })(preName);
+			document.getElementById(preName + "LargerFontButton").onclick = onLargerClickHandlerCreator(preName);
+			document.getElementById(preName + "SmallerFontButton").onclick = onSmallerClickHandlerCreator(preName);
 		}
 
 		sizeCodePanes();
@@ -63,14 +72,14 @@ var CodeViewer = (function ()
 	function loadCode(url, viewContainerName)
 	{
 		if (!window.XMLHttpRequest && "ActiveXObject" in window)
-			window.XMLHttpRequest = function () { return new ActiveXObject("MSXML2.XMLHttp"); };
+			window.XMLHttpRequest = function () { return new window.ActiveXObject("MSXML2.XMLHttp"); };
 
 		var request = new XMLHttpRequest();
 		request.open("GET", url, true);
 		request.onreadystatechange =
 			(function(capturedURL, capturedRequest, capturedViewContainerName)
 			{
-				return (function () { onLoadCodeStateChange(capturedURL, capturedRequest, capturedViewContainerName); });
+				return function () { onLoadCodeStateChange(capturedURL, capturedRequest, capturedViewContainerName); };
 			})(url, request, viewContainerName);
 		request.send();
 	}
@@ -85,7 +94,7 @@ var CodeViewer = (function ()
 			return;
 		if (request.status !== 200 && request.status !== 304)
 		{
-			alert("error: " + request.status + ": " + request.statusText);
+			window.alert("error: " + request.status + ": " + request.statusText);
 			return;
 		}
 
@@ -166,7 +175,7 @@ var CodeViewer = (function ()
 			document.getElementById(preElements[i]).style.height = preHeight + "px";
 	}
 
-	
+
 	var publicInterface =
 		{
 			setupPage: setupPage
