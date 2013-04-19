@@ -44,12 +44,17 @@ module.exports = function(grunt)
 				www: ["www.concertjs.com/Build/**/*"],
 
 				www_Deploy:
-				[
-					"www.concertjs.com/Build/Dev/**/*.full.*",
-					"www.concertjs.com/Build/Dev/**/*.min.*",
-					"www.concertjs.com/Build/Prod/**/*.full.*",
-					"www.concertjs.com/Build/Prod/**/*.min.*"
-				]
+				{
+					src:
+					[
+						"www.concertjs.com/Build/Dev/**/*.full.*",
+						"www.concertjs.com/Build/Dev/**/*.min.*",
+						"!www.concertjs.com/Build/Dev/Reference/**/*",
+						"www.concertjs.com/Build/Prod/**/*.full.*",
+						"www.concertjs.com/Build/Prod/**/*.min.*",
+						"!www.concertjs.com/Build/Dev/Reference/**/*"
+					]
+				}
 			}, // end clean task definitions
 
 
@@ -107,6 +112,16 @@ module.exports = function(grunt)
 				www: { expand: true, cwd: "www.concertjs.com/Source", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" }
 			}, // end processTemplates task definitions
 
+
+			buildReferenceDocs:
+			{
+				www:
+				{
+					sourceFile: "www.concertjs.com/Components/ConcertJS/Concert.full.js",
+					destination: "www.concertjs.com/Build/Assembly/Reference",
+					template: "www.concertjs.com/DocTemplates/ConcertJS"
+				}
+			},
 
 			cssmin:
 			{
@@ -244,6 +259,32 @@ module.exports = function(grunt)
 				});
 		}); // end call to grunt.registerMultiTask("processTemplates"...)
 
+	grunt.registerMultiTask(
+		"buildReferenceDocs",
+		"Run jsdoc to create documentation files",
+		function ()
+		{
+			var sourceFile = this.data.sourceFile, destination = this.data.destination, template = this.data.template;
+			grunt.log.write("Running jsdoc\r\n    file:" + sourceFile + "\r\n    template:" + template + "\r\n    output path:" + destination + "\r\n");
+			var done = this.async();
+			grunt.util.spawn(
+				{
+					cmd: "jsdoc.bat",
+					args: ["--template", template, "--destination", destination, sourceFile],
+					opts: { stdio: "pipe" }
+				},
+				function (error, result, code)
+				{
+					if (error !== null || (result.stderr && result.stderr !== ""))
+					{
+						grunt.fail.warn("Error encountered attempting to run jsdoc: " + result.stderr);
+						done(false);
+					}
+					else
+						done();
+				});
+		}); // end call to grunt.registerMultiTask("buildReferenceDocs"...)
+
 	grunt.registerTask("lint_requestAnimationFrame", ["jshint:requestAnimationFrame"]);
 	grunt.registerTask("lint_ConcertJS", ["jshint:ConcertJS"]);
 	grunt.registerTask("lint_www", ["jshint:www"]);
@@ -256,7 +297,7 @@ module.exports = function(grunt)
 
 	grunt.registerTask("build_requestAnimationFrame", ["copy:requestAnimationFrame_Build", "uglify:requestAnimationFrame", "uglify:requestAnimationFrame_DeUglify"]);
 	grunt.registerTask("build_ConcertJS", ["copy:ConcertJS_Import", "copy:ConcertJS_Build", "uglify:ConcertJS", "uglify:ConcertJS_DeUglify"]);
-	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
+	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "buildReferenceDocs:www", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
 	grunt.registerTask("build_all", ["build_requestAnimationFrame", "build_ConcertJS", "build_www"]);
 
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);

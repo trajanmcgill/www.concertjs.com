@@ -12,6 +12,12 @@ body
 	background-color: #1e1e1e;
 }
 
+#HomePageLink
+{
+	display: block;
+	margin-bottom: 20px;
+}
+
 a {
     color: #d7ba7d;
 }

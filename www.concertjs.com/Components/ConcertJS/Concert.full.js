@@ -1,4 +1,11 @@
-﻿var Concert = (function ()
+﻿/**
+ * @file Concert.js: Easy synchronized animation with JavaScript.
+ * @version 1.0.0
+ * @author Trajan McGill <code@trajanmcgill.com>
+ */
+
+/** @namespace */
+var Concert = (function ()
 {
 	"use strict";
 
@@ -84,7 +91,15 @@
 			}, // end Util singleton definition
 
 
-		// Commonly used functions for applying the current value in the middle of a transformation.
+		/**
+		 * Commonly used functions for applying a value to the target of a transformation.
+		 * @public
+		 * @namespace
+		 * @memberof Concert
+		 * @property {function} Property - Applies a value to <b>any</b> target object, treating the feature as a <strong>property</strong> of the target object.
+		 * @property {function} Style - Applies a value to a target <b>DOM element</b>, treating the feature as a <strong>style</strong> of the target object.
+		 * @property {function} SVG_ElementAttribute - Applies a value to a target <b>SVG element</b>, treating the feature as an <strong>attribute</strong> of the target object.
+		 */
 		Applicators:
 			{
 				Property:
@@ -107,7 +122,16 @@
 			}, // end Applicator singleton / namespace definition
 
 
-		// Commonly used functions for calculating a current value in the middle of a transformation.
+		/**
+		 * Commonly used functions for calculating the current value to apply in the middle of a transformation based on the start and end values defined in the transformation.
+		 * @public
+		 * @namespace
+		 * @memberof Concert
+		 * @property {function} Color - Calculates a color in between the colors specified as start and end values.<br><br><em>Expected start / end values</em>: <strong>CSS color style value strings</strong>, specified in any of hex, rgb, rgba, hsl, or hsla format (start and end values must be in the same format as each other).<br><br><em>Returns</em>: <strong>A CSS color style value string</strong> in the same format as the start and end values.
+		 * @property {function} Discrete - Used when output needed should jump directly from one value to another rather than gradually moving from the start value to the end value.<br><br><em>Expected start / end values</em>: <strong>(Any type)</strong><br><br><em>Returns</em>: Either the start value (if the transformation is not yet complete) or the end value (if the transformation is complete).<br><br>If the transformation has a property called <code>round</code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.
+		 * @property {function} Linear - Calculates a value based on linear interpolation between the start and end values.<br><br><em>Expected start / end values</em>: <strong>Numeric</strong><br><br><em>Returns</em>: <strong>Numeric</strong>.<br><br>If the transformation has a property called <code>round</code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.<br><br><em>Note: This should not be confused with the [ConstantRate easing function]{@link Concert.EasingFunctions}. The easing function is used to determine what fraction of the transformation is complete (i.e., it affects the <em>rate</em> of the transformation), whereas the selected calculator function determines the method by which the values are calculated (i.e., numeric interpolation vs. discrete values, vs. specialized calculations such as determining what color is partway between two other colors).</em>
+		 * @property {function} Rotational - Calculates a set of coordinates resulting from rotational motion.<br><br><em>Expected start / end values</em>: <strong>Numeric Array</strong>, in the form <code>[radius, angle]</code>. Additionally, the transformation must have properties called <code>center</code>, an array of the form <code>[left, top]</code> defining the center point around which the rotation takes place, and <code>offset</code>, an array of the form <code>[horizontalOffset, verticalOffset]</code> defining an offset to be added to the resulting coordinates (for instance, a center of [100, 100] with an offset of [0, 0] would rotate the upper left corner of the target object around the point [100, 100]).</code><br><br><em>Returns</em>: <strong>Numeric Array</strong> determined from calculating the current rotational position and converting it to resulting coordinates in the form <code>[left, top]</code>.
+		 */
 		Calculators:
 			{
 				Color:
@@ -285,7 +309,17 @@
 			}, // end Calculator singleton / namespace definition
 
 
-		// Pre-defined functions for calculating the effective distance along a transformation time path.
+		/**
+		 * Pre-defined functions for calculating the current effective distance traveled (represented as a fractional value from 0 to 1) along a transformation time path.
+		 * @public
+		 * @namespace
+		 * @memberof Concert
+		 * @property {function} ConstantRate - Returns a value that increases linearly from 0 to 1 as the current time moves from the start time to the end time; or 0 if the current time is before the start time; or 1 if the current time is after the end time.
+		 * @property {function} QuadIn - Return value is 0 at or before the start time, changes slowly at first, then accelerates as the current time moves closer to the end time, returning 1 at or after the end time. Specifically, uses the formula: <br><code>([currentTime - startTime] / [endTime - startTime])<sup>2</sup></code>
+		 * @property {function} QuadInOut - Return value is 0 at or before the start time, changes slowly at first, then accelerates to reach the halfway point, then decelerates again at the same rate as the current time moves closer to the end time, returning 1 at or after the end time. Effectively is the same as breaking the transformation in half, applying QuadIn to the first half, and QuadOut to the second half.
+		 * @property {function} QuadOut - Return value is 0 at or before the start time, changes quickly at first, then decelerates as the current time moves closer to the end time, returning 1 at or after the end time. Specifically, uses the formula: <br><code>(1 - (1 - ((currentTime - startTime) / (endTime - startTime))<sup>2</sup>))</code>
+		 * @property {function} Smoothstep - Another function which starts slowly, accelerates to the mid-point, then decelerates, returning 0 at or before the start time and 1 at or after the end time (See {@link http://en.wikipedia.org/wiki/Smoothstep}).
+		 */
 		EasingFunctions:
 			{
 				ConstantRate:
@@ -358,6 +392,15 @@
 			}, // end EasingFunctions singleton / namespace definition
 
 
+		/**
+		 * Pre-defined functions for controlling the behavior of a sequence when the current time exceeds the end time or moves before the start time of the sequence. When running a sequence, any of these can be applied to the <code>before</code> or <code>after</code> properties of the parameters object passed into the [run]{@link Concert.Sequence#run}, [begin]{@link Concert.Sequence#begin}, [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo} methods.
+		 * @public
+		 * @namespace
+		 * @memberof Concert
+		 * @property {function} Bounce(bounceCount) - The <strong>result of calling this function</strong> with a specified number of times to bounce is a function object that can be passed into one of the run methods as the value of <code>before</code> or <code>after</code> and results in the sequence bouncing (that is, alternating directions to play forward and backward) the specified number of times when it reaches that time boundary. A <code>bounceCount</code> value of <code>0</code> is the same as using <code>Concert.Repeating.None</code>, <code>1</code> means add a single extra run-through in the reverse direction, and so on.
+		 * @property {function} Loop(loopbackCount) - The <strong>result of calling this function</strong> with a specified number of times to loop is a function object that can be passed into one of the run methods as the value of <code>before</code> or <code>after</code> and results in the sequence looping the specified number of times when it reaches that time boundary. A <code>loopbackCount</code> value of <code>0</code> is the same as using <code>Concert.Repeating.None</code>, <code>1</code> means play through twice (that is, loop back to the beginning 1 time), and so on.
+		 * @property {function} None - This function is <strong>passed directly into one of the run methods</strong> as the value of <code>before</code> or <code>after</code> and results in the sequence halting when it reaches that time boundary.
+		 */
 		Repeating:
 			{
 				Bounce:
@@ -1004,6 +1047,17 @@
 				// ===============================================
 				// -- Sequence Constructor
 
+				/**
+				 * Represents an animation sequence, or, more broadly, a series of changes which are applied to a collection of objects over time.
+				 * A sequence contains a set of transformations that are applied to DOM Elements, JavaScript objects, or anything else that can be manipulated with JavasScript.
+				 * It contains methods that allow defining those transformations, seeking to any point in the sequence timeline, and running the sequence in various ways.
+				 * @name Sequence
+				 * @public
+				 * @memberof Concert
+				 * @constructor
+				 * @param {Object} [transformationSet] An object defining an initial set of transformations to add to the sequence. The layout of this object is the same as used in the [addTransformations method]{@link Concert.Sequence#addTransformations}.
+				 * @returns {Object} A new Sequence object.
+				 */
 				function SequenceConstructor(transformationSet)
 				{
 					// Initialize object:
@@ -1454,6 +1508,14 @@
 				// ===============================================
 				// -- Sequence Public Method Definitions
 
+				/**
+				 * Adds a set of transformations (i.e., changes applied to objects over time) to the sequence.
+				 * @name addTransformations
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {Object} transformationSet ADDCODE
+				 */
 				function __addTransformations(transformationSet)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1635,6 +1697,14 @@
 				} // end __addTransformations()
 
 
+				/**
+				 * ADDCODE
+				 * @name begin
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {Object} parameters ADDCODE
+				 */
 				function __begin(parameters)
 				{
 					var thisPublic = this.thisPublic; //, thisProtected = _getProtectedMembers.call(thisPublic); // Can save a few bytes in the minified version since thisProtected isn't used in this function
@@ -1643,6 +1713,22 @@
 				} // end __begin()
 
 
+				/**
+				 * Creates a duplicate of a sequence, allowing a sequence to be defined once and cloned to apply to any number of different sets of target objects.
+				 * For example, the same series of animated motions might be applied to numerous on-screen elements.
+				 * Since each sequence may contain transformations targeting numerous different objects, this is accomplished by passing in a function that,
+				 * when passed a transformation target object, returns the corresponding object to be targeted in the new sequence.
+				 * This method is capable of duplicating nearly every aspect of the original sequence, including jumping to the same current point in time and even
+				 * cloning its running or non-running status if desired.
+				 * @name clone
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {function} targetLookupFunction ADDCODE
+				 * @param {boolean} matchRunningStatus ADDCODE
+				 * @param {boolean} doInitialSeek ADDCODE
+				 * @returns {Object} ADDCODE
+				 */
 				function __clone(targetLookupFunction, matchRunningStatus, doInitialSeek)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1745,6 +1831,15 @@
 				} // end __clone()
 
 
+				/**
+				 * ADDCODE
+				 * @name follow
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {Object} syncSource ADDCODE
+				 * @param {Object} parameters ADDCODE
+				 */
 				function __follow(syncSource, parameters)
 				{
 					var thisPublic = this.thisPublic; //, thisProtected = _getProtectedMembers.call(thisPublic); // Can save a few bytes in the minified version since thisProtected isn't used in this function
@@ -1753,6 +1848,13 @@
 				} // end __follow()
 
 
+				/**
+				 * ADDCODE
+				 * @name generateValues
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 */
 				function __generateValues()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1764,6 +1866,14 @@
 				} // end __generateValues();
 
 
+				/**
+				 * ADDCODE
+				 * @name getCurrentTime
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @returns {number} ADDCODE
+				 */
 				function __getCurrentTime()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1772,6 +1882,14 @@
 				} // end _getCurrentTime()
 
 
+				/**
+				 * ADDCODE
+				 * @name getEndTime
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @returns {number} ADDCODE
+				 */
 				function __getEndTime()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1783,6 +1901,14 @@
 				} // end __getEndTime()
 
 
+				/**
+				 * ADDCODE
+				 * @name getID
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @returns {number} ADDCODE
+				 */
 				function __getID()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1791,6 +1917,14 @@
 				} // end __getID()
 
 
+				/**
+				 * ADDCODE
+				 * @name getStartTime
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @returns {number} ADDCODE
+				 */
 				function __getStartTime()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1802,6 +1936,15 @@
 				} // end __getStartTime()
 
 
+				/**
+				 * ADDCODE
+				 * @name index
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {requestCallback} completionCallback ADDCODE
+				 * @param {boolean} isAsynchronous ADDCODE
+				 */
 				function __index(completionCallback, isAsynchronous)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1829,6 +1972,14 @@
 				} // end __index()
 
 
+				/**
+				 * ADDCODE
+				 * @name isRunning
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @returns {boolean} ADDCODE
+				 */
 				function __isRunning()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1837,6 +1988,14 @@
 				} // end __isRunning()
 
 
+				/**
+				 * ADDCODE
+				 * @name retarget
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {function} targetLookupFunction ADDCODE
+				 */
 				function __retarget(targetLookupFunction)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1850,6 +2009,14 @@
 				} // end _retarget()
 
 
+				/**
+				 * ADDCODE
+				 * @name run
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {Object} parameters ADDCODE
+				 */
 				function __run(parameters)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1898,6 +2065,15 @@
 				} // end __run()
 
 
+				/**
+				 * ADDCODE
+				 * @name seek
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {number} time ADDCODE
+				 * @param {boolean} [useSoleControlOptimization] ADDCODE
+				 */
 				function __seek(time, useSoleControlOptimization)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1961,6 +2137,14 @@
 				} // end __seek()
 
 
+				/**
+				 * ADDCODE
+				 * @name setDefaults
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {Object} newDefaults ADDCODE
+				 */
 				function __setDefaults(newDefaults)
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1975,6 +2159,13 @@
 				} // end __setDefaults()
 
 
+				/**
+				 * ADDCODE
+				 * @name stop
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 */
 				function __stop()
 				{
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
@@ -1988,6 +2179,15 @@
 				} // end __stop()
 
 
+				/**
+				 * ADDCODE
+				 * @name syncTo
+				 * @memberof Concert.Sequence#
+				 * @public
+				 * @method
+				 * @param {function} syncSource ADDCODE
+				 * @param {Object} parameters ADDCODE
+				 */
 				function __syncTo(syncSource, parameters)
 				{
 					var thisPublic = this.thisPublic; //, thisProtected = _getProtectedMembers.call(thisPublic); // Can save a few bytes in the minified version since thisProtected isn't used in this function
@@ -2001,11 +2201,16 @@
 			}), // end Sequence definition
 
 
-		// revertNameSpace: Can be used to avoid namespace collision problems.
-		// Sets the global variable Concert back to what it was before this component assigned a new value to it.
-		// Use of this would essentially be to run this definition script (e.g., include it in via script element on a web page),
-		// then immediately capture the object assigned to Concert in some other, non-conflicting variable for
-		// actual use, and then call revertNameSpace() to put back Concert to whatever value it had before.
+		/**
+		 * Can be used to avoid namespace collision problems.
+		 * Sets the global variable Concert back to what it was before this component assigned a new value to it.
+		 * Usage: run the ConcertJS definition script (e.g., include the ConcertJS file via a script element on a web page),
+		 * then immediately capture the object assigned to <code>Concert</code> in some other, non-conflicting variable for
+		 * actual use, and then call <code>Concert.revertNameSpace()</code> to put back <code>Concert</code> to whatever value it had before.
+		 * @public
+		 * @method
+		 * @memberof Concert
+		 */
 		revertNameSpace:
 			function ()
 			{
