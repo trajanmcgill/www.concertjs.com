@@ -70,17 +70,11 @@ var Concert = (function ()
 				{
 					var propertyName;
 
-					for (propertyName in newPublicData)
-					{
-						if (newPublicData.hasOwnProperty(propertyName))
-							publicContext[propertyName] = newPublicData[propertyName];
-					}
+					for (propertyName in newPublicData) if (newPublicData.hasOwnProperty(propertyName))
+						publicContext[propertyName] = newPublicData[propertyName];
 
-					for (propertyName in newProtectedData)
-					{
-						if (newProtectedData.hasOwnProperty(propertyName))
-							protectedContext[propertyName] = newProtectedData[propertyName];
-					}
+					for (propertyName in newProtectedData) if (newProtectedData.hasOwnProperty(propertyName))
+						protectedContext[propertyName] = newProtectedData[propertyName];
 				}, // end loadObjectData()
 
 
@@ -696,22 +690,25 @@ var Concert = (function ()
 
 				function __clone(newTarget)
 				{
-					var newTransformation, propertyName, propertyValue, additionalProperties = this.additionalProperties, newAdditionalProperties;
+					var newTransformation, propertyName, additionalProperties = this.additionalProperties, newAdditionalProperties,
+						propertiesNotToCopy =
+						{
+							transformationID: true, additionalProperties: true, target: true, lastAppliedValueContainer: true, lastFrameID: true, lastCalculatedValue: true,
+							clone: true, generateValues: true, hasDynamicValues: true, retarget: true, seek: true
+						};
 
 					newTransformation = new _Concert.Transformation();
 
-					for (propertyName in this) if (this.hasOwnProperty(propertyName) && propertyName !== "additionalProperties")
-					{
-						propertyValue = this[propertyName];
-						if (typeof propertyValue !== "function")
-							newTransformation[propertyName] = this[propertyName];
-					}
+					for (propertyName in this) if (this.hasOwnProperty(propertyName) && !propertiesNotToCopy[propertyName])
+						newTransformation[propertyName] = this[propertyName];
 					newTransformation.target = newTarget;
 					newTransformation.lastAppliedValueContainer =
 						{
 							value: (_Concert.Util.isArray(this.feature) ? new Array(this.feature.length) : null),
 							unit: null
 						};
+					newTransformation.lastFrameID = null;
+					newTransformation.lastCalculatedValue = null;
 
 					newAdditionalProperties = newTransformation.additionalProperties;
 					for (propertyName in additionalProperties) if (additionalProperties.hasOwnProperty(propertyName))
@@ -1148,20 +1145,14 @@ var Concert = (function ()
 
 					if (initialParams)
 					{
-						for (paramName in initialParams)
-						{
-							if (initialParams.hasOwnProperty(paramName))
-								combined[paramName] = initialParams[paramName];
-						}
+						for (paramName in initialParams) if (initialParams.hasOwnProperty(paramName))
+							combined[paramName] = initialParams[paramName];
 					}
 
 					if (overrides)
 					{
-						for (paramName in overrides)
-						{
-							if (overrides.hasOwnProperty(paramName))
-								combined[paramName] = overrides[paramName];
-						}
+						for (paramName in overrides) if (overrides.hasOwnProperty(paramName))
+							combined[paramName] = overrides[paramName];
 					}
 
 					return combined;
@@ -1550,11 +1541,8 @@ var Concert = (function ()
 							for (j = 0, numCurGroupTargets = curGroupTargets.length; j < numCurGroupTargets; j++)
 							{
 								singleTargetVersion = {};
-								for (propertyName in curTransformationGroup)
-								{
-									if (curTransformationGroup.hasOwnProperty(propertyName))
-										singleTargetVersion[propertyName] = curTransformationGroup[propertyName];
-								}
+								for (propertyName in curTransformationGroup) if (curTransformationGroup.hasOwnProperty(propertyName))
+									singleTargetVersion[propertyName] = curTransformationGroup[propertyName];
 								singleTargetVersion.targets = null;
 								singleTargetVersion.target = curGroupTargets[j];
 								thisPublic.addTransformations(singleTargetVersion);
@@ -1673,11 +1661,8 @@ var Concert = (function ()
 										applicator: curGroupApplicator
 									};
 
-								for (propertyName in curSegment)
-								{
-									if (curSegment.hasOwnProperty(propertyName))
-										newTransformationProperties[propertyName] = curSegment[propertyName];
-								}
+								for (propertyName in curSegment) if (curSegment.hasOwnProperty(propertyName))
+									newTransformationProperties[propertyName] = curSegment[propertyName];
 								if (typeof newTransformationProperties.unit === "undefined")
 									newTransformationProperties.unit = curGroupUnit;
 								if (typeof newTransformationProperties.calculator === "undefined")
@@ -1719,15 +1704,19 @@ var Concert = (function ()
 				 * Since each sequence may contain transformations targeting numerous different objects, this is accomplished by passing in a function that,
 				 * when passed a transformation target object, returns the corresponding object to be targeted in the new sequence.
 				 * This method is capable of duplicating nearly every aspect of the original sequence, including jumping to the same current point in time and even
-				 * cloning its running or non-running status if desired.
+				 * cloning its running or non-running status if desired. (To change the target objects of a sequence without creating a new one, see the [retarget]{@link Concert.Sequence#retarget} method.)
 				 * @name clone
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
 				 * @param {function} targetLookupFunction ADDCODE
-				 * @param {boolean} matchRunningStatus ADDCODE
-				 * @param {boolean} doInitialSeek ADDCODE
-				 * @returns {Object} ADDCODE
+				 * @param {boolean} [matchRunningStatus=false] If <code>true</code>, and the sequence being cloned is currently running, the new sequence will jump to the same point on the timeline and run as well. Otherwise, the new sequence will not automatically start running.
+				 * @param {boolean} [doInitialSeek=false] If <code>true</code>, the new sequence will immediately seek to the same point on the timeline as the original sequence. Otherwise, the new sequence will merely be created, but will not immediately perform any action (unless the matchRunningStatus parameter is <code>true</code>).
+				 * @returns {Object} A new [Sequence]{@link Concert.Sequence} object, with the same properties and duplicates of all the same transformations that were in the original sequence, but with new target objects of those transformations substituted in as controlled by the <code>targetLookupFunction</code> parameter.
+				 * @example <caption>this is a caption</caption>
+				 * some line
+				 *     another line
+				 * var x = y; WORKING HERE
 				 */
 				function __clone(targetLookupFunction, matchRunningStatus, doInitialSeek)
 				{
