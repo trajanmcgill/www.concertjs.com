@@ -1703,20 +1703,35 @@ var Concert = (function ()
 				 * For example, the same series of animated motions might be applied to numerous on-screen elements.
 				 * Since each sequence may contain transformations targeting numerous different objects, this is accomplished by passing in a function that,
 				 * when passed a transformation target object, returns the corresponding object to be targeted in the new sequence.
+				 * (Note that one useful way of doing this easily is to set the targets of the original sequence to be uniquely identifying strings or integers instead of actual objects. The original sequence then just becomes essentially a dummy sequence with placeholder targets that your lookup function can easily identify and substitute for.)
 				 * This method is capable of duplicating nearly every aspect of the original sequence, including jumping to the same current point in time and even
 				 * cloning its running or non-running status if desired. (To change the target objects of a sequence without creating a new one, see the [retarget]{@link Concert.Sequence#retarget} method.)
 				 * @name clone
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
-				 * @param {function} targetLookupFunction ADDCODE
+				 * @param {function} targetLookupFunction A function taking a single parameter which will be an object used as a target in a transformation of the original sequence. The function must return the equivalent object which should be targeted by that same transformation in the new sequence.
 				 * @param {boolean} [matchRunningStatus=false] If <code>true</code>, and the sequence being cloned is currently running, the new sequence will jump to the same point on the timeline and run as well. Otherwise, the new sequence will not automatically start running.
 				 * @param {boolean} [doInitialSeek=false] If <code>true</code>, the new sequence will immediately seek to the same point on the timeline as the original sequence. Otherwise, the new sequence will merely be created, but will not immediately perform any action (unless the matchRunningStatus parameter is <code>true</code>).
 				 * @returns {Object} A new [Sequence]{@link Concert.Sequence} object, with the same properties and duplicates of all the same transformations that were in the original sequence, but with new target objects of those transformations substituted in as controlled by the <code>targetLookupFunction</code> parameter.
-				 * @example <caption>this is a caption</caption>
-				 * some line
-				 *     another line
-				 * var x = y; WORKING HERE
+				 * @example <caption>One possible method of using this function easily for replicating a sequence definition onto any number of targets is shown below. The initial sequence here is defined with two transformations that are given strings ("UpperElement" and "LowerElement") as targets. The initial sequence is thus just a dummy from which we can clone easily and repeatedly, and the strings make helpful placeholders for the function passed into the clone method to use for matching up to real DOM elements or other intended target objects which we may have created dynamically at a later time. Note further that if you index a sequence before cloning it, the cloned sequences will already be indexed and can be run instantly without any indexing lag.</caption>
+				 * var originalSequence = new Concert.Sequence();
+				 * originalSequence.setDefaults(
+				 *   {
+				 *     applicator: Concert.Applicators.Style,
+				 *     calculator: Concert.Calculators.Linear,
+				 *     easing: Concert.EasingFunctions.ConstantRate,
+				 *     unit: "px"
+				 *   });
+				 * originalSequence.addTransformations(
+				 *   [
+				 *     { target: "UpperElement", feature: "left", keyframes: { times: [0, 1000], values: [100, 200] } },
+				 *     { target: "LowerElement", feature: "left", keyframes: { times: [0, 1000], values: [100, 200] } }
+				 *   ]);
+				 * 
+				 * var newSequence1 = originalSequence.clone(
+				 *     function (originalTarget)
+				 *     { return document.getElementById(originalTarget + "1"); });
 				 */
 				function __clone(targetLookupFunction, matchRunningStatus, doInitialSeek)
 				{

@@ -6,7 +6,7 @@ html
 
 body
 {
-	font: 14px "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
+	font: 15px "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans serif;
 	line-height: 130%;
 	color: #c8c8c8;
 	background-color: #1e1e1e;
@@ -59,6 +59,7 @@ section
 	padding: 12px 24px;
     border-bottom: 1px solid #ccc;
     margin-right: 240px;
+	min-width: 875px;
 }
 
 	section a, section a:visited {
@@ -174,7 +175,7 @@ h4
 	font-weight: bold;
 	letter-spacing: -0.01em;
 	margin-top: 16px;
-	margin: 18px 0 3px 0;
+	margin: 36px 0 3px 0;
 	color: #A35A00;
 }
 
@@ -227,7 +228,7 @@ h6
 .details li { margin-left: 30px; padding-top: 6px; }
 
 .description {
-	margin-bottom: 1em;
+	margin-bottom: 0;
 	margin-left: -16px;
 	margin-top: 1em;
 }
@@ -301,6 +302,16 @@ h6
 
 .params th, .props th { border-right: 1px solid #aaa; }
 .params thead .last, .props thead .last { border-right: 1px solid #ddd; }
+
+.params td
+{
+	background-color: rgb(238, 238, 238);
+}
+
+.params td.description pre
+{
+	font-size: 12px;
+}
 
 .disabled {
     color: #454545;

@@ -120,6 +120,13 @@ module.exports = function(grunt)
 					sourceFile: "www.concertjs.com/Components/ConcertJS/Concert.full.js",
 					destination: "www.concertjs.com/Build/Assembly/Reference",
 					template: "www.concertjs.com/DocTemplates/ConcertJS"
+				},
+
+				develop:
+				{
+					sourceFile: "ConcertJS/Source/Concert.js",
+					destination: "www.concertjs.com/Build/Dev/Reference",
+					template: "www.concertjs.com/DocTemplates/ConcertJS"
 				}
 			},
 
