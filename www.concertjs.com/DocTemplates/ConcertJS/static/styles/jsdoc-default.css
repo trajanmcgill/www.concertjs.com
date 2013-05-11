@@ -313,6 +313,13 @@ h6
 	font-size: 12px;
 }
 
-.disabled {
+.disabled
+{
     color: #454545;
+}
+
+.ExplanationParagraph
+{
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
