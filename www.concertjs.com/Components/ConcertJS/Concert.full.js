@@ -1550,6 +1550,9 @@ var Concert = (function ()
 				 * <strong><em>TransformationObject</em></strong> =
 				 *   {
 				 *       target: <em>TargetObjectDefinition</em>,
+				 *       AND/OR
+				 *       targets: [<em>TargetObjectDefinition<sub>1</sub></em>, <em>TargetObjectDefinition<sub>2</sub></em>, ...]
+				 *
 				 *       feature: <em>FeatureDefinition</em>,
 				 *       [unit: <em>UnitDefinition</em>,] // If absent, uses sequence's default value
 				 *       [applicator: <em>ApplicatorFunction</em>,] // If absent, uses sequence's default value
@@ -1562,7 +1565,9 @@ var Concert = (function ()
 				 *   };
 				 * 
 				 * <strong><em>TargetObjectDefinition</em></strong> = The object to be modified by this transformation.
-				 * Often this will be a DOM object, but it can be anything at all.
+				 * Often this will be a DOM object, but it can be anything at all. Multiple targets can be
+				 * specified, by using the <code>targets</code> (plural) property, as a shorthand method of
+				 * duplicating the transformation definitions to target all the included target objects.
 				 *
 				 * <strong><em>FeatureDefinition</em></strong> = The feature of the target object which will be modified, OR an array of
 				 * such features. In most cases, this will be a string (for example, when animating a DOM style,
