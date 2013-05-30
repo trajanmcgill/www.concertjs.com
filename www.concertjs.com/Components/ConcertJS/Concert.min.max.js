@@ -221,7 +221,7 @@ var Concert = function() {
             function e(e) {
                 var t;
                 this.transformationID = u++, this.additionalProperties = {};
-                for (t in e) "target" === t || "feature" === t || "applicator" === t || "calculator" === t || "t1" === t || "t2" === t || "v1" === t || "v2" === t || "v1Generator" === t || "v2Generator" === t || "unit" === t || "easing" === t ? this[t] = e[t] : e.hasOwnProperty(t) && (this.additionalProperties[t] = e[t]);
+                for (t in e) "target" === t || "feature" === t || "applicator" === t || "calculator" === t || "t0" === t || "t1" === t || "v0" === t || "v1" === t || "v0Generator" === t || "v1Generator" === t || "unit" === t || "easing" === t ? this[t] = e[t] : e.hasOwnProperty(t) && (this.additionalProperties[t] = e[t]);
                 this.lastFrameID = null, this.lastCalculatedValue = null, this.lastAppliedValueContainer = {
                     value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
                     unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
@@ -262,11 +262,11 @@ var Concert = function() {
                 return t;
             }
             function r(e) {
-                var t = this.v1Generator, n = this.v2Generator;
-                "function" == typeof t && (this.v1 = t(e)), "function" == typeof n && (this.v2 = n(e));
+                var t = this.v0Generator, n = this.v1Generator;
+                "function" == typeof t && (this.v0 = t(e)), "function" == typeof n && (this.v1 = n(e));
             }
             function a() {
-                return "function" == typeof this.v1Generator || "function" == typeof this.v2Generator;
+                return "function" == typeof this.v0Generator || "function" == typeof this.v1Generator;
             }
             function o(e) {
                 this.target = e, this.lastAppliedValueContainer = {
@@ -275,7 +275,7 @@ var Concert = function() {
                 };
             }
             function s(e, n, i, r) {
-                var a = n === this.lastFrameID ? this.lastCalculatedValue : this.calculator(this.easing(this.t1, this.t2, e), this.v1, this.v2, this.additionalProperties);
+                var a = n === this.lastFrameID ? this.lastCalculatedValue : this.calculator(this.easing(this.t0, this.t1, e), this.v0, this.v1, this.additionalProperties);
                 t(this.applicator, this.target, this.feature, i, {
                     value: a,
                     unit: this.unit
@@ -305,11 +305,11 @@ var Concert = function() {
             function i(e) {
                 var t, n, i, r, a, o, s, u, l = this.transformations, c = l.length - 1, f = e.length;
                 if (!(0 > c)) for (l.sort(function(e, t) {
-                    var n = e.t1, i = t.t1;
+                    var n = e.t0, i = t.t0;
                     return n === i ? 0 : i > n ? -1 : 1;
                 }), i = this.transformationIndexBySegment = Array(f), r = 0, u = e[0].startTime, 
-                t = 0, a = l[0], c > 0 ? (o = l[1], s = o.t1, n = !0) : n = !1; f > r; ) if (n && u >= s) t++, 
-                a = o, c > t ? (o = l[t + 1], s = o.t1) : n = !1; else {
+                t = 0, a = l[0], c > 0 ? (o = l[1], s = o.t0, n = !0) : n = !1; f > r; ) if (n && u >= s) t++, 
+                a = o, c > t ? (o = l[t + 1], s = o.t0) : n = !1; else {
                     if (i[r] = a, r++, !(f > r)) break;
                     u = e[r].startTime;
                 }
@@ -503,7 +503,7 @@ var Concert = function() {
                     if (d && (e = new Date().getTime()), 2 !== h || d || n.Util.isArray(m)) for (3 === h ? u = m[g] : 4 === h && (f = a.targetSequences); v > g; ) {
                         switch (h) {
                           case 0:
-                            r = m[g], S[P++] = r.t1, S[P++] = r.t2;
+                            r = m[g], S[P++] = r.t0, S[P++] = r.t1;
                             break;
 
                           case 1:
@@ -558,12 +558,12 @@ var Concert = function() {
                                 unit: d,
                                 calculator: m,
                                 easing: g,
-                                t1: O,
-                                t2: k,
-                                v1: U,
-                                v2: C,
-                                v1Generator: B,
-                                v2Generator: F
+                                t0: O,
+                                t1: k,
+                                v0: U,
+                                v1: C,
+                                v0Generator: B,
+                                v1Generator: F
                             }, I = new n.Transformation(b), G.push(I), (B || F) && L.push(I), a = 0; x.length > a; a++) x[a].transformations.push(I);
                             O = k, U = C;
                         }
@@ -575,7 +575,7 @@ var Concert = function() {
                         };
                         for (P in y) y.hasOwnProperty(P) && (b[P] = y[P]);
                         for (void 0 === b.unit && (b.unit = d), void 0 === b.calculator && (b.calculator = m), 
-                        void 0 === b.easing && (b.easing = g), I = new n.Transformation(b), G.push(I), (void 0 !== b.v1Generator || void 0 !== b.v2Generator) && L.push(I), 
+                        void 0 === b.easing && (b.easing = g), I = new n.Transformation(b), G.push(I), (void 0 !== b.v0Generator || void 0 !== b.v1Generator) && L.push(I), 
                         a = 0; x.length > a; a++) x[a].transformations.push(I);
                     }
                 }

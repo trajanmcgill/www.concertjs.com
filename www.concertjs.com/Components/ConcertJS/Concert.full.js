@@ -602,12 +602,12 @@ var Concert = (function ()
 						    || propertyName === "feature"
 						    || propertyName === "applicator"
 						    || propertyName === "calculator"
+						    || propertyName === "t0"
 						    || propertyName === "t1"
-						    || propertyName === "t2"
+						    || propertyName === "v0"
 						    || propertyName === "v1"
-						    || propertyName === "v2"
+							|| propertyName === "v0Generator"
 							|| propertyName === "v1Generator"
-							|| propertyName === "v2Generator"
 						    || propertyName === "unit"
 						    || propertyName === "easing")
 						{
@@ -721,18 +721,18 @@ var Concert = (function ()
 
 				function __generateValues(sequence)
 				{
-					var v1Generator = this.v1Generator, v2Generator = this.v2Generator;
+					var v0Generator = this.v0Generator, v1Generator = this.v1Generator;
 
+					if (typeof v0Generator === "function")
+						this.v0 = v0Generator(sequence);
 					if (typeof v1Generator === "function")
 						this.v1 = v1Generator(sequence);
-					if (typeof v2Generator === "function")
-						this.v2 = v2Generator(sequence);
 				} // end __generateValues()
 
 
 				function __hasDynamicValues()
 				{
-					return ((typeof this.v1Generator === "function") || (typeof this.v2Generator === "function"));
+					return ((typeof this.v0Generator === "function") || (typeof this.v1Generator === "function"));
 				} // end _hasDynamicValues()
 
 
@@ -752,7 +752,7 @@ var Concert = (function ()
 					var newValue =
 						(frameID === this.lastFrameID)
 						? this.lastCalculatedValue
-						: this.calculator(this.easing(this.t1, this.t2, time), this.v1, this.v2, this.additionalProperties);
+						: this.calculator(this.easing(this.t0, this.t1, time), this.v0, this.v1, this.additionalProperties);
 
 					_applyValue(this.applicator, this.target, this.feature, seekFeature,
 					            { value: newValue, unit: this.unit },
@@ -843,8 +843,8 @@ var Concert = (function ()
 					transformations.sort(
 						function (a, b)
 						{
-							var aStartTime = a.t1;
-							var bStartTime = b.t1;
+							var aStartTime = a.t0;
+							var bStartTime = b.t0;
 							return ((aStartTime === bStartTime) ? 0 : ((aStartTime < bStartTime) ? -1 : 1));
 						});
 
@@ -857,7 +857,7 @@ var Concert = (function ()
 					if (finalTransformationNumber > 0)
 					{
 						nextTransformation = transformations[1];
-						nextTransformationStartTime = nextTransformation.t1;
+						nextTransformationStartTime = nextTransformation.t0;
 						beforeLastTransformation = true;
 					}
 					else
@@ -871,7 +871,7 @@ var Concert = (function ()
 							if (currentTransformationNumber < finalTransformationNumber)
 							{
 								nextTransformation = transformations[currentTransformationNumber + 1];
-								nextTransformationStartTime = nextTransformation.t1;
+								nextTransformationStartTime = nextTransformation.t0;
 							}
 							else
 								beforeLastTransformation = false;
@@ -1440,8 +1440,8 @@ var Concert = (function ()
 								{
 									case 0: // Building breakpoint list
 										curTransformation = inputData[curIndex];
+										outputData[curBreakpointIndex++] = curTransformation.t0;
 										outputData[curBreakpointIndex++] = curTransformation.t1;
-										outputData[curBreakpointIndex++] = curTransformation.t2;
 										break;
 									case 1: // Consolidating distinct breakpoint values
 										curBreakpointValue = inputData[curIndex];
@@ -1612,14 +1612,14 @@ var Concert = (function ()
 				 *
 				 * <strong><em>SegmentDefinition</em></strong> = 
 				 *   {
-				 *       t1: <em>TimeDefinition</em>, // Start time of this transformation
-				 *       t2: <em>TimeDefinition</em>, // End time of this transformation
+				 *       t0: <em>TimeDefinition</em>, // Start time of this transformation
+				 *       t1: <em>TimeDefinition</em>, // End time of this transformation
 				 *
-				 *       v1: <em>ValueDefinition</em>, // Value applied at the start time
-				 *       v2: <em>ValueDefinition</em>, // Value applied at the end time
+				 *       v0: <em>ValueDefinition</em>, // Value applied at the start time
+				 *       v1: <em>ValueDefinition</em>, // Value applied at the end time
 				 *       OR
+				 *       v0Generator: <em>ValueGenerator</em>, // Function to calculate v0
 				 *       v1Generator: <em>ValueGenerator</em>, // Function to calculate v1
-				 *       v2Generator: <em>ValueGenerator</em>, // Function to calculate v2
 				 *
 				 *       [calculator: <em>CalculatorFunction</em>,] // If absent, falls back to the calculator defined at the
 				 *       // <em>TransformationObject</em> level; if also absent there, to the sequence's default calculator.
@@ -1714,7 +1714,7 @@ var Concert = (function ()
 				 *     {
 				 *       target: document.getElementById("someObject2"),
 				 *       feature: "width",
-				 *       segments: [ { t1: 0, t2: 1000, v1: 50, v2: 100 } ]
+				 *       segments: [ { t0: 0, t1: 1000, v0: 50, v1: 100 } ]
 				 *     },
 				 *   ]);
 				 *     
@@ -1840,12 +1840,12 @@ var Concert = (function ()
 											unit: curGroupUnit,
 											calculator: curGroupCalculator,
 											easing: curGroupEasing,
-											t1: lastKeyFrameTime,
-											t2: curKeyFrameTime,
-											v1: lastKeyFrameValue,
-											v2: curKeyFrameValue,
-											v1Generator: lastKeyFrameValueGenerator,
-											v2Generator: curKeyFrameValueGenerator
+											t0: lastKeyFrameTime,
+											t1: curKeyFrameTime,
+											v0: lastKeyFrameValue,
+											v1: curKeyFrameValue,
+											v0Generator: lastKeyFrameValueGenerator,
+											v1Generator: curKeyFrameValueGenerator
 										};
 									newTransformation = new _Concert.Transformation(newTransformationProperties);
 									allTransformations.push(newTransformation);
@@ -1887,7 +1887,7 @@ var Concert = (function ()
 
 								newTransformation = new _Concert.Transformation(newTransformationProperties);
 								allTransformations.push(newTransformation);
-								if ((typeof newTransformationProperties.v1Generator !== "undefined") || (typeof newTransformationProperties.v2Generator !== "undefined"))
+								if ((typeof newTransformationProperties.v0Generator !== "undefined") || (typeof newTransformationProperties.v1Generator !== "undefined"))
 									dynamicValueTransformations.push(newTransformation);
 								for (k = 0; k < curFeatureSequences.length; k++)
 									curFeatureSequences[k].transformations.push(newTransformation);
