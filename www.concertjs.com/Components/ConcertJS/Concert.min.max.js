@@ -70,43 +70,43 @@ var Concert = function() {
                     return 1 === e.length && (e += e), parseInt(e, 16);
                 }
                 function a(e, t, i) {
-                    var a, o, u, s, l, c, f, h, d, m = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$|^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([0-9.]+)\s*\)$/i, g = /^hsl\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)$|^hsla\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*,\s*([0-9.]+)\s*\)$/i, p = /^#([0-9a-f])([0-9a-f])([0-9a-f])$|^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i, v = !1, T = !1;
-                    if (null !== (a = m.exec(e)) ? (o = m.exec(t), v = !0) : null !== (a = g.exec(e)) && (o = g.exec(t), 
-                    T = !0), v || T) {
-                        for (u = [], s = 1; 8 > s; s++) l = a[s], void 0 !== l && (l = parseInt(l, 10), 
-                        c = l + i * (parseInt(o[s], 10) - l), u.push(7 > s ? n.Util.round(c, 1) : c));
-                        v ? f = "rgb" + (4 === u.length ? "a" : "") + "(" + u.join() + ")" : (c = "" + u[0] + "," + ("" + u[1]) + "%," + ("" + u[2]) + "%", 
-                        f = 4 === u.length ? "hsla(" + c + "," + ("" + u[3]) + ")" : "hsl(" + c + ")");
+                    var a, o, s, u, l, c, f, h, d, m = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$|^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([0-9.]+)\s*\)$/i, g = /^hsl\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)$|^hsla\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*,\s*([0-9.]+)\s*\)$/i, p = /^#([0-9a-f])([0-9a-f])([0-9a-f])$|^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i, T = !1, v = !1;
+                    if (null !== (a = m.exec(e)) ? (o = m.exec(t), T = !0) : null !== (a = g.exec(e)) && (o = g.exec(t), 
+                    v = !0), T || v) {
+                        for (s = [], u = 1; 8 > u; u++) l = a[u], void 0 !== l && (l = parseInt(l, 10), 
+                        c = l + i * (parseInt(o[u], 10) - l), s.push(7 > u ? n.Util.round(c, 1) : c));
+                        T ? f = "rgb" + (4 === s.length ? "a" : "") + "(" + s.join() + ")" : (c = "" + s[0] + "," + ("" + s[1]) + "%," + ("" + s[2]) + "%", 
+                        f = 4 === s.length ? "hsla(" + c + "," + ("" + s[3]) + ")" : "hsl(" + c + ")");
                     } else {
-                        for (a = p.exec(e), o = p.exec(t), h = [], d = [], s = 1; 7 > s; s++) c = a[s], 
-                        void 0 !== c && h.push(c), c = o[s], void 0 !== c && d.push(c);
-                        for (f = "#", s = 0; 3 > s; s++) l = r(h[s]), c = n.Util.round(l + i * (r(d[s]) - l), 1), 
+                        for (a = p.exec(e), o = p.exec(t), h = [], d = [], u = 1; 7 > u; u++) c = a[u], 
+                        void 0 !== c && h.push(c), c = o[u], void 0 !== c && d.push(c);
+                        for (f = "#", u = 0; 3 > u; u++) l = r(h[u]), c = n.Util.round(l + i * (r(d[u]) - l), 1), 
                         f += (16 > c ? "0" : "") + c.toString(16);
                     }
                     return f;
                 }
-                var o, u, s;
-                if (n.Util.isArray(t)) for (s = [], o = 0, u = t.length; u > o; o++) s.push(a(t[o], i[o], e)); else s = a(t, i, e);
-                return s;
-            },
-            Discrete: function(e, t, i, r) {
-                var a, o, u, s, l, c = void 0 !== r.round;
-                if (c && (l = r.round), n.Util.isArray(t)) for (u = [], a = 0, s = t.length; s > a; a++) o = 1 > e ? t[a] : i[a], 
-                u.push(c ? n.Util.round(o, l) : o); else o = 1 > e ? t : i, u = c ? n.Util.round(o, l) : o;
+                var o, s, u;
+                if (n.Util.isArray(t)) for (u = [], o = 0, s = t.length; s > o; o++) u.push(a(t[o], i[o], e)); else u = a(t, i, e);
                 return u;
             },
+            Discrete: function(e, t, i, r) {
+                var a, o, s, u, l, c = void 0 !== r.round;
+                if (c && (l = r.round), n.Util.isArray(t)) for (s = [], a = 0, u = t.length; u > a; a++) o = 1 > e ? t[a] : i[a], 
+                s.push(c ? n.Util.round(o, l) : o); else o = 1 > e ? t : i, s = c ? n.Util.round(o, l) : o;
+                return s;
+            },
             Linear: function(e, t, i, r) {
-                var a, o, u, s, l, c, f = void 0 !== r.round;
-                if (f && (c = r.round), n.Util.isArray(t)) for (l = [], a = 0, o = t.length; o > a; a++) u = t[a], 
-                s = u + e * (i[a] - u), l.push(f ? n.Util.round(s, c) : s); else s = t + e * (i - t), 
-                l = f ? n.Util.round(s, c) : s;
+                var a, o, s, u, l, c, f = void 0 !== r.round;
+                if (f && (c = r.round), n.Util.isArray(t)) for (l = [], a = 0, o = t.length; o > a; a++) s = t[a], 
+                u = s + e * (i[a] - s), l.push(f ? n.Util.round(u, c) : u); else u = t + e * (i - t), 
+                l = f ? n.Util.round(u, c) : u;
                 return l;
             },
             Rotational: function(e, t, i, r) {
                 var a, o = void 0 !== r.round;
                 o && (a = r.round);
-                var u = r.center[0], s = r.center[1], l = r.offset[0], c = r.offset[1], f = t[0], h = i[0], d = t[1], m = i[1], g = f + e * (h - f), p = d + e * (m - d), v = u + g * Math.cos(p) + l, T = s + g * Math.sin(p) + c;
-                return o && (v = n.Util.round(v, a), T = n.Util.round(T, a)), [ v, T ];
+                var s = r.center[0], u = r.center[1], l = r.offset[0], c = r.offset[1], f = t[0], h = i[0], d = t[1], m = i[1], g = f + e * (h - f), p = d + e * (m - d), T = s + g * Math.cos(p) + l, v = u + g * Math.sin(p) + c;
+                return o && (T = n.Util.round(T, a), v = n.Util.round(v, a)), [ T, v ];
             }
         },
         EasingFunctions: {
@@ -131,16 +131,16 @@ var Concert = function() {
         Repeating: {
             Bounce: function(e) {
                 function t(t, i, r) {
-                    var a, o, u, s = i - t;
-                    return t > r ? (a = t - r, o = Math.floor(a / s) + 1, n || e >= o ? (u = a % s, 
+                    var a, o, s, u = i - t;
+                    return t > r ? (a = t - r, o = Math.floor(a / u) + 1, n || e >= o ? (s = a % u, 
                     {
-                        adjustedTime: 0 === o % 2 ? i - u : u,
+                        adjustedTime: 0 === o % 2 ? i - s : s,
                         hitFinalBoundary: !1
                     }) : {
                         adjustedTime: 0 === e % 2 ? t : i,
                         hitFinalBoundary: !0
-                    }) : (a = r - i, o = Math.floor(a / s) + 1, n || e >= o ? (u = a % s, {
-                        adjustedTime: 0 === o % 2 ? u : i - u,
+                    }) : (a = r - i, o = Math.floor(a / u) + 1, n || e >= o ? (s = a % u, {
+                        adjustedTime: 0 === o % 2 ? s : i - s,
                         hitFinalBoundary: !1
                     }) : {
                         adjustedTime: 0 === e % 2 ? i : t,
@@ -220,20 +220,23 @@ var Concert = function() {
         Transformation: function() {
             function e(e) {
                 var t;
-                this.transformationID = s++, this.additionalProperties = {};
+                this.transformationID = u++, this.additionalProperties = {};
                 for (t in e) "target" === t || "feature" === t || "applicator" === t || "calculator" === t || "t1" === t || "t2" === t || "v1" === t || "v2" === t || "v1Generator" === t || "v2Generator" === t || "unit" === t || "easing" === t ? this[t] = e[t] : e.hasOwnProperty(t) && (this.additionalProperties[t] = e[t]);
                 this.lastFrameID = null, this.lastCalculatedValue = null, this.lastAppliedValueContainer = {
                     value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
-                    unit: null
+                    unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
                 }, this.clone = i, this.generateValues = r, this.hasDynamicValues = a, this.retarget = o, 
-                this.seek = u;
+                this.seek = s;
             }
-            function t(e, t, i, r, a, o, u) {
-                var s, l, c, f, h, d, m, g, p, v, T;
-                if (l = a.value, c = a.unit, f = o.value, h = o.unit, d = u || null === f, n.Util.isArray(i)) for (p = n.Util.isArray(c), 
-                s = 0, m = i.length; m > s; s++) g = i[s], g === r && (v = l[s], T = p ? c[s] : c, 
-                (d || v !== f[s] || T !== (p ? h[s] : h)) && (e(t, g, v, T), f[s] = v, p ? h[s] = T : o.unit = T)); else (d || l !== f || c !== h) && (e(t, i, l, c), 
-                o.value = l, o.unit = c);
+            function t(e, t, i, r, a, o, s) {
+                var u, l, c, f, h, d, m, g, p, T, v;
+                if (l = a.value, c = a.unit, f = o.value, h = o.unit, d = s || null === f, n.Util.isArray(i)) {
+                    for (p = n.Util.isArray(c), u = 0, m = i.length; m > u; u++) if (g = i[u], g === r) {
+                        T = l[u], v = p ? c[u] : c, (d || T !== f[u] || v !== (p ? h[u] : h)) && (e(t, g, T, v), 
+                        f[u] = T, p ? h[u] = v : o.unit = v);
+                        break;
+                    }
+                } else (d || l !== f || c !== h) && (e(t, i, l, c), o.value = l, o.unit = c);
             }
             function i(e) {
                 var t, i, r, a = this.additionalProperties, o = {
@@ -253,7 +256,7 @@ var Concert = function() {
                 for (i in this) this.hasOwnProperty(i) && !o[i] && (t[i] = this[i]);
                 t.target = e, t.lastAppliedValueContainer = {
                     value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
-                    unit: null
+                    unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
                 }, t.lastFrameID = null, t.lastCalculatedValue = null, r = t.additionalProperties;
                 for (i in a) a.hasOwnProperty(i) && (r[i] = a[i]);
                 return t;
@@ -268,17 +271,17 @@ var Concert = function() {
             function o(e) {
                 this.target = e, this.lastAppliedValueContainer = {
                     value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
-                    unit: null
+                    unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
                 };
             }
-            function u(e, n, i, r) {
+            function s(e, n, i, r) {
                 var a = n === this.lastFrameID ? this.lastCalculatedValue : this.calculator(this.easing(this.t1, this.t2, e), this.v1, this.v2, this.additionalProperties);
                 t(this.applicator, this.target, this.feature, i, {
                     value: a,
                     unit: this.unit
                 }, this.lastAppliedValueContainer, r);
             }
-            var s = 0;
+            var u = 0;
             return e;
         }(),
         FeatureSequence: function() {
@@ -287,28 +290,28 @@ var Concert = function() {
                 this.clone = t, this.indexTransformations = i, this.retarget = r, this.seek = a;
             }
             function t(e) {
-                var t, i, r, a, o = this.transformations, u = o.length, s = Array(u), l = this.transformationIndexBySegment, c = null, f = new n.FeatureSequence(e, this.feature), h = {
+                var t, i, r, a, o = this.transformations, s = o.length, u = Array(s), l = this.transformationIndexBySegment, c = null, f = new n.FeatureSequence(e, this.feature), h = {
                     featureSequence: f,
-                    transformations: s
+                    transformations: u
                 };
-                for (t = 0; u > t; t++) s[t] = o[t].clone(e);
-                if (f.transformations = s, l) for (r = l.length, c = Array(r), t = 0; r > t; t++) for (a = l[t], 
-                i = 0; u > i; i++) if (a === o[i]) {
-                    c[t] = s[i];
+                for (t = 0; s > t; t++) u[t] = o[t].clone(e);
+                if (f.transformations = u, l) for (r = l.length, c = Array(r), t = 0; r > t; t++) for (a = l[t], 
+                i = 0; s > i; i++) if (a === o[i]) {
+                    c[t] = u[i];
                     break;
                 }
                 return f.transformationIndexBySegment = c, h;
             }
             function i(e) {
-                var t, n, i, r, a, o, u, s, l = this.transformations, c = l.length - 1, f = e.length;
+                var t, n, i, r, a, o, s, u, l = this.transformations, c = l.length - 1, f = e.length;
                 if (!(0 > c)) for (l.sort(function(e, t) {
                     var n = e.t1, i = t.t1;
                     return n === i ? 0 : i > n ? -1 : 1;
-                }), i = this.transformationIndexBySegment = Array(f), r = 0, s = e[0].startTime, 
-                t = 0, a = l[0], c > 0 ? (o = l[1], u = o.t1, n = !0) : n = !1; f > r; ) if (n && s >= u) t++, 
-                a = o, c > t ? (o = l[t + 1], u = o.t1) : n = !1; else {
+                }), i = this.transformationIndexBySegment = Array(f), r = 0, u = e[0].startTime, 
+                t = 0, a = l[0], c > 0 ? (o = l[1], s = o.t1, n = !0) : n = !1; f > r; ) if (n && u >= s) t++, 
+                a = o, c > t ? (o = l[t + 1], s = o.t1) : n = !1; else {
                     if (i[r] = a, r++, !(f > r)) break;
-                    s = e[r].startTime;
+                    u = e[r].startTime;
                 }
             }
             function r(e) {
@@ -326,31 +329,31 @@ var Concert = function() {
                 t.call(this);
                 var i = this.thisPublic, f = e.call(i);
                 f.target = n, f.featureSequences = [], i.addFeatureSequence = r, i.clone = a, i.findFeatureSequenceByFeature = o, 
-                i.getTarget = u, i.indexTransformations = s, i.retarget = l, i.seek = c;
+                i.getTarget = s, i.indexTransformations = u, i.retarget = l, i.seek = c;
             }
             function r(t) {
                 var n = this.thisPublic, i = e.call(n);
                 i.featureSequences.push(t);
             }
             function a(t) {
-                var i, r, a = this.thisPublic, o = e.call(a), u = [], s = o.featureSequences, l = s.length, c = new n.TargetSequence(t), f = {
+                var i, r, a = this.thisPublic, o = e.call(a), s = [], u = o.featureSequences, l = u.length, c = new n.TargetSequence(t), f = {
                     targetSequence: c,
-                    transformations: u
+                    transformations: s
                 };
-                for (i = 0; l > i; i++) r = s[i].clone(t), c.addFeatureSequence(r.featureSequence), 
-                u.push.apply(u, r.transformations);
+                for (i = 0; l > i; i++) r = u[i].clone(t), c.addFeatureSequence(r.featureSequence), 
+                s.push.apply(s, r.transformations);
                 return f;
             }
             function o(t) {
-                var n, i, r = this.thisPublic, a = e.call(r), o = a.featureSequences, u = o.length;
-                for (n = 0; u > n; n++) if (i = o[n], i.feature === t) return i;
+                var n, i, r = this.thisPublic, a = e.call(r), o = a.featureSequences, s = o.length;
+                for (n = 0; s > n; n++) if (i = o[n], i.feature === t) return i;
                 return null;
             }
-            function u() {
+            function s() {
                 var t = this.thisPublic, n = e.call(t);
                 return n.target;
             }
-            function s(t) {
+            function u(t) {
                 var n, i, r = this.thisPublic, a = e.call(r), o = a.featureSequences;
                 for (n = 0, i = o.length; i > n; n++) o[n].indexTransformations(t);
             }
@@ -360,7 +363,7 @@ var Concert = function() {
                 r.target = t;
             }
             function c(t, n, i, r) {
-                var a, o, u = this.thisPublic, s = e.call(u), l = s.featureSequences;
+                var a, o, s = this.thisPublic, u = e.call(s), l = u.featureSequences;
                 for (o = 0, a = l.length; a > o; o++) l[o].seek(t, n, i, r);
             }
             return i;
@@ -385,12 +388,12 @@ var Concert = function() {
                     calculator: Concert.Calculators.Linear
                 }, a.synchronizeTo = null, a.speed = 1, a.timeOffset = 0, a.pollingInterval = 0, 
                 a.after = n.Repeating.None, a.before = n.Repeating.None, a.autoStopAtEnd = !0, a.onAutoStop = null, 
-                a.soleControlOptimizationDuringRun = !0, a.advanceIndexingToNextStep = s, a.findSequenceSegmentNumberByTime = l, 
-                a.findSequenceSegmentNumberInRange = c, a.findTargetSequenceByTarget = f, a.resetIndexing = h, 
-                a.runIndexing = d, r.addTransformations = m, r.begin = g, r.clone = p, r.follow = v, 
-                r.generateValues = T, r.getCurrentTime = S, r.getEndTime = y, r.getID = P, r.getStartTime = b, 
-                r.index = I, r.isRunning = D, r.retarget = x, r.run = A, r.seek = q, r.setDefaults = w, 
-                r.stop = R, r.syncTo = C, i && r.addTransformations(i);
+                a.stretchStartTimeToZero = !0, a.soleControlOptimizationDuringRun = !0, a.advanceIndexingToNextStep = u, 
+                a.findSequenceSegmentNumberByTime = l, a.findSequenceSegmentNumberInRange = c, a.findTargetSequenceByTarget = f, 
+                a.resetIndexing = h, a.runIndexing = d, r.addTransformations = m, r.begin = g, r.clone = p, 
+                r.follow = T, r.generateValues = v, r.getCurrentTime = S, r.getEndTime = y, r.getID = P, 
+                r.getStartTime = b, r.index = I, r.isRunning = D, r.retarget = x, r.run = A, r.seek = q, 
+                r.setAfter = w, r.setBefore = R, r.setDefaults = k, r.stop = C, r.syncTo = F, i && r.addTransformations(i);
             }
             function r(e, t) {
                 var n, i = {};
@@ -405,72 +408,72 @@ var Concert = function() {
                 var r = this.thisPublic, a = e.call(r);
                 n.Util.loadObjectData(t, i, r, a);
             }
-            function u(e, t) {
+            function s(e, t) {
                 var n, i = 0, r = t.length - 1;
                 if (0 > r || e > t[r]) t.push(e); else if (t[0] > e) t.unshift(e); else {
                     for (;r > i + 1; ) n = Math.floor((i + r) / 2), t[n] > e ? r = n : i = n;
                     t.splice(r, 0, e);
                 }
             }
-            function s() {
-                var t, i, r, a, o = this.thisPublic, u = e.call(o), s = u.indexingProcessData, l = !1;
-                switch (s.step++, s.startingIndex = 0, s.step) {
+            function u() {
+                var t, i, r, a, o = this.thisPublic, s = e.call(o), u = s.indexingProcessData, l = !1;
+                switch (u.step++, u.startingIndex = 0, u.step) {
                   case 1:
-                    s.inputData = s.outputData, s.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.consolidateDistinctValues, 
-                    s.totalIterationsThisStep = s.inputData.length, s.outputData = {};
+                    u.inputData = u.outputData, u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.consolidateDistinctValues, 
+                    u.totalIterationsThisStep = u.inputData.length, u.outputData = {};
                     break;
 
                   case 2:
-                    if (s.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildSortedArray, 
-                    s.isAsynchronous) {
-                        t = s.outputData, r = [];
+                    if (u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildSortedArray, 
+                    u.isAsynchronous) {
+                        t = u.outputData, r = [];
                         for (i in t) t.hasOwnProperty(i) && r.push(t[i]);
-                        s.inputData = r, s.totalIterationsThisStep = r.length;
-                    } else s.inputData = s.outputData, s.totalIterationsThisStep = 1;
-                    s.outputData = [];
+                        u.inputData = r, u.totalIterationsThisStep = r.length;
+                    } else u.inputData = u.outputData, u.totalIterationsThisStep = 1;
+                    u.outputData = [];
                     break;
 
                   case 3:
-                    s.inputData = s.outputData, s.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildDistinctSegmentList, 
-                    s.totalIterationsThisStep = s.inputData.length - 1, s.outputData = Array(s.totalIterationsThisStep);
+                    u.inputData = u.outputData, u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildDistinctSegmentList, 
+                    u.totalIterationsThisStep = u.inputData.length - 1, u.outputData = Array(u.totalIterationsThisStep);
                     break;
 
                   case 4:
-                    s.inputData = s.outputData, s.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.indexTargetSequences, 
-                    s.totalIterationsThisStep = u.targetSequences.length, s.outputData = null;
+                    u.inputData = u.outputData, u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.indexTargetSequences, 
+                    u.totalIterationsThisStep = s.targetSequences.length, u.outputData = null;
                     break;
 
                   case 5:
-                    for (l = !0, u.timelineSegments = a = s.inputData, u.sequenceStartTime = !a || 1 > a.length ? null : a[0].startTime, 
-                    u.sequenceEndTime = !a || 1 > a.length ? null : a[a.length - 1].endTime, u.indexed = !0, 
-                    u.indexingInProgress = !1, s.inputData = null, s.iterationsPerRound = 1, s.totalIterationsThisStep = 0, 
-                    s.outputData = null; u.indexCompletionCallbacks.length; ) u.indexCompletionCallbacks.shift()(o);
+                    for (l = !0, s.timelineSegments = a = u.inputData, s.sequenceStartTime = !a || 1 > a.length ? null : a[0].startTime, 
+                    s.sequenceEndTime = !a || 1 > a.length ? null : a[a.length - 1].endTime, s.indexed = !0, 
+                    s.indexingInProgress = !1, u.inputData = null, u.iterationsPerRound = 1, u.totalIterationsThisStep = 0, 
+                    u.outputData = null; s.indexCompletionCallbacks.length; ) s.indexCompletionCallbacks.shift()(o);
                 }
                 return l;
             }
             function l(t) {
-                var n, i, r, a, o = this.thisPublic, u = e.call(o), s = u.timelineSegments, l = s.length;
-                return l > 0 ? (i = u.lastUsedTimelineSegmentNumber, r = s[i], a = r.endTime, t >= r.startTime ? a > t ? n = {
+                var n, i, r, a, o = this.thisPublic, s = e.call(o), u = s.timelineSegments, l = u.length;
+                return l > 0 ? (i = s.lastUsedTimelineSegmentNumber, r = u[i], a = r.endTime, t >= r.startTime ? a > t ? n = {
                     segmentNumber: i,
                     timeMatchType: 0
                 } : i === l - 1 ? n = {
                     segmentNumber: i,
                     timeMatchType: 1
-                } : (i++, r = s[i], a = r.endTime, n = a > t ? {
+                } : (i++, r = u[i], a = r.endTime, n = a > t ? {
                     segmentNumber: i,
                     timeMatchType: 0
                 } : i === l - 1 ? {
                     segmentNumber: i,
                     timeMatchType: 1
-                } : u.findSequenceSegmentNumberInRange(t, i + 1, l - 1)) : n = 0 === i ? {
+                } : s.findSequenceSegmentNumberInRange(t, i + 1, l - 1)) : n = 0 === i ? {
                     segmentNumber: 0,
                     timeMatchType: -1
-                } : u.findSequenceSegmentNumberInRange(t, 0, i - 1), u.lastUsedTimelineSegmentNumber = n.segmentNumber) : n = null, 
+                } : s.findSequenceSegmentNumberInRange(t, 0, i - 1), s.lastUsedTimelineSegmentNumber = n.segmentNumber) : n = null, 
                 n;
             }
             function c(t, n, i) {
-                var r, a, o, u = this.thisPublic, s = e.call(u);
-                do if (r = Math.floor((n + i) / 2), a = s.timelineSegments[r], a.startTime > t) i = r - 1, 
+                var r, a, o, s = this.thisPublic, u = e.call(s);
+                do if (r = Math.floor((n + i) / 2), a = u.timelineSegments[r], a.startTime > t) i = r - 1, 
                 o = -1; else {
                     if (!(t >= a.endTime)) {
                         o = 0;
@@ -496,31 +499,31 @@ var Concert = function() {
             }
             function d() {
                 function t() {
-                    var e, i, r, s, l, c, f, h = o.step, d = o.isAsynchronous, m = o.inputData, g = o.startingIndex, p = o.totalIterationsThisStep, v = d ? o.iterationsPerRound : p, T = Math.min(p, g + v), S = o.outputData, y = !1, P = 0 === h ? 2 * g : null;
-                    if (d && (e = new Date().getTime()), 2 !== h || d || n.Util.isArray(m)) for (3 === h ? s = m[g] : 4 === h && (f = a.targetSequences); T > g; ) {
+                    var e, i, r, u, l, c, f, h = o.step, d = o.isAsynchronous, m = o.inputData, g = o.startingIndex, p = o.totalIterationsThisStep, T = d ? o.iterationsPerRound : p, v = Math.min(p, g + T), S = o.outputData, y = !1, P = 0 === h ? 2 * g : null;
+                    if (d && (e = new Date().getTime()), 2 !== h || d || n.Util.isArray(m)) for (3 === h ? u = m[g] : 4 === h && (f = a.targetSequences); v > g; ) {
                         switch (h) {
                           case 0:
                             r = m[g], S[P++] = r.t1, S[P++] = r.t2;
                             break;
 
                           case 1:
-                            s = m[g], S[s] = s;
+                            u = m[g], S[u] = u;
                             break;
 
                           case 2:
-                            u(m[g], S);
+                            s(m[g], S);
                             break;
 
                           case 3:
-                            c = m[g + 1], S[g] = new n.TimelineSegment(s, c), s = c;
+                            c = m[g + 1], S[g] = new n.TimelineSegment(u, c), u = c;
                             break;
 
                           case 4:
                             f[g].indexTransformations(m);
                         }
                         g++;
-                    } else for (l in m) m.hasOwnProperty(l) && u(m[l], S);
-                    return T === p ? y = a.advanceIndexingToNextStep() : (i = new Date().getTime(), 
+                    } else for (l in m) m.hasOwnProperty(l) && s(m[l], S);
+                    return v === p ? y = a.advanceIndexingToNextStep() : (i = new Date().getTime(), 
                     o.startingIndex = g, n.Definitions.IterationRoundTimeHalfBound > i - e && (o.iterationsPerRound *= 2)), 
                     d && !y && (a.indexTimerID = window.setTimeout(t, 0)), y;
                 }
@@ -529,51 +532,51 @@ var Concert = function() {
                 a.indexTimerID = null); !i; ) i = t();
             }
             function m(t) {
-                var i, r, a, o, u, s, l, c, f, h, d, m, g, p, v, T, S, y, P, b, I, D, x, A, q, w, R, C, F, k, O, N, B, U = this.thisPublic, V = e.call(U), j = [], M = V.targetSequences, E = null, z = V.defaults, G = V.allTransformations, L = V.dynamicValueTransformations;
-                for (V.indexingInProgress ? V.resetIndexing() : V.indexed = !1, n.Util.isArray(t) || (t = [ t ]), 
-                i = 0, o = t.length; o > i; i++) if (u = t[i], s = u.target, l = u.targets, n.Util.isArray(l)) for (void 0 !== s && null !== s && (l = [ s ].concat(l)), 
+                var i, r, a, o, s, u, l, c, f, h, d, m, g, p, T, v, S, y, P, b, I, D, x, A, q, w, R, k, C, F, O, U, B, N, V = this.thisPublic, j = e.call(V), M = j.targetSequences, E = null, z = j.defaults, G = j.allTransformations, L = j.dynamicValueTransformations;
+                for (j.indexingInProgress ? j.resetIndexing() : j.indexed = !1, n.Util.isArray(t) || (t = [ t ]), 
+                i = 0, o = t.length; o > i; i++) if (s = t[i], u = s.target, l = s.targets, n.Util.isArray(l)) for (void 0 !== u && null !== u && (l = [ u ].concat(l)), 
                 r = 0, c = l.length; c > r; r++) {
                     f = {};
-                    for (P in u) u.hasOwnProperty(P) && (f[P] = u[P]);
-                    f.targets = null, f.target = l[r], U.addTransformations(f);
+                    for (P in s) s.hasOwnProperty(P) && (f[P] = s[P]);
+                    f.targets = null, f.target = l[r], V.addTransformations(f);
                 } else {
-                    for (E = V.findTargetSequenceByTarget(s), null === E && (E = new n.TargetSequence(s), 
-                    M.push(E)), h = n.Util.isArray(u.feature) ? u.feature : [ u.feature ], p = u.applicator, 
-                    void 0 === p && (p = z.applicator), d = u.unit, void 0 === d && (d = z.unit), m = u.calculator, 
-                    void 0 === m && (m = z.calculator), g = u.easing, void 0 === g && (g = z.easing), 
-                    r = 0; h.length > r; r++) D = E.findFeatureSequenceByFeature(h[r]), null === D && (D = new n.FeatureSequence(s, h[r]), 
-                    E.addFeatureSequence(D)), j[r] = D;
-                    if (v = u.keyframes, void 0 !== v) {
-                        for (A = v.times, q = v.values, w = v.valueGenerators, k = O = N = C = F = null, 
-                        r = 0, x = A.length; x > r; r++) if (R = A[r], q && (C = q[r]), w && (F = w[r]), 
-                        null === k ? (k = R, O = C, N = F, B = null !== R && r === x - 1) : null === R ? (k = O = N = null, 
-                        B = !1) : B = !0, B) {
+                    for (E = j.findTargetSequenceByTarget(u), null === E && (E = new n.TargetSequence(u), 
+                    M.push(E)), h = n.Util.isArray(s.feature) ? s.feature : [ s.feature ], p = s.applicator, 
+                    void 0 === p && (p = z.applicator), d = s.unit, void 0 === d && (d = z.unit), m = s.calculator, 
+                    void 0 === m && (m = z.calculator), g = s.easing, void 0 === g && (g = z.easing), 
+                    x = Array(h.length), r = 0; h.length > r; r++) D = E.findFeatureSequenceByFeature(h[r]), 
+                    null === D && (D = new n.FeatureSequence(u, h[r]), E.addFeatureSequence(D)), x[r] = D;
+                    if (T = s.keyframes, void 0 !== T) {
+                        for (q = T.times, w = T.values, R = T.valueGenerators, O = U = B = C = F = null, 
+                        r = 0, A = q.length; A > r; r++) if (k = q[r], w && (C = w[r]), R && (F = R[r]), 
+                        null === O ? (O = k, U = C, B = F, N = null !== k && r === A - 1) : null === k ? (O = U = B = null, 
+                        N = !1) : N = !0, N) {
                             for (b = {
-                                target: s,
+                                target: u,
                                 feature: 1 === h.length ? h[0] : h,
                                 applicator: p,
                                 unit: d,
                                 calculator: m,
                                 easing: g,
-                                t1: k,
-                                t2: R,
-                                v1: O,
+                                t1: O,
+                                t2: k,
+                                v1: U,
                                 v2: C,
-                                v1Generator: N,
+                                v1Generator: B,
                                 v2Generator: F
-                            }, I = new n.Transformation(b), G.push(I), (N || F) && L.push(I), a = 0; j.length > a; a++) j[a].transformations.push(I);
-                            k = R, O = C;
+                            }, I = new n.Transformation(b), G.push(I), (B || F) && L.push(I), a = 0; x.length > a; a++) x[a].transformations.push(I);
+                            O = k, U = C;
                         }
-                    } else for (T = u.segments, n.Util.isArray(T) || (T = [ T ]), r = 0, S = T.length; S > r; r++) {
-                        y = T[r], b = {
-                            target: s,
+                    } else for (v = s.segments, n.Util.isArray(v) || (v = [ v ]), r = 0, S = v.length; S > r; r++) {
+                        y = v[r], b = {
+                            target: u,
                             feature: 1 === h.length ? h[0] : h,
                             applicator: p
                         };
                         for (P in y) y.hasOwnProperty(P) && (b[P] = y[P]);
                         for (void 0 === b.unit && (b.unit = d), void 0 === b.calculator && (b.calculator = m), 
                         void 0 === b.easing && (b.easing = g), I = new n.Transformation(b), G.push(I), (void 0 !== b.v1Generator || void 0 !== b.v2Generator) && L.push(I), 
-                        a = 0; j.length > a; a++) j[a].transformations.push(I);
+                        a = 0; x.length > a; a++) x[a].transformations.push(I);
                     }
                 }
             }
@@ -587,47 +590,48 @@ var Concert = function() {
                 }, e));
             }
             function p(t, i, r) {
-                var a, u, s, l, c, f, h, d, m, g, p, v = this.thisPublic, T = e.call(v), S = i && T.running, y = T.currentTime, P = T.synchronizer, b = T.speed, I = T.timeOffset, D = T.pollingInterval, x = T.initialSyncSourcePoint, A = T.allTransformations.length, q = 0, w = 0, R = Array(A), C = Array(T.dynamicValueTransformations.length), F = T.targetSequences, k = F.length, O = Array(k), N = T.timelineSegments, B = N.length, U = Array(B), V = T.defaults, j = {}, M = new n.Sequence(), E = {}, z = T.soleControlOptimizationDuringRun;
-                for (a = 0; k > a; a++) for (d = F[a], m = d.clone(t(d.getTarget())), O[a] = m.targetSequence, 
-                l = m.transformations, u = 0, c = l.length; c > u; u++) h = l[u], R[q] = h, q++, 
-                h.hasDynamicValues() && (C[w] = h, w++);
-                for (a = 0; B > a; a++) g = N[a], U[a] = new n.TimelineSegment(g.startTime, g.endTime);
-                for (s in V) V.hasOwnProperty(s) && (j[s] = V[s]);
+                var a, s, u, l, c, f, h, d, m, g, p, T = this.thisPublic, v = e.call(T), S = i && v.running, y = v.currentTime, P = v.synchronizer, b = v.speed, I = v.timeOffset, D = v.pollingInterval, x = v.initialSyncSourcePoint, A = v.allTransformations.length, q = 0, w = 0, R = Array(A), k = Array(v.dynamicValueTransformations.length), C = v.targetSequences, F = C.length, O = Array(F), U = v.timelineSegments, B = U.length, N = Array(B), V = v.defaults, j = {}, M = new n.Sequence(), E = {}, z = v.soleControlOptimizationDuringRun;
+                for (a = 0; F > a; a++) for (d = C[a], m = d.clone(t(d.getTarget())), O[a] = m.targetSequence, 
+                l = m.transformations, s = 0, c = l.length; c > s; s++) h = l[s], R[q] = h, q++, 
+                h.hasDynamicValues() && (k[w] = h, w++);
+                for (a = 0; B > a; a++) g = U[a], N[a] = new n.TimelineSegment(g.startTime, g.endTime);
+                for (u in V) V.hasOwnProperty(u) && (j[u] = V[u]);
                 return f = S ? f = 1 > D ? new n.Pollers.Auto() : new n.Pollers.FixedInterval(D) : null, 
                 p = {
                     targetSequences: O,
-                    timelineSegments: U,
-                    lastUsedTimelineSegmentNumber: T.lastUsedTimelineSegmentNumber,
+                    timelineSegments: N,
+                    lastUsedTimelineSegmentNumber: v.lastUsedTimelineSegmentNumber,
                     allTransformations: R,
-                    dynamicValueTransformations: C,
+                    dynamicValueTransformations: k,
                     indexCompletionCallbacks: [],
-                    indexed: T.indexed,
+                    indexed: v.indexed,
                     indexingInProgress: !1,
                     indexTimerID: null,
                     indexingProcessData: {},
                     running: S,
                     currentTime: y,
-                    unadjustedTime: T.unadjustedTime,
-                    sequenceStartTime: T.sequenceStartTime,
-                    sequenceEndTime: T.sequenceEndTime,
+                    unadjustedTime: v.unadjustedTime,
+                    sequenceStartTime: v.sequenceStartTime,
+                    sequenceEndTime: v.sequenceEndTime,
                     poller: f,
                     synchronizer: P,
                     initialSyncSourcePoint: x,
                     defaults: j,
-                    synchronizeTo: T.synchronizeTo,
+                    synchronizeTo: v.synchronizeTo,
                     speed: b,
                     timeOffset: I,
                     pollingInterval: D,
-                    after: T.after,
-                    before: T.before,
-                    autoStopAtEnd: T.autoStopAtEnd,
-                    onAutoStop: T.onAutoStop,
+                    after: v.after,
+                    before: v.before,
+                    autoStopAtEnd: v.autoStopAtEnd,
+                    onAutoStop: v.onAutoStop,
+                    stretchStartTimeToZero: v.stretchStartTimeToZero,
                     soleControlOptimizationDuringRun: z
                 }, o.call(M, E, p), r && M.seek(y, z), S && f.run(function() {
                     M.seek(x + b * (P() - x) + I, z);
                 }), M;
             }
-            function v(e, t) {
+            function T(e, t) {
                 var n = this.thisPublic;
                 n.run(r({
                     synchronizeTo: e,
@@ -635,7 +639,7 @@ var Concert = function() {
                     timeOffset: null
                 }, t));
             }
-            function T() {
+            function v() {
                 var t, n = this.thisPublic, i = e.call(n), r = i.dynamicValueTransformations, a = r.length;
                 for (t = 0; a > t; t++) r[t].generateValues(n);
             }
@@ -653,7 +657,7 @@ var Concert = function() {
             }
             function b() {
                 var t = this.thisPublic, n = e.call(t);
-                return n.indexed || t.index(null, !1), n.sequenceStartTime;
+                return n.indexed || t.index(null, !1), n.stretchStartTimeToZero ? Math.min(n.sequenceStartTime, 0) : n.sequenceStartTime;
             }
             function I(t, n) {
                 var i = this.thisPublic, r = e.call(i);
@@ -666,48 +670,57 @@ var Concert = function() {
                 return n.running;
             }
             function x(t) {
-                var n, i, r = this.thisPublic, a = e.call(r), o = a.targetSequences, u = o.length;
-                for (n = 0; u > n; n++) i = o[n], i.retarget(t(i.getTarget()));
+                var n, i, r = this.thisPublic, a = e.call(r), o = a.targetSequences, s = o.length;
+                for (n = 0; s > n; n++) i = o[n], i.retarget(t(i.getTarget()));
             }
             function A(t) {
-                var i, r, o, u, s, l, c, f, h = this.thisPublic, d = e.call(h);
+                var i, r, o, s, u, l, c, f, h = this.thisPublic, d = e.call(h);
                 d.running && h.stop(), d.indexed || h.index(null, !1), a(t, "generateValues", !0) && h.generateValues(), 
-                u = a(t, "initialSeek", null), null !== u && h.seek(u, !1), d.speed = r = a(t, "speed", d.speed), 
+                s = a(t, "initialSeek", null), null !== s && h.seek(s, !1), d.speed = r = a(t, "speed", d.speed), 
                 d.after = a(t, "after", d.after), d.before = a(t, "before", d.before), d.autoStopAtEnd = a(t, "autoStopAtEnd", d.autoStopAtEnd), 
-                d.onAutoStop = a(t, "onAutoStop", d.onAutoStop), d.soleControlOptimizationDuringRun = f = a(t, "useSoleControlOptimization", d.soleControlOptimizationDuringRun), 
-                d.pollingInterval = s = a(t, "pollingInterval", d.pollingInterval), d.poller = 1 > s ? new n.Pollers.Auto() : new n.Pollers.FixedInterval(s), 
+                d.onAutoStop = a(t, "onAutoStop", d.onAutoStop), d.stretchStartTimeToZero = a(t, "stretchStartTimeToZero", d.stretchStartTimeToZero), 
+                d.soleControlOptimizationDuringRun = f = a(t, "useSoleControlOptimization", d.soleControlOptimizationDuringRun), 
+                d.pollingInterval = u = a(t, "pollingInterval", d.pollingInterval), d.poller = 1 > u ? new n.Pollers.Auto() : new n.Pollers.FixedInterval(u), 
                 i = a(t, "synchronizeTo", d.synchronizeTo), l = null === i ? function() {
                     return new Date().getTime();
                 } : "function" == typeof i ? i : function() {
                     return 1e3 * i.currentTime;
                 }, d.synchronizer = l, d.initialSyncSourcePoint = c = l(), o = a(t, "timeOffset", null), 
-                null === o && (o = null !== d.unadjustedTime ? d.unadjustedTime - c : d.sequenceStartTime - c), 
+                null === o && (o = null !== d.unadjustedTime ? d.unadjustedTime - c : h.getStartTime() - c), 
                 d.timeOffset = o, d.running = !0, d.poller.run(function() {
                     h.seek(c + r * (l() - c) + o, f);
                 });
             }
             function q(t, n) {
-                var i, r, a, o, u, s, l, c, f, h = this.thisPublic, d = e.call(h), m = !1, g = null, p = d.targetSequences, v = p.length;
-                if (d.indexed || h.index(null, !1), o = d.sequenceStartTime, u = d.sequenceEndTime, 
-                c = d.nextFrameID++, o > t ? (s = d.before(o, u, t), l = s.adjustedTime, m = s.hitFinalBoundary) : t > u ? (s = d.after(o, u, t), 
-                l = s.adjustedTime, m = s.hitFinalBoundary) : l = t, d.currentTime = l, d.unadjustedTime = t, 
+                var i, r, a, o, s, u, l, c, f, h = this.thisPublic, d = e.call(h), m = !1, g = null, p = d.targetSequences, T = p.length;
+                if (d.indexed || h.index(null, !1), o = h.getStartTime(), s = d.sequenceEndTime, 
+                c = d.nextFrameID++, o > t ? (u = d.before(o, s, t), l = u.adjustedTime, m = u.hitFinalBoundary) : t > s ? (u = d.after(o, s, t), 
+                l = u.adjustedTime, m = u.hitFinalBoundary) : l = t, d.currentTime = l, d.unadjustedTime = t, 
                 r = d.findSequenceSegmentNumberByTime(l), null !== r) {
                     for (a = r.segmentNumber, a !== d.lastSegmentNumber ? (f = !0, d.lastSegmentNumber = a) : f = void 0 === n ? !0 : !n, 
-                    i = 0; v > i; i++) p[i].seek(a, l, c, f);
+                    i = 0; T > i; i++) p[i].seek(a, l, c, f);
                     g = r.timeMatchType;
                 }
                 return m && d.running && d.autoStopAtEnd && (h.stop(), d.onAutoStop && d.onAutoStop(h)), 
                 g;
             }
             function w(t) {
+                var n = this.thisPublic, i = e.call(n);
+                i.after = t;
+            }
+            function R(t) {
+                var n = this.thisPublic, i = e.call(n);
+                i.before = t;
+            }
+            function k(t) {
                 var n, i = this.thisPublic, r = e.call(i), a = r.defaults;
                 for (n in t) t.hasOwnProperty(n) && (a[n] = t[n]);
             }
-            function R() {
+            function C() {
                 var t = this.thisPublic, n = e.call(t);
                 n.running = !1, n.poller && (n.poller.stop(), n.poller = null);
             }
-            function C(e, t) {
+            function F(e, t) {
                 var n = this.thisPublic;
                 n.run(r({
                     synchronizeTo: e,
