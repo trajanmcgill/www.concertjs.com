@@ -16,6 +16,7 @@ body
 {
 	display: block;
 	margin-bottom: 20px;
+	font-size: 15px;
 }
 
 a {
@@ -58,7 +59,7 @@ section
 	background-color: #eee;
 	padding: 12px 24px;
     border-bottom: 1px solid #ccc;
-    margin-left: 240px;
+    margin-left: 170px;
 	min-width: 875px;
 }
 
@@ -82,9 +83,9 @@ nav
 {
 	display: block;
 	float: right;
-    margin-right: -230px;
-    margin-top: 28px;
-    width: 220px;
+    margin-right: -170px;
+    margin-top: 0px;
+    width: 160px;
     border-left: 1px solid #ccc;
     padding-left: 9px;
 }
@@ -96,6 +97,10 @@ nav ul {
     padding:0;
     margin:0;
     list-style-type:none;
+}
+
+nav h2 {
+	margin-top: 34px;
 }
 
 nav h2 a, nav h2 a:visited {
@@ -149,7 +154,7 @@ h1
 
 .page-title
 {
-	margin-left: 230px;
+	margin-left: 170px;
 	color: #d7ba7d;
 }
 
