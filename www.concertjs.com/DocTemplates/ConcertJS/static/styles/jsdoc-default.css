@@ -46,8 +46,8 @@ header
 }
 
 #main {
-    float: left;
-    width: 100%;
+    float: right;
+	width: 100%;
 }
 
 section
@@ -58,7 +58,7 @@ section
 	background-color: #eee;
 	padding: 12px 24px;
     border-bottom: 1px solid #ccc;
-    margin-right: 240px;
+    margin-left: 240px;
 	min-width: 875px;
 }
 
@@ -81,8 +81,8 @@ section
 nav
 {
 	display: block;
-	float: left;
-    margin-left: -230px;
+	float: right;
+    margin-right: -230px;
     margin-top: 28px;
     width: 220px;
     border-left: 1px solid #ccc;
@@ -149,6 +149,7 @@ h1
 
 .page-title
 {
+	margin-left: 230px;
 	color: #d7ba7d;
 }
 
