@@ -185,14 +185,14 @@ module.exports = function(grunt)
 							openTargetTagStart = "/*<template:targetDef";
 							openDataTagStart = "/*<template:data";
 							closeDataTag = "/*</template:data>*/";
-							tagEnd = ">*/";
+							tagEnd = ">*/\r\n";
 						}
 						else if (/.*\.html$/i.test(curInputFileName))
 						{
 							openTargetTagStart = "<template:targetDef";
 							openDataTagStart = "<template:data";
 							closeDataTag = "</template:data>";
-							tagEnd = ">";
+							tagEnd = ">\r\n";
 						}
 						else
 							grunt.fail.warn("processTemplates: unknown input file type (" + curInputFileName + ").");
@@ -221,6 +221,7 @@ module.exports = function(grunt)
 								newText = fileContents.substring(currentPos, nextCloseTagPos);
 							for (j = 0; j < openElementStack.length; j++)
 								openElementStack[j].output += newText;
+							grunt.log.writeln("newText=:" + newText + ":");
 
 							if (nextOpenTagPos < nextCloseTagPos && nextOpenTagPos >= 0)
 							{
