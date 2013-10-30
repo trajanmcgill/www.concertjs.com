@@ -21,6 +21,7 @@ var CodeViewer = (function ()
 			CSSView: 12
 		};
 
+
 	function getQueryParams()
 	{
 		var i, assignmentHalves, varName, valueString, paramArray, queryParams = {}, queryText = window.location.search;
@@ -43,7 +44,8 @@ var CodeViewer = (function ()
 		}
 
 		return queryParams;
-	}
+	} // end getQueryParams()
+
 
 	function setupPage()
 	{
@@ -67,7 +69,8 @@ var CodeViewer = (function ()
 		loadCode(url, "HTMLView");
 
 		window.onresize = sizeCodePanes;
-	}
+	} // end setupPage()
+
 
 	function loadCode(url, viewContainerName)
 	{
@@ -82,7 +85,7 @@ var CodeViewer = (function ()
 				return function () { onLoadCodeStateChange(capturedURL, capturedRequest, capturedViewContainerName); };
 			})(url, request, viewContainerName);
 		request.send();
-	}
+	} // end loadCode()
 
 
 	function onLoadCodeStateChange(url, request, viewContainerName)
@@ -173,7 +176,7 @@ var CodeViewer = (function ()
 
 		for(i = 0; i < preElements.length; i++)
 			document.getElementById(preElements[i]).style.height = preHeight + "px";
-	}
+	} // end sizeCodePanes()
 
 
 	var publicInterface =
@@ -182,4 +185,4 @@ var CodeViewer = (function ()
 		};
 
 	return publicInterface;
-})();
+})(); // end CodeViewer singleton definition
