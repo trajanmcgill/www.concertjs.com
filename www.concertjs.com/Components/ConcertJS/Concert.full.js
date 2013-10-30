@@ -1637,18 +1637,19 @@ var Concert = (function ()
 				 *       // sequence's default easing.
 				 *
 				 *       [unit: <em>UnitDefinition</em>,] // If absent, falls back to the unit defined at the
-				 *       // <em>TransformationObject</em> level; if also absent there, to the sequence's default unit.
+				 *       // <em>TransformationObject</em> level; if also absent there, to the sequence's
+				 *       // default unit.
 				 *   };
 				 *
 				 * <strong><em>KeyframeTimesArray</em></strong> = An array of the form [<em>TimeDefinition<sub>1</sub></em>, <em>TimeDefinition<sub>2</sub></em>, ...].
 				 * This defines the timeline points used as keyframes for this transformation series,
 				 * to be matched up with the values in the corresponding <em>KeyframeValuesArray</em>. A null
 				 * element has the effect of breaking the keyframe string into two segments. For example,
-				 * the array [0, 100, 1000, 2000] defines a constant flow of transition with four keyframes.
-				 * The array [0, 100, null, 1000, 2000], on the other hand, defines a flow that is broken
-				 * in two pieces: one animated segment with keyframes at time 0 and 100, then no further
-				 * animation at all until until time 1000, followed by another period of animation between
-				 * the keyframes at times 1000 and 2000.
+				 * the array [0, 100, 1000, 2000] defines a constant flow of transition with four
+				 * keyframes. The array [0, 100, null, 1000, 2000], on the other hand, defines a flow
+				 * that is broken in two pieces: one animated segment with keyframes at time 0 and 100,
+				 * then no further animation at all until until time 1000, followed by another period
+				 * of animation between the keyframes at times 1000 and 2000.
 				 *
 				 * <strong><em>KeyframeValuesArray</em></strong> = An array of the form [<em>ValueDefinition<sub>1</sub></em>, <em>ValueDefinition<sub>2</sub></em>, ...].
 				 * This defines the values applied at each keyframe point, as matched up with the keyframe
@@ -1671,11 +1672,11 @@ var Concert = (function ()
 				 * <strong><em>ValueDefinition</em></strong> = A value to be applied to the target object feature, or an array of
 				 * such values. This value can be of any type, although it needs to be one appropriate to
 				 * the target feature, calculator, and applicator being used. If a unit is specified, the
-				 * value will be treated as a string and the unit will be appended to it before application.
-				 * Arrays are allowed as a shorthand method of defining multiple features, values, and units
-				 * together in a more compact notation. The first value in the array will be matched with
-				 * the first unit and the first feature in those arrays, and so on. See below samples for an
-				 * example of using arrays in this way.
+				 * value will be treated as a string and the unit will be appended to it before
+				 * application. Arrays are allowed as a shorthand method of defining multiple features,
+				 * values, and units together in a more compact notation. The first value in the array
+				 * will be matched with the first unit and the first feature in those arrays, and so on.
+				 * See below samples for an example of using arrays in this way.
 				 *
 				 * <strong><em>ValueGenerator</em></strong> = A function which returns a valid <em>ValueDefinition</em> and has the signature:
 				 *   <em>function generatorFunction(sequence)</em>
@@ -2448,8 +2449,9 @@ var Concert = (function ()
 				 *   <strong>after</strong>: VALUE, // Initial default: Concert.Repeating.None
 				 *
 				 *   // --------
-				 *   // Boolean; Whether or not to automatically call stop() upon hitting the end. (Note
-				 *   // that "the end" means after all looping, bouncing, etc. is taken into account.)
+				 *   // Boolean; Whether or not to automatically call stop() upon hitting the end.
+				 *   // (Note that "the end" means after all looping, bouncing, etc. is taken into
+				 *   // account.)
 				 *   <strong>autoStopAtEnd</strong>: VALUE, // Initial default: true
 				 *
 				 *   // --------
@@ -2482,11 +2484,11 @@ var Concert = (function ()
 				 *   <strong>onAutoStop</strong>: VALUE, // Initial default: null
 				 *
 				 *   // --------
-				 *   // Numeric; How far apart (in milliseconds) to calculate and seek to a new timeline
-				 *   // position. Set to any value > 0 for manual control, or set to 0 (or anything < 1)
-				 *   // to let Concert determine this automatically. (It does this by using
-				 *   // requestAnimationFrame() for if the browser supports  it, or a fixed interval of
-				 *   // 16 ms otherwise.
+				 *   // Numeric; How far apart (in milliseconds) to calculate and seek to a new
+				 *   // timeline position. Set to any value > 0 for manual control, or set to 0
+				 *   // (or anything < 1) to let Concert determine this automatically. (It does
+				 *   // this by using requestAnimationFrame() for if the browser supports  it,
+				 *   // or a fixed interval of 16 ms otherwise.
 				 *   <strong>pollingInterval</strong>: VALUE, // Initial default: 0
 				 *
 				 *   // --------
@@ -2511,25 +2513,27 @@ var Concert = (function ()
 				 *   //       Using a custom function here allows you to synchronize the sequence to
 				 *   //       anything you want (for instance, locking it to the current value of a UI
 				 *   //       element, such as a slider, or to another Concert.Sequence object.)
-				 *   //   html audio or video DOM object: locks the sequence to the currentTime property
-				 *   //       of the media element. This allows the sequence to remain synchronized to
-				 *   //       the media even when it is paused, scrubbed, or the user skips around.
+				 *   //   html audio or video DOM object: locks the sequence to the currentTime
+				 *   //       property of the media element. This allows the sequence to remain
+				 *   //       synchronized to the media even when it is paused, scrubbed, or the
+				 *   //       user skips around.
 				 *   <strong>synchronizeTo</strong>: VALUE, // Initial default: null
 				 *
 				 *   // --------
-				 *   // Numeric; An offset value that is added to the current time before seeking every
-				 *   // time the polling interval comes around. This is useful if you want your sequence
-				 *   // to run fixed amount ahead of, or behind, your synchronization source. If null,
-				 *   // this value is automatically calculated assuming that you want the current
-				 *   // sequence time (or the sequence start time if no calls to seek() have yet been
-				 *   // made) to match up with the current return value of the synchronization source.
-				 *   // For instance, you may have a sequence that runs, locked to the system clock,
-				 *   // from time 0 to time 10000 (i.e., for 10 seconds). But the raw value coming from
-				 *   // the system clock is never between 0 and 10000; it is the number of milliseconds
-				 *   // since January 1, 1970 00:00:00 UTC, which is a very high number. The timeOffset
-				 *   // value is therefore added in order to translate the raw starting clock value to
-				 *   // the start time of the sequence. But because this automatic translation may not
-				 *   // always be the desired behavior, it can be explicitly set here.
+				 *   // Numeric; An offset value that is added to the current time before seeking
+				 *   // every time the polling interval comes around. This is useful if you want
+				 *   // your sequence to run fixed amount ahead of, or behind, your synchronization
+				 *   // source. If null, this value is automatically calculated assuming that you
+				 *   // want the current sequence time (or the sequence start time if no calls to
+				 *   // seek() have yet been made) to match up with the current return value of the
+				 *   // synchronization source. For instance, you may have a sequence that runs,
+				 *   // locked to the system clock, from time 0 to time 10000 (i.e., for 10 seconds).
+				 *   // But the raw value coming from the system clock is never between 0 and 10000;
+				 *   // it is the number of milliseconds since January 1, 1970 00:00:00 UTC, which
+				 *   // is a very high number. The timeOffset value is therefore added in order to
+				 *   // translate the raw starting clock value to the start time of the sequence.
+				 *   // But because this automatic translation may not always be the desired
+				 *   // behavior, it can be explicitly set here.
 				 *   <strong>timeOffset</strong>: VALUE, // Default value: null
 				 *
 				 *   // --------
