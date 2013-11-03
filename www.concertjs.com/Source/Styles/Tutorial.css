@@ -1,0 +1,32 @@
+﻿h3
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+h4
+{
+	border-top: 1px solid black;
+	margin-bottom: 10px;
+}
+
+div.TutorialStep:first-child h4
+{
+	border-top-style: none;
+}
+
+#ContentDescription
+{
+	font-size: 18px;
+}
+
+.TutorialStep
+{
+
+}
+
+.TutorialDemoFrame
+{
+	float: right;
+	width: 480px;
+}
