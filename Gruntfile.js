@@ -221,7 +221,6 @@ module.exports = function(grunt)
 								newText = fileContents.substring(currentPos, nextCloseTagPos);
 							for (j = 0; j < openElementStack.length; j++)
 								openElementStack[j].output += newText;
-							grunt.log.writeln("newText=:" + newText + ":");
 
 							if (nextOpenTagPos < nextCloseTagPos && nextOpenTagPos >= 0)
 							{
