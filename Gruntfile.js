@@ -305,6 +305,7 @@ module.exports = function(grunt)
 	grunt.registerTask("build_requestAnimationFrame", ["copy:requestAnimationFrame_Build", "uglify:requestAnimationFrame", "uglify:requestAnimationFrame_DeUglify"]);
 	grunt.registerTask("build_ConcertJS", ["copy:ConcertJS_Import", "copy:ConcertJS_Build", "uglify:ConcertJS", "uglify:ConcertJS_DeUglify"]);
 	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "buildReferenceDocs:www", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
+	grunt.registerTask("build_www_minimal", ["copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
 	grunt.registerTask("build_all", ["build_requestAnimationFrame", "build_ConcertJS", "build_www"]);
 
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
