@@ -27,6 +27,18 @@ div.TutorialStep:first-child h4
 
 .TutorialDemoFrame
 {
-	float: right;
 	width: 480px;
+	border: 1px solid black;
+}
+
+.TutorialDemoFrameContainer
+{
+	float: right;
+	width: 482px;
+	border: 1px solid #d7ba7d;
+}
+
+.TutorialDemoFrameCaption
+{
+	font-size: 13px;
 }

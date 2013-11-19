@@ -1,0 +1,24 @@
+﻿body
+{
+	color: #d7ba7d;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#HelloDiv
+{
+	font-weight: bold;
+	font-size: 20px;
+	overflow-y: hidden;
+	white-space: nowrap;
+	height: 0;
+}
