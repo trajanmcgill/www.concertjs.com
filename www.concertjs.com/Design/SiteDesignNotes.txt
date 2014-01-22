@@ -21,3 +21,8 @@ Things that ought to be on there:
 -known bugs
 -release notes
 -donation button?
+
+
+Tutorial things to cover:
+-Sequences
+-Transformations
