@@ -25,4 +25,17 @@ Things that ought to be on there:
 
 Tutorial things to cover:
 -Sequences
--Transformations
+-Transformations (and transformation sets)
+-Downloading and including in a web page
+-setting defaults
+-defining transformation sets (both methods)
+-cloning and retargeting
+-seeking
+-repeating: behavior after the end and before the beginning of a sequence
+-starting and stopping, different ways of running: begin, run, follow, and syncTo
+-indexing (automatic and manual)
+-getting properties of a sequence
+-applicators (built-in and custom)
+-calculators (built-in and custom)
+-easing functions (built-in and custom)
+-discussion of more advanced uses

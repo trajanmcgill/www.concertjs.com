@@ -24,28 +24,25 @@
 <template:data target="tutorial.html" section="MainContent">
 	<div>
 		<div class="TutorialStep">
-			<h4>Step 1</h4>
+			<h4>1) What does a simple ConcertJS animation look like?</h4>
 			<div class="TutorialDemoFrameContainer">
 				<iframe class="TutorialDemoFrame" src="Tutorial/TutorialStep01.html"></iframe>
 				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=Tutorial/TutorialStep01.html" target="_blank">See Full Source Code</a></div>
 			</div>
 			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
+				<pre><code>var sequence = new Concert.Sequence();
+sequence.addTransformations(
+  {
+    target: document.getElementById("HelloDiv"),
+    feature: "height",
+    unit: "px",
+    applicator: Concert.Applicators.Style,
+    calculator: Concert.Calculators.Linear,
+    easing: Concert.EasingFunctions.ConstantRate,
+    keyframes: { times: [0, 1000], values: [0, 24] }
+  });
+sequence.begin();
+</code></pre>
 			</p>
 		</div>
 
@@ -55,22 +52,17 @@
 				<iframe class="TutorialDemoFrame" src="http://www.asdf.com/"></iframe>
 			</div>
 			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
+				The most basic conceptual pieces involved in using ConcertJS are the <code>Transformation</code> and the <code>Sequence</code>.
 			</p>
 			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
+				A <code>Transformation</code> is a single change applied over time to a single feature of a single object.
+				For instance (as in this example), it could be a change in the height of a DOM element from 0px to 24px over 1000ms (1 second).
 			</p>
 			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
+				A <code>Sequence</code> is a series of changes applied to a collection of objects over time. It contains one or more transformations.
 			</p>
 			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
-			</p>
-			<p>
-				Lookee here. This is a very well-written explanation that will show you how easy this stuff is!
+				Anything we do with ConcertJS will involve creating and working with a <code>Sequence</code> object.
 			</p>
 		</div>
 	</div>
