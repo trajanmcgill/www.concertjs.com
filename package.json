@@ -1,8 +1,8 @@
 {
   "name": "ConcertJS",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.2",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-compress": "~0.4.7",
     "grunt-contrib-concat": "~0.1.3",
