@@ -1,5 +1,15 @@
 module.exports = function(grunt)
 {
+	var LicenseBanner = 
+		"/*! <%= pkg.name %> <%= pkg.version %>\r\n"
+		+ " * <%= pkg.homepage %>\r\n"
+		+ " *\r\n"
+		+ " * <%= pkg.custom_CopyrightNotice %>\r\n"
+		+ " * <%= pkg.custom_LicenseDescription %>\r\n"
+		+ " * <%= pkg.custom_LicenseURL %>\r\n"
+		+ " */\r\n";
+
+
 	function stripMinOrFull(dest, src)
 	{
 		var fullOriginalDest = dest + src,
@@ -70,6 +80,7 @@ module.exports = function(grunt)
 						{ src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.full.js" },
 						{ expand: true, cwd: "ConcertJS/Components/requestAnimationFrame/", src: ["*.js"], dest: "ConcertJS/Build/" }
 					],
+					options: { process: function (content, srcpath) { return (grunt.config.process(LicenseBanner) + content); } }
 				},
 
 				www_Import: { expand: true, cwd: "ConcertJS/Build/", src: ["*.js"], dest: "www.concertjs.com/Components/ConcertJS/" },
@@ -146,13 +157,14 @@ module.exports = function(grunt)
 				requestAnimationFrame: { options: { banner: "/*! requestAnimationFrame.js */\n" }, src: ["requestAnimationFrame/Source/requestAnimationFrame.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.min.js" },
 				requestAnimationFrame_DeUglify: { options: { beautify: true }, src: ["requestAnimationFrame/Build/requestAnimationFrame.min.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.min.max.js" },
 
-				ConcertJS: { options: { banner: "/*! <%= pkg.name %> <%= pkg.version %> */\n" }, src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.min.js" },
+				ConcertJS: { options: { banner: LicenseBanner }, src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.min.js" },
 				ConcertJS_DeUglify: { options: { beautify: true }, src: ["ConcertJS/Build/Concert.min.js"], dest: "ConcertJS/Build/Concert.min.max.js" },
 
 				www: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
 				www_DeUglify: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/Scripts/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.max.js" }
 			} // end uglify task definitions
 		});
+	
 	
 	// Load the plugins
 	grunt.loadNpmTasks("grunt-contrib-clean");
