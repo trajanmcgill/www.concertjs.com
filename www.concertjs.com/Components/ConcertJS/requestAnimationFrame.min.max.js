@@ -1,27 +1,27 @@
-(function() {
+!function() {
     "use strict";
-    function e(e) {
-        var t = a;
-        return a++, l[t] = e, c++, null === r && (r = window.setTimeout(i, Math.max(0, 16 - (new Date().getTime() - w)))), 
-        t;
+    function a(a) {
+        var b = f;
+        return f++, g[b] = a, k++, null === i && (i = window.setTimeout(d, Math.max(0, 16 - (new Date().getTime() - j)))), 
+        b;
     }
-    function t(e) {
-        e >= s && l.hasOwnProperty(e) ? n(l, e) : o.hasOwnProperty(e) && n(o, e);
+    function b(a) {
+        a >= l && g.hasOwnProperty(a) ? c(g, a) : h.hasOwnProperty(a) && c(h, a);
     }
-    function n(e, t) {
-        delete e[t], c--, 1 > c && null !== r && (window.clearTimeout(r), r = null);
+    function c(a, b) {
+        delete a[b], k--, 1 > k && null !== i && (window.clearTimeout(i), i = null);
     }
-    function i() {
-        var e, t;
-        r = null, w = new Date().getTime(), o = l, l = {}, s = a;
-        for (e in o) if (o.hasOwnProperty(e)) {
-            t = o[e], delete o[e], c--;
+    function d() {
+        var a, b;
+        i = null, j = new Date().getTime(), h = g, g = {}, l = f;
+        for (a in h) if (h.hasOwnProperty(a)) {
+            b = h[a], delete h[a], k--;
             try {
-                t(w);
-            } catch (n) {}
+                b(j);
+            } catch (c) {}
         }
     }
-    var u, a = 0, l = {}, o = {}, r = null, w = 0, c = 0, s = 0, m = window, f = "AnimationFrame", h = "cancel" + f, d = "request" + f, q = [ "webkitCancel", "webkitCancelRequest", "mozCancel" ], b = [ "webkitRequest", "webkitRequest", "mozRequest" ];
-    for (u = 0; !m[h] && q.length > u; u++) m[h] = m[q[u] + f], m[d] = m[b[u] + f];
-    m[h] || (m[h] = t, m[d] = e);
-})();
+    var e, f = 0, g = {}, h = {}, i = null, j = 0, k = 0, l = 0, m = window, n = "AnimationFrame", o = "cancel" + n, p = "request" + n, q = [ "webkitCancel", "webkitCancelRequest", "mozCancel" ], r = [ "webkitRequest", "webkitRequest", "mozRequest" ];
+    for (e = 0; !m[o] && e < q.length; e++) m[o] = m[q[e] + n], m[p] = m[r[e] + n];
+    m[o] || (m[o] = b, m[p] = a);
+}();

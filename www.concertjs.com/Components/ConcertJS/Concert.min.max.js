@@ -1,27 +1,27 @@
 var Concert = function() {
     "use strict";
-    var e = Concert, t = function() {
-        function e() {
-            var e = this;
-            e.thisPublic = this;
-            var t = {
-                thisPublic: e
+    var a = Concert, b = function() {
+        function a() {
+            var a = this;
+            a.thisPublic = this;
+            var b = {
+                thisPublic: a
             };
-            e.___accessProtectedMembers = function() {
-                i = t;
+            a.___accessProtectedMembers = function() {
+                d = b;
             };
         }
-        function t() {
-            return this.___accessProtectedMembers(), i;
+        function b() {
+            return this.___accessProtectedMembers(), d;
         }
-        function n() {}
-        var i;
-        return e.extend = function(e) {
-            var i = e(t, this);
-            return n.prototype = this.prototype, i.prototype = new n(), i.prototype.constructor = i, 
-            i.extend = this.extend, i;
-        }, e;
-    }(), n = {
+        function c() {}
+        var d;
+        return a.extend = function(a) {
+            var d = a(b, this);
+            return c.prototype = this.prototype, d.prototype = new c(), d.prototype.constructor = d, 
+            d.extend = this.extend, d;
+        }, a;
+    }(), c = {
         nextSequenceID: 0,
         Definitions: {
             FallbackAutoPollerInterval: 16,
@@ -35,211 +35,211 @@ var Concert = function() {
             }
         },
         Util: {
-            arraysShallowlyEqual: function(e, t) {
-                var n, i = e.length;
-                if (t.length !== i) return !1;
-                for (n = 0; i > n; n++) if (e[n] !== t[n]) return !1;
+            arraysShallowlyEqual: function(a, b) {
+                var c, d = a.length;
+                if (b.length !== d) return !1;
+                for (c = 0; d > c; c++) if (a[c] !== b[c]) return !1;
                 return !0;
             },
-            isArray: function(e) {
-                return "object" == typeof e && "[object Array]" === Object.prototype.toString.call(e);
+            isArray: function(a) {
+                return "object" == typeof a && "[object Array]" === Object.prototype.toString.call(a);
             },
-            loadObjectData: function(e, t, n, i) {
-                var r;
-                for (r in e) e.hasOwnProperty(r) && (n[r] = e[r]);
-                for (r in t) t.hasOwnProperty(r) && (i[r] = t[r]);
+            loadObjectData: function(a, b, c, d) {
+                var e;
+                for (e in a) a.hasOwnProperty(e) && (c[e] = a[e]);
+                for (e in b) b.hasOwnProperty(e) && (d[e] = b[e]);
             },
-            round: function(e, t) {
-                return t * Math.round(e / t);
+            round: function(a, b) {
+                return b * Math.round(a / b);
             }
         },
         Applicators: {
-            Property: function(e, t, n) {
-                e[t] = n;
+            Property: function(a, b, c) {
+                a[b] = c;
             },
-            Style: function(e, t, n, i) {
-                e.style[t] = null === i ? n : "" + n + i;
+            Style: function(a, b, c, d) {
+                a.style[b] = null === d ? c : c.toString() + d;
             },
-            SVG_ElementAttribute: function(e, t, n, i) {
-                e.setAttribute(t, null === i ? n : "" + n + i);
+            SVG_ElementAttribute: function(a, b, c, d) {
+                a.setAttribute(b, null === d ? c : c.toString() + d);
             }
         },
         Calculators: {
-            Color: function(e, t, i) {
-                function r(e) {
-                    return 1 === e.length && (e += e), parseInt(e, 16);
+            Color: function(a, b, d) {
+                function e(a) {
+                    return 1 === a.length && (a += a), parseInt(a, 16);
                 }
-                function a(e, t, i) {
-                    var a, o, s, u, l, c, f, h, d, m = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$|^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([0-9.]+)\s*\)$/i, g = /^hsl\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)$|^hsla\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*,\s*([0-9.]+)\s*\)$/i, p = /^#([0-9a-f])([0-9a-f])([0-9a-f])$|^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i, T = !1, v = !1;
-                    if (null !== (a = m.exec(e)) ? (o = m.exec(t), T = !0) : null !== (a = g.exec(e)) && (o = g.exec(t), 
-                    v = !0), T || v) {
-                        for (s = [], u = 1; 8 > u; u++) l = a[u], void 0 !== l && (l = parseInt(l, 10), 
-                        c = l + i * (parseInt(o[u], 10) - l), s.push(7 > u ? n.Util.round(c, 1) : c));
-                        T ? f = "rgb" + (4 === s.length ? "a" : "") + "(" + s.join() + ")" : (c = "" + s[0] + "," + ("" + s[1]) + "%," + ("" + s[2]) + "%", 
-                        f = 4 === s.length ? "hsla(" + c + "," + ("" + s[3]) + ")" : "hsl(" + c + ")");
+                function f(a, b, d) {
+                    var f, g, h, i, j, k, l, m, n, o = /^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$|^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([0-9.]+)\s*\)$/i, p = /^hsl\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)$|^hsla\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*,\s*([0-9.]+)\s*\)$/i, q = /^#([0-9a-f])([0-9a-f])([0-9a-f])$|^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i, r = !1, s = !1;
+                    if (null !== (f = o.exec(a)) ? (g = o.exec(b), r = !0) : null !== (f = p.exec(a)) && (g = p.exec(b), 
+                    s = !0), r || s) {
+                        for (h = [], i = 1; 8 > i; i++) j = f[i], "undefined" != typeof j && (j = parseInt(j, 10), 
+                        k = j + d * (parseInt(g[i], 10) - j), h.push(7 > i ? c.Util.round(k, 1) : k));
+                        r ? l = "rgb" + (4 === h.length ? "a" : "") + "(" + h.join() + ")" : (k = h[0].toString() + "," + h[1].toString() + "%," + h[2].toString() + "%", 
+                        l = 4 === h.length ? "hsla(" + k + "," + h[3].toString() + ")" : "hsl(" + k + ")");
                     } else {
-                        for (a = p.exec(e), o = p.exec(t), h = [], d = [], u = 1; 7 > u; u++) c = a[u], 
-                        void 0 !== c && h.push(c), c = o[u], void 0 !== c && d.push(c);
-                        for (f = "#", u = 0; 3 > u; u++) l = r(h[u]), c = n.Util.round(l + i * (r(d[u]) - l), 1), 
-                        f += (16 > c ? "0" : "") + c.toString(16);
+                        for (f = q.exec(a), g = q.exec(b), m = [], n = [], i = 1; 7 > i; i++) k = f[i], 
+                        "undefined" != typeof k && m.push(k), k = g[i], "undefined" != typeof k && n.push(k);
+                        for (l = "#", i = 0; 3 > i; i++) j = e(m[i]), k = c.Util.round(j + d * (e(n[i]) - j), 1), 
+                        l += (16 > k ? "0" : "") + k.toString(16);
                     }
-                    return f;
+                    return l;
                 }
-                var o, s, u;
-                if (n.Util.isArray(t)) for (u = [], o = 0, s = t.length; s > o; o++) u.push(a(t[o], i[o], e)); else u = a(t, i, e);
-                return u;
+                var g, h, i;
+                if (c.Util.isArray(b)) for (i = [], g = 0, h = b.length; h > g; g++) i.push(f(b[g], d[g], a)); else i = f(b, d, a);
+                return i;
             },
-            Discrete: function(e, t, i, r) {
-                var a, o, s, u, l, c = void 0 !== r.round;
-                if (c && (l = r.round), n.Util.isArray(t)) for (s = [], a = 0, u = t.length; u > a; a++) o = 1 > e ? t[a] : i[a], 
-                s.push(c ? n.Util.round(o, l) : o); else o = 1 > e ? t : i, s = c ? n.Util.round(o, l) : o;
-                return s;
+            Discrete: function(a, b, d, e) {
+                var f, g, h, i, j, k = "undefined" != typeof e.round;
+                if (k && (j = e.round), c.Util.isArray(b)) for (h = [], f = 0, i = b.length; i > f; f++) g = 1 > a ? b[f] : d[f], 
+                h.push(k ? c.Util.round(g, j) : g); else g = 1 > a ? b : d, h = k ? c.Util.round(g, j) : g;
+                return h;
             },
-            Linear: function(e, t, i, r) {
-                var a, o, s, u, l, c, f = void 0 !== r.round;
-                if (f && (c = r.round), n.Util.isArray(t)) for (l = [], a = 0, o = t.length; o > a; a++) s = t[a], 
-                u = s + e * (i[a] - s), l.push(f ? n.Util.round(u, c) : u); else u = t + e * (i - t), 
-                l = f ? n.Util.round(u, c) : u;
-                return l;
+            Linear: function(a, b, d, e) {
+                var f, g, h, i, j, k, l = "undefined" != typeof e.round;
+                if (l && (k = e.round), c.Util.isArray(b)) for (j = [], f = 0, g = b.length; g > f; f++) h = b[f], 
+                i = h + a * (d[f] - h), j.push(l ? c.Util.round(i, k) : i); else i = b + a * (d - b), 
+                j = l ? c.Util.round(i, k) : i;
+                return j;
             },
-            Rotational: function(e, t, i, r) {
-                var a, o = void 0 !== r.round;
-                o && (a = r.round);
-                var s = r.center[0], u = r.center[1], l = r.offset[0], c = r.offset[1], f = t[0], h = i[0], d = t[1], m = i[1], g = f + e * (h - f), p = d + e * (m - d), T = s + g * Math.cos(p) + l, v = u + g * Math.sin(p) + c;
-                return o && (T = n.Util.round(T, a), v = n.Util.round(v, a)), [ T, v ];
+            Rotational: function(a, b, d, e) {
+                var f, g = "undefined" != typeof e.round;
+                g && (f = e.round);
+                var h = e.center[0], i = e.center[1], j = e.offset[0], k = e.offset[1], l = b[0], m = d[0], n = b[1], o = d[1], p = l + a * (m - l), q = n + a * (o - n), r = h + p * Math.cos(q) + j, s = i + p * Math.sin(q) + k;
+                return g && (r = c.Util.round(r, f), s = c.Util.round(s, f)), [ r, s ];
             }
         },
         EasingFunctions: {
-            ConstantRate: function(e, t, n) {
-                return n >= t ? 1 : e > n ? 0 : (n - e) / (t - e);
+            ConstantRate: function(a, b, c) {
+                return c >= b ? 1 : a > c ? 0 : (c - a) / (b - a);
             },
-            QuadIn: function(e, t, n) {
-                return n >= t ? 1 : e > n ? 0 : Math.pow((n - e) / (t - e), 2);
+            QuadIn: function(a, b, c) {
+                return c >= b ? 1 : a > c ? 0 : Math.pow((c - a) / (b - a), 2);
             },
-            QuadInOut: function(e, t, n) {
-                var i;
-                return n >= t ? 1 : e > n ? 0 : (i = (e + t) / 2, i > n ? Math.pow((n - e) / (i - e), 2) / 2 : .5 + (1 - Math.pow(1 - (n - i) / (t - i), 2)) / 2);
+            QuadInOut: function(a, b, c) {
+                var d;
+                return c >= b ? 1 : a > c ? 0 : (d = (a + b) / 2, d > c ? Math.pow((c - a) / (d - a), 2) / 2 : .5 + (1 - Math.pow(1 - (c - d) / (b - d), 2)) / 2);
             },
-            QuadOut: function(e, t, n) {
-                return n >= t ? 1 : e > n ? 0 : 1 - Math.pow(1 - (n - e) / (t - e), 2);
+            QuadOut: function(a, b, c) {
+                return c >= b ? 1 : a > c ? 0 : 1 - Math.pow(1 - (c - a) / (b - a), 2);
             },
-            Smoothstep: function(e, t, n) {
-                var i;
-                return n >= t ? 1 : e > n ? 0 : (i = (n - e) / (t - e), i * i * (3 - 2 * i));
+            Smoothstep: function(a, b, c) {
+                var d;
+                return c >= b ? 1 : a > c ? 0 : (d = (c - a) / (b - a), d * d * (3 - 2 * d));
             }
         },
         Repeating: {
-            Bounce: function(e) {
-                function t(t, i, r) {
-                    var a, o, s, u = i - t;
-                    return t > r ? (a = t - r, o = Math.floor(a / u) + 1, n || e >= o ? (s = a % u, 
+            Bounce: function(a) {
+                function b(b, d, e) {
+                    var f, g, h, i = d - b;
+                    return b > e ? (f = b - e, g = Math.floor(f / i) + 1, c || a >= g ? (h = f % i, 
                     {
-                        adjustedTime: 0 === o % 2 ? i - s : s,
+                        adjustedTime: g % 2 === 0 ? d - h : h,
                         hitFinalBoundary: !1
                     }) : {
-                        adjustedTime: 0 === e % 2 ? t : i,
+                        adjustedTime: a % 2 === 0 ? b : d,
                         hitFinalBoundary: !0
-                    }) : (a = r - i, o = Math.floor(a / u) + 1, n || e >= o ? (s = a % u, {
-                        adjustedTime: 0 === o % 2 ? s : i - s,
+                    }) : (f = e - d, g = Math.floor(f / i) + 1, c || a >= g ? (h = f % i, {
+                        adjustedTime: g % 2 === 0 ? h : d - h,
                         hitFinalBoundary: !1
                     }) : {
-                        adjustedTime: 0 === e % 2 ? i : t,
+                        adjustedTime: a % 2 === 0 ? d : b,
                         hitFinalBoundary: !0
                     });
                 }
-                var n = void 0 === e || null === e;
-                return t;
+                var c = "undefined" == typeof a || null === a;
+                return b;
             },
-            Loop: function(e) {
-                function t(t, i, r) {
-                    var a, o = i - t;
-                    return t > r ? (a = t - r, n || e >= a / o ? {
-                        adjustedTime: i - a % o,
+            Loop: function(a) {
+                function b(b, d, e) {
+                    var f, g = d - b;
+                    return b > e ? (f = b - e, c || a >= f / g ? {
+                        adjustedTime: d - f % g,
                         hitFinalBoundary: !1
                     } : {
-                        adjustedTime: t,
+                        adjustedTime: b,
                         hitFinalBoundary: !0
-                    }) : (a = r - i, n || e >= a / o ? {
-                        adjustedTime: t + a % o,
+                    }) : (f = e - d, c || a >= f / g ? {
+                        adjustedTime: b + f % g,
                         hitFinalBoundary: !1
                     } : {
-                        adjustedTime: i,
+                        adjustedTime: d,
                         hitFinalBoundary: !0
                     });
                 }
-                var n = void 0 === e || null === e;
-                return t;
+                var c = "undefined" == typeof a || null === a;
+                return b;
             },
-            None: function(e, t, n) {
-                return e > n ? {
-                    adjustedTime: e,
+            None: function(a, b, c) {
+                return a > c ? {
+                    adjustedTime: a,
                     hitFinalBoundary: !0
                 } : {
-                    adjustedTime: t,
+                    adjustedTime: b,
                     hitFinalBoundary: !0
                 };
             }
         },
         Pollers: {
-            Auto: t.extend(function(e, t) {
-                function i() {
-                    if (!window.cancelAnimationFrame) return new n.Pollers.FixedInterval(n.Definitions.FallbackAutoPollerInterval);
-                    t.call(this);
-                    var i = this.thisPublic, o = e.call(i);
-                    o.frameRequestID = null, i.run = r, i.stop = a;
+            Auto: b.extend(function(a, b) {
+                function d() {
+                    if (!window.cancelAnimationFrame) return new c.Pollers.FixedInterval(c.Definitions.FallbackAutoPollerInterval);
+                    b.call(this);
+                    var d = this.thisPublic, g = a.call(d);
+                    g.frameRequestID = null, d.run = e, d.stop = f;
                 }
-                function r(t) {
-                    var n, i = this.thisPublic, r = e.call(i);
-                    null === r.frameRequestID && (n = function() {
-                        r.frameRequestID = window.requestAnimationFrame(n), t();
-                    }, n());
+                function e(b) {
+                    var c, d = this.thisPublic, e = a.call(d);
+                    null === e.frameRequestID && (c = function() {
+                        e.frameRequestID = window.requestAnimationFrame(c), b();
+                    })();
                 }
-                function a() {
-                    var t = this.thisPublic, n = e.call(t);
-                    null !== n.frameRequestID && (window.cancelAnimationFrame(n.frameRequestID), n.frameRequestID = null);
+                function f() {
+                    var b = this.thisPublic, c = a.call(b);
+                    null !== c.frameRequestID && (window.cancelAnimationFrame(c.frameRequestID), c.frameRequestID = null);
                 }
-                return i;
+                return d;
             }),
-            FixedInterval: t.extend(function(e, t) {
-                function n(n) {
-                    t.call(this);
-                    var a = this.thisPublic, o = e.call(a);
-                    o.interval = n, o.intervalID = null, a.run = i, a.stop = r;
+            FixedInterval: b.extend(function(a, b) {
+                function c(c) {
+                    b.call(this);
+                    var f = this.thisPublic, g = a.call(f);
+                    g.interval = c, g.intervalID = null, f.run = d, f.stop = e;
                 }
-                function i(t) {
-                    var n = this.thisPublic, i = e.call(n);
-                    null === i.intervalID && (i.intervalID = setInterval(t, i.interval));
+                function d(b) {
+                    var c = this.thisPublic, d = a.call(c);
+                    null === d.intervalID && (d.intervalID = setInterval(b, d.interval));
                 }
-                function r() {
-                    var t = this.thisPublic, n = e.call(t);
-                    null !== n.intervalID && (clearInterval(n.intervalID), n.intervalID = null);
+                function e() {
+                    var b = this.thisPublic, c = a.call(b);
+                    null !== c.intervalID && (clearInterval(c.intervalID), c.intervalID = null);
                 }
-                return n;
+                return c;
             })
         },
         Transformation: function() {
-            function e(e) {
-                var t;
-                this.transformationID = u++, this.additionalProperties = {};
-                for (t in e) "target" === t || "feature" === t || "applicator" === t || "calculator" === t || "t0" === t || "t1" === t || "v0" === t || "v1" === t || "v0Generator" === t || "v1Generator" === t || "unit" === t || "easing" === t ? this[t] = e[t] : e.hasOwnProperty(t) && (this.additionalProperties[t] = e[t]);
+            function a(a) {
+                var b;
+                this.transformationID = i++, this.additionalProperties = {};
+                for (b in a) "target" === b || "feature" === b || "applicator" === b || "calculator" === b || "t0" === b || "t1" === b || "v0" === b || "v1" === b || "v0Generator" === b || "v1Generator" === b || "unit" === b || "easing" === b ? this[b] = a[b] : a.hasOwnProperty(b) && (this.additionalProperties[b] = a[b]);
                 this.lastFrameID = null, this.lastCalculatedValue = null, this.lastAppliedValueContainer = {
-                    value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
-                    unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
-                }, this.clone = i, this.generateValues = r, this.hasDynamicValues = a, this.retarget = o, 
-                this.seek = s;
+                    value: c.Util.isArray(this.feature) ? new Array(this.feature.length) : null,
+                    unit: c.Util.isArray(this.unit) ? new Array(this.unit.length) : null
+                }, this.clone = d, this.generateValues = e, this.hasDynamicValues = f, this.retarget = g, 
+                this.seek = h;
             }
-            function t(e, t, i, r, a, o, s) {
-                var u, l, c, f, h, d, m, g, p, T, v;
-                if (l = a.value, c = a.unit, f = o.value, h = o.unit, d = s || null === f, n.Util.isArray(i)) {
-                    for (p = n.Util.isArray(c), u = 0, m = i.length; m > u; u++) if (g = i[u], g === r) {
-                        T = l[u], v = p ? c[u] : c, (d || T !== f[u] || v !== (p ? h[u] : h)) && (e(t, g, T, v), 
-                        f[u] = T, p ? h[u] = v : o.unit = v);
+            function b(a, b, d, e, f, g, h) {
+                var i, j, k, l, m, n, o, p, q, r, s;
+                if (j = f.value, k = f.unit, l = g.value, m = g.unit, n = h || null === l, c.Util.isArray(d)) {
+                    for (q = c.Util.isArray(k), i = 0, o = d.length; o > i; i++) if (p = d[i], p === e) {
+                        r = j[i], s = q ? k[i] : k, (n || r !== l[i] || s !== (q ? m[i] : m)) && (a(b, p, r, s), 
+                        l[i] = r, q ? m[i] = s : g.unit = s);
                         break;
                     }
-                } else (d || l !== f || c !== h) && (e(t, i, l, c), o.value = l, o.unit = c);
+                } else (n || j !== l || k !== m) && (a(b, d, j, k), g.value = j, g.unit = k);
             }
-            function i(e) {
-                var t, i, r, a = this.additionalProperties, o = {
+            function d(a) {
+                var b, d, e, f = this.additionalProperties, g = {
                     transformationID: !0,
                     additionalProperties: !0,
                     target: !0,
@@ -252,495 +252,496 @@ var Concert = function() {
                     retarget: !0,
                     seek: !0
                 };
-                t = new n.Transformation();
-                for (i in this) this.hasOwnProperty(i) && !o[i] && (t[i] = this[i]);
-                t.target = e, t.lastAppliedValueContainer = {
-                    value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
-                    unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
-                }, t.lastFrameID = null, t.lastCalculatedValue = null, r = t.additionalProperties;
-                for (i in a) a.hasOwnProperty(i) && (r[i] = a[i]);
-                return t;
+                b = new c.Transformation();
+                for (d in this) this.hasOwnProperty(d) && !g[d] && (b[d] = this[d]);
+                b.target = a, b.lastAppliedValueContainer = {
+                    value: c.Util.isArray(this.feature) ? new Array(this.feature.length) : null,
+                    unit: c.Util.isArray(this.unit) ? new Array(this.unit.length) : null
+                }, b.lastFrameID = null, b.lastCalculatedValue = null, e = b.additionalProperties;
+                for (d in f) f.hasOwnProperty(d) && (e[d] = f[d]);
+                return b;
             }
-            function r(e) {
-                var t = this.v0Generator, n = this.v1Generator;
-                "function" == typeof t && (this.v0 = t(e)), "function" == typeof n && (this.v1 = n(e));
+            function e(a) {
+                var b = this.v0Generator, c = this.v1Generator;
+                "function" == typeof b && (this.v0 = b(a)), "function" == typeof c && (this.v1 = c(a));
             }
-            function a() {
+            function f() {
                 return "function" == typeof this.v0Generator || "function" == typeof this.v1Generator;
             }
-            function o(e) {
-                this.target = e, this.lastAppliedValueContainer = {
-                    value: n.Util.isArray(this.feature) ? Array(this.feature.length) : null,
-                    unit: n.Util.isArray(this.unit) ? Array(this.unit.length) : null
+            function g(a) {
+                this.target = a, this.lastAppliedValueContainer = {
+                    value: c.Util.isArray(this.feature) ? new Array(this.feature.length) : null,
+                    unit: c.Util.isArray(this.unit) ? new Array(this.unit.length) : null
                 };
             }
-            function s(e, n, i, r) {
-                var a = n === this.lastFrameID ? this.lastCalculatedValue : this.calculator(this.easing(this.t0, this.t1, e), this.v0, this.v1, this.additionalProperties);
-                t(this.applicator, this.target, this.feature, i, {
-                    value: a,
+            function h(a, c, d, e) {
+                var f = c === this.lastFrameID ? this.lastCalculatedValue : this.calculator(this.easing(this.t0, this.t1, a), this.v0, this.v1, this.additionalProperties);
+                b(this.applicator, this.target, this.feature, d, {
+                    value: f,
                     unit: this.unit
-                }, this.lastAppliedValueContainer, r);
+                }, this.lastAppliedValueContainer, e);
             }
-            var u = 0;
-            return e;
+            var i = 0;
+            return a;
         }(),
         FeatureSequence: function() {
-            function e(e, n) {
-                this.target = e, this.feature = n, this.transformations = [], this.transformationIndexBySegment = null, 
-                this.clone = t, this.indexTransformations = i, this.retarget = r, this.seek = a;
+            function a(a, c) {
+                this.target = a, this.feature = c, this.transformations = [], this.transformationIndexBySegment = null, 
+                this.clone = b, this.indexTransformations = d, this.retarget = e, this.seek = f;
             }
-            function t(e) {
-                var t, i, r, a, o = this.transformations, s = o.length, u = Array(s), l = this.transformationIndexBySegment, c = null, f = new n.FeatureSequence(e, this.feature), h = {
-                    featureSequence: f,
-                    transformations: u
+            function b(a) {
+                var b, d, e, f, g = this.transformations, h = g.length, i = new Array(h), j = this.transformationIndexBySegment, k = null, l = new c.FeatureSequence(a, this.feature), m = {
+                    featureSequence: l,
+                    transformations: i
                 };
-                for (t = 0; s > t; t++) u[t] = o[t].clone(e);
-                if (f.transformations = u, l) for (r = l.length, c = Array(r), t = 0; r > t; t++) for (a = l[t], 
-                i = 0; s > i; i++) if (a === o[i]) {
-                    c[t] = u[i];
+                for (b = 0; h > b; b++) i[b] = g[b].clone(a);
+                if (l.transformations = i, j) for (e = j.length, k = new Array(e), b = 0; e > b; b++) for (f = j[b], 
+                d = 0; h > d; d++) if (f === g[d]) {
+                    k[b] = i[d];
                     break;
                 }
-                return f.transformationIndexBySegment = c, h;
+                return l.transformationIndexBySegment = k, m;
             }
-            function i(e) {
-                var t, n, i, r, a, o, s, u, l = this.transformations, c = l.length - 1, f = e.length;
-                if (!(0 > c)) for (l.sort(function(e, t) {
-                    var n = e.t0, i = t.t0;
-                    return n === i ? 0 : i > n ? -1 : 1;
-                }), i = this.transformationIndexBySegment = Array(f), r = 0, u = e[0].startTime, 
-                t = 0, a = l[0], c > 0 ? (o = l[1], s = o.t0, n = !0) : n = !1; f > r; ) if (n && u >= s) t++, 
-                a = o, c > t ? (o = l[t + 1], s = o.t0) : n = !1; else {
-                    if (i[r] = a, r++, !(f > r)) break;
-                    u = e[r].startTime;
+            function d(a) {
+                var b, c, d, e, f, g, h, i, j = this.transformations, k = j.length - 1, l = a.length;
+                if (!(0 > k)) for (j.sort(function(a, b) {
+                    var c = a.t0, d = b.t0;
+                    return c === d ? 0 : d > c ? -1 : 1;
+                }), d = this.transformationIndexBySegment = new Array(l), e = 0, i = a[0].startTime, 
+                b = 0, f = j[0], k > 0 ? (g = j[1], h = g.t0, c = !0) : c = !1; l > e; ) if (c && i >= h) b++, 
+                f = g, k > b ? (g = j[b + 1], h = g.t0) : c = !1; else {
+                    if (d[e] = f, e++, !(l > e)) break;
+                    i = a[e].startTime;
                 }
             }
-            function r(e) {
-                var t, n = this.transformations, i = n.length;
-                for (t = 0; i > t; t++) n[t].retarget(e);
-                this.target = e;
+            function e(a) {
+                var b, c = this.transformations, d = c.length;
+                for (b = 0; d > b; b++) c[b].retarget(a);
+                this.target = a;
             }
-            function a(e, t, n, i) {
-                return this.transformationIndexBySegment[e].seek(t, n, this.feature, i);
+            function f(a, b, c, d) {
+                return this.transformationIndexBySegment[a].seek(b, c, this.feature, d);
             }
-            return e;
+            return a;
         }(),
-        TargetSequence: t.extend(function(e, t) {
-            function i(n) {
-                t.call(this);
-                var i = this.thisPublic, f = e.call(i);
-                f.target = n, f.featureSequences = [], i.addFeatureSequence = r, i.clone = a, i.findFeatureSequenceByFeature = o, 
-                i.getTarget = s, i.indexTransformations = u, i.retarget = l, i.seek = c;
+        TargetSequence: b.extend(function(a, b) {
+            function d(c) {
+                b.call(this);
+                var d = this.thisPublic, l = a.call(d);
+                l.target = c, l.featureSequences = [], d.addFeatureSequence = e, d.clone = f, d.findFeatureSequenceByFeature = g, 
+                d.getTarget = h, d.indexTransformations = i, d.retarget = j, d.seek = k;
             }
-            function r(t) {
-                var n = this.thisPublic, i = e.call(n);
-                i.featureSequences.push(t);
+            function e(b) {
+                var c = this.thisPublic, d = a.call(c);
+                d.featureSequences.push(b);
             }
-            function a(t) {
-                var i, r, a = this.thisPublic, o = e.call(a), s = [], u = o.featureSequences, l = u.length, c = new n.TargetSequence(t), f = {
-                    targetSequence: c,
-                    transformations: s
+            function f(b) {
+                var d, e, f = this.thisPublic, g = a.call(f), h = [], i = g.featureSequences, j = i.length, k = new c.TargetSequence(b), l = {
+                    targetSequence: k,
+                    transformations: h
                 };
-                for (i = 0; l > i; i++) r = u[i].clone(t), c.addFeatureSequence(r.featureSequence), 
-                s.push.apply(s, r.transformations);
-                return f;
+                for (d = 0; j > d; d++) e = i[d].clone(b), k.addFeatureSequence(e.featureSequence), 
+                h.push.apply(h, e.transformations);
+                return l;
             }
-            function o(t) {
-                var n, i, r = this.thisPublic, a = e.call(r), o = a.featureSequences, s = o.length;
-                for (n = 0; s > n; n++) if (i = o[n], i.feature === t) return i;
+            function g(b) {
+                var c, d, e = this.thisPublic, f = a.call(e), g = f.featureSequences, h = g.length;
+                for (c = 0; h > c; c++) if (d = g[c], d.feature === b) return d;
                 return null;
             }
-            function s() {
-                var t = this.thisPublic, n = e.call(t);
-                return n.target;
+            function h() {
+                var b = this.thisPublic, c = a.call(b);
+                return c.target;
             }
-            function u(t) {
-                var n, i, r = this.thisPublic, a = e.call(r), o = a.featureSequences;
-                for (n = 0, i = o.length; i > n; n++) o[n].indexTransformations(t);
+            function i(b) {
+                var c, d, e = this.thisPublic, f = a.call(e), g = f.featureSequences;
+                for (c = 0, d = g.length; d > c; c++) g[c].indexTransformations(b);
             }
-            function l(t) {
-                var n, i = this.thisPublic, r = e.call(i), a = r.featureSequences, o = a.length;
-                for (n = 0; o > n; n++) a[n].retarget(t);
-                r.target = t;
+            function j(b) {
+                var c, d = this.thisPublic, e = a.call(d), f = e.featureSequences, g = f.length;
+                for (c = 0; g > c; c++) f[c].retarget(b);
+                e.target = b;
             }
-            function c(t, n, i, r) {
-                var a, o, s = this.thisPublic, u = e.call(s), l = u.featureSequences;
-                for (o = 0, a = l.length; a > o; o++) l[o].seek(t, n, i, r);
+            function k(b, c, d, e) {
+                var f, g, h = this.thisPublic, i = a.call(h), j = i.featureSequences;
+                for (g = 0, f = j.length; f > g; g++) j[g].seek(b, c, d, e);
             }
-            return i;
+            return d;
         }),
-        TimelineSegment: function(e, t) {
-            this.startTime = e, this.endTime = t;
+        TimelineSegment: function(a, b) {
+            this.startTime = a, this.endTime = b;
         },
-        Sequence: t.extend(function(e, t) {
-            function i(i) {
-                t.call(this);
-                var r = this.thisPublic, a = e.call(r);
-                a.ID = n.nextSequenceID, n.nextSequenceID++, a.nextFrameID = 0, a.targetSequences = [], 
-                a.timelineSegments = [], a.lastUsedTimelineSegmentNumber = 0, a.allTransformations = [], 
-                a.dynamicValueTransformations = [], a.indexCompletionCallbacks = [], a.indexed = !1, 
-                a.indexingInProgress = !1, a.indexTimerID = null, a.indexingProcessData = {}, a.running = !1, 
-                a.currentTime = null, a.unadjustedTime = null, a.sequenceStartTime = null, a.sequenceEndTime = null, 
-                a.poller = null, a.synchronizer = null, a.initialSyncSourcePoint = null, a.lastSegmentNumber = null, 
-                a.defaults = {
+        Sequence: b.extend(function(a, b) {
+            function d(d) {
+                b.call(this);
+                var e = this.thisPublic, f = a.call(e);
+                f.ID = c.nextSequenceID, c.nextSequenceID++, f.nextFrameID = 0, f.targetSequences = [], 
+                f.timelineSegments = [], f.lastUsedTimelineSegmentNumber = 0, f.allTransformations = [], 
+                f.dynamicValueTransformations = [], f.indexCompletionCallbacks = [], f.indexed = !1, 
+                f.indexingInProgress = !1, f.indexTimerID = null, f.indexingProcessData = {}, f.running = !1, 
+                f.currentTime = null, f.unadjustedTime = null, f.sequenceStartTime = null, f.sequenceEndTime = null, 
+                f.poller = null, f.synchronizer = null, f.initialSyncSourcePoint = null, f.lastSegmentNumber = null, 
+                f.defaults = {
                     unit: null,
                     applicator: Concert.Applicators.Property,
                     easing: Concert.EasingFunctions.ConstantRate,
                     calculator: Concert.Calculators.Linear
-                }, a.synchronizeTo = null, a.speed = 1, a.timeOffset = 0, a.pollingInterval = 0, 
-                a.after = n.Repeating.None, a.before = n.Repeating.None, a.autoStopAtEnd = !0, a.onAutoStop = null, 
-                a.stretchStartTimeToZero = !0, a.soleControlOptimizationDuringRun = !0, a.advanceIndexingToNextStep = u, 
-                a.findSequenceSegmentNumberByTime = l, a.findSequenceSegmentNumberInRange = c, a.findTargetSequenceByTarget = f, 
-                a.resetIndexing = h, a.runIndexing = d, r.addTransformations = m, r.begin = g, r.clone = p, 
-                r.follow = T, r.generateValues = v, r.getCurrentTime = S, r.getEndTime = y, r.getID = P, 
-                r.getStartTime = b, r.index = I, r.isRunning = D, r.retarget = x, r.run = A, r.seek = q, 
-                r.setAfter = w, r.setBefore = R, r.setDefaults = k, r.stop = C, r.syncTo = F, i && r.addTransformations(i);
+                }, f.synchronizeTo = null, f.speed = 1, f.timeOffset = 0, f.pollingInterval = 0, 
+                f.after = c.Repeating.None, f.before = c.Repeating.None, f.autoStopAtEnd = !0, f.onAutoStop = null, 
+                f.stretchStartTimeToZero = !0, f.soleControlOptimizationDuringRun = !0, f.advanceIndexingToNextStep = i, 
+                f.findSequenceSegmentNumberByTime = j, f.findSequenceSegmentNumberInRange = k, f.findTargetSequenceByTarget = l, 
+                f.resetIndexing = m, f.runIndexing = n, e.addTransformations = o, e.begin = p, e.clone = q, 
+                e.follow = r, e.generateValues = s, e.getCurrentTime = t, e.getEndTime = u, e.getID = v, 
+                e.getStartTime = w, e.index = x, e.isRunning = y, e.retarget = z, e.run = A, e.seek = B, 
+                e.setAfter = C, e.setBefore = D, e.setDefaults = E, e.stop = F, e.syncTo = G, d && e.addTransformations(d);
             }
-            function r(e, t) {
-                var n, i = {};
-                if (e) for (n in e) e.hasOwnProperty(n) && (i[n] = e[n]);
-                if (t) for (n in t) t.hasOwnProperty(n) && (i[n] = t[n]);
-                return i;
+            function e(a, b) {
+                var c, d = {};
+                if (a) for (c in a) a.hasOwnProperty(c) && (d[c] = a[c]);
+                if (b) for (c in b) b.hasOwnProperty(c) && (d[c] = b[c]);
+                return d;
             }
-            function a(e, t, n) {
-                return e && void 0 !== e[t] ? e[t] : n;
+            function f(a, b, c) {
+                return a && "undefined" != typeof a[b] ? a[b] : c;
             }
-            function o(t, i) {
-                var r = this.thisPublic, a = e.call(r);
-                n.Util.loadObjectData(t, i, r, a);
+            function g(b, d) {
+                var e = this.thisPublic, f = a.call(e);
+                c.Util.loadObjectData(b, d, e, f);
             }
-            function s(e, t) {
-                var n, i = 0, r = t.length - 1;
-                if (0 > r || e > t[r]) t.push(e); else if (t[0] > e) t.unshift(e); else {
-                    for (;r > i + 1; ) n = Math.floor((i + r) / 2), t[n] > e ? r = n : i = n;
-                    t.splice(r, 0, e);
+            function h(a, b) {
+                var c, d = 0, e = b.length - 1;
+                if (0 > e || a > b[e]) b.push(a); else if (a < b[0]) b.unshift(a); else {
+                    for (;e > d + 1; ) c = Math.floor((d + e) / 2), a < b[c] ? e = c : d = c;
+                    b.splice(e, 0, a);
                 }
             }
-            function u() {
-                var t, i, r, a, o = this.thisPublic, s = e.call(o), u = s.indexingProcessData, l = !1;
-                switch (u.step++, u.startingIndex = 0, u.step) {
+            function i() {
+                var b, d, e, f, g = this.thisPublic, h = a.call(g), i = h.indexingProcessData, j = !1;
+                switch (i.step++, i.startingIndex = 0, i.step) {
                   case 1:
-                    u.inputData = u.outputData, u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.consolidateDistinctValues, 
-                    u.totalIterationsThisStep = u.inputData.length, u.outputData = {};
+                    i.inputData = i.outputData, i.iterationsPerRound = c.Definitions.StartingIterationsPerAsynchProcessingRound.consolidateDistinctValues, 
+                    i.totalIterationsThisStep = i.inputData.length, i.outputData = {};
                     break;
 
                   case 2:
-                    if (u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildSortedArray, 
-                    u.isAsynchronous) {
-                        t = u.outputData, r = [];
-                        for (i in t) t.hasOwnProperty(i) && r.push(t[i]);
-                        u.inputData = r, u.totalIterationsThisStep = r.length;
-                    } else u.inputData = u.outputData, u.totalIterationsThisStep = 1;
-                    u.outputData = [];
+                    if (i.iterationsPerRound = c.Definitions.StartingIterationsPerAsynchProcessingRound.buildSortedArray, 
+                    i.isAsynchronous) {
+                        b = i.outputData, e = [];
+                        for (d in b) b.hasOwnProperty(d) && e.push(b[d]);
+                        i.inputData = e, i.totalIterationsThisStep = e.length;
+                    } else i.inputData = i.outputData, i.totalIterationsThisStep = 1;
+                    i.outputData = [];
                     break;
 
                   case 3:
-                    u.inputData = u.outputData, u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildDistinctSegmentList, 
-                    u.totalIterationsThisStep = u.inputData.length - 1, u.outputData = Array(u.totalIterationsThisStep);
+                    i.inputData = i.outputData, i.iterationsPerRound = c.Definitions.StartingIterationsPerAsynchProcessingRound.buildDistinctSegmentList, 
+                    i.totalIterationsThisStep = i.inputData.length - 1, i.outputData = new Array(i.totalIterationsThisStep);
                     break;
 
                   case 4:
-                    u.inputData = u.outputData, u.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.indexTargetSequences, 
-                    u.totalIterationsThisStep = s.targetSequences.length, u.outputData = null;
+                    i.inputData = i.outputData, i.iterationsPerRound = c.Definitions.StartingIterationsPerAsynchProcessingRound.indexTargetSequences, 
+                    i.totalIterationsThisStep = h.targetSequences.length, i.outputData = null;
                     break;
 
                   case 5:
-                    for (l = !0, s.timelineSegments = a = u.inputData, s.sequenceStartTime = !a || 1 > a.length ? null : a[0].startTime, 
-                    s.sequenceEndTime = !a || 1 > a.length ? null : a[a.length - 1].endTime, s.indexed = !0, 
-                    s.indexingInProgress = !1, u.inputData = null, u.iterationsPerRound = 1, u.totalIterationsThisStep = 0, 
-                    u.outputData = null; s.indexCompletionCallbacks.length; ) s.indexCompletionCallbacks.shift()(o);
+                    for (j = !0, h.timelineSegments = f = i.inputData, h.sequenceStartTime = !f || f.length < 1 ? null : f[0].startTime, 
+                    h.sequenceEndTime = !f || f.length < 1 ? null : f[f.length - 1].endTime, h.indexed = !0, 
+                    h.indexingInProgress = !1, i.inputData = null, i.iterationsPerRound = 1, i.totalIterationsThisStep = 0, 
+                    i.outputData = null; h.indexCompletionCallbacks.length; ) h.indexCompletionCallbacks.shift()(g);
                 }
-                return l;
+                return j;
             }
-            function l(t) {
-                var n, i, r, a, o = this.thisPublic, s = e.call(o), u = s.timelineSegments, l = u.length;
-                return l > 0 ? (i = s.lastUsedTimelineSegmentNumber, r = u[i], a = r.endTime, t >= r.startTime ? a > t ? n = {
-                    segmentNumber: i,
+            function j(b) {
+                var c, d, e, f, g = this.thisPublic, h = a.call(g), i = h.timelineSegments, j = i.length;
+                return j > 0 ? (d = h.lastUsedTimelineSegmentNumber, e = i[d], f = e.endTime, b >= e.startTime ? f > b ? c = {
+                    segmentNumber: d,
                     timeMatchType: 0
-                } : i === l - 1 ? n = {
-                    segmentNumber: i,
+                } : d === j - 1 ? c = {
+                    segmentNumber: d,
                     timeMatchType: 1
-                } : (i++, r = u[i], a = r.endTime, n = a > t ? {
-                    segmentNumber: i,
+                } : (d++, e = i[d], f = e.endTime, c = f > b ? {
+                    segmentNumber: d,
                     timeMatchType: 0
-                } : i === l - 1 ? {
-                    segmentNumber: i,
+                } : d === j - 1 ? {
+                    segmentNumber: d,
                     timeMatchType: 1
-                } : s.findSequenceSegmentNumberInRange(t, i + 1, l - 1)) : n = 0 === i ? {
+                } : h.findSequenceSegmentNumberInRange(b, d + 1, j - 1)) : c = 0 === d ? {
                     segmentNumber: 0,
                     timeMatchType: -1
-                } : s.findSequenceSegmentNumberInRange(t, 0, i - 1), s.lastUsedTimelineSegmentNumber = n.segmentNumber) : n = null, 
-                n;
+                } : h.findSequenceSegmentNumberInRange(b, 0, d - 1), h.lastUsedTimelineSegmentNumber = c.segmentNumber) : c = null, 
+                c;
             }
-            function c(t, n, i) {
-                var r, a, o, s = this.thisPublic, u = e.call(s);
-                do if (r = Math.floor((n + i) / 2), a = u.timelineSegments[r], a.startTime > t) i = r - 1, 
-                o = -1; else {
-                    if (!(t >= a.endTime)) {
-                        o = 0;
+            function k(b, c, d) {
+                var e, f, g, h = this.thisPublic, i = a.call(h);
+                do if (e = Math.floor((c + d) / 2), f = i.timelineSegments[e], b < f.startTime) d = e - 1, 
+                g = -1; else {
+                    if (!(b >= f.endTime)) {
+                        g = 0;
                         break;
                     }
-                    n = r + 1, o = 1;
-                } while (i > n);
+                    c = e + 1, g = 1;
+                } while (d > c);
                 return {
-                    segmentNumber: r,
-                    timeMatchType: o
+                    segmentNumber: e,
+                    timeMatchType: g
                 };
             }
-            function f(t) {
-                var n, i = this.thisPublic, r = e.call(i), a = r.targetSequences, o = a.length;
-                for (n = 0; o > n; n++) if (a[n].getTarget() === t) return a[n];
+            function l(b) {
+                var c, d = this.thisPublic, e = a.call(d), f = e.targetSequences, g = f.length;
+                for (c = 0; g > c; c++) if (f[c].getTarget() === b) return f[c];
                 return null;
             }
-            function h() {
-                var t = this.thisPublic, i = e.call(t), r = i.indexingProcessData;
-                r.step = 0, r.startingIndex = 0, r.iterationsPerRound = n.Definitions.StartingIterationsPerAsynchProcessingRound.buildBreakPointList, 
-                r.inputData = i.allTransformations, r.totalIterationsThisStep = i.allTransformations.length, 
-                r.outputData = Array(2 * r.totalIterationsThisStep);
+            function m() {
+                var b = this.thisPublic, d = a.call(b), e = d.indexingProcessData;
+                e.step = 0, e.startingIndex = 0, e.iterationsPerRound = c.Definitions.StartingIterationsPerAsynchProcessingRound.buildBreakPointList, 
+                e.inputData = d.allTransformations, e.totalIterationsThisStep = d.allTransformations.length, 
+                e.outputData = new Array(2 * e.totalIterationsThisStep);
             }
-            function d() {
-                function t() {
-                    var e, i, r, u, l, c, f, h = o.step, d = o.isAsynchronous, m = o.inputData, g = o.startingIndex, p = o.totalIterationsThisStep, T = d ? o.iterationsPerRound : p, v = Math.min(p, g + T), S = o.outputData, y = !1, P = 0 === h ? 2 * g : null;
-                    if (d && (e = new Date().getTime()), 2 !== h || d || n.Util.isArray(m)) for (3 === h ? u = m[g] : 4 === h && (f = a.targetSequences); v > g; ) {
-                        switch (h) {
+            function n() {
+                function b() {
+                    var a, d, e, i, j, k, l, m = g.step, n = g.isAsynchronous, o = g.inputData, p = g.startingIndex, q = g.totalIterationsThisStep, r = n ? g.iterationsPerRound : q, s = Math.min(q, p + r), t = g.outputData, u = !1, v = 0 === m ? 2 * p : null;
+                    if (n && (a = new Date().getTime()), 2 !== m || n || c.Util.isArray(o)) for (3 === m ? i = o[p] : 4 === m && (l = f.targetSequences); s > p; ) {
+                        switch (m) {
                           case 0:
-                            r = m[g], S[P++] = r.t0, S[P++] = r.t1;
+                            e = o[p], t[v++] = e.t0, t[v++] = e.t1;
                             break;
 
                           case 1:
-                            u = m[g], S[u] = u;
+                            i = o[p], t[i] = i;
                             break;
 
                           case 2:
-                            s(m[g], S);
+                            h(o[p], t);
                             break;
 
                           case 3:
-                            c = m[g + 1], S[g] = new n.TimelineSegment(u, c), u = c;
+                            k = o[p + 1], t[p] = new c.TimelineSegment(i, k), i = k;
                             break;
 
                           case 4:
-                            f[g].indexTransformations(m);
+                            l[p].indexTransformations(o);
                         }
-                        g++;
-                    } else for (l in m) m.hasOwnProperty(l) && s(m[l], S);
-                    return v === p ? y = a.advanceIndexingToNextStep() : (i = new Date().getTime(), 
-                    o.startingIndex = g, n.Definitions.IterationRoundTimeHalfBound > i - e && (o.iterationsPerRound *= 2)), 
-                    d && !y && (a.indexTimerID = window.setTimeout(t, 0)), y;
+                        p++;
+                    } else for (j in o) o.hasOwnProperty(j) && h(o[j], t);
+                    return s === q ? u = f.advanceIndexingToNextStep() : (d = new Date().getTime(), 
+                    g.startingIndex = p, d - a < c.Definitions.IterationRoundTimeHalfBound && (g.iterationsPerRound *= 2)), 
+                    n && !u && (f.indexTimerID = window.setTimeout(b, 0)), u;
                 }
-                var i, r = this.thisPublic, a = e.call(r), o = a.indexingProcessData;
-                if (o.isAsynchronous) a.indexingInProgress = !0, a.indexTimerID = window.setTimeout(t, 0); else for (null !== a.indexTimerID && (window.clearTimeout(a.indexTimerID), 
-                a.indexTimerID = null); !i; ) i = t();
+                var d, e = this.thisPublic, f = a.call(e), g = f.indexingProcessData;
+                if (g.isAsynchronous) f.indexingInProgress = !0, f.indexTimerID = window.setTimeout(b, 0); else for (null !== f.indexTimerID && (window.clearTimeout(f.indexTimerID), 
+                f.indexTimerID = null); !d; ) d = b();
             }
-            function m(t) {
-                var i, r, a, o, s, u, l, c, f, h, d, m, g, p, T, v, S, y, P, b, I, D, x, A, q, w, R, k, C, F, O, U, B, N, V = this.thisPublic, j = e.call(V), M = j.targetSequences, E = null, z = j.defaults, G = j.allTransformations, L = j.dynamicValueTransformations;
-                for (j.indexingInProgress ? j.resetIndexing() : j.indexed = !1, n.Util.isArray(t) || (t = [ t ]), 
-                i = 0, o = t.length; o > i; i++) if (s = t[i], u = s.target, l = s.targets, n.Util.isArray(l)) for (void 0 !== u && null !== u && (l = [ u ].concat(l)), 
-                r = 0, c = l.length; c > r; r++) {
-                    f = {};
-                    for (P in s) s.hasOwnProperty(P) && (f[P] = s[P]);
-                    f.targets = null, f.target = l[r], V.addTransformations(f);
+            function o(b) {
+                var d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, A, B, C, D, E, F, G, H, I, J, K, L = this.thisPublic, M = a.call(L), N = M.targetSequences, O = null, P = M.defaults, Q = M.allTransformations, R = M.dynamicValueTransformations;
+                for (M.indexingInProgress ? M.resetIndexing() : M.indexed = !1, c.Util.isArray(b) || (b = [ b ]), 
+                d = 0, g = b.length; g > d; d++) if (h = b[d], i = h.target, j = h.targets, c.Util.isArray(j)) for ("undefined" != typeof i && null !== i && (j = [ i ].concat(j)), 
+                e = 0, k = j.length; k > e; e++) {
+                    l = {};
+                    for (v in h) h.hasOwnProperty(v) && (l[v] = h[v]);
+                    l.targets = null, l.target = j[e], L.addTransformations(l);
                 } else {
-                    for (E = j.findTargetSequenceByTarget(u), null === E && (E = new n.TargetSequence(u), 
-                    M.push(E)), h = n.Util.isArray(s.feature) ? s.feature : [ s.feature ], p = s.applicator, 
-                    void 0 === p && (p = z.applicator), d = s.unit, void 0 === d && (d = z.unit), m = s.calculator, 
-                    void 0 === m && (m = z.calculator), g = s.easing, void 0 === g && (g = z.easing), 
-                    x = Array(h.length), r = 0; h.length > r; r++) D = E.findFeatureSequenceByFeature(h[r]), 
-                    null === D && (D = new n.FeatureSequence(u, h[r]), E.addFeatureSequence(D)), x[r] = D;
-                    if (T = s.keyframes, void 0 !== T) {
-                        for (q = T.times, w = T.values, R = T.valueGenerators, O = U = B = C = F = null, 
-                        r = 0, A = q.length; A > r; r++) if (k = q[r], w && (C = w[r]), R && (F = R[r]), 
-                        null === O ? (O = k, U = C, B = F, N = null !== k && r === A - 1) : null === k ? (O = U = B = null, 
-                        N = !1) : N = !0, N) {
-                            for (b = {
-                                target: u,
-                                feature: 1 === h.length ? h[0] : h,
-                                applicator: p,
-                                unit: d,
-                                calculator: m,
-                                easing: g,
-                                t0: O,
-                                t1: k,
-                                v0: U,
-                                v1: C,
-                                v0Generator: B,
-                                v1Generator: F
-                            }, I = new n.Transformation(b), G.push(I), (B || F) && L.push(I), a = 0; x.length > a; a++) x[a].transformations.push(I);
-                            O = k, U = C;
+                    for (O = M.findTargetSequenceByTarget(i), null === O && (O = new c.TargetSequence(i), 
+                    N.push(O)), m = c.Util.isArray(h.feature) ? h.feature : [ h.feature ], q = h.applicator, 
+                    "undefined" == typeof q && (q = P.applicator), n = h.unit, "undefined" == typeof n && (n = P.unit), 
+                    o = h.calculator, "undefined" == typeof o && (o = P.calculator), p = h.easing, "undefined" == typeof p && (p = P.easing), 
+                    z = new Array(m.length), e = 0; e < m.length; e++) y = O.findFeatureSequenceByFeature(m[e]), 
+                    null === y && (y = new c.FeatureSequence(i, m[e]), O.addFeatureSequence(y)), z[e] = y;
+                    if (r = h.keyframes, "undefined" != typeof r) {
+                        for (B = r.times, C = r.values, D = r.valueGenerators, H = I = J = F = G = null, 
+                        e = 0, A = B.length; A > e; e++) if (E = B[e], C && (F = C[e]), D && (G = D[e]), 
+                        null === H ? (H = E, I = F, J = G, K = null !== E && e === A - 1) : null === E ? (H = I = J = null, 
+                        K = !1) : K = !0, K) {
+                            for (w = {
+                                target: i,
+                                feature: 1 === m.length ? m[0] : m,
+                                applicator: q,
+                                unit: n,
+                                calculator: o,
+                                easing: p,
+                                t0: H,
+                                t1: E,
+                                v0: I,
+                                v1: F,
+                                v0Generator: J,
+                                v1Generator: G
+                            }, x = new c.Transformation(w), Q.push(x), (J || G) && R.push(x), f = 0; f < z.length; f++) z[f].transformations.push(x);
+                            H = E, I = F;
                         }
-                    } else for (v = s.segments, n.Util.isArray(v) || (v = [ v ]), r = 0, S = v.length; S > r; r++) {
-                        y = v[r], b = {
-                            target: u,
-                            feature: 1 === h.length ? h[0] : h,
-                            applicator: p
+                    } else for (s = h.segments, c.Util.isArray(s) || (s = [ s ]), e = 0, t = s.length; t > e; e++) {
+                        u = s[e], w = {
+                            target: i,
+                            feature: 1 === m.length ? m[0] : m,
+                            applicator: q
                         };
-                        for (P in y) y.hasOwnProperty(P) && (b[P] = y[P]);
-                        for (void 0 === b.unit && (b.unit = d), void 0 === b.calculator && (b.calculator = m), 
-                        void 0 === b.easing && (b.easing = g), I = new n.Transformation(b), G.push(I), (void 0 !== b.v0Generator || void 0 !== b.v1Generator) && L.push(I), 
-                        a = 0; x.length > a; a++) x[a].transformations.push(I);
+                        for (v in u) u.hasOwnProperty(v) && (w[v] = u[v]);
+                        for ("undefined" == typeof w.unit && (w.unit = n), "undefined" == typeof w.calculator && (w.calculator = o), 
+                        "undefined" == typeof w.easing && (w.easing = p), x = new c.Transformation(w), Q.push(x), 
+                        ("undefined" != typeof w.v0Generator || "undefined" != typeof w.v1Generator) && R.push(x), 
+                        f = 0; f < z.length; f++) z[f].transformations.push(x);
                     }
                 }
             }
-            function g(e) {
-                var t = this.thisPublic;
-                t.run(r({
+            function p(a) {
+                var b = this.thisPublic;
+                b.run(e({
                     synchronizeTo: null,
                     initialSeek: 0,
                     timeOffset: null,
                     autoStopAtEnd: !0
-                }, e));
+                }, a));
             }
-            function p(t, i, r) {
-                var a, s, u, l, c, f, h, d, m, g, p, T = this.thisPublic, v = e.call(T), S = i && v.running, y = v.currentTime, P = v.synchronizer, b = v.speed, I = v.timeOffset, D = v.pollingInterval, x = v.initialSyncSourcePoint, A = v.allTransformations.length, q = 0, w = 0, R = Array(A), k = Array(v.dynamicValueTransformations.length), C = v.targetSequences, F = C.length, O = Array(F), U = v.timelineSegments, B = U.length, N = Array(B), V = v.defaults, j = {}, M = new n.Sequence(), E = {}, z = v.soleControlOptimizationDuringRun;
-                for (a = 0; F > a; a++) for (d = C[a], m = d.clone(t(d.getTarget())), O[a] = m.targetSequence, 
-                l = m.transformations, s = 0, c = l.length; c > s; s++) h = l[s], R[q] = h, q++, 
-                h.hasDynamicValues() && (k[w] = h, w++);
-                for (a = 0; B > a; a++) g = U[a], N[a] = new n.TimelineSegment(g.startTime, g.endTime);
-                for (u in V) V.hasOwnProperty(u) && (j[u] = V[u]);
-                return f = S ? f = 1 > D ? new n.Pollers.Auto() : new n.Pollers.FixedInterval(D) : null, 
-                p = {
-                    targetSequences: O,
-                    timelineSegments: N,
-                    lastUsedTimelineSegmentNumber: v.lastUsedTimelineSegmentNumber,
-                    allTransformations: R,
-                    dynamicValueTransformations: k,
+            function q(b, d, e) {
+                var f, h, i, j, k, l, m, n, o, p, q, r = this.thisPublic, s = a.call(r), t = d && s.running, u = s.currentTime, v = s.synchronizer, w = s.speed, x = s.timeOffset, y = s.pollingInterval, z = s.initialSyncSourcePoint, A = s.allTransformations.length, B = 0, C = 0, D = new Array(A), E = new Array(s.dynamicValueTransformations.length), F = s.targetSequences, G = F.length, H = new Array(G), I = s.timelineSegments, J = I.length, K = new Array(J), L = s.defaults, M = {}, N = new c.Sequence(), O = {}, P = s.soleControlOptimizationDuringRun;
+                for (f = 0; G > f; f++) for (n = F[f], o = n.clone(b(n.getTarget())), H[f] = o.targetSequence, 
+                j = o.transformations, h = 0, k = j.length; k > h; h++) m = j[h], D[B] = m, B++, 
+                m.hasDynamicValues() && (E[C] = m, C++);
+                for (f = 0; J > f; f++) p = I[f], K[f] = new c.TimelineSegment(p.startTime, p.endTime);
+                for (i in L) L.hasOwnProperty(i) && (M[i] = L[i]);
+                return l = t ? l = 1 > y ? new c.Pollers.Auto() : new c.Pollers.FixedInterval(y) : null, 
+                q = {
+                    targetSequences: H,
+                    timelineSegments: K,
+                    lastUsedTimelineSegmentNumber: s.lastUsedTimelineSegmentNumber,
+                    allTransformations: D,
+                    dynamicValueTransformations: E,
                     indexCompletionCallbacks: [],
-                    indexed: v.indexed,
+                    indexed: s.indexed,
                     indexingInProgress: !1,
                     indexTimerID: null,
                     indexingProcessData: {},
-                    running: S,
-                    currentTime: y,
-                    unadjustedTime: v.unadjustedTime,
-                    sequenceStartTime: v.sequenceStartTime,
-                    sequenceEndTime: v.sequenceEndTime,
-                    poller: f,
-                    synchronizer: P,
-                    initialSyncSourcePoint: x,
-                    defaults: j,
-                    synchronizeTo: v.synchronizeTo,
-                    speed: b,
-                    timeOffset: I,
-                    pollingInterval: D,
-                    after: v.after,
-                    before: v.before,
-                    autoStopAtEnd: v.autoStopAtEnd,
-                    onAutoStop: v.onAutoStop,
-                    stretchStartTimeToZero: v.stretchStartTimeToZero,
-                    soleControlOptimizationDuringRun: z
-                }, o.call(M, E, p), r && M.seek(y, z), S && f.run(function() {
-                    M.seek(x + b * (P() - x) + I, z);
-                }), M;
+                    running: t,
+                    currentTime: u,
+                    unadjustedTime: s.unadjustedTime,
+                    sequenceStartTime: s.sequenceStartTime,
+                    sequenceEndTime: s.sequenceEndTime,
+                    poller: l,
+                    synchronizer: v,
+                    initialSyncSourcePoint: z,
+                    defaults: M,
+                    synchronizeTo: s.synchronizeTo,
+                    speed: w,
+                    timeOffset: x,
+                    pollingInterval: y,
+                    after: s.after,
+                    before: s.before,
+                    autoStopAtEnd: s.autoStopAtEnd,
+                    onAutoStop: s.onAutoStop,
+                    stretchStartTimeToZero: s.stretchStartTimeToZero,
+                    soleControlOptimizationDuringRun: P
+                }, g.call(N, O, q), e && N.seek(u, P), t && l.run(function() {
+                    N.seek(z + w * (v() - z) + x, P);
+                }), N;
             }
-            function T(e, t) {
-                var n = this.thisPublic;
-                n.run(r({
-                    synchronizeTo: e,
+            function r(a, b) {
+                var c = this.thisPublic;
+                c.run(e({
+                    synchronizeTo: a,
                     initialSeek: null,
                     timeOffset: null
-                }, t));
+                }, b));
+            }
+            function s() {
+                var b, c = this.thisPublic, d = a.call(c), e = d.dynamicValueTransformations, f = e.length;
+                for (b = 0; f > b; b++) e[b].generateValues(c);
+            }
+            function t() {
+                var b = this.thisPublic, c = a.call(b);
+                return c.currentTime;
+            }
+            function u() {
+                var b = this.thisPublic, c = a.call(b);
+                return c.indexed || b.index(null, !1), c.sequenceEndTime;
             }
             function v() {
-                var t, n = this.thisPublic, i = e.call(n), r = i.dynamicValueTransformations, a = r.length;
-                for (t = 0; a > t; t++) r[t].generateValues(n);
+                var b = this.thisPublic, c = a.call(b);
+                return c.ID;
             }
-            function S() {
-                var t = this.thisPublic, n = e.call(t);
-                return n.currentTime;
+            function w() {
+                var b = this.thisPublic, c = a.call(b);
+                return c.indexed || b.index(null, !1), c.stretchStartTimeToZero ? Math.min(c.sequenceStartTime, 0) : c.sequenceStartTime;
+            }
+            function x(b, c) {
+                var d = this.thisPublic, e = a.call(d);
+                e.indexed && b ? b(d) : e.allTransformations.length < 1 ? (e.indexed = !0, b && b(d)) : (b && e.indexCompletionCallbacks.push(b), 
+                e.indexingInProgress || e.resetIndexing(), e.indexingProcessData.isAsynchronous = c ? !0 : !1, 
+                e.runIndexing());
             }
             function y() {
-                var t = this.thisPublic, n = e.call(t);
-                return n.indexed || t.index(null, !1), n.sequenceEndTime;
+                var b = this.thisPublic, c = a.call(b);
+                return c.running;
             }
-            function P() {
-                var t = this.thisPublic, n = e.call(t);
-                return n.ID;
+            function z(b) {
+                var c, d, e = this.thisPublic, f = a.call(e), g = f.targetSequences, h = g.length;
+                for (c = 0; h > c; c++) d = g[c], d.retarget(b(d.getTarget()));
             }
-            function b() {
-                var t = this.thisPublic, n = e.call(t);
-                return n.indexed || t.index(null, !1), n.stretchStartTimeToZero ? Math.min(n.sequenceStartTime, 0) : n.sequenceStartTime;
-            }
-            function I(t, n) {
-                var i = this.thisPublic, r = e.call(i);
-                r.indexed && t ? t(i) : 1 > r.allTransformations.length ? (r.indexed = !0, t && t(i)) : (t && r.indexCompletionCallbacks.push(t), 
-                r.indexingInProgress || r.resetIndexing(), r.indexingProcessData.isAsynchronous = n ? !0 : !1, 
-                r.runIndexing());
-            }
-            function D() {
-                var t = this.thisPublic, n = e.call(t);
-                return n.running;
-            }
-            function x(t) {
-                var n, i, r = this.thisPublic, a = e.call(r), o = a.targetSequences, s = o.length;
-                for (n = 0; s > n; n++) i = o[n], i.retarget(t(i.getTarget()));
-            }
-            function A(t) {
-                var i, r, o, s, u, l, c, f, h = this.thisPublic, d = e.call(h);
-                d.running && h.stop(), d.indexed || h.index(null, !1), a(t, "generateValues", !0) && h.generateValues(), 
-                s = a(t, "initialSeek", null), null !== s && h.seek(s, !1), d.speed = r = a(t, "speed", d.speed), 
-                d.after = a(t, "after", d.after), d.before = a(t, "before", d.before), d.autoStopAtEnd = a(t, "autoStopAtEnd", d.autoStopAtEnd), 
-                d.onAutoStop = a(t, "onAutoStop", d.onAutoStop), d.stretchStartTimeToZero = a(t, "stretchStartTimeToZero", d.stretchStartTimeToZero), 
-                d.soleControlOptimizationDuringRun = f = a(t, "useSoleControlOptimization", d.soleControlOptimizationDuringRun), 
-                d.pollingInterval = u = a(t, "pollingInterval", d.pollingInterval), d.poller = 1 > u ? new n.Pollers.Auto() : new n.Pollers.FixedInterval(u), 
-                i = a(t, "synchronizeTo", d.synchronizeTo), l = null === i ? function() {
+            function A(b) {
+                var d, e, g, h, i, j, k, l, m = this.thisPublic, n = a.call(m);
+                n.running && m.stop(), n.indexed || m.index(null, !1), f(b, "generateValues", !0) && m.generateValues(), 
+                h = f(b, "initialSeek", null), null !== h && m.seek(h, !1), n.speed = e = f(b, "speed", n.speed), 
+                n.after = f(b, "after", n.after), n.before = f(b, "before", n.before), n.autoStopAtEnd = f(b, "autoStopAtEnd", n.autoStopAtEnd), 
+                n.onAutoStop = f(b, "onAutoStop", n.onAutoStop), n.stretchStartTimeToZero = f(b, "stretchStartTimeToZero", n.stretchStartTimeToZero), 
+                n.soleControlOptimizationDuringRun = l = f(b, "useSoleControlOptimization", n.soleControlOptimizationDuringRun), 
+                n.pollingInterval = i = f(b, "pollingInterval", n.pollingInterval), n.poller = 1 > i ? new c.Pollers.Auto() : new c.Pollers.FixedInterval(i), 
+                d = f(b, "synchronizeTo", n.synchronizeTo), j = null === d ? function() {
                     return new Date().getTime();
-                } : "function" == typeof i ? i : function() {
-                    return 1e3 * i.currentTime;
-                }, d.synchronizer = l, d.initialSyncSourcePoint = c = l(), o = a(t, "timeOffset", null), 
-                null === o && (o = null !== d.unadjustedTime ? d.unadjustedTime - c : h.getStartTime() - c), 
-                d.timeOffset = o, d.running = !0, d.poller.run(function() {
-                    h.seek(c + r * (l() - c) + o, f);
+                } : "function" == typeof d ? d : function() {
+                    return 1e3 * d.currentTime;
+                }, n.synchronizer = j, n.initialSyncSourcePoint = k = j(), g = f(b, "timeOffset", null), 
+                null === g && (g = null !== n.unadjustedTime ? n.unadjustedTime - k : m.getStartTime() - k), 
+                n.timeOffset = g, n.running = !0, n.poller.run(function() {
+                    m.seek(k + e * (j() - k) + g, l);
                 });
             }
-            function q(t, n) {
-                var i, r, a, o, s, u, l, c, f, h = this.thisPublic, d = e.call(h), m = !1, g = null, p = d.targetSequences, T = p.length;
-                if (d.indexed || h.index(null, !1), o = h.getStartTime(), s = d.sequenceEndTime, 
-                c = d.nextFrameID++, o > t ? (u = d.before(o, s, t), l = u.adjustedTime, m = u.hitFinalBoundary) : t > s ? (u = d.after(o, s, t), 
-                l = u.adjustedTime, m = u.hitFinalBoundary) : l = t, d.currentTime = l, d.unadjustedTime = t, 
-                r = d.findSequenceSegmentNumberByTime(l), null !== r) {
-                    for (a = r.segmentNumber, a !== d.lastSegmentNumber ? (f = !0, d.lastSegmentNumber = a) : f = void 0 === n ? !0 : !n, 
-                    i = 0; T > i; i++) p[i].seek(a, l, c, f);
-                    g = r.timeMatchType;
+            function B(b, c) {
+                var d, e, f, g, h, i, j, k, l, m = this.thisPublic, n = a.call(m), o = !1, p = null, q = n.targetSequences, r = q.length;
+                if (n.indexed || m.index(null, !1), g = m.getStartTime(), h = n.sequenceEndTime, 
+                k = n.nextFrameID++, g > b ? (i = n.before(g, h, b), j = i.adjustedTime, o = i.hitFinalBoundary) : b > h ? (i = n.after(g, h, b), 
+                j = i.adjustedTime, o = i.hitFinalBoundary) : j = b, n.currentTime = j, n.unadjustedTime = b, 
+                e = n.findSequenceSegmentNumberByTime(j), null !== e) {
+                    for (f = e.segmentNumber, f !== n.lastSegmentNumber ? (l = !0, n.lastSegmentNumber = f) : l = "undefined" == typeof c ? !0 : !c, 
+                    d = 0; r > d; d++) q[d].seek(f, j, k, l);
+                    p = e.timeMatchType;
                 }
-                return m && d.running && d.autoStopAtEnd && (h.stop(), d.onAutoStop && d.onAutoStop(h)), 
-                g;
+                return o && n.running && n.autoStopAtEnd && (m.stop(), n.onAutoStop && n.onAutoStop(m)), 
+                p;
             }
-            function w(t) {
-                var n = this.thisPublic, i = e.call(n);
-                i.after = t;
+            function C(b) {
+                var c = this.thisPublic, d = a.call(c);
+                d.after = b;
             }
-            function R(t) {
-                var n = this.thisPublic, i = e.call(n);
-                i.before = t;
+            function D(b) {
+                var c = this.thisPublic, d = a.call(c);
+                d.before = b;
             }
-            function k(t) {
-                var n, i = this.thisPublic, r = e.call(i), a = r.defaults;
-                for (n in t) t.hasOwnProperty(n) && (a[n] = t[n]);
+            function E(b) {
+                var c, d = this.thisPublic, e = a.call(d), f = e.defaults;
+                for (c in b) b.hasOwnProperty(c) && (f[c] = b[c]);
             }
-            function C() {
-                var t = this.thisPublic, n = e.call(t);
-                n.running = !1, n.poller && (n.poller.stop(), n.poller = null);
+            function F() {
+                var b = this.thisPublic, c = a.call(b);
+                c.running = !1, c.poller && (c.poller.stop(), c.poller = null);
             }
-            function F(e, t) {
-                var n = this.thisPublic;
-                n.run(r({
-                    synchronizeTo: e,
+            function G(a, b) {
+                var c = this.thisPublic;
+                c.run(e({
+                    synchronizeTo: a,
                     initialSeek: null,
                     timeOffset: 0,
                     autoStopAtEnd: !1
-                }, t));
+                }, b));
             }
-            return i;
+            return d;
         }),
         revertNameSpace: function() {
-            Concert = e;
+            Concert = a;
         }
-    }, i = {
-        Applicators: n.Applicators,
-        Calculators: n.Calculators,
-        EasingFunctions: n.EasingFunctions,
-        Repeating: n.Repeating,
-        Sequence: n.Sequence,
-        revertNameSpace: n.revertNameSpace
+    }, d = {
+        Applicators: c.Applicators,
+        Calculators: c.Calculators,
+        EasingFunctions: c.EasingFunctions,
+        Repeating: c.Repeating,
+        Sequence: c.Sequence,
+        revertNameSpace: c.revertNameSpace
     };
-    return i;
+    return d;
 }();
