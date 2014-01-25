@@ -1,3 +1,10 @@
+/*! ConcertJS 1.0.0
+ * http://www.concertjs.com/
+ *
+ * Copyright 2014 Trajan McGill
+ * Released under the MIT license.
+ * http://www.concertjs.com/license
+ */
 !function() {
     "use strict";
     function a(a) {

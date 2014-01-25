@@ -1,4 +1,11 @@
-﻿// requestAnimationFrame.js: 2013-03-23 by Trajan McGill.
+/*! ConcertJS 1.0.0
+ * http://www.concertjs.com/
+ *
+ * Copyright 2014 Trajan McGill
+ * Released under the MIT license.
+ * http://www.concertjs.com/license
+ */
+// requestAnimationFrame.js: 2013-03-23 by Trajan McGill.
 // This code is released into the public domain; or, if such a declaration is
 // not effective in your jurisdiction, it is licensed to you perpetually for
 // any use in any form; in either case without any guarantee or warranty.

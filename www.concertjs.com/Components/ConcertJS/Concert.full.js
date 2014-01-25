@@ -1,4 +1,11 @@
-﻿/**
+/*! ConcertJS 1.0.0
+ * http://www.concertjs.com/
+ *
+ * Copyright 2014 Trajan McGill
+ * Released under the MIT license.
+ * http://www.concertjs.com/license
+ */
+/**
  * @file Concert.js: Easy synchronized animation with JavaScript.
  * @version 1.0.0
  * @author Trajan McGill <code@trajanmcgill.com>
