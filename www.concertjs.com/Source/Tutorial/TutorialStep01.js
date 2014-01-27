@@ -15,5 +15,5 @@
 			keyframes: { times: [0, 1000], values: [0, 24] }
 		});
 
-	document.getElementById("GoButton").onclick = function () { sequence.begin(); }
+	document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 })();

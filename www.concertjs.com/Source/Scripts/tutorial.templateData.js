@@ -6,7 +6,7 @@
 {
 	"use strict";
 /*<template:data target="tutorial_01.js" section="Script">*/
-	var x = 1;
+	//var x = 1;
 /*</template:data>*/
 
 })();
