@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ConcertJS Reference: Namespace: Calculators</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css?ver=3">
+</head>
+
+<body>
+
+<div id="main">
+    <h1 class="page-title">Namespace: Calculators</h1>
+    
+    
+
+
+
+<section>
+    
+<header>
+    <h2>
+        <span class="ancestors"><a href="Concert.html">Concert</a>.</span>
+    
+    Calculators
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+            <div class="description">Commonly used functions for calculating the current value to apply in the middle of a transformation based on the start and end values defined in the transformation.</div>
+        
+        
+        
+<dl class="details">
+    
+        
+        <h5 class="subsection-title">Properties:</h5>
+        
+        <dl>
+
+<table class="props">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>Color</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Calculates a color in between the colors specified as start and end values.<br><br><em>Expected start / end values</em>: <strong>CSS color style value strings</strong>, specified in any of hex, rgb, rgba, hsl, or hsla format (start and end values must be in the same format as each other).<br><br><em>Returns</em>: <strong>A CSS color style value string</strong> in the same format as the start and end values.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Discrete</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Used when output needed should jump directly from one value to another rather than gradually moving from the start value to the end value.<br><br><em>Expected start / end values</em>: <strong>(Any type)</strong><br><br><em>Returns</em>: Either the start value (if the transformation is not yet complete) or the end value (if the transformation is complete).<br><br>If the transformation has a property called <code>round</code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Linear</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Calculates a value based on linear interpolation between the start and end values.<br><br><em>Expected start / end values</em>: <strong>Numeric</strong><br><br><em>Returns</em>: <strong>Numeric</strong>.<br><br>If the transformation has a property called <code>round</code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.<br><br><em>Note: This should not be confused with the <a href="Concert.EasingFunctions.html">ConstantRate easing function</a>. The easing function is used to determine what fraction of the transformation is complete (i.e., it affects the <em>rate</em> of the transformation), whereas the selected calculator function determines the method by which the values are calculated (i.e., numeric interpolation vs. discrete values, vs. specialized calculations such as determining what color is partway between two other colors).</em></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>Rotational</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">Calculates a set of coordinates resulting from rotational motion.<br><br><em>Expected start / end values</em>: <strong>Numeric Array</strong>, in the form <code>[radius, angle]</code>. Additionally, the transformation must have properties called <code>center</code>, an array of the form <code>[left, top]</code> defining the center point around which the rotation takes place, and <code>offset</code>, an array of the form <code>[horizontalOffset, verticalOffset]</code> defining an offset to be added to the resulting coordinates (for instance, a center of [100, 100] with an offset of [0, 0] would rotate the upper left corner of the target object around the point [100, 100]).</code><br><br><em>Returns</em>: <strong>Numeric Array</strong> determined from calculating the current rotational position and converting it to resulting coordinates in the form <code>[left, top]</code>.</td>
+        </tr>
+	
+	
+	</tbody>
+</table></dl>
+        
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Concert.full.js.html">Concert.full.js</a>, line 136
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+</div>
+
+<nav>
+    <a id="HomePageLink" href="../index.html">ConcertJS Home</a>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Concert.Sequence.html">Sequence</a></li></ul><h3>Namespaces</h3><ul><li><a href="Concert.html">Concert</a></li><li><a href="Concert.Applicators.html">Applicators</a></li><li><a href="Concert.Calculators.html">Calculators</a></li><li><a href="Concert.EasingFunctions.html">EasingFunctions</a></li><li><a href="Concert.Repeating.html">Repeating</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Jan 26 2014 17:54:20 GMT-0600 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>

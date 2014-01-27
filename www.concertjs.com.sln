@@ -1,0 +1,117 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Web
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ConcertJS", "http://localhost:29861", "{A4054D46-552E-498F-903F-BDABA618C689}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_29861"
+		Debug.AspNetCompiler.PhysicalPath = "ConcertJS\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_29861\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_29861"
+		Release.AspNetCompiler.PhysicalPath = "ConcertJS\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_29861\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "ConcertJS\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "www.concertjs.com", "http://localhost:2047", "{CFF757D7-A1C4-48F0-B19E-5530FF6E8F5C}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_2047"
+		Debug.AspNetCompiler.PhysicalPath = "www.concertjs.com\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_2047\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_2047"
+		Release.AspNetCompiler.PhysicalPath = "www.concertjs.com\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_2047\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "www.concertjs.com\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "requestAnimationFrame", "http://localhost:18268", "{9A84D6AE-F548-469C-BD0E-3398088DA99D}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_18268"
+		Debug.AspNetCompiler.PhysicalPath = "requestAnimationFrame\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_18268\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_18268"
+		Release.AspNetCompiler.PhysicalPath = "requestAnimationFrame\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_18268\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "requestAnimationFrame\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "forum.concertjs.com", "http://localhost:58057", "{EDF88AB0-7F49-416E-9647-1DA5CA1DC98A}"
+	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_58057"
+		Debug.AspNetCompiler.PhysicalPath = "forum.concertjs.com\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58057\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_58057"
+		Release.AspNetCompiler.PhysicalPath = "forum.concertjs.com\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58057\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "forum.concertjs.com\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A42850B2-1051-443C-A66F-9D16F993BB2C}"
+	ProjectSection(SolutionItems) = preProject
+		Gruntfile.js = Gruntfile.js
+		jsdoc.bat = jsdoc.bat
+		package.json = package.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A4054D46-552E-498F-903F-BDABA618C689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4054D46-552E-498F-903F-BDABA618C689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF757D7-A1C4-48F0-B19E-5530FF6E8F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF757D7-A1C4-48F0-B19E-5530FF6E8F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A84D6AE-F548-469C-BD0E-3398088DA99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A84D6AE-F548-469C-BD0E-3398088DA99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF88AB0-7F49-416E-9647-1DA5CA1DC98A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF88AB0-7F49-416E-9647-1DA5CA1DC98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

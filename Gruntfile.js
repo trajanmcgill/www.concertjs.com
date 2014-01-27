@@ -1,15 +1,5 @@
 module.exports = function(grunt)
 {
-	var LicenseBanner = 
-		"/*! <%= pkg.name %> <%= pkg.version %>\r\n"
-		+ " * <%= pkg.homepage %>\r\n"
-		+ " *\r\n"
-		+ " * <%= pkg.custom_CopyrightNotice %>\r\n"
-		+ " * <%= pkg.custom_LicenseDescription %>\r\n"
-		+ " * <%= pkg.custom_LicenseURL %>\r\n"
-		+ " */\r\n";
-
-
 	function stripMinOrFull(dest, src)
 	{
 		var fullOriginalDest = dest + src,
@@ -20,7 +10,7 @@ module.exports = function(grunt)
 		console.log("copying " + fullOriginalDest + " to " + outputFile);
 
 		return outputFile;
-	}
+	} // end stripMinOrFull()
 
 
 	// Project configuration.
@@ -37,32 +27,33 @@ module.exports = function(grunt)
 					noarg: true, noempty: true, nonew: true, quotmark: "double", smarttabs: true, strict: true, trailing: true, undef: true, unused: true, validthis: true
 				},
 
-				BaseObject: { options: { strict: false, unused: false }, src: ["ConcertJS/Components/BaseObject/BaseObject.js"] },
-
-				requestAnimationFrame: { src: ["requestAnimationFrame/Source/requestAnimationFrame.js"] },
-
-				ConcertJS: { src: ["ConcertJS/Source/Concert.js"] },
-
-				www: { expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!**/*.template.js"] }
+				checkSource: { expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!**/*.template.js"] }
 			}, // end jshint task definitions
 
 
 			clean:
 			{
-				requestAnimationFrame: ["requestAnimationFrame/Build/**/*"],
-				ConcertJS: ["ConcertJS/Build/**/*"],
 				www: ["www.concertjs.com/Build/**/*"],
 
-				www_Deploy:
+				removeAssembledOriginalJSandCSS:
+				{
+					src:
+					[
+						"www.concertjs.com/Build/Assembly/**/*.js",
+						"www.concertjs.com/Build/Assembly/**/*.css",
+						"!**/*.full.js",
+						"!**/*.full.css"
+					]
+				},
+
+				removeFullAndMinFiles:
 				{
 					src:
 					[
 						"www.concertjs.com/Build/Dev/**/*.full.*",
 						"www.concertjs.com/Build/Dev/**/*.min.*",
-						"!www.concertjs.com/Build/Dev/Reference/**/*",
 						"www.concertjs.com/Build/Prod/**/*.full.*",
-						"www.concertjs.com/Build/Prod/**/*.min.*",
-						"!www.concertjs.com/Build/Dev/Reference/**/*"
+						"www.concertjs.com/Build/Prod/**/*.min.*"
 					]
 				}
 			}, // end clean task definitions
@@ -70,31 +61,26 @@ module.exports = function(grunt)
 
 			copy:
 			{
-				requestAnimationFrame_Build: { src: ["requestAnimationFrame/Source/requestAnimationFrame.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.full.js" },
-
-				ConcertJS_Import: { expand: true, cwd: "requestAnimationFrame/Build/", src: ["*.js"], dest: "ConcertJS/Components/requestAnimationFrame/" },
-				ConcertJS_Build:
+				assembleNonTemplatedSourceFiles:
 				{
 					files:
 					[
-						{ src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.full.js" },
-						{ expand: true, cwd: "ConcertJS/Components/requestAnimationFrame/", src: ["*.js"], dest: "ConcertJS/Build/" }
-					],
-					options: { process: function (content, srcpath) { return (grunt.config.process(LicenseBanner) + content); } }
-				},
-
-				www_Import: { expand: true, cwd: "ConcertJS/Build/", src: ["*.js"], dest: "www.concertjs.com/Components/ConcertJS/" },
-				www_Assemble:
-				{
-					files:
-					[
-						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Assembly/Components/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html", "!**/*.template.html", "!**/*.templateData.html"], dest: "www.concertjs.com/Build/Assembly/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!**/*.template.js", "!**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.js" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.css", "!**/*.template.css", "!**/*.templateData.css"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.css" }
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html", "!Tutorial/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "www.concertjs.com/Build/Assembly/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!Tutorial/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.css", "!Tutorial/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "www.concertjs.com/Build/Assembly/" }
 					]
 				},
-				www_Deploy:
+
+				copyOriginalToFull:
+				{
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.js" },
+						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.css"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.css" },
+					]
+				},
+
+				deployAssembledFiles:
 				{
 					files:
 					[
@@ -102,48 +88,48 @@ module.exports = function(grunt)
 						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Prod/" }
 					]
 				},
-				www_SelectEnvironment:
+
+				deployComponents:
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Dev/" },
+						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Dev/Components/" },
+						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Components/" }
+					]
+				},
+
+				deployTutorial:
+				{
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Source/Tutorial/", src: "**/*", dest: "www.concertjs.com/Build/Dev/Tutorial/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/Tutorial/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Tutorial/" }
+					]
+				},
+
+				selectEnvironment:
+				{
+					files:
+					[
 						{ expand: true, cwd: "www.concertjs.com/Build/Dev/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Dev/", rename: stripMinOrFull },
 						{ expand: true, cwd: "www.concertjs.com/Build/Dev/", src: "**/*.full.js", dest: "www.concertjs.com/Build/Dev/", rename: stripMinOrFull },
 
-						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Prod/" },
 						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.css", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull },
 						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.js", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull }
 					]
-				},
+				}
 			}, // end copy task defitions
 
 
 			processTemplates:
 			{
-				www: { expand: true, cwd: "www.concertjs.com/Source", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" }
+				assembleTemplateResults: { expand: true, cwd: "www.concertjs.com/Source", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" }
 			}, // end processTemplates task definitions
 
 
-			buildReferenceDocs:
-			{
-				www:
-				{
-					sourceFile: "www.concertjs.com/Components/ConcertJS/Concert.full.js",
-					destination: "www.concertjs.com/Build/Assembly/Reference",
-					template: "www.concertjs.com/DocTemplates/ConcertJS"
-				},
-
-				develop:
-				{
-					sourceFile: "ConcertJS/Source/Concert.js",
-					destination: "www.concertjs.com/Build/Dev/Reference",
-					template: "www.concertjs.com/DocTemplates/ConcertJS"
-				}
-			},
-
 			cssmin:
 			{
-				www: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Assembly/", ext: ".min.css" }
+				minifyAssembledCSS: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Assembly/", ext: ".min.css" }
 			}, // end cssmin task definitions
 
 
@@ -151,17 +137,8 @@ module.exports = function(grunt)
 			{
 				options: { sequences: false, verbose: true, warnings: true },
 
-				BaseObject: { src: ["ConcertJS/Components/BaseObject/BaseObject.js"], dest: "ConcertJS/Build/BaseObject.min.js" },
-				BaseObject_DeUglify: { options: { beautify: true }, src: ["ConcertJS/Build/BaseObject.min.js"], dest: "ConcertJS/Build/BaseObject.min.max.js" },
-
-				requestAnimationFrame: { options: { banner: "/*! requestAnimationFrame.js */\n" }, src: ["requestAnimationFrame/Source/requestAnimationFrame.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.min.js" },
-				requestAnimationFrame_DeUglify: { options: { beautify: true }, src: ["requestAnimationFrame/Build/requestAnimationFrame.min.js"], dest: "requestAnimationFrame/Build/requestAnimationFrame.min.max.js" },
-
-				ConcertJS: { options: { banner: LicenseBanner }, src: ["ConcertJS/Source/Concert.js"], dest: "ConcertJS/Build/Concert.min.js" },
-				ConcertJS_DeUglify: { options: { beautify: true }, src: ["ConcertJS/Build/Concert.min.js"], dest: "ConcertJS/Build/Concert.min.max.js" },
-
-				www: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
-				www_DeUglify: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/Scripts/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/Scripts/", ext: ".min.max.js" }
+				minifyAssembledJS: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
+				deminifyAssembledJS: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.max.js" }
 			} // end uglify task definitions
 		});
 	
@@ -287,49 +264,43 @@ module.exports = function(grunt)
 				});
 		}); // end call to grunt.registerMultiTask("processTemplates"...)
 
-	grunt.registerMultiTask(
-		"buildReferenceDocs",
-		"Run jsdoc to create documentation files",
-		function ()
-		{
-			var sourceFile = this.data.sourceFile, destination = this.data.destination, template = this.data.template;
-			grunt.log.write("Running jsdoc\r\n    file:" + sourceFile + "\r\n    template:" + template + "\r\n    output path:" + destination + "\r\n");
-			var done = this.async();
-			grunt.util.spawn(
-				{
-					cmd: "jsdoc.bat",
-					args: ["--template", template, "--destination", destination, sourceFile],
-					opts: { stdio: "pipe" }
-				},
-				function (error, result, code)
-				{
-					if (error !== null || (result.stderr && result.stderr !== ""))
-					{
-						grunt.fail.warn("Error encountered attempting to run jsdoc: " + result.stderr);
-						done(false);
-					}
-					else
-						done();
-				});
-		}); // end call to grunt.registerMultiTask("buildReferenceDocs"...)
+	grunt.registerTask("lint_all", ["jshint:checkSource"]);
 
-	grunt.registerTask("lint_requestAnimationFrame", ["jshint:requestAnimationFrame"]);
-	grunt.registerTask("lint_ConcertJS", ["jshint:ConcertJS"]);
-	grunt.registerTask("lint_www", ["jshint:www"]);
-	grunt.registerTask("lint_all", ["lint_requestAnimationFrame", "lint_ConcertJS", "lint_www"]);
+	grunt.registerTask("clean_all", ["clean:www"]);
 
-	grunt.registerTask("clean_requestAnimationFrame", ["clean:requestAnimationFrame"]);
-	grunt.registerTask("clean_ConcertJS", ["clean:ConcertJS"]);
-	grunt.registerTask("clean_www", ["clean:www"]);
-	grunt.registerTask("clean_all", ["clean_requestAnimationFrame", "clean_ConcertJS", "clean_www"]);
-
-	grunt.registerTask("build_requestAnimationFrame", ["copy:requestAnimationFrame_Build", "uglify:requestAnimationFrame", "uglify:requestAnimationFrame_DeUglify"]);
-	grunt.registerTask("build_ConcertJS", ["copy:ConcertJS_Import", "copy:ConcertJS_Build", "uglify:ConcertJS", "uglify:ConcertJS_DeUglify"]);
-	grunt.registerTask("build_www", ["copy:www_Import", "copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "buildReferenceDocs:www", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
-	grunt.registerTask("build_www_minimal", ["copy:www_Assemble", "processTemplates:www", "cssmin:www", "uglify:www", "uglify:www_DeUglify", "copy:www_Deploy", "copy:www_SelectEnvironment", "clean:www_Deploy"]);
-	grunt.registerTask("build_all", ["build_requestAnimationFrame", "build_ConcertJS", "build_www"]);
+	grunt.registerTask(
+		"build_www",
+		[
+			"copy:assembleNonTemplatedSourceFiles", // copy non-templated source files into assembly directory, excluding tutorial files
+			"processTemplates:assembleTemplateResults", // process templates into assembly directory
+			"copy:copyOriginalToFull", // copy all .js and .css files in assembly directory to *.full.js and *.full.css
+			"clean:removeAssembledOriginalJSandCSS", // remove all original .js and css files from assembly directory
+			"uglify:minifyAssembledJS", // minify all .full.js files in assembly directory into .min.js
+			"cssmin:minifyAssembledCSS", // minify all .full.css files in assembly directory into .min.css
+			"copy:deployAssembledFiles", // copy all assembly files into dev and prod directories
+			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
+			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
+			"copy:deployComponents", // copy components directory into dev and prod directories
+			"copy:deployTutorial" // copy tutorials directory into dev and prod directories
+		]);
+	grunt.registerTask("build_all", ["build_www"]);
 
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
 
 	grunt.registerTask("default", ["lint_all", "rebuild_all"]);
 };
+
+/*
+-clean build directories
+-copy non-templated source files into assembly directory, excluding tutorial files
+-process templates into assembly directory
+-copy all .css files in assembly directory to *.full.css and all .js files in assembly directory to *.full.js
+-remove all original .js and css files from assembly directory
+-minify all .full.js files in assembly directory into .min.js
+-minify all .full.css files in assembly directory into .min.css
+-copy all assembly files into dev and prod directories
+-copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
+-clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
+-copy components directory into dev and prod directories
+-copy tutorials directory into dev and prod directories
+*/
