@@ -1,0 +1,43 @@
+﻿<template:targetDef target="downloads.html" template="ConcertJSPage.template.html"></template:targetDef>
+
+<template:data target="downloads.html" section="HeadContent">
+	<link rel="stylesheet" type="text/css" href="Styles/downloads.css" />
+</template:data>
+
+<template:data target="downloads.html" section="DescriptionAreaContent">
+	<h3>Downloading ConcertJS</h3>
+	<p>Full and minified forms of each release of ConcertJS are available for download below.</p>
+	<h4>Using ConcertJS in Your Own Projects</h4>
+	<ul>
+		<li>ConcertJS is freely available for use in any project, including commercial projects, under the MIT License. Find out more <a href="license.html">here</a>.</li>
+		<li>Using ConcertJS: Please do not link directly to the below files. Instead, download and include them in your own project. Why?
+			<ul>
+				<li>
+					Making your web site depend on someone else's web site is a poor idea.
+					If you link here instead of hosting the file on your own site, then whenever my site is slow or unavailable, your site is broken.
+					You have no control over the reliability of my site. Don't make your site's reliability dependent on things you can't control.
+				</li>
+				<li>
+					It is possible (if unlikely&mdash; this depends on how you are using the library) that you could run into errors caused by cross-site scripting restrictions
+					when trying to pull the script from one place and use it on a web site hosted on another. Because XSS restrictions are implemented differently per browser,
+					this could be happening to your users without your being aware.
+				</li>
+				<li>
+					It is more courteous to me and to other users of ConcertJS: I can have a better idea of how many people are downloading this library,
+					and this site won't get bogged down by having to use its bandwidth to serve to every user of every single application out there using ConcertJS.
+				</li>
+			</ul>
+		</li>
+	</ul>
+</template:data>
+
+
+<template:data target="downloads.html" section="MainContent">
+	<div>
+		<h3>Version 1.0.0 (Latest release)</h3>
+		<ul>
+			<li><a href="Components/ConcertJS/Concert-1.0.0.min.js">Concert-1.0.0.min.js</a> - Minified (xx KB, for production use)</li>
+			<li><a href="Components/ConcertJS/Concert-1.0.0.full.js">Concert-1.0.0.full.js</a> - Full (XX KB, for development or exploring the code)</li>
+		</ul>
+	</div>
+</template:data>

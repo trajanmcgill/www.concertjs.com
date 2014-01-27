@@ -192,8 +192,10 @@ module.exports = function(grunt)
 					for (i = 0; i < file.src.length; i++)
 					{
 						curInputFileName = file.src[i];
+						//grunt.log.writeln("Examining file: " + curInputFileName);
 						if (/.*\.js$/i.test(curInputFileName) || /.*\.css$/i.test(curInputFileName))
 						{
+							//grunt.log.writeln("  js or css.");
 							openTargetTagStart = "/*<template:targetDef";
 							openDataTagStart = "/*<template:data";
 							closeDataTag = "/*</template:data>*/";
@@ -201,6 +203,7 @@ module.exports = function(grunt)
 						}
 						else if (/.*\.html$/i.test(curInputFileName))
 						{
+							//grunt.log.writeln("  html.");
 							openTargetTagStart = "<template:targetDef";
 							openDataTagStart = "<template:data";
 							closeDataTag = "</template:data>";
@@ -210,16 +213,21 @@ module.exports = function(grunt)
 							grunt.fail.warn("processTemplates: unknown input file type (" + curInputFileName + ").");
 
 						curSourceRootDir = curInputFileName.substr(0, curInputFileName.lastIndexOf("/"))
+						//grunt.log.writeln("  curSourceRootDir=" + curSourceRootDir);
 						fileContents = grunt.file.read(curInputFileName);
+						//grunt.log.writeln("  File has been read.");
+						//grunt.log.writeln("  File contents:" + fileContents)
 
 						currentPos = 0;
 						nextTargetDefPos = fileContents.indexOf(openTargetTagStart, currentPos);
+						//grunt.log.writeln("  openTargetTagStart=" + openTargetTagStart + "; nextTargetDefPos=" + nextTargetDefPos);
 						while (nextTargetDefPos >= 0)
 						{
 							fullTag = fileContents.substring(nextTargetDefPos, fileContents.indexOf(tagEnd, nextTargetDefPos) + tagEnd.length);
 							allTargets[targetExp.exec(fullTag)[1]] = { templateFullName: curSourceRootDir + "/" + templateExp.exec(fullTag)[1], sections: [] };
 							currentPos = nextTargetDefPos + fullTag.length;
 							nextTargetDefPos = fileContents.indexOf(openTargetTagStart, currentPos)
+							//grunt.log.writeln("  nextTargetDefPos=" + nextTargetDefPos);
 						}
 
 						currentPos = 0;
@@ -260,6 +268,7 @@ module.exports = function(grunt)
 					for (curTarget in allTargets) if (allTargets.hasOwnProperty(curTarget))
 					{
 						curTargetFullName = curDestRootDir + "/" + curTarget;
+						//grunt.log.writeln("curTargetFullName=" + curTargetFullName);
 
 						templateContents = grunt.file.read(allTargets[curTarget].templateFullName);
 						targetOutput =
