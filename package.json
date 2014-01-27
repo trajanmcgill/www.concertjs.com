@@ -1,16 +1,13 @@
 {
-	"name": "ConcertJS",
+	"name": "www.concertjs.com",
 	"version": "1.0.0",
-	"description": "Easy synchronized animation with JavaScript.",
+	"description": "ConcertJS Web Site",
 	"homepage": "http://www.concertjs.com/",
 	"author":
 	{
 		"name": "Trajan McGill",
 		"email": "code@trajanmcgill.com"
 	},
-	"custom_CopyrightNotice": "Copyright 2014 Trajan McGill",
-	"custom_LicenseDescription": "Released under the MIT license.",
-	"custom_LicenseURL": "http://www.concertjs.com/license",
 	"devDependencies":
 	{
 		"grunt": "~0.4.2",
