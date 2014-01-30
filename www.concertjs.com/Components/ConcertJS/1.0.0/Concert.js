@@ -1537,7 +1537,7 @@ var Concert = (function ()
 				 * the calculator function, allowing the rate at which a transformation proceeds to change over time. The reason for separating these becomes apparent when we consider that different
 				 * types of calculation are necessary for different types of features. A function calculating an animated transition from one RGB color value to another uses a different algorithm than
 				 * one calculating the animation of a simple, numeric value, for instance, or a complex calculator function that takes multiple inputs and calculates rotational movement.
-				 * Because ConcertJS allows anything at all to be animated, it supports the ability to choose any method of calculating values, and then (regardless of which one is used)
+				 * Because Concert.js allows anything at all to be animated, it supports the ability to choose any method of calculating values, and then (regardless of which one is used)
 				 * specifying any easing function to alter the rate at which the animation takes place. Easing functions are specified at the level of the transformation (not the full sequence,
 				 * although it is possible to set a default easing function for a sequence), so a single sequence can contain different transformations using a different easing functions.</p>
 				 * @name addTransformations
@@ -1821,7 +1821,7 @@ var Concert = (function ()
 				 *
 				 * @example <caption>Example 4 Below: This example demonstrates using custom applicator, calculator, and easing functions
 				 * to manipulate the width of a DOM object. The code shows a custom applicator function that could be used if we wanted to
-				 * use a jQuery object containing multiple elements as a target object. <strong>Note that ConcertJS does NOT depend in any
+				 * use a jQuery object containing multiple elements as a target object. <strong>Note that Concert.js does NOT depend in any
 				 * way on jQuery; this example merely shows
 				 * using the two libraries in conjunction.</strong> The custom calculator function also makes use of jQuery, and shows how
 				 * a custom calculator could be used to generate truly dynamic values- in this case, it keeps the calculated value locked
@@ -2340,7 +2340,7 @@ var Concert = (function ()
 				 * However, for very large sequences (large enough that indexing would cause a noticable lag), it may be desirable to manually control when indexing takes place
 				 * (that is, to pre-index the sequence), so that seeking or running will begin instantly. Once indexed, a sequence (or any sequences cloned from it) will not need
 				 * to be indexed again unless new transformations are added to it.<br><br>
-				 * <strong>Explanation of Indexing:</strong> ConcertJS sequences can consist of very large numbers of transformations applied to numerous target objects,
+				 * <strong>Explanation of Indexing:</strong> Concert.js sequences can consist of very large numbers of transformations applied to numerous target objects,
 				 * with the ability to seek extremely quickly to any point in the sequence. This is what makes it useful for synchronizing to other things (such as audio or video)
 				 * and for other situations that require arbitrary seeking, running at different speeds or in either direction, or other uses that don't conform to a simple,
 				 * run-once-forward-only-at-normal-speed scenario. What makes this possible is an internal data structure that optimizes for quickly finding the correct value
@@ -2847,7 +2847,7 @@ var Concert = (function ()
 		/**
 		 * Can be used to avoid namespace collision problems.
 		 * Sets the global variable Concert back to what it was before this component assigned a new value to it.
-		 * Usage: run the ConcertJS definition script (e.g., include the ConcertJS file via a script element on a web page),
+		 * Usage: run the Concert.js definition script (e.g., include the Concert.js file via a script element on a web page),
 		 * then immediately capture the object assigned to <code>Concert</code> in some other, non-conflicting variable for
 		 * actual use, and then call <code>Concert.revertNameSpace()</code> to put back <code>Concert</code> to whatever value it had before.
 		 * @public
