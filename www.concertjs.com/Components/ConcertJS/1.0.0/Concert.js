@@ -1,30 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>ConcertJS Reference: Source: Concert.full.js</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css?ver=3">
-</head>
-
-<body>
-
-<div id="main">
-    <h1 class="page-title">Source: Concert.full.js</h1>
-    
-    
-
-
-    
-    <section>
-        <article>
-            <pre class="prettyprint source"><code>/*! ConcertJS 1.0.0
+/*! Concert.js 1.0.0
  * http://www.concertjs.com/
  *
  * Copyright 2014 Trajan McGill
@@ -33,8 +7,9 @@
  */
 /**
  * @file Concert.js: Easy synchronized animation with JavaScript.
+ * @name Concert.js
  * @version 1.0.0
- * @author Trajan McGill &lt;code@trajanmcgill.com>
+ * @author Trajan McGill <code@trajanmcgill.com>
  */
 
 /** @namespace */
@@ -83,7 +58,7 @@ var Concert = (function ()
 					if (array2.length !== arrayLength)
 						return false;
 
-					for (i = 0; i &lt; arrayLength; i++)
+					for (i = 0; i < arrayLength; i++)
 					{
 						if (array1[i] !== array2[i])
 							return false;
@@ -123,9 +98,9 @@ var Concert = (function ()
 		 * @public
 		 * @namespace
 		 * @memberof Concert
-		 * @property {function} Property - Applies a value to &lt;b>any&lt;/b> target object, treating the feature as a &lt;strong>property&lt;/strong> of the target object.
-		 * @property {function} Style - Applies a value to a target &lt;b>DOM element&lt;/b>, treating the feature as a &lt;strong>style&lt;/strong> of the target object.
-		 * @property {function} SVG_ElementAttribute - Applies a value to a target &lt;b>SVG element&lt;/b>, treating the feature as an &lt;strong>attribute&lt;/strong> of the target object.
+		 * @property {function} Property - Applies a value to <b>any</b> target object, treating the feature as a <strong>property</strong> of the target object.
+		 * @property {function} Style - Applies a value to a target <b>DOM element</b>, treating the feature as a <strong>style</strong> of the target object.
+		 * @property {function} SVG_ElementAttribute - Applies a value to a target <b>SVG element</b>, treating the feature as an <strong>attribute</strong> of the target object.
 		 */
 		Applicators:
 			{
@@ -154,10 +129,10 @@ var Concert = (function ()
 		 * @public
 		 * @namespace
 		 * @memberof Concert
-		 * @property {function} Color - Calculates a color in between the colors specified as start and end values.&lt;br>&lt;br>&lt;em>Expected start / end values&lt;/em>: &lt;strong>CSS color style value strings&lt;/strong>, specified in any of hex, rgb, rgba, hsl, or hsla format (start and end values must be in the same format as each other).&lt;br>&lt;br>&lt;em>Returns&lt;/em>: &lt;strong>A CSS color style value string&lt;/strong> in the same format as the start and end values.
-		 * @property {function} Discrete - Used when output needed should jump directly from one value to another rather than gradually moving from the start value to the end value.&lt;br>&lt;br>&lt;em>Expected start / end values&lt;/em>: &lt;strong>(Any type)&lt;/strong>&lt;br>&lt;br>&lt;em>Returns&lt;/em>: Either the start value (if the transformation is not yet complete) or the end value (if the transformation is complete).&lt;br>&lt;br>If the transformation has a property called &lt;code>round&lt;/code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.
-		 * @property {function} Linear - Calculates a value based on linear interpolation between the start and end values.&lt;br>&lt;br>&lt;em>Expected start / end values&lt;/em>: &lt;strong>Numeric&lt;/strong>&lt;br>&lt;br>&lt;em>Returns&lt;/em>: &lt;strong>Numeric&lt;/strong>.&lt;br>&lt;br>If the transformation has a property called &lt;code>round&lt;/code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.&lt;br>&lt;br>&lt;em>Note: This should not be confused with the [ConstantRate easing function]{@link Concert.EasingFunctions}. The easing function is used to determine what fraction of the transformation is complete (i.e., it affects the &lt;em>rate&lt;/em> of the transformation), whereas the selected calculator function determines the method by which the values are calculated (i.e., numeric interpolation vs. discrete values, vs. specialized calculations such as determining what color is partway between two other colors).&lt;/em>
-		 * @property {function} Rotational - Calculates a set of coordinates resulting from rotational motion.&lt;br>&lt;br>&lt;em>Expected start / end values&lt;/em>: &lt;strong>Numeric Array&lt;/strong>, in the form &lt;code>[radius, angle]&lt;/code>. Additionally, the transformation must have properties called &lt;code>center&lt;/code>, an array of the form &lt;code>[left, top]&lt;/code> defining the center point around which the rotation takes place, and &lt;code>offset&lt;/code>, an array of the form &lt;code>[horizontalOffset, verticalOffset]&lt;/code> defining an offset to be added to the resulting coordinates (for instance, a center of [100, 100] with an offset of [0, 0] would rotate the upper left corner of the target object around the point [100, 100]).&lt;/code>&lt;br>&lt;br>&lt;em>Returns&lt;/em>: &lt;strong>Numeric Array&lt;/strong> determined from calculating the current rotational position and converting it to resulting coordinates in the form &lt;code>[left, top]&lt;/code>.
+		 * @property {function} Color - Calculates a color in between the colors specified as start and end values.<br><br><em>Expected start / end values</em>: <strong>CSS color style value strings</strong>, specified in any of hex, rgb, rgba, hsl, or hsla format (start and end values must be in the same format as each other).<br><br><em>Returns</em>: <strong>A CSS color style value string</strong> in the same format as the start and end values.
+		 * @property {function} Discrete - Used when output needed should jump directly from one value to another rather than gradually moving from the start value to the end value.<br><br><em>Expected start / end values</em>: <strong>(Any type)</strong><br><br><em>Returns</em>: Either the start value (if the transformation is not yet complete) or the end value (if the transformation is complete).<br><br>If the transformation has a property called <code>round</code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.
+		 * @property {function} Linear - Calculates a value based on linear interpolation between the start and end values.<br><br><em>Expected start / end values</em>: <strong>Numeric</strong><br><br><em>Returns</em>: <strong>Numeric</strong>.<br><br>If the transformation has a property called <code>round</code> whose value is X the value will be treated as numeric and the return value will be rounded to the nearest multiple of X.<br><br><em>Note: This should not be confused with the [ConstantRate easing function]{@link Concert.EasingFunctions}. The easing function is used to determine what fraction of the transformation is complete (i.e., it affects the <em>rate</em> of the transformation), whereas the selected calculator function determines the method by which the values are calculated (i.e., numeric interpolation vs. discrete values, vs. specialized calculations such as determining what color is partway between two other colors).</em>
+		 * @property {function} Rotational - Calculates a set of coordinates resulting from rotational motion.<br><br><em>Expected start / end values</em>: <strong>Numeric Array</strong>, in the form <code>[radius, angle]</code>. Additionally, the transformation must have properties called <code>center</code>, an array of the form <code>[left, top]</code> defining the center point around which the rotation takes place, and <code>offset</code>, an array of the form <code>[horizontalOffset, verticalOffset]</code> defining an offset to be added to the resulting coordinates (for instance, a center of [100, 100] with an offset of [0, 0] would rotate the upper left corner of the target object around the point [100, 100]).</code><br><br><em>Returns</em>: <strong>Numeric Array</strong> determined from calculating the current rotational position and converting it to resulting coordinates in the form <code>[left, top]</code>.
 		 */
 		Calculators:
 			{
@@ -196,14 +171,14 @@ var Concert = (function ()
 							if (rgbFunctionMatch || hslFunctionMatch)
 							{
 								calculatedValues = [];
-								for (i = 1; i &lt; 8; i++) // skip the first element, it contains the full string match
+								for (i = 1; i < 8; i++) // skip the first element, it contains the full string match
 								{
 									curVal1 = color1Pieces[i];
 									if (typeof curVal1 !== "undefined")
 									{
 										curVal1 = parseInt(curVal1, 10);
 										tempVal = curVal1 + distanceFraction * (parseInt(color2Pieces[i], 10) - curVal1);
-										calculatedValues.push((i &lt; 7) ? _Concert.Util.round(tempVal, 1) : tempVal);
+										calculatedValues.push((i < 7) ? _Concert.Util.round(tempVal, 1) : tempVal);
 									}
 								}
 
@@ -225,7 +200,7 @@ var Concert = (function ()
 								hexColors1 = [];
 								hexColors2 = [];
 
-								for (i = 1; i &lt; 7; i++)
+								for (i = 1; i < 7; i++)
 								{
 									tempVal = color1Pieces[i];
 									if (typeof tempVal !== "undefined")
@@ -236,11 +211,11 @@ var Concert = (function ()
 								}
 
 								interpolatedValueStr = "#";
-								for (i = 0; i &lt; 3; i++)
+								for (i = 0; i < 3; i++)
 								{
 									curVal1 = hexColorToDecimal(hexColors1[i]);
 									tempVal = _Concert.Util.round(curVal1 + distanceFraction * (hexColorToDecimal(hexColors2[i]) - curVal1), 1);
-									interpolatedValueStr += ((tempVal &lt; 16) ? "0" : "") + tempVal.toString(16);
+									interpolatedValueStr += ((tempVal < 16) ? "0" : "") + tempVal.toString(16);
 								}
 							} // end if/else on (rgbFunctionMatch || hslFunctionMatch)
 
@@ -250,7 +225,7 @@ var Concert = (function ()
 						if (_Concert.Util.isArray(startValue))
 						{
 							returnValue = [];
-							for (i = 0, valueLength = startValue.length; i &lt; valueLength; i++)
+							for (i = 0, valueLength = startValue.length; i < valueLength; i++)
 								returnValue.push(interpolateColor(startValue[i], endValue[i], distanceFraction));
 						}
 						else
@@ -269,15 +244,15 @@ var Concert = (function ()
 						if (_Concert.Util.isArray(startValue))
 						{
 							returnValue = [];
-							for (i = 0, valueLength = startValue.length; i &lt; valueLength; i++)
+							for (i = 0, valueLength = startValue.length; i < valueLength; i++)
 							{
-								curReturnValue = ((distanceFraction &lt; 1) ? startValue[i] : endValue[i]);
+								curReturnValue = ((distanceFraction < 1) ? startValue[i] : endValue[i]);
 								returnValue.push(doRounding ? _Concert.Util.round(curReturnValue, roundFactor) : curReturnValue);
 							}
 						}
 						else
 						{
-							curReturnValue = ((distanceFraction &lt; 1) ? startValue : endValue);
+							curReturnValue = ((distanceFraction < 1) ? startValue : endValue);
 							returnValue = doRounding ? _Concert.Util.round(curReturnValue, roundFactor) : curReturnValue;
 						}
 
@@ -294,7 +269,7 @@ var Concert = (function ()
 						if (_Concert.Util.isArray(startValue))
 						{
 							returnValue = [];
-							for (i = 0, valueLength = startValue.length; i &lt; valueLength; i++)
+							for (i = 0, valueLength = startValue.length; i < valueLength; i++)
 							{
 								curStartValue = startValue[i];
 								curCalcValue = curStartValue + distanceFraction * (endValue[i] - curStartValue);
@@ -342,9 +317,9 @@ var Concert = (function ()
 		 * @namespace
 		 * @memberof Concert
 		 * @property {function} ConstantRate - Returns a value that increases linearly from 0 to 1 as the current time moves from the start time to the end time; or 0 if the current time is before the start time; or 1 if the current time is after the end time.
-		 * @property {function} QuadIn - Return value is 0 at or before the start time, changes slowly at first, then accelerates as the current time moves closer to the end time, returning 1 at or after the end time. Specifically, uses the formula: &lt;br>&lt;code>([currentTime - startTime] / [endTime - startTime])&lt;sup>2&lt;/sup>&lt;/code>
+		 * @property {function} QuadIn - Return value is 0 at or before the start time, changes slowly at first, then accelerates as the current time moves closer to the end time, returning 1 at or after the end time. Specifically, uses the formula: <br><code>([currentTime - startTime] / [endTime - startTime])<sup>2</sup></code>
 		 * @property {function} QuadInOut - Return value is 0 at or before the start time, changes slowly at first, then accelerates to reach the halfway point, then decelerates again at the same rate as the current time moves closer to the end time, returning 1 at or after the end time. Effectively is the same as breaking the transformation in half, applying QuadIn to the first half, and QuadOut to the second half.
-		 * @property {function} QuadOut - Return value is 0 at or before the start time, changes quickly at first, then decelerates as the current time moves closer to the end time, returning 1 at or after the end time. Specifically, uses the formula: &lt;br>&lt;code>(1 - (1 - ((currentTime - startTime) / (endTime - startTime))&lt;sup>2&lt;/sup>))&lt;/code>
+		 * @property {function} QuadOut - Return value is 0 at or before the start time, changes quickly at first, then decelerates as the current time moves closer to the end time, returning 1 at or after the end time. Specifically, uses the formula: <br><code>(1 - (1 - ((currentTime - startTime) / (endTime - startTime))<sup>2</sup>))</code>
 		 * @property {function} Smoothstep - Another function which starts slowly, accelerates to the mid-point, then decelerates, returning 0 at or before the start time and 1 at or after the end time (See {@link http://en.wikipedia.org/wiki/Smoothstep}).
 		 */
 		EasingFunctions:
@@ -354,7 +329,7 @@ var Concert = (function ()
 					{
 						if (currentTime >= endTime)
 							return 1;
-						else if (currentTime &lt; startTime)
+						else if (currentTime < startTime)
 							return 0;
 						else
 							return ((currentTime - startTime) / (endTime - startTime));
@@ -365,7 +340,7 @@ var Concert = (function ()
 					{
 						if (currentTime >= endTime)
 							return 1;
-						else if (currentTime &lt; startTime)
+						else if (currentTime < startTime)
 							return 0;
 						else
 							return Math.pow((currentTime - startTime) / (endTime - startTime), 2);
@@ -378,12 +353,12 @@ var Concert = (function ()
 
 						if (currentTime >= endTime)
 							return 1;
-						else if (currentTime &lt; startTime)
+						else if (currentTime < startTime)
 							return 0;
 						else
 						{
 							halfway = (startTime + endTime) / 2;
-							if (currentTime &lt; halfway)
+							if (currentTime < halfway)
 								return (Math.pow((currentTime - startTime) / (halfway - startTime), 2) / 2);
 							else
 								return (0.5 + (1 - Math.pow(1 - (currentTime - halfway) / (endTime - halfway), 2)) / 2);
@@ -395,7 +370,7 @@ var Concert = (function ()
 					{
 						if (currentTime >= endTime)
 							return 1;
-						else if (currentTime &lt; startTime)
+						else if (currentTime < startTime)
 							return 0;
 						else
 							return (1 - Math.pow(1 - ((currentTime - startTime) / (endTime - startTime)), 2));
@@ -408,7 +383,7 @@ var Concert = (function ()
 
 						if (currentTime >= endTime)
 							return 1;
-						else if (currentTime &lt; startTime)
+						else if (currentTime < startTime)
 							return 0;
 						else
 						{
@@ -420,13 +395,13 @@ var Concert = (function ()
 
 
 		/**
-		 * Pre-defined functions for controlling the behavior of a sequence when the current time exceeds the end time or moves before the start time of the sequence. When running a sequence, any of these can be applied to the &lt;code>before&lt;/code> or &lt;code>after&lt;/code> properties of the parameters object passed into the [run]{@link Concert.Sequence#run}, [begin]{@link Concert.Sequence#begin}, [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo} methods.
+		 * Pre-defined functions for controlling the behavior of a sequence when the current time exceeds the end time or moves before the start time of the sequence. When running a sequence, any of these can be applied to the <code>before</code> or <code>after</code> properties of the parameters object passed into the [run]{@link Concert.Sequence#run}, [begin]{@link Concert.Sequence#begin}, [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo} methods.
 		 * @public
 		 * @namespace
 		 * @memberof Concert
-		 * @property {function} Bounce(bounceCount) - The &lt;strong>result of calling this function&lt;/strong> with a specified number of times to bounce is a function object that can be passed into [setBefore]{@link Concert.Sequence#setBefore} or [setAfter]{@link Concert.Sequence#setAfter}, or into one of the run methods as the value of the &lt;code>before&lt;/code> or &lt;code>after&lt;/code> property. It results in the sequence bouncing (that is, alternating directions to play forward and backward) the specified number of times when it reaches that time boundary. A &lt;code>bounceCount&lt;/code> value of &lt;code>0&lt;/code> is the same as using &lt;code>Concert.Repeating.None&lt;/code>, &lt;code>1&lt;/code> means add a single extra run-through in the reverse direction, and so on.
-		 * @property {function} Loop(loopbackCount) - The &lt;strong>result of calling this function&lt;/strong> with a specified number of times to loop is a function object that can be passed into [setBefore]{@link Concert.Sequence#setBefore} or [setAfter]{@link Concert.Sequence#setAfter}, or into one of the run methods as the value of the &lt;code>before&lt;/code> or &lt;code>after&lt;/code> property. It results in the sequence looping the specified number of times when it reaches that time boundary. A &lt;code>loopbackCount&lt;/code> value of &lt;code>0&lt;/code> is the same as using &lt;code>Concert.Repeating.None&lt;/code>, &lt;code>1&lt;/code> means play through twice (that is, loop back to the beginning 1 time), and so on.
-		 * @property {function} None - This function should be &lt;strong>passed directly into&lt;/strong> the [setBefore]{@link Concert.Sequence#setBefore} or [setAfter]{@link Concert.Sequence#setAfter} method or into one of the run methods as the value of the &lt;code>before&lt;/code> or &lt;code>after&lt;/code> property. It results in the sequence halting when it reaches that time boundary.
+		 * @property {function} Bounce(bounceCount) - The <strong>result of calling this function</strong> with a specified number of times to bounce is a function object that can be passed into [setBefore]{@link Concert.Sequence#setBefore} or [setAfter]{@link Concert.Sequence#setAfter}, or into one of the run methods as the value of the <code>before</code> or <code>after</code> property. It results in the sequence bouncing (that is, alternating directions to play forward and backward) the specified number of times when it reaches that time boundary. A <code>bounceCount</code> value of <code>0</code> is the same as using <code>Concert.Repeating.None</code>, <code>1</code> means add a single extra run-through in the reverse direction, and so on.
+		 * @property {function} Loop(loopbackCount) - The <strong>result of calling this function</strong> with a specified number of times to loop is a function object that can be passed into [setBefore]{@link Concert.Sequence#setBefore} or [setAfter]{@link Concert.Sequence#setAfter}, or into one of the run methods as the value of the <code>before</code> or <code>after</code> property. It results in the sequence looping the specified number of times when it reaches that time boundary. A <code>loopbackCount</code> value of <code>0</code> is the same as using <code>Concert.Repeating.None</code>, <code>1</code> means play through twice (that is, loop back to the beginning 1 time), and so on.
+		 * @property {function} None - This function should be <strong>passed directly into</strong> the [setBefore]{@link Concert.Sequence#setBefore} or [setAfter]{@link Concert.Sequence#setAfter} method or into one of the run methods as the value of the <code>before</code> or <code>after</code> property. It results in the sequence halting when it reaches that time boundary.
 		 */
 		Repeating:
 			{
@@ -439,12 +414,12 @@ var Concert = (function ()
 						{
 							var distanceOut, bounceNum, curBounceOffset, duration = sequenceEnd - sequenceStart;
 
-							if (unadjustedTime &lt; sequenceStart)
+							if (unadjustedTime < sequenceStart)
 							{
 								distanceOut = sequenceStart - unadjustedTime;
 								bounceNum = Math.floor(distanceOut / duration) + 1;
 
-								if (infinite || bounceNum &lt;= bounceCount)
+								if (infinite || bounceNum <= bounceCount)
 								{
 									curBounceOffset = distanceOut % duration;
 									return { adjustedTime: (((bounceNum % 2) === 0) ? (sequenceEnd - curBounceOffset) : curBounceOffset), hitFinalBoundary: false };
@@ -457,7 +432,7 @@ var Concert = (function ()
 								distanceOut = unadjustedTime - sequenceEnd;
 								bounceNum = Math.floor(distanceOut / duration) + 1;
 
-								if (infinite || bounceNum &lt;= bounceCount)
+								if (infinite || bounceNum <= bounceCount)
 								{
 									curBounceOffset = distanceOut % duration;
 									return { adjustedTime: (((bounceNum % 2) === 0) ? curBounceOffset : sequenceEnd - curBounceOffset), hitFinalBoundary: false };
@@ -479,11 +454,11 @@ var Concert = (function ()
 						{
 							var distanceOut, duration = sequenceEnd - sequenceStart;
 
-							if (unadjustedTime &lt; sequenceStart)
+							if (unadjustedTime < sequenceStart)
 							{
 								distanceOut = sequenceStart - unadjustedTime;
 
-								if (infinite || (distanceOut / duration) &lt;= loopbackCount)
+								if (infinite || (distanceOut / duration) <= loopbackCount)
 									return { adjustedTime: (sequenceEnd - (distanceOut % duration)), hitFinalBoundary: false };
 								else
 									return { adjustedTime: sequenceStart, hitFinalBoundary: true };
@@ -492,7 +467,7 @@ var Concert = (function ()
 							{
 								distanceOut = unadjustedTime - sequenceEnd;
 
-								if (infinite || (distanceOut / duration) &lt;= loopbackCount)
+								if (infinite || (distanceOut / duration) <= loopbackCount)
 									return { adjustedTime: (sequenceStart + (distanceOut % duration)), hitFinalBoundary: false };
 								else
 									return { adjustedTime: sequenceEnd, hitFinalBoundary: true };
@@ -505,7 +480,7 @@ var Concert = (function ()
 				None:
 					function (sequenceStart, sequenceEnd, unadjustedTime)
 					{
-						return ((unadjustedTime &lt; sequenceStart) ? { adjustedTime: sequenceStart, hitFinalBoundary: true } : { adjustedTime: sequenceEnd, hitFinalBoundary: true });
+						return ((unadjustedTime < sequenceStart) ? { adjustedTime: sequenceStart, hitFinalBoundary: true } : { adjustedTime: sequenceEnd, hitFinalBoundary: true });
 					}
 			},
 
@@ -686,7 +661,7 @@ var Concert = (function ()
 					{
 						unitIsArray = _Concert.Util.isArray(newUnit);
 
-						for (i = 0, numTransformationFeatures = transformationFeatures.length; i &lt; numTransformationFeatures; i++)
+						for (i = 0, numTransformationFeatures = transformationFeatures.length; i < numTransformationFeatures; i++)
 						{
 							curTransformationFeature = transformationFeatures[i];
 							if (curTransformationFeature === seekFeature)
@@ -835,7 +810,7 @@ var Concert = (function ()
 						newFeatureSequence = new _Concert.FeatureSequence(newTarget, this.feature),
 						returnVal = { featureSequence: newFeatureSequence, transformations: newTransformations };
 
-					for (i = 0; i &lt; numTransformations; i++)
+					for (i = 0; i < numTransformations; i++)
 						newTransformations[i] = transformations[i].clone(newTarget);
 					newFeatureSequence.transformations = newTransformations;
 
@@ -844,10 +819,10 @@ var Concert = (function ()
 						numSegments = transformationIndexBySegment.length;
 						newTransformationIndexBySegment = new Array(numSegments);
 
-						for (i = 0; i &lt; numSegments; i++)
+						for (i = 0; i < numSegments; i++)
 						{
 							curIndexedTransformation = transformationIndexBySegment[i];
-							for (j = 0; j &lt; numTransformations; j++)
+							for (j = 0; j < numTransformations; j++)
 							{
 								if (curIndexedTransformation === transformations[j])
 								{
@@ -870,7 +845,7 @@ var Concert = (function ()
 						transformationIndexBySegment, currentSegmentNumber, currentTransformation, nextTransformation,
 						nextTransformationStartTime, currentSegmentStartTime;
 
-					if (finalTransformationNumber &lt; 0)
+					if (finalTransformationNumber < 0)
 						return;
 
 					transformations.sort(
@@ -878,7 +853,7 @@ var Concert = (function ()
 						{
 							var aStartTime = a.t0;
 							var bStartTime = b.t0;
-							return ((aStartTime === bStartTime) ? 0 : ((aStartTime &lt; bStartTime) ? -1 : 1));
+							return ((aStartTime === bStartTime) ? 0 : ((aStartTime < bStartTime) ? -1 : 1));
 						});
 
 					transformationIndexBySegment = this.transformationIndexBySegment = new Array(numSegments);
@@ -895,13 +870,13 @@ var Concert = (function ()
 					}
 					else
 						beforeLastTransformation = false;
-					while (currentSegmentNumber &lt; numSegments)
+					while (currentSegmentNumber < numSegments)
 					{
 						if (beforeLastTransformation && currentSegmentStartTime >= nextTransformationStartTime)
 						{
 							currentTransformationNumber++;
 							currentTransformation = nextTransformation;
-							if (currentTransformationNumber &lt; finalTransformationNumber)
+							if (currentTransformationNumber < finalTransformationNumber)
 							{
 								nextTransformation = transformations[currentTransformationNumber + 1];
 								nextTransformationStartTime = nextTransformation.t0;
@@ -913,7 +888,7 @@ var Concert = (function ()
 						{
 							transformationIndexBySegment[currentSegmentNumber] = currentTransformation;
 							currentSegmentNumber++;
-							if (currentSegmentNumber &lt; numSegments)
+							if (currentSegmentNumber < numSegments)
 								currentSegmentStartTime = overallSequenceSegments[currentSegmentNumber].startTime;
 							else
 								break;
@@ -925,7 +900,7 @@ var Concert = (function ()
 				function __retarget(newTarget)
 				{
 					var i, transformations = this.transformations, numTransformations = transformations.length;
-					for (i = 0; i &lt; numTransformations; i++)
+					for (i = 0; i < numTransformations; i++)
 						transformations[i].retarget(newTarget);
 
 					this.target = newTarget;
@@ -991,7 +966,7 @@ var Concert = (function ()
 						newTargetSequence = new _Concert.TargetSequence(newTarget),
 						returnVal = { targetSequence: newTargetSequence, transformations: allNewTransformations };
 
-					for (i = 0; i &lt; numFeatureSequences; i++)
+					for (i = 0; i < numFeatureSequences; i++)
 					{
 						featureSequenceCloneReturn = featureSequences[i].clone(newTarget);
 						newTargetSequence.addFeatureSequence(featureSequenceCloneReturn.featureSequence);
@@ -1008,7 +983,7 @@ var Concert = (function ()
 
 					var i, curFeatureSequence, featureSequences = thisProtected.featureSequences, numFeatureSequences = featureSequences.length;
 
-					for (i = 0; i &lt; numFeatureSequences; i++)
+					for (i = 0; i < numFeatureSequences; i++)
 					{
 						curFeatureSequence = featureSequences[i];
 						if (curFeatureSequence.feature === feature)
@@ -1033,7 +1008,7 @@ var Concert = (function ()
 
 					var i, numFeatureSequences;
 					var featureSequences = thisProtected.featureSequences;
-					for (i = 0, numFeatureSequences = featureSequences.length; i &lt; numFeatureSequences; i++)
+					for (i = 0, numFeatureSequences = featureSequences.length; i < numFeatureSequences; i++)
 						featureSequences[i].indexTransformations(overallSequenceSegments);
 				} // end __indexTransformations()
 
@@ -1043,7 +1018,7 @@ var Concert = (function ()
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
 
 					var i, featureSequences = thisProtected.featureSequences, numFeatureSequences = featureSequences.length;
-					for(i = 0; i &lt; numFeatureSequences; i++)
+					for(i = 0; i < numFeatureSequences; i++)
 						featureSequences[i].retarget(newTarget);
 					thisProtected.target = newTarget;
 				} // end _retarget()
@@ -1054,7 +1029,7 @@ var Concert = (function ()
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
 
 					var numFeatureSequences, i, featureSequences = thisProtected.featureSequences;
-					for (i = 0, numFeatureSequences = featureSequences.length; i &lt; numFeatureSequences; i++)
+					for (i = 0, numFeatureSequences = featureSequences.length; i < numFeatureSequences; i++)
 						featureSequences[i].seek(sequenceSegmentNumber, time, frameID, forceApplication);
 				} // end __seek()
 
@@ -1214,16 +1189,16 @@ var Concert = (function ()
 				{
 					var searchStart = 0, searchEnd = workingArray.length - 1, middle;
 
-					if (searchEnd &lt; 0 || distinctVal > workingArray[searchEnd])
+					if (searchEnd < 0 || distinctVal > workingArray[searchEnd])
 						workingArray.push(distinctVal);
-					else if (distinctVal &lt; workingArray[0])
+					else if (distinctVal < workingArray[0])
 						workingArray.unshift(distinctVal);
 					else
 					{
-						while (searchStart + 1 &lt; searchEnd)
+						while (searchStart + 1 < searchEnd)
 						{
 							middle = Math.floor((searchStart + searchEnd) / 2);
-							if (distinctVal &lt; workingArray[middle])
+							if (distinctVal < workingArray[middle])
 								searchEnd = middle;
 							else
 								searchStart = middle;
@@ -1293,8 +1268,8 @@ var Concert = (function ()
 							indexingComplete = true;
 
 							thisProtected.timelineSegments = timelineSegments = indexingProcessData.inputData;
-							thisProtected.sequenceStartTime = ((!timelineSegments || timelineSegments.length &lt; 1) ? null : timelineSegments[0].startTime);
-							thisProtected.sequenceEndTime = ((!timelineSegments || timelineSegments.length &lt; 1) ? null : timelineSegments[timelineSegments.length - 1].endTime);
+							thisProtected.sequenceStartTime = ((!timelineSegments || timelineSegments.length < 1) ? null : timelineSegments[0].startTime);
+							thisProtected.sequenceEndTime = ((!timelineSegments || timelineSegments.length < 1) ? null : timelineSegments[timelineSegments.length - 1].endTime);
 
 							thisProtected.indexed = true;
 							thisProtected.indexingInProgress = false;
@@ -1329,7 +1304,7 @@ var Concert = (function ()
 
 						if (time >= currentSegment.startTime)
 						{
-							if (time &lt; currentSegmentEnd)
+							if (time < currentSegmentEnd)
 								match = { segmentNumber: currentSegmentNumber, timeMatchType: 0 };
 							else if (currentSegmentNumber === numSegments - 1)
 								match = { segmentNumber: currentSegmentNumber, timeMatchType: 1 };
@@ -1339,7 +1314,7 @@ var Concert = (function ()
 								currentSegment = timelineSegments[currentSegmentNumber];
 								currentSegmentEnd = currentSegment.endTime;
 
-								if (time &lt; currentSegmentEnd)
+								if (time < currentSegmentEnd)
 									match = { segmentNumber: currentSegmentNumber, timeMatchType: 0 };
 								else if (currentSegmentNumber === numSegments - 1)
 									match = { segmentNumber: currentSegmentNumber, timeMatchType: 1 };
@@ -1374,7 +1349,7 @@ var Concert = (function ()
 						currentSegmentNumber = Math.floor((rangeStart + rangeEnd) / 2);
 						currentSegment = thisProtected.timelineSegments[currentSegmentNumber];
 
-						if (time &lt; currentSegment.startTime)
+						if (time < currentSegment.startTime)
 						{
 							rangeEnd = currentSegmentNumber - 1;
 							currentTimeMatchType = -1;
@@ -1392,7 +1367,7 @@ var Concert = (function ()
 								break;
 							}
 						}
-					} while (rangeStart &lt; rangeEnd);
+					} while (rangeStart < rangeEnd);
 
 					return { segmentNumber: currentSegmentNumber, timeMatchType: currentTimeMatchType };
 				} // end __findSequenceSegmentNumberInRange()
@@ -1404,7 +1379,7 @@ var Concert = (function ()
 
 					var i, targetSequences = thisProtected.targetSequences, numTargetSequences = targetSequences.length;
 
-					for (i = 0; i &lt; numTargetSequences; i++)
+					for (i = 0; i < numTargetSequences; i++)
 					{
 						if (targetSequences[i].getTarget() === target)
 							return targetSequences[i];
@@ -1467,7 +1442,7 @@ var Concert = (function ()
 							else if (step === 4)
 								targetSequences = thisProtected.targetSequences;
 
-							while (curIndex &lt; stoppingPoint)
+							while (curIndex < stoppingPoint)
 							{
 								switch (step)
 								{
@@ -1494,7 +1469,7 @@ var Concert = (function ()
 								}
 
 								curIndex++;
-							} // end while (curIndex &lt; stoppingPoint)
+							} // end while (curIndex < stoppingPoint)
 						} // end if/else on (step === 2 && !isAsynchronous && !_Concert.Util.isArray(inputData))
 
 						if (stoppingPoint === totalItemsToProcessThisStep)
@@ -1503,7 +1478,7 @@ var Concert = (function ()
 						{
 							endTime = (new Date()).getTime();
 							indexingProcessData.startingIndex = curIndex;
-							if ((endTime - startTime) &lt; _Concert.Definitions.IterationRoundTimeHalfBound)
+							if ((endTime - startTime) < _Concert.Definitions.IterationRoundTimeHalfBound)
 								indexingProcessData.iterationsPerRound *= 2;
 						}
 
@@ -1537,26 +1512,26 @@ var Concert = (function ()
 				// -- Sequence Public Method Definitions
 
 				/**
-				 * Adds a set of transformations (i.e., changes applied to objects over time) to the sequence.&lt;br>
-				 * &lt;p class="ExplanationParagraph">&lt;strong>Terminology:&lt;/strong>&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-A &lt;em>transformation&lt;/em> is a single change applied over time to a single feature of a single object. Its properties include which object to modify and what feature of it will be altered, a start time and starting value, and end time and ending value. For instance, a transformation may represent changing the "width" style of a DIV element from "100px" at time 1000 to "200px" at time 2000.&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-A &lt;em>sequence&lt;/em> is a collection of transformations that are to be applied together as a group.&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-A &lt;em>target object&lt;/em> is anything that will be modified by a transformation (e.g., a DOM element or a JavaScript object).&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-A &lt;em>target feature&lt;/em> is the aspect of the target object that will be modified (e.g., for a DOM element this might be "width").&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-A &lt;em>unit&lt;/em> is an optional (initially defaults to &lt;code>null&lt;/code>) string appended to a calculated value when applying it to a target feature
-				 * (e.g., for a DOM style property this might be "px").&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-A &lt;em>calculator&lt;/em> is a function that looks at the start and end values of a target feature and calculates a current value to apply
+				 * Adds a set of transformations (i.e., changes applied to objects over time) to the sequence.<br>
+				 * <p class="ExplanationParagraph"><strong>Terminology:</strong></p>
+				 * <p class="ExplanationParagraph">-A <em>transformation</em> is a single change applied over time to a single feature of a single object. Its properties include which object to modify and what feature of it will be altered, a start time and starting value, and end time and ending value. For instance, a transformation may represent changing the "width" style of a DIV element from "100px" at time 1000 to "200px" at time 2000.</p>
+				 * <p class="ExplanationParagraph">-A <em>sequence</em> is a collection of transformations that are to be applied together as a group.</p>
+				 * <p class="ExplanationParagraph">-A <em>target object</em> is anything that will be modified by a transformation (e.g., a DOM element or a JavaScript object).</p>
+				 * <p class="ExplanationParagraph">-A <em>target feature</em> is the aspect of the target object that will be modified (e.g., for a DOM element this might be "width").</p>
+				 * <p class="ExplanationParagraph">-A <em>unit</em> is an optional (initially defaults to <code>null</code>) string appended to a calculated value when applying it to a target feature
+				 * (e.g., for a DOM style property this might be "px").</p>
+				 * <p class="ExplanationParagraph">-A <em>calculator</em> is a function that looks at the start and end values of a target feature and calculates a current value to apply
 				 * based on the current distance along the timeline. Ordinarily this is set to one of the pre-defined calculator functions in the [Concert.Calculators]{@link Concert.Calculators} namespace
-				 * (initially defaulting to &lt;code>Concert.Calculators.Linear&lt;/code>), but can also be a custom function, as explained further below.&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-An &lt;em>applicator&lt;/em> is a function that takes the values computed by the calculator function and applies them to the target feature.
+				 * (initially defaulting to <code>Concert.Calculators.Linear</code>), but can also be a custom function, as explained further below.</p>
+				 * <p class="ExplanationParagraph">-An <em>applicator</em> is a function that takes the values computed by the calculator function and applies them to the target feature.
 				 * For instance, different applicators would be used for setting JavaScript object properties, DOM element styles, or SVG element attributes.
 				 * Ordinarily this is set to one of the pre-defined applicator functions in the [Concert.Applicators]{@link Concert.Applicators} namespace
-				 * (initially defaulting to &lt;code>Concert.Applicators.Property&lt;/code>), but can also be a custom function, as explained further below.&lt;/p>
-				 * &lt;p class="ExplanationParagraph">-An &lt;em>easing&lt;/em> is a function which modifies the rate at which a transformation moves from beginning to end.
+				 * (initially defaulting to <code>Concert.Applicators.Property</code>), but can also be a custom function, as explained further below.</p>
+				 * <p class="ExplanationParagraph">-An <em>easing</em> is a function which modifies the rate at which a transformation moves from beginning to end.
 				 * For instance, it may progress steadily from the start time to the end time, or it may accelerate and decelerate to make motion appear smoother.
 				 * Ordinarily this is set to one of the pre-defined easing functions in the [Concert.EasingFunctions]{@link Concert.EasingFunctions} namespace
-				 * (initially defaulting to &lt;code>Concert.EasingFunctions.ConstantRate&lt;/code>) but can also be a custom function, as explained further below.&lt;/p>
-				 * &lt;p class="ExplanationParagraph">Note: The easing function could easily be confused with the calculator function, because many animation libraries combine these two concepts.
+				 * (initially defaulting to <code>Concert.EasingFunctions.ConstantRate</code>) but can also be a custom function, as explained further below.</p>
+				 * <p class="ExplanationParagraph">Note: The easing function could easily be confused with the calculator function, because many animation libraries combine these two concepts.
 				 * Here, however, they can be set independently. Essentially, a calculator function, given a start value, an end value, and the current time (in the form of a fractional distance
 				 * between the start time and end time of the transformation), calculates a current value to apply. The easing function is what computes the current time that will be passed into
 				 * the calculator function, allowing the rate at which a transformation proceeds to change over time. The reason for separating these becomes apparent when we consider that different
@@ -1564,45 +1539,45 @@ var Concert = (function ()
 				 * one calculating the animation of a simple, numeric value, for instance, or a complex calculator function that takes multiple inputs and calculates rotational movement.
 				 * Because ConcertJS allows anything at all to be animated, it supports the ability to choose any method of calculating values, and then (regardless of which one is used)
 				 * specifying any easing function to alter the rate at which the animation takes place. Easing functions are specified at the level of the transformation (not the full sequence,
-				 * although it is possible to set a default easing function for a sequence), so a single sequence can contain different transformations using a different easing functions.&lt;/p>
+				 * although it is possible to set a default easing function for a sequence), so a single sequence can contain different transformations using a different easing functions.</p>
 				 * @name addTransformations
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
 				 * @param {Object} transformationSet An object or array describing a set of changes which will be applied at specified times to specified target objects.
 				 * (A target object being anything that will be modified by the sequence, such as a DOM element or a JavaScript object.)
-				 * The &lt;code>transformationSet&lt;/code> parameter is either a single object whose properties define a set of transformations, or an array of such objects.
+				 * The <code>transformationSet</code> parameter is either a single object whose properties define a set of transformations, or an array of such objects.
 				 * Certain of the properties (as indicated below) are optional, and each sequence maintains its own settings for what default values will be applied to transformations
 				 * when the optional properties are not defined. (Note: these defaults are applied at the time the transformations are added, not at run-time, so changing the defaults
-				 * for a sequence will never alter transformations which have already been added to that sequence.)&lt;br>&lt;br>
-				 * The expected layout of the object passed into this method is defined as follows (also see examples below):&lt;pre>
-				 * &lt;strong>transformationSet&lt;/strong> = &lt;em>TransformationObject&lt;/em>
+				 * for a sequence will never alter transformations which have already been added to that sequence.)<br><br>
+				 * The expected layout of the object passed into this method is defined as follows (also see examples below):<pre>
+				 * <strong>transformationSet</strong> = <em>TransformationObject</em>
 				 * OR
-				 * &lt;strong>transformationSet&lt;/strong> = [&lt;em>TransformationObject&lt;sub>1&lt;/sub>&lt;/em>, &lt;em>TransformationObject&lt;sub>2&lt;/sub>&lt;/em>, ...]
+				 * <strong>transformationSet</strong> = [<em>TransformationObject<sub>1</sub></em>, <em>TransformationObject<sub>2</sub></em>, ...]
 				 * 
-				 * &lt;strong>&lt;em>TransformationObject&lt;/em>&lt;/strong> =
+				 * <strong><em>TransformationObject</em></strong> =
 				 *   {
-				 *       target: &lt;em>TargetObjectDefinition&lt;/em>,
+				 *       target: <em>TargetObjectDefinition</em>,
 				 *       AND/OR
-				 *       targets: [&lt;em>TargetObjectDefinition&lt;sub>1&lt;/sub>&lt;/em>, &lt;em>TargetObjectDefinition&lt;sub>2&lt;/sub>&lt;/em>, ...]
+				 *       targets: [<em>TargetObjectDefinition<sub>1</sub></em>, <em>TargetObjectDefinition<sub>2</sub></em>, ...]
 				 *
-				 *       feature: &lt;em>FeatureDefinition&lt;/em>,
-				 *       [unit: &lt;em>UnitDefinition&lt;/em>,] // If absent, uses sequence's default value
-				 *       [applicator: &lt;em>ApplicatorFunction&lt;/em>,] // If absent, uses sequence's default value
-				 *       [calculator: &lt;em>CalculatorFunction&lt;/em>,] // If absent, uses sequence's default value
-				 *       [easing: &lt;em>EasingFunction&lt;/em>,] // If absent, uses sequence's default value
+				 *       feature: <em>FeatureDefinition</em>,
+				 *       [unit: <em>UnitDefinition</em>,] // If absent, uses sequence's default value
+				 *       [applicator: <em>ApplicatorFunction</em>,] // If absent, uses sequence's default value
+				 *       [calculator: <em>CalculatorFunction</em>,] // If absent, uses sequence's default value
+				 *       [easing: <em>EasingFunction</em>,] // If absent, uses sequence's default value
 				 *
-				 *       keyframes: &lt;em>KeyframesDefinition&lt;/em>
+				 *       keyframes: <em>KeyframesDefinition</em>
 				 *       OR
-				 *       segments: &lt;em>SegmentDefinition&lt;/em> OR [&lt;em>SegmentDefinition&lt;sub>1&lt;/sub>&lt;/em>, &lt;em>SegmentDefinition&lt;sub>2&lt;/sub>&lt;/em>, ...]
+				 *       segments: <em>SegmentDefinition</em> OR [<em>SegmentDefinition<sub>1</sub></em>, <em>SegmentDefinition<sub>2</sub></em>, ...]
 				 *   };
 				 * 
-				 * &lt;strong>&lt;em>TargetObjectDefinition&lt;/em>&lt;/strong> = The object to be modified by this transformation.
+				 * <strong><em>TargetObjectDefinition</em></strong> = The object to be modified by this transformation.
 				 * Often this will be a DOM object, but it can be anything at all. Multiple targets can
-				 * be specified, by using the &lt;code>targets&lt;/code> (plural) property, as a shorthand method of
+				 * be specified, by using the <code>targets</code> (plural) property, as a shorthand method of
 				 * duplicating the transformation definitions to target all the included target objects.
 				 *
-				 * &lt;strong>&lt;em>FeatureDefinition&lt;/em>&lt;/strong> = The feature of the target object which will be modified, OR an
+				 * <strong><em>FeatureDefinition</em></strong> = The feature of the target object which will be modified, OR an
 				 * array of such features. In most cases, this will be a string (for example, when
 				 * animating a DOM style, this might be "width") or an array of strings. Arrays are
 				 * allowed as a shorthand method of defining multiple features, values, and units
@@ -1610,73 +1585,73 @@ var Concert = (function ()
 				 * matched with the first unit and the first value in those arrays, and so on. See
 				 * below samples for an example of using arrays in this way.
 				 *
-				 * &lt;strong>&lt;em>UnitDefinition&lt;/em>&lt;/strong> = A string to be appended to calculated values before they are applied
+				 * <strong><em>UnitDefinition</em></strong> = A string to be appended to calculated values before they are applied
 				 * to the target (for example, when animating a DOM style, this might be "px"), OR an
 				 * array of such strings. Arrays are allowed as a shorthand method of defining multiple
 				 * features, values, and units together in a more compact notation. The first unit in
 				 * the array will be matched with the first feature and the first value in those arrays,
-				 * and so on. See below samples for an example of using arrays in this way. Use &lt;em>null&lt;/em>
+				 * and so on. See below samples for an example of using arrays in this way. Use <em>null</em>
 				 * if nothing should be appended to the calculated values for this transformation.
 				 *
-				 * &lt;strong>&lt;em>ApplicatorFunction&lt;/em>&lt;/strong> = Function used to apply the calculated current value to the
+				 * <strong><em>ApplicatorFunction</em></strong> = Function used to apply the calculated current value to the
 				 * feature. Because different types of features (e.g., DOM element styles as contrasted
 				 * to plain JavaScript object properties) are applied in different ways, different
 				 * applicator functions are needed. This can be set to one of the functions defined in
 				 * the [Concert.Applicators]{@link Concert.Applicators} namespace, or to any function with the signature:
-				 *   &lt;em>function applicatorFunction(target, feature, value, unit)&lt;/em>
+				 *   <em>function applicatorFunction(target, feature, value, unit)</em>
 				 * See below examples for a sample of a custom applicator.
 				 *
-				 * &lt;strong>&lt;em>CalculatorFunction&lt;/em>&lt;/strong> = Function used to calculate a current value to apply to the target
+				 * <strong><em>CalculatorFunction</em></strong> = Function used to calculate a current value to apply to the target
 				 * feature. This can be set to one of the functions defined in the [Concert.Calculators]{@link Concert.Calculators}
 				 * namespace, or to any function returning an approprate value for this transformation's
 				 * target feature and having the signature:
-				 *   &lt;em>function calculatorFunction(distanceFraction, startValue, endValue, addlProperties)&lt;/em>
+				 *   <em>function calculatorFunction(distanceFraction, startValue, endValue, addlProperties)</em>
 				 * See below examples for a sample of a custom calculator.
 				 *
-				 * &lt;strong>&lt;em>EasingFunction&lt;/em>&lt;/strong> = Function used to compute the current time (as a fractional
+				 * <strong><em>EasingFunction</em></strong> = Function used to compute the current time (as a fractional
 				 * proportion of the distance traversed, from 0 to 1, between the start time and
 				 * end time of the transformation). This can be set to one of the functions defined
 				 * in the [Concert.EasingFunctions]{@link Concert.EasingFunctions} namespace, or to
 				 * any function returning a value from 0 to 1 and having the signature:
-				 *   &lt;em>function easingFunction(startTime, endTime, currentTime)&lt;/em>
+				 *   <em>function easingFunction(startTime, endTime, currentTime)</em>
 				 * See below examples for a sample of a custom easing function.
 				 *
-				 * &lt;strong>&lt;em>KeyframesDefinition&lt;/em>&lt;/strong> =
+				 * <strong><em>KeyframesDefinition</em></strong> =
 				 *   {
-				 *       times: &lt;em>KeyframeTimesArray&lt;/em>,
+				 *       times: <em>KeyframeTimesArray</em>,
 				 *
-				 *       [values: &lt;em>KeyframeValuesArray&lt;/em>,]
+				 *       [values: <em>KeyframeValuesArray</em>,]
 				 *       OR
-				 *       [valueGenerators: &lt;em>ValueGeneratorsArray&lt;/em>]
+				 *       [valueGenerators: <em>ValueGeneratorsArray</em>]
 				 *   };
 				 *
-				 * &lt;strong>&lt;em>SegmentDefinition&lt;/em>&lt;/strong> = 
+				 * <strong><em>SegmentDefinition</em></strong> = 
 				 *   {
-				 *       t0: &lt;em>TimeDefinition&lt;/em>, // Start time of this transformation
-				 *       t1: &lt;em>TimeDefinition&lt;/em>, // End time of this transformation
+				 *       t0: <em>TimeDefinition</em>, // Start time of this transformation
+				 *       t1: <em>TimeDefinition</em>, // End time of this transformation
 				 *
-				 *       v0: &lt;em>ValueDefinition&lt;/em>, // Value applied at the start time
-				 *       v1: &lt;em>ValueDefinition&lt;/em>, // Value applied at the end time
+				 *       v0: <em>ValueDefinition</em>, // Value applied at the start time
+				 *       v1: <em>ValueDefinition</em>, // Value applied at the end time
 				 *       OR
-				 *       v0Generator: &lt;em>ValueGenerator&lt;/em>, // Function to calculate v0
-				 *       v1Generator: &lt;em>ValueGenerator&lt;/em>, // Function to calculate v1
+				 *       v0Generator: <em>ValueGenerator</em>, // Function to calculate v0
+				 *       v1Generator: <em>ValueGenerator</em>, // Function to calculate v1
 				 *
-				 *       [calculator: &lt;em>CalculatorFunction&lt;/em>,] // If absent, falls back to the calculator
-				 *       // defined at the &lt;em>TransformationObject&lt;/em> level; if also absent there, to the
+				 *       [calculator: <em>CalculatorFunction</em>,] // If absent, falls back to the calculator
+				 *       // defined at the <em>TransformationObject</em> level; if also absent there, to the
 				 *       // sequence's default calculator.
 				 *
-				 *       [easing: &lt;em>EasingFunction&lt;/em>,] // If absent, falls back to the easing function
-				 *       // defined at the &lt;em>TransformationObject&lt;/em> level; if also absent there, to the
+				 *       [easing: <em>EasingFunction</em>,] // If absent, falls back to the easing function
+				 *       // defined at the <em>TransformationObject</em> level; if also absent there, to the
 				 *       // sequence's default easing.
 				 *
-				 *       [unit: &lt;em>UnitDefinition&lt;/em>,] // If absent, falls back to the unit defined at the
-				 *       // &lt;em>TransformationObject&lt;/em> level; if also absent there, to the sequence's
+				 *       [unit: <em>UnitDefinition</em>,] // If absent, falls back to the unit defined at the
+				 *       // <em>TransformationObject</em> level; if also absent there, to the sequence's
 				 *       // default unit.
 				 *   };
 				 *
-				 * &lt;strong>&lt;em>KeyframeTimesArray&lt;/em>&lt;/strong> = An array of the form [&lt;em>TimeDefinition&lt;sub>1&lt;/sub>&lt;/em>, &lt;em>TimeDefinition&lt;sub>2&lt;/sub>&lt;/em>, ...].
+				 * <strong><em>KeyframeTimesArray</em></strong> = An array of the form [<em>TimeDefinition<sub>1</sub></em>, <em>TimeDefinition<sub>2</sub></em>, ...].
 				 * This defines the timeline points used as keyframes for this transformation series,
-				 * to be matched up with the values in the corresponding &lt;em>KeyframeValuesArray&lt;/em>. A null
+				 * to be matched up with the values in the corresponding <em>KeyframeValuesArray</em>. A null
 				 * element has the effect of breaking the keyframe string into two segments. For example,
 				 * the array [0, 100, 1000, 2000] defines a constant flow of transition with four
 				 * keyframes. The array [0, 100, null, 1000, 2000], on the other hand, defines a flow
@@ -1684,17 +1659,17 @@ var Concert = (function ()
 				 * then no further animation at all until until time 1000, followed by another period
 				 * of animation between the keyframes at times 1000 and 2000.
 				 *
-				 * &lt;strong>&lt;em>KeyframeValuesArray&lt;/em>&lt;/strong> = An array of the form [&lt;em>ValueDefinition&lt;sub>1&lt;/sub>&lt;/em>, &lt;em>ValueDefinition&lt;sub>2&lt;/sub>&lt;/em>, ...].
+				 * <strong><em>KeyframeValuesArray</em></strong> = An array of the form [<em>ValueDefinition<sub>1</sub></em>, <em>ValueDefinition<sub>2</sub></em>, ...].
 				 * This defines the values applied at each keyframe point, as matched up with the keyframe
-				 * points defined in the corresponding &lt;em>KeyframeTimesArray&lt;/em>. Note that null values
+				 * points defined in the corresponding <em>KeyframeTimesArray</em>. Note that null values
 				 * appearing in this array work exactly the same way (and should match up with) null
-				 * values in the &lt;em>KeyframeTimesArray&lt;/em>. Both arrays must have the same number of elements.
+				 * values in the <em>KeyframeTimesArray</em>. Both arrays must have the same number of elements.
 				 *
-				 * &lt;strong>&lt;em>ValueGeneratorsArray&lt;/em>&lt;/strong> = An array of the form [&lt;em>ValueGenerator&lt;sub>1&lt;/sub>&lt;/em>, &lt;em>ValueGenerator&lt;sub>2&lt;/sub>&lt;/em>, ...].
+				 * <strong><em>ValueGeneratorsArray</em></strong> = An array of the form [<em>ValueGenerator<sub>1</sub></em>, <em>ValueGenerator<sub>2</sub></em>, ...].
 				 * This defines the functions that calculate values applied at each keyframe point, as
-				 * matched up with the keyframe points defined in the corresponding &lt;em>KeyframeTimesArray&lt;/em>.
+				 * matched up with the keyframe points defined in the corresponding <em>KeyframeTimesArray</em>.
 				 *
-				 * &lt;strong>&lt;em>TimeDefinition&lt;/em>&lt;/strong> = A number indicating a point along the sequence timeline. When
+				 * <strong><em>TimeDefinition</em></strong> = A number indicating a point along the sequence timeline. When
 				 * synchronizing to a media object or running by the system clock, this should ordinarily
 				 * be specified as a number of milliseconds (1/1000's of a second). Otherwise, there is no
 				 * restriction; it simply indicates a numeric point on the overall timeline, with no
@@ -1702,7 +1677,7 @@ var Concert = (function ()
 				 * of a slider or other user control, in which case this number would just be anything
 				 * from the minimum to the maximum values of that control.
 				 *
-				 * &lt;strong>&lt;em>ValueDefinition&lt;/em>&lt;/strong> = A value to be applied to the target object feature, or an array of
+				 * <strong><em>ValueDefinition</em></strong> = A value to be applied to the target object feature, or an array of
 				 * such values. This value can be of any type, although it needs to be one appropriate to
 				 * the target feature, calculator, and applicator being used. If a unit is specified, the
 				 * value will be treated as a string and the unit will be appended to it before
@@ -1711,8 +1686,8 @@ var Concert = (function ()
 				 * will be matched with the first unit and the first feature in those arrays, and so on.
 				 * See below samples for an example of using arrays in this way.
 				 *
-				 * &lt;strong>&lt;em>ValueGenerator&lt;/em>&lt;/strong> = A function which returns a valid &lt;em>ValueDefinition&lt;/em> and has the signature:
-				 *   &lt;em>function generatorFunction(sequence)&lt;/em>
+				 * <strong><em>ValueGenerator</em></strong> = A function which returns a valid <em>ValueDefinition</em> and has the signature:
+				 *   <em>function generatorFunction(sequence)</em>
 				 * This is a mechanism that allows specifying functions that will calculate start and end
 				 * values for a transformation, instead of using fixed values determined at the time the
 				 * transformation is initially specified. This can be helpful if the same transformation
@@ -1725,14 +1700,14 @@ var Concert = (function ()
 				 * determines what the start and end values are that the Calculator will look at during
 				 * run-time of the sequence. All of the value generator functions for an entire sequence
 				 * are called at once, either manually by calling the sequence's [generateValues]{@link Concert.Sequence#generateValues} method,
-				 * or at the time the sequence is run, by specifying &lt;code>true&lt;/code> for the &lt;code>generateValues&lt;/code> option
+				 * or at the time the sequence is run, by specifying <code>true</code> for the <code>generateValues</code> option
 				 * when calling the [run]{@link Concert.Sequence#run}, [begin]{@link Concert.Sequence#begin}, [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo} methods.
 				 * The generator function will be passed a reference to the sequence object containing the
 				 * transformation whose values are currently being generated.
 				 *
-				 *&lt;/pre>
-				 * @example &lt;caption>Example 1 Below: Single target object and feature, using keyframes, not relying on defaults. This would move a DOM object with id "someObject"
-				 * by changing its "left" style value from "0px" to "60px" over the timeline period from time 1000 to 2000.&lt;/caption>
+				 *</pre>
+				 * @example <caption>Example 1 Below: Single target object and feature, using keyframes, not relying on defaults. This would move a DOM object with id "someObject"
+				 * by changing its "left" style value from "0px" to "60px" over the timeline period from time 1000 to 2000.</caption>
 				 * sequence.addTransformations({
 				 *     target: document.getElementById("someObject"),
 				 *     feature: "left",
@@ -1743,12 +1718,12 @@ var Concert = (function ()
 				 *     keyframes: { times: [1000, 2000], values: [0, 60] }
 				 *   });
 				 *     
-				 * @example &lt;caption>Example 2 Below: This example demonstrates adding transformations for more than one target at a time, using both the
+				 * @example <caption>Example 2 Below: This example demonstrates adding transformations for more than one target at a time, using both the
 				 * "keyframes" and "segments" styles of definition, and using arrays for the target features and values. (An array could also have been
 				 * specified for the "unit" property, but that isn't necessary if the same unit is being used for all the features as it is here.) Also
 				 * note that the setDefaults method is being used to avoid having to specify common properties over and over again.
 				 * This code would move the DOM object with id "someObject1" from position (0, 0) to (100, 200) from time 0 to 1000,
-				 * and would change the width on the object with id "someObject2" from 75 to 150 and back to 75 again over the same time period.&lt;/caption>
+				 * and would change the width on the object with id "someObject2" from 75 to 150 and back to 75 again over the same time period.</caption>
 				 * sequence.setDefaults(
 				 *   {
 				 *     applicator: Concert.Applicators.Style,
@@ -1776,7 +1751,7 @@ var Concert = (function ()
 				 *     }
 				 *   ]);
 				 *     
-				 * @example &lt;caption>Example 3 Below: This example demonstrates using value generator functions instead of fixed values.
+				 * @example <caption>Example 3 Below: This example demonstrates using value generator functions instead of fixed values.
 				 * This could would create a single transformation that animates the "left" property of the DOM element with ID "PhotonTorpedoBox".
 				 * The animation runs from time 0 to time 1000, but the actual values are not yet known. Imagining that we're animating the firing
 				 * of a torpedo from a ship whose location at the time the torpedo will be fired is not yet known, we set up functions that can
@@ -1784,7 +1759,7 @@ var Concert = (function ()
 				 * we would call generateValues(), which calls the generator functions and stores the values returned to be used when the sequence
 				 * is run. (Or, if the generateValues option is specified with a value of true when running the sequence, generateValues() will be
 				 * called automatically at that time.) Also note, the QuadIn easing function is used here, which will cause the motion to speed
-				 * up as it proceeds from beginning to end.&lt;/caption>
+				 * up as it proceeds from beginning to end.</caption>
 				 * sequence.setDefaults(
 				 *   {
 				 *     applicator: Concert.Applicators.Style,
@@ -1818,8 +1793,8 @@ var Concert = (function ()
 				 * // ... sometime later:
 				 * sequence.generateValues();
 				 * 
-				 * @example &lt;caption>Example 3b Below: Shown here is the relevant portion of the last example modified to use keyframes notation instead of
-				 * segments notation.&lt;/caption>
+				 * @example <caption>Example 3b Below: Shown here is the relevant portion of the last example modified to use keyframes notation instead of
+				 * segments notation.</caption>
 				 * sequence.addTransformations(
 				 *   {
 				 *     target: document.getElementById("PhotonTorpedoBox"),
@@ -1844,15 +1819,15 @@ var Concert = (function ()
 				 *       }
 				 *   });
 				 *
-				 * @example &lt;caption>Example 4 Below: This example demonstrates using custom applicator, calculator, and easing functions
+				 * @example <caption>Example 4 Below: This example demonstrates using custom applicator, calculator, and easing functions
 				 * to manipulate the width of a DOM object. The code shows a custom applicator function that could be used if we wanted to
-				 * use a jQuery object containing multiple elements as a target object. &lt;strong>Note that ConcertJS does NOT depend in any
+				 * use a jQuery object containing multiple elements as a target object. <strong>Note that ConcertJS does NOT depend in any
 				 * way on jQuery; this example merely shows
-				 * using the two libraries in conjunction.&lt;/strong> The custom calculator function also makes use of jQuery, and shows how
+				 * using the two libraries in conjunction.</strong> The custom calculator function also makes use of jQuery, and shows how
 				 * a custom calculator could be used to generate truly dynamic values- in this case, it keeps the calculated value locked
 				 * to the width of a particular DOM element. The custom easing function shown here causes the animation to proceed at
 				 * half-speed for two thirds of the time, then double-speed for the final third of the time.
-				 * &lt;/caption>
+				 * </caption>
 				 * function customApplicator(target, feature, value, unit)
 				 * {
 				 *   target.each(function () { $(this).css(feature, value + unit); });
@@ -1867,7 +1842,7 @@ var Concert = (function ()
 				 * function customEasing(startTime, endTime, currentTime)
 				 * {
 				 *   var fractionComplete = (currentTime - startTime) / (endTime - startTime);
-				 *   if (fractionComplete &lt; 2 / 3)
+				 *   if (fractionComplete < 2 / 3)
 				 *     return (fractionComplete / 2);
 				 *   else
 				 *     return (1 / 3 + 2 * (fractionComplete - 2 / 3));
@@ -1907,7 +1882,7 @@ var Concert = (function ()
 					if (!(_Concert.Util.isArray(transformationSet)))
 						transformationSet = [transformationSet];
 
-					for (i = 0, numTransformationGroups = transformationSet.length; i &lt; numTransformationGroups; i++)
+					for (i = 0, numTransformationGroups = transformationSet.length; i < numTransformationGroups; i++)
 					{
 						curTransformationGroup = transformationSet[i];
 
@@ -1919,7 +1894,7 @@ var Concert = (function ()
 							if ((typeof curGroupTarget !== "undefined") && (curGroupTarget !== null))
 								curGroupTargets = [curGroupTarget].concat(curGroupTargets);
 
-							for (j = 0, numCurGroupTargets = curGroupTargets.length; j &lt; numCurGroupTargets; j++)
+							for (j = 0, numCurGroupTargets = curGroupTargets.length; j < numCurGroupTargets; j++)
 							{
 								singleTargetVersion = {};
 								for (propertyName in curTransformationGroup) if (curTransformationGroup.hasOwnProperty(propertyName))
@@ -1954,7 +1929,7 @@ var Concert = (function ()
 							curGroupEasing = defaults.easing;
 
 						curFeatureSequences = new Array(curGroupFeatures.length);
-						for (j = 0; j &lt; curGroupFeatures.length; j++)
+						for (j = 0; j < curGroupFeatures.length; j++)
 						{
 							singleFeatureSequence = curTargetSequence.findFeatureSequenceByFeature(curGroupFeatures[j]);
 							if (singleFeatureSequence === null)
@@ -1973,7 +1948,7 @@ var Concert = (function ()
 							valueGenerators = curGroupKeyFrames.valueGenerators;
 
 							lastKeyFrameTime = lastKeyFrameValue = lastKeyFrameValueGenerator = curKeyFrameValue = curKeyFrameValueGenerator = null;
-							for (j = 0, numKeyFrames = times.length; j &lt; numKeyFrames; j++)
+							for (j = 0, numKeyFrames = times.length; j < numKeyFrames; j++)
 							{
 								curKeyFrameTime = times[j];
 								if (values)
@@ -2018,7 +1993,7 @@ var Concert = (function ()
 									allTransformations.push(newTransformation);
 									if (lastKeyFrameValueGenerator || curKeyFrameValueGenerator)
 										dynamicValueTransformations.push(newTransformation);
-									for(k = 0; k &lt; curFeatureSequences.length; k++)
+									for(k = 0; k < curFeatureSequences.length; k++)
 										curFeatureSequences[k].transformations.push(newTransformation);
 
 									lastKeyFrameTime = curKeyFrameTime;
@@ -2032,7 +2007,7 @@ var Concert = (function ()
 							if (!(_Concert.Util.isArray(curGroupSegments)))
 								curGroupSegments = [curGroupSegments];
 
-							for (j = 0, numSegments = curGroupSegments.length; j &lt; numSegments; j++)
+							for (j = 0, numSegments = curGroupSegments.length; j < numSegments; j++)
 							{
 								curSegment = curGroupSegments[j];
 
@@ -2056,7 +2031,7 @@ var Concert = (function ()
 								allTransformations.push(newTransformation);
 								if ((typeof newTransformationProperties.v0Generator !== "undefined") || (typeof newTransformationProperties.v1Generator !== "undefined"))
 									dynamicValueTransformations.push(newTransformation);
-								for (k = 0; k &lt; curFeatureSequences.length; k++)
+								for (k = 0; k < curFeatureSequences.length; k++)
 									curFeatureSequences[k].transformations.push(newTransformation);
 							} // end loop through segments
 						} // end if/else on (typeof curGroupKeyFrames != "undefined")
@@ -2067,8 +2042,8 @@ var Concert = (function ()
 				/**
 				 * Runs a transformation starting from the beginning, locked to the system clock and automatically stopping upon reaching the end.
 				 * This is really just a shortcut method provided for a common usage scenario; it is exactly the same as calling the [run]{@link Concert.Sequence#run} method with the parameters
-				 * &lt;code>{ synchronizeTo: null, initialSeek: 0, timeOffset: null, autoStopAtEnd: true }&lt;/code>. Note that these parameter values can still be overridden, or any of the other parameters
-				 * accepted by the [run]{@link Concert.Sequence#run} method can be specified in the &lt;code>parameters&lt;/code> argument passed into this method.
+				 * <code>{ synchronizeTo: null, initialSeek: 0, timeOffset: null, autoStopAtEnd: true }</code>. Note that these parameter values can still be overridden, or any of the other parameters
+				 * accepted by the [run]{@link Concert.Sequence#run} method can be specified in the <code>parameters</code> argument passed into this method.
 				 * @name begin
 				 * @memberof Concert.Sequence#
 				 * @public
@@ -2097,10 +2072,10 @@ var Concert = (function ()
 				 * @public
 				 * @method
 				 * @param {function} targetLookupFunction A function taking a single parameter. The value passed in will be one of the transformation targets of the original sequence. The function must return the equivalent object which should be targeted by the equivalent transformation in the new sequence.
-				 * @param {boolean} [matchRunningStatus=false] If &lt;code>true&lt;/code>, and the sequence being cloned is currently running, the new sequence will jump to the same point on the timeline and run as well. Otherwise, the new sequence will not automatically start running.
-				 * @param {boolean} [doInitialSeek=false] If &lt;code>true&lt;/code>, the new sequence will immediately seek to the same point on the timeline as the original sequence. Otherwise, the new sequence will merely be created, but will not immediately perform any action (unless the matchRunningStatus parameter is &lt;code>true&lt;/code>).
-				 * @returns {Object} A new [Sequence]{@link Concert.Sequence} object, with the same properties and duplicates of all the same transformations that were in the original sequence, but with new target objects of those transformations substituted in as controlled by the &lt;code>targetLookupFunction&lt;/code> parameter.
-				 * @example &lt;caption>One possible method of using this function easily for replicating a sequence definition onto any number of targets is shown below. The initial sequence here is defined with two transformations that are given strings ("UpperElement" and "LowerElement") as targets. The initial sequence is thus just a dummy from which we can clone easily and repeatedly, and the strings make helpful placeholders for the function passed into the clone method to use for matching up to real DOM elements or other intended target objects which we may have created dynamically at a later time. Note further that if you index a sequence before cloning it, resulting cloned sequences will already be indexed and can be run instantly without any indexing lag.&lt;/caption>
+				 * @param {boolean} [matchRunningStatus=false] If <code>true</code>, and the sequence being cloned is currently running, the new sequence will jump to the same point on the timeline and run as well. Otherwise, the new sequence will not automatically start running.
+				 * @param {boolean} [doInitialSeek=false] If <code>true</code>, the new sequence will immediately seek to the same point on the timeline as the original sequence. Otherwise, the new sequence will merely be created, but will not immediately perform any action (unless the matchRunningStatus parameter is <code>true</code>).
+				 * @returns {Object} A new [Sequence]{@link Concert.Sequence} object, with the same properties and duplicates of all the same transformations that were in the original sequence, but with new target objects of those transformations substituted in as controlled by the <code>targetLookupFunction</code> parameter.
+				 * @example <caption>One possible method of using this function easily for replicating a sequence definition onto any number of targets is shown below. The initial sequence here is defined with two transformations that are given strings ("UpperElement" and "LowerElement") as targets. The initial sequence is thus just a dummy from which we can clone easily and repeatedly, and the strings make helpful placeholders for the function passed into the clone method to use for matching up to real DOM elements or other intended target objects which we may have created dynamically at a later time. Note further that if you index a sequence before cloning it, resulting cloned sequences will already be indexed and can be run instantly without any indexing lag.</caption>
 				 * var originalSequence = new Concert.Sequence();
 				 * originalSequence.setDefaults(
 				 *   {
@@ -2151,7 +2126,7 @@ var Concert = (function ()
 						newSequence = new _Concert.Sequence(), newPublicData = {}, newProtectedData,
 						newSoleControlOptimizationDuringRun = thisProtected.soleControlOptimizationDuringRun;
 
-					for (i = 0; i &lt; numTargetSequences; i++)
+					for (i = 0; i < numTargetSequences; i++)
 					{
 						curTargetSequence = targetSequences[i];
 						targetSequenceCloneReturn = curTargetSequence.clone(targetLookupFunction(curTargetSequence.getTarget()));
@@ -2159,7 +2134,7 @@ var Concert = (function ()
 						newTargetSequences[i] = targetSequenceCloneReturn.targetSequence;
 
 						curTargetTransformations = targetSequenceCloneReturn.transformations;
-						for (j = 0, curTargetNumTransformations = curTargetTransformations.length; j &lt; curTargetNumTransformations; j++)
+						for (j = 0, curTargetNumTransformations = curTargetTransformations.length; j < curTargetNumTransformations; j++)
 						{
 							curNewTransformation = curTargetTransformations[j];
 							allNewTransformations[newTransformationsAdded] = curNewTransformation;
@@ -2172,7 +2147,7 @@ var Concert = (function ()
 						}
 					}
 
-					for (i = 0; i &lt; numTimelineSegments; i++)
+					for (i = 0; i < numTimelineSegments; i++)
 					{
 						curTimelineSegment = timelineSegments[i];
 						newTimelineSegments[i] = new _Concert.TimelineSegment(curTimelineSegment.startTime, curTimelineSegment.endTime);
@@ -2184,7 +2159,7 @@ var Concert = (function ()
 							newDefaults[propertyName] = defaults[propertyName];
 					}
 
-					newPoller = newRunning ? (newPoller = (newPollingInterval &lt; 1) ? (new _Concert.Pollers.Auto()) : (new _Concert.Pollers.FixedInterval(newPollingInterval))) : null;
+					newPoller = newRunning ? (newPoller = (newPollingInterval < 1) ? (new _Concert.Pollers.Auto()) : (new _Concert.Pollers.FixedInterval(newPollingInterval))) : null;
 
 					newProtectedData =
 						{
@@ -2235,16 +2210,16 @@ var Concert = (function ()
 
 				/**
 				 * Runs a transformation starting from the current timeline position, locked to the specified synchronization source. This differs from the [syncTo]{@link Concert.Sequence#syncTo} method
-				 * in that &lt;code>follow&lt;/code> causes the sequence to run exactly in time with the synchronization source and in the same direction, but starting at the current timeline position, whereas
+				 * in that <code>follow</code> causes the sequence to run exactly in time with the synchronization source and in the same direction, but starting at the current timeline position, whereas
 				 * with [syncTo]{@link Concert.Sequence#syncTo} the sequence will first jump to a timeline position matching the current value of the synchronization source and then do the same.
 				 * This is really just a shortcut method provided for a common usage scenario; it is exactly the same as calling the [run]{@link Concert.Sequence#run} method with the parameters
-				 * &lt;code>{ synchronizeTo: &lt;em>syncSource&lt;/em>, initialSeek: null, timeOffset: null }&lt;/code>. Note that these parameter values can still be overridden, or any of the other parameters
-				 * accepted by the [run]{@link Concert.Sequence#run} method can be specified in the &lt;code>parameters&lt;/code> argument passed into this method.
+				 * <code>{ synchronizeTo: <em>syncSource</em>, initialSeek: null, timeOffset: null }</code>. Note that these parameter values can still be overridden, or any of the other parameters
+				 * accepted by the [run]{@link Concert.Sequence#run} method can be specified in the <code>parameters</code> argument passed into this method.
 				 * @name follow
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
-				 * @param {Varies} syncSource A synchronization source. Can take any of the following different types of values:&lt;pre>
+				 * @param {Varies} syncSource A synchronization source. Can take any of the following different types of values:<pre>
 				 *   null: locks sequence to the system clock.
 				 *   function object: the passed-in function is called every time the polling
 				 *       interval is reached, and the return value is used as the seek time.
@@ -2253,7 +2228,7 @@ var Concert = (function ()
 				 *       element, such as a slider, or to another Concert.Sequence object.)
 				 *   html audio or video DOM object: locks the sequence to the currentTime property
 				 *       of the media element. This allows the sequence to remain synchronized to
-				 *       the media even when it is paused, scrubbed, or the user skips around.&lt;/pre>
+				 *       the media even when it is paused, scrubbed, or the user skips around.</pre>
 				 * @param {Object} [parameters] An object with property values setting options for how to run the sequence.
 				 * See the [run]{@link Concert.Sequence#run} method for information on allowable properties and values in this object.
 				 */
@@ -2266,14 +2241,14 @@ var Concert = (function ()
 
 
 				/**
-				 * Calls the value generation functions attached to transformations that have value generators instead of fixed start and end values.&lt;br>
-				 * &lt;em>It may be useful at times to define transformations whose start and end values are not fixed at the time the transformations are first defined,
+				 * Calls the value generation functions attached to transformations that have value generators instead of fixed start and end values.<br>
+				 * <em>It may be useful at times to define transformations whose start and end values are not fixed at the time the transformations are first defined,
 				 * but which instead are calculated dynamically at some later time prior to running the sequence. This is accomplished by specifying functions instead
 				 * of start and end values, as explained in the documentation for the [addTransformations]{@link Concert.Sequence#addTransformations} method.
 				 * Those functions (for all such transformations in a sequence) are then called, and their return values stored as the start and end values of their
 				 * respective transformations, either at the time the sequence is run by specifying the appropriate option when calling the [run]{@link Concert.Sequence#run},
 				 * [begin]{@link Concert.Sequence#begin}, [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo} methods, or at any time by
-				 * calling &lt;code>generateValues&lt;/code>.&lt;/em>
+				 * calling <code>generateValues</code>.</em>
 				 * @name generateValues
 				 * @memberof Concert.Sequence#
 				 * @public
@@ -2285,7 +2260,7 @@ var Concert = (function ()
 
 					var i, dynamicValueTransformations = thisProtected.dynamicValueTransformations, numDynamicValueTransformations = dynamicValueTransformations.length;
 
-					for (i = 0; i &lt; numDynamicValueTransformations; i++)
+					for (i = 0; i < numDynamicValueTransformations; i++)
 						dynamicValueTransformations[i].generateValues(thisPublic);
 				} // end __generateValues();
 
@@ -2364,8 +2339,8 @@ var Concert = (function ()
 				 * Indexes a sequence. This function is run automatically (if necessary) any time a sequence is run or the [seek]{@link Concert.Sequence#seek} method is called.
 				 * However, for very large sequences (large enough that indexing would cause a noticable lag), it may be desirable to manually control when indexing takes place
 				 * (that is, to pre-index the sequence), so that seeking or running will begin instantly. Once indexed, a sequence (or any sequences cloned from it) will not need
-				 * to be indexed again unless new transformations are added to it.&lt;br>&lt;br>
-				 * &lt;strong>Explanation of Indexing:&lt;/strong> ConcertJS sequences can consist of very large numbers of transformations applied to numerous target objects,
+				 * to be indexed again unless new transformations are added to it.<br><br>
+				 * <strong>Explanation of Indexing:</strong> ConcertJS sequences can consist of very large numbers of transformations applied to numerous target objects,
 				 * with the ability to seek extremely quickly to any point in the sequence. This is what makes it useful for synchronizing to other things (such as audio or video)
 				 * and for other situations that require arbitrary seeking, running at different speeds or in either direction, or other uses that don't conform to a simple,
 				 * run-once-forward-only-at-normal-speed scenario. What makes this possible is an internal data structure that optimizes for quickly finding the correct value
@@ -2377,15 +2352,15 @@ var Concert = (function ()
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
-				 * @param {function} completionCallback This function will be executed upon completion of indexing. It is especially useful if the &lt;code>isAsynchronous&lt;/code>
-				 * parameter is set to &lt;code>true&lt;/code>. The function specified here should have a signature of the form &lt;code>someCallBackFunction(sequenceObject)&lt;/code>.
+				 * @param {function} completionCallback This function will be executed upon completion of indexing. It is especially useful if the <code>isAsynchronous</code>
+				 * parameter is set to <code>true</code>. The function specified here should have a signature of the form <code>someCallBackFunction(sequenceObject)</code>.
 				 * That is, the function will be called with a single argument, which will be the sequence object whose indexing has completed. (For purposes of handling this
 				 * callback when there are multiple sequences being manipulated, it may also be helpful to remember that every [Sequence]{@link Concert.Sequence} object has a
 				 * unique  integer ID which can be retrieved using the [getID]{@link Concert.Sequence#getID} method.)
-				 * @param {boolean} isAsynchronous If &lt;code>true&lt;/code>, the indexing process will not be run all at once, but will instead be broken into
-				 * smaller chunks of work and scheduled using calls to &lt;code>window.setTimeout&lt;/code>. This is useful for very large sequences, to help reduce
-				 * or eliminate any noticable pause in browser responsiveness while indexing is taking place.&lt;br>
-				 * &lt;em>For the current version, the indexer makes a best effort to keep each processing chunk under 100 ms. Future versions may allow the
+				 * @param {boolean} isAsynchronous If <code>true</code>, the indexing process will not be run all at once, but will instead be broken into
+				 * smaller chunks of work and scheduled using calls to <code>window.setTimeout</code>. This is useful for very large sequences, to help reduce
+				 * or eliminate any noticable pause in browser responsiveness while indexing is taking place.<br>
+				 * <em>For the current version, the indexer makes a best effort to keep each processing chunk under 100 ms. Future versions may allow the
 				 * programmer to adjust this value, and may also be able to incorporate web workers as a way of pushing most of the work into a completely separate,
 				 * concurrent thread.
 				 */
@@ -2395,7 +2370,7 @@ var Concert = (function ()
 
 					if (thisProtected.indexed && completionCallback)
 						completionCallback(thisPublic);
-					else if (thisProtected.allTransformations.length &lt; 1)
+					else if (thisProtected.allTransformations.length < 1)
 					{
 						thisProtected.indexed = true;
 						if (completionCallback)
@@ -2422,7 +2397,7 @@ var Concert = (function ()
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
-				 * @returns {boolean} &lt;code>true&lt;/code> if the sequence is currently running, &lt;code>false&lt;/code>otherwise.
+				 * @returns {boolean} <code>true</code> if the sequence is currently running, <code>false</code>otherwise.
 				 */
 				function __isRunning()
 				{
@@ -2448,7 +2423,7 @@ var Concert = (function ()
 					var thisPublic = this.thisPublic, thisProtected = _getProtectedMembers.call(thisPublic);
 
 					var i, curTargetSequence, targetSequences = thisProtected.targetSequences, numTargetSequences = targetSequences.length;
-					for (i = 0; i &lt; numTargetSequences; i++)
+					for (i = 0; i < numTargetSequences; i++)
 					{
 						curTargetSequence = targetSequences[i];
 						curTargetSequence.retarget(targetLookupFunction(curTargetSequence.getTarget()));
@@ -2457,18 +2432,18 @@ var Concert = (function ()
 
 
 				/**
-				 * Runs the sequence, with the options defined in the &lt;code>parameters&lt;/code> object.
+				 * Runs the sequence, with the options defined in the <code>parameters</code> object.
 				 * For many purposes, one of the other run methods ([begin]{@link Concert.Sequence#begin}, [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo})
 				 * may be easier, because they assume certain default options that are correct in most usage scenarios, but this method is the general-purpose way to run a sequence
-				 * with any set of behavioral options, and is in fact used behind the scenes by those other methods. Except for &lt;code>generateValues&lt;/code>, &lt;code>initialSeek&lt;/code>, and
-				 * &lt;code>timeOffset&lt;/code> (the last of which is automatically re-calculated if null), options specified in the &lt;code>parameters&lt;/code> object are remembered and will be retained
+				 * with any set of behavioral options, and is in fact used behind the scenes by those other methods. Except for <code>generateValues</code>, <code>initialSeek</code>, and
+				 * <code>timeOffset</code> (the last of which is automatically re-calculated if null), options specified in the <code>parameters</code> object are remembered and will be retained
 				 * as the default values. This means for restarting stopped sequences, it is not always necessary to explicitly re-state all the options, and it also means that this method can be
 				 * called on an already-running sequence to change run-time options on the fly.
 				 * @name run
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
-				 * @param {Object} [parameters] An object with property values setting options for how to run the sequence. Defined as follows below. Any or all of the below options may be specified:&lt;pre>&lt;code>
+				 * @param {Object} [parameters] An object with property values setting options for how to run the sequence. Defined as follows below. Any or all of the below options may be specified:<pre><code>
 				 * parameters =
 				 * {
 				 *   // --------
@@ -2479,13 +2454,13 @@ var Concert = (function ()
 				 *   // the sequence to loop back to the beginning twice (thus running a total of three
 				 *   // times) before ceasing. See [Concert.Repeating]{@link Concert.Repeating} for information on the pre-defined
 				 *   // values, or see [setAfter]{@link Concert.Sequence#setAfter} for more information on using a custom function.
-				 *   &lt;strong>after&lt;/strong>: VALUE, // Initial default: Concert.Repeating.None
+				 *   <strong>after</strong>: VALUE, // Initial default: Concert.Repeating.None
 				 *
 				 *   // --------
 				 *   // Boolean; Whether or not to automatically call stop() upon hitting the end.
 				 *   // (Note that "the end" means after all looping, bouncing, etc. is taken into
 				 *   // account.)
-				 *   &lt;strong>autoStopAtEnd&lt;/strong>: VALUE, // Initial default: true
+				 *   <strong>autoStopAtEnd</strong>: VALUE, // Initial default: true
 				 *
 				 *   // --------
 				 *   // Function; Defines how the sequence behaves when the calculated current time
@@ -2496,7 +2471,7 @@ var Concert = (function ()
 				 *   // (thus running a total of three times) before ceasing. See [Concert.Repeating]{@link Concert.Repeating} for
 				 *   // information on the pre-defined values, or see [setBefore]{@link Concert.Sequence#setBefore} for more information on
 				 *   // using a custom function.
-				 *   &lt;strong>before&lt;/strong>: VALUE, // Initial default: Concert.Repeating.None
+				 *   <strong>before</strong>: VALUE, // Initial default: Concert.Repeating.None
 				 *
 				 *   // --------
 				 *   // If the sequence has any transformations whose start and end values are dynamic
@@ -2504,38 +2479,38 @@ var Concert = (function ()
 				 *   // to use will have to be calculated at some point in order to run the sequence.
 				 *   // This can be accomplished by calling [generateValues]{@link Concert.Sequence#generateValues} manually, or it will happen
 				 *   // automatically just before run-time if this parameter is set to true.
-				 *   &lt;strong>generateValues&lt;/strong>: VALUE, // Default value: true
+				 *   <strong>generateValues</strong>: VALUE, // Default value: true
 				 *
 				 *   // --------
 				 *   // Numeric; If specified, sequence will seek to this time before commencing
 				 *   // the run.
-				 *   &lt;strong>initialSeek&lt;/strong>: VALUE, // Default: null
+				 *   <strong>initialSeek</strong>: VALUE, // Default: null
 				 *
 				 *   // --------
 				 *   // Function; Callback function invoked just after automatically stopping at the
 				 *   end of the sequence (only will be called if autoStopAtEnd is true).
-				 *   &lt;strong>onAutoStop&lt;/strong>: VALUE, // Initial default: null
+				 *   <strong>onAutoStop</strong>: VALUE, // Initial default: null
 				 *
 				 *   // --------
 				 *   // Numeric; How far apart (in milliseconds) to calculate and seek to a new
 				 *   // timeline position. Set to any value > 0 for manual control, or set to 0
-				 *   // (or anything &lt; 1) to let Concert determine this automatically. (It does
+				 *   // (or anything < 1) to let Concert determine this automatically. (It does
 				 *   // this by using requestAnimationFrame() for if the browser supports  it,
 				 *   // or a fixed interval of 16 ms otherwise.
-				 *   &lt;strong>pollingInterval&lt;/strong>: VALUE, // Initial default: 0
+				 *   <strong>pollingInterval</strong>: VALUE, // Initial default: 0
 				 *
 				 *   // --------
 				 *   // Numeric; Run speed multiplier (0.5 = half-speed, 2 = double-speed, ...)
-				 *   &lt;strong>speed&lt;/strong>: VALUE, // Initial default: 1
+				 *   <strong>speed</strong>: VALUE, // Initial default: 1
 				 *
 				 *   // --------
 				 *   // Boolean; Indicates whether to treat the sequence start time as 0 even if the
 				 *   // first transformation in the sequence starts at a time greater than 0. This
 				 *   // prevents a sequence whose first animations begin some time into the timeline
-				 *   // from auto-stopping or triggering its &lt;em>before&lt;/em> behavior when it is run from
+				 *   // from auto-stopping or triggering its <em>before</em> behavior when it is run from
 				 *   // time 0. To define the beginning of the sequence timeline as the beginning of
-				 *   // the first transformation in the timeline no matter what, set to &lt;em>false&lt;/em>.
-				 *   &lt;strong>stretchStartTimeToZero&lt;/strong>: VALUE // Initial default: true
+				 *   // the first transformation in the timeline no matter what, set to <em>false</em>.
+				 *   <strong>stretchStartTimeToZero</strong>: VALUE // Initial default: true
 				 *
 				 *   // --------
 				 *   // Variable type; Sets a synchronization source for this sequence. Can take any
@@ -2550,7 +2525,7 @@ var Concert = (function ()
 				 *   //       property of the media element. This allows the sequence to remain
 				 *   //       synchronized to the media even when it is paused, scrubbed, or the
 				 *   //       user skips around.
-				 *   &lt;strong>synchronizeTo&lt;/strong>: VALUE, // Initial default: null
+				 *   <strong>synchronizeTo</strong>: VALUE, // Initial default: null
 				 *
 				 *   // --------
 				 *   // Numeric; An offset value that is added to the current time before seeking
@@ -2567,7 +2542,7 @@ var Concert = (function ()
 				 *   // translate the raw starting clock value to the start time of the sequence.
 				 *   // But because this automatic translation may not always be the desired
 				 *   // behavior, it can be explicitly set here.
-				 *   &lt;strong>timeOffset&lt;/strong>: VALUE, // Default value: null
+				 *   <strong>timeOffset</strong>: VALUE, // Default value: null
 				 *
 				 *   // --------
 				 *   // Boolean; Whether or not to optimize based on the assumption that none of the
@@ -2575,9 +2550,9 @@ var Concert = (function ()
 				 *   // anything else. See [seek]{@link Concert.Sequence#seek} method for details. (Note that regardless of the value
 				 *   // specified here, the seek method can be called manually at any point with its
 				 *   //  useSoleControlOptimization parameter set to either true or false.)
-				 *   &lt;strong>useSoleControlOptimization&lt;/strong>: VALUE, // Initial default: true
+				 *   <strong>useSoleControlOptimization</strong>: VALUE, // Initial default: true
 				 * }
-				 * &lt;/code>&lt;/pre>
+				 * </code></pre>
 				 */
 				function __run(parameters)
 				{
@@ -2608,7 +2583,7 @@ var Concert = (function ()
 					thisProtected.soleControlOptimizationDuringRun = soleControlOptimizationDuringRun = _getParamValue(parameters, "useSoleControlOptimization", thisProtected.soleControlOptimizationDuringRun);
 
 					thisProtected.pollingInterval = pollingInterval = _getParamValue(parameters, "pollingInterval", thisProtected.pollingInterval);
-					thisProtected.poller = (pollingInterval &lt; 1) ? (new _Concert.Pollers.Auto()) : (new _Concert.Pollers.FixedInterval(pollingInterval));
+					thisProtected.poller = (pollingInterval < 1) ? (new _Concert.Pollers.Auto()) : (new _Concert.Pollers.FixedInterval(pollingInterval));
 
 					synchronizeTo = _getParamValue(parameters, "synchronizeTo", thisProtected.synchronizeTo);
 					if (synchronizeTo === null)
@@ -2629,12 +2604,12 @@ var Concert = (function ()
 
 
 				/**
-				 * Seeks to the specified point along the sequence timeline. If the &lt;code>time&lt;/code> value is less than the sequence's start time or greater than the sequence's end time,
+				 * Seeks to the specified point along the sequence timeline. If the <code>time</code> value is less than the sequence's start time or greater than the sequence's end time,
 				 * the resulting behavior will be defined by the sequence's "before" or "after" repeating behavior settings, as controlled by the [setBefore]{@link Concert.Sequence#setBefore} and
 				 * [setAfter]{@link Concert.Sequence#setAfter} methods or by the options passed into the [run]{@link Concert.Sequence#run}, [begin]{@link Concert.Sequence#begin},
 				 * [follow]{@link Concert.Sequence#follow}, or [syncTo]{@link Concert.Sequence#syncTo} methods. The default behavior, if none has explicitly been specified, is
-				 * [Concert.Repeating.None]{@link Concert.Repeating}, which seeks to the sequence start time for any &lt;code>time&lt;/code> value less than or equal to the sequence's
-				 * start time, and to the end time for any &lt;code>time&lt;/code> value greater than or equal to the sequence's end time. The &lt;code>useSoleControlOptimization&lt;/code> option,
+				 * [Concert.Repeating.None]{@link Concert.Repeating}, which seeks to the sequence start time for any <code>time</code> value less than or equal to the sequence's
+				 * start time, and to the end time for any <code>time</code> value greater than or equal to the sequence's end time. The <code>useSoleControlOptimization</code> option,
 				 * when set to true, enhances run-time performance, but should only be used if nothing other than the Concert sequence will be modifying any target object properties that are modified
 				 * by transformations in the sequence. Essentially it skips updating target object properties any time a newly calculated value is the same as the last one applied, which speeds up
 				 * seek times especially when doing relatively slow things such as DOM updates, but which will not work if the target object property's value has been changed by something else
@@ -2664,7 +2639,7 @@ var Concert = (function ()
 
 					frameID = thisProtected.nextFrameID++;
 
-					if (time &lt; sequenceStart)
+					if (time < sequenceStart)
 					{
 						adjustedTimeContainer = thisProtected.before(sequenceStart, sequenceEnd, time);
 						adjustedTime = adjustedTimeContainer.adjustedTime;
@@ -2693,7 +2668,7 @@ var Concert = (function ()
 						}
 						else
 							forceApplication = (typeof useSoleControlOptimization === "undefined") ? true : !useSoleControlOptimization;
-						for (i = 0; i &lt; numTargetSequences; i++)
+						for (i = 0; i < numTargetSequences; i++)
 							targetSequences[i].seek(segmentNumber, adjustedTime, frameID, forceApplication);
 						returnVal = segmentMatch.timeMatchType;
 					}
@@ -2716,14 +2691,14 @@ var Concert = (function ()
 				 * @public
 				 * @method
 				 * @param {function} newAfter One of the functions defined in [Concert.Repeating]{@link Concert.Repeating}, or a custom function.
-				 * For any sequence where this is not explicitly set, the "after" behavior defaults to &lt;code>Concert.Repeating.None&lt;/code>.
-				 * Any function passed in here should have a signature of the form &lt;code>function (sequenceStart, sequenceEnd, unadjustedTime)&lt;/code> and must return
-				 * an object of the form &lt;code>{ adjustedTime: XXX, hitFinalBoundary: YYY }&lt;/code>, where &lt;code>XXX&lt;/code> is the actual time to use in the seek, and
-				 * &lt;code>YYY&lt;/code> is a boolean value indicating whether this seek will put the sequence at one of its final boundary points. For instance, a looping
-				 * behavior function could take an &lt;code>unadjustedTime&lt;/code> value past the end of the sequence and map it to a resulting value somewhere between the
+				 * For any sequence where this is not explicitly set, the "after" behavior defaults to <code>Concert.Repeating.None</code>.
+				 * Any function passed in here should have a signature of the form <code>function (sequenceStart, sequenceEnd, unadjustedTime)</code> and must return
+				 * an object of the form <code>{ adjustedTime: XXX, hitFinalBoundary: YYY }</code>, where <code>XXX</code> is the actual time to use in the seek, and
+				 * <code>YYY</code> is a boolean value indicating whether this seek will put the sequence at one of its final boundary points. For instance, a looping
+				 * behavior function could take an <code>unadjustedTime</code> value past the end of the sequence and map it to a resulting value somewhere between the
 				 * sequence start and end times, and if it does not loop infinitely, a high enough input would result in hitting the final boundary beyond which looping
-				 * does not continue. The &lt;code>hitFinalBoundary&lt;/code> property value is what is used to determine whether to automatically call the
-				 * [stop]{@link Concert.Sequence#stop} method if running with &lt;code>autoStopAtEnd&lt;/code> set to &lt;code>true&lt;/code>.
+				 * does not continue. The <code>hitFinalBoundary</code> property value is what is used to determine whether to automatically call the
+				 * [stop]{@link Concert.Sequence#stop} method if running with <code>autoStopAtEnd</code> set to <code>true</code>.
 				 */
 				function __setAfter(newAfter)
 				{
@@ -2740,14 +2715,14 @@ var Concert = (function ()
 				 * @public
 				 * @method
 				 * @param {Object} newBefore One of the functions defined in [Concert.Repeating]{@link Concert.Repeating}, or a custom function.
-				 * For any sequence where this is not explicitly set, the "after" behavior defaults to &lt;code>Concert.Repeating.None&lt;/code>.
-				 * Any function passed in here should have a signature of the form &lt;code>function (sequenceStart, sequenceEnd, unadjustedTime)&lt;/code> and must return
-				 * an object of the form &lt;code>{ adjustedTime: XXX, hitFinalBoundary: YYY }&lt;/code>, where &lt;code>XXX&lt;/code> is the actual time to use in the seek, and
-				 * &lt;code>YYY&lt;/code> is a boolean value indicating whether this seek will put the sequence at one of its final boundary points. For instance, a looping
-				 * behavior function could take an &lt;code>unadjustedTime&lt;/code> value past the end of the sequence and map it to a resulting value somewhere between the
+				 * For any sequence where this is not explicitly set, the "after" behavior defaults to <code>Concert.Repeating.None</code>.
+				 * Any function passed in here should have a signature of the form <code>function (sequenceStart, sequenceEnd, unadjustedTime)</code> and must return
+				 * an object of the form <code>{ adjustedTime: XXX, hitFinalBoundary: YYY }</code>, where <code>XXX</code> is the actual time to use in the seek, and
+				 * <code>YYY</code> is a boolean value indicating whether this seek will put the sequence at one of its final boundary points. For instance, a looping
+				 * behavior function could take an <code>unadjustedTime</code> value past the end of the sequence and map it to a resulting value somewhere between the
 				 * sequence start and end times, and if it does not loop infinitely, a high enough input would result in hitting the final boundary beyond which looping
-				 * does not continue. The &lt;code>hitFinalBoundary&lt;/code> property value is what is used to determine whether to automatically call the
-				 * [stop]{@link Concert.Sequence#stop} method if running with &lt;code>autoStopAtEnd&lt;/code> set to &lt;code>true&lt;/code>.
+				 * does not continue. The <code>hitFinalBoundary</code> property value is what is used to determine whether to automatically call the
+				 * [stop]{@link Concert.Sequence#stop} method if running with <code>autoStopAtEnd</code> set to <code>true</code>.
 				 */
 				function __setBefore(newBefore)
 				{
@@ -2766,33 +2741,33 @@ var Concert = (function ()
 				 * @public
 				 * @method
 				 * @param {Object} newDefaults An object with property values setting default options for new transformations. Defined as follows.
-				 * Any or all of the below options may be specified.&lt;pre>&lt;code>
+				 * Any or all of the below options may be specified.<pre><code>
 				 * newDefaults =
 				 * {
 				 *   // --------
 				 *   // Function; One of the [Concert.Applicators]{@link Concert.Applicators} functions, or a custom function.
 				 *   // See [Concert.Applicators]{@link Concert.Applicators} and [addTransformations]{@link Concert.Sequence#addTransformations} for more information about the
 				 *   // meaning of this property and its allowable values.
-				 *   &lt;strong>applicator&lt;/strong>: VALUE, // Initial default value: Concert.Applicators.Property
+				 *   <strong>applicator</strong>: VALUE, // Initial default value: Concert.Applicators.Property
 				 *
 				 *   // --------
 				 *   // Function; One of the [Concert.Calculators]{@link Concert.Calculators} functions, or a custom function.
 				 *   // See [Concert.Calculators]{@link Concert.Calculators} and [addTransformations]{@link Concert.Sequence#addTransformations} for more information about the
 				 *   // meaning of this property and its allowable values.
-				 *   &lt;strong>calculator&lt;/strong>: VALUE, // Initial default value: Concert.Calculators.Linear
+				 *   <strong>calculator</strong>: VALUE, // Initial default value: Concert.Calculators.Linear
 				 *
 				 *   // --------
 				 *   // Function; One of the [Concert.EasingFunctions]{@link Concert.EasingFunctions} functions, or a custom function.
 				 *   // See [Concert.EasingFunctions]{@link Concert.EasingFunctions} and [addTransformations]{@link Concert.Sequence#addTransformations} for more information about
 				 *   // the meaning of this property and its allowable values.
-				 *   &lt;strong>easing&lt;/strong>: VALUE, // Initial default value: Concert.EasingFunctions.ConstantRate
+				 *   <strong>easing</strong>: VALUE, // Initial default value: Concert.EasingFunctions.ConstantRate
 				 *
 				 *   // --------
 				 *   // String; The unit, if there is one, is appended to the end of a calculated value
 				 *   // before it is applied. Common values would include "px", "%", "em", and so on.
-				 *   &lt;strong>unit&lt;/strong>: VALUE, // Initial default value: null (no unit at all)
+				 *   <strong>unit</strong>: VALUE, // Initial default value: null (no unit at all)
 				 * }
-				 * &lt;/code>&lt;/pre>
+				 * </code></pre>
 				 */
 				function __setDefaults(newDefaults)
 				{
@@ -2809,10 +2784,10 @@ var Concert = (function ()
 
 
 				/**
-				 * Stops a currently running sequence. Calling this function, whether explicitly or by setting &lt;code>autoStopAtEnd&lt;/code> to &lt;code>true&lt;/code>,
+				 * Stops a currently running sequence. Calling this function, whether explicitly or by setting <code>autoStopAtEnd</code> to <code>true</code>,
 				 * is recommended when you wish the sequence to stop running or synchronizing, because otherwise the timers which continually update the sequence will continue to run.
 				 * This may be the desired behavior if the sequence is being synchronized to a value which may continue to change, but in many cases it would be a waste of processor
-				 * cycles to continue running a completed sequence. (Note that &lt;code>autoStopAtEnd&lt;/code> is automatically enabled if the sequence is run using the
+				 * cycles to continue running a completed sequence. (Note that <code>autoStopAtEnd</code> is automatically enabled if the sequence is run using the
 				 * [begin]{@link Concert.Sequence#begin} method.)
 				 * @name stop
 				 * @memberof Concert.Sequence#
@@ -2835,15 +2810,15 @@ var Concert = (function ()
 				/**
 				 * Runs a transformation locked to the specified synchronization source and matching its position. This differs from the [follow]{@link Concert.Sequence#follow} method
 				 * in that [follow]{@link Concert.Sequence#follow} causes the sequence to run exactly in time with the synchronization source and in the same direction, but starting at the current
-				 * timeline position, whereas with &lt;code>syncTo&lt;/code> the sequence will first jump to a timeline position matching the current value of the synchronization source and then do the same.
+				 * timeline position, whereas with <code>syncTo</code> the sequence will first jump to a timeline position matching the current value of the synchronization source and then do the same.
 				 * This is really just a shortcut method provided for a common usage scenario; it is exactly the same as calling the [run]{@link Concert.Sequence#run} method with the parameters
-				 * &lt;code>{ synchronizeTo: syncSource, initialSeek: null, timeOffset: 0, autoStopAtEnd: false }&lt;/code>. Note that these parameter values can still be overridden,
-				 * or any of the other parameters accepted by the [run]{@link Concert.Sequence#run} method can be specified in the &lt;code>parameters&lt;/code> argument passed into this method.
+				 * <code>{ synchronizeTo: syncSource, initialSeek: null, timeOffset: 0, autoStopAtEnd: false }</code>. Note that these parameter values can still be overridden,
+				 * or any of the other parameters accepted by the [run]{@link Concert.Sequence#run} method can be specified in the <code>parameters</code> argument passed into this method.
 				 * @name syncTo
 				 * @memberof Concert.Sequence#
 				 * @public
 				 * @method
-				 * @param {Varies} syncSource A synchronization source. Can take any of the following different types of values:&lt;pre>
+				 * @param {Varies} syncSource A synchronization source. Can take any of the following different types of values:<pre>
 				 *   null: locks sequence to the system clock.
 				 *   function object: the passed-in function is called every time the polling
 				 *       interval is reached, and the return value is used as the seek time.
@@ -2852,7 +2827,7 @@ var Concert = (function ()
 				 *       element, such as a slider, or to another Concert.Sequence object.)
 				 *   html audio or video DOM object: locks the sequence to the currentTime property
 				 *       of the media element. This allows the sequence to remain synchronized to
-				 *       the media even when it is paused, scrubbed, or the user skips around.&lt;/pre>
+				 *       the media even when it is paused, scrubbed, or the user skips around.</pre>
 				 * @param {Object} [parameters] An object with property values setting options for how to run the sequence.
 				 * See the [run]{@link Concert.Sequence#run} method for information on allowable properties and values in this object.
 				 */
@@ -2873,8 +2848,8 @@ var Concert = (function ()
 		 * Can be used to avoid namespace collision problems.
 		 * Sets the global variable Concert back to what it was before this component assigned a new value to it.
 		 * Usage: run the ConcertJS definition script (e.g., include the ConcertJS file via a script element on a web page),
-		 * then immediately capture the object assigned to &lt;code>Concert&lt;/code> in some other, non-conflicting variable for
-		 * actual use, and then call &lt;code>Concert.revertNameSpace()&lt;/code> to put back &lt;code>Concert&lt;/code> to whatever value it had before.
+		 * then immediately capture the object assigned to <code>Concert</code> in some other, non-conflicting variable for
+		 * actual use, and then call <code>Concert.revertNameSpace()</code> to put back <code>Concert</code> to whatever value it had before.
 		 * @public
 		 * @method
 		 * @memberof Concert
@@ -2902,26 +2877,3 @@ var Concert = (function ()
 
 	return __Concert_PublicInterface;
 })(); // end Concert namespace
-</code></pre>
-        </article>
-    </section>
-
-
-
-
-</div>
-
-<nav>
-    <a id="HomePageLink" href="../index.html">ConcertJS Home</a>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Concert.Sequence.html">Sequence</a></li></ul><h3>Namespaces</h3><ul><li><a href="Concert.html">Concert</a></li><li><a href="Concert.Applicators.html">Applicators</a></li><li><a href="Concert.Calculators.html">Calculators</a></li><li><a href="Concert.EasingFunctions.html">EasingFunctions</a></li><li><a href="Concert.Repeating.html">Repeating</a></li></ul>
-</nav>
-
-<br clear="both">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sun Jan 26 2014 17:54:20 GMT-0600 (CST)
-</footer>
-
-<script> prettyPrint(); </script>
-</body>
-</html>
