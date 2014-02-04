@@ -1,0 +1,48 @@
+﻿body
+{
+	color: #d7ba7d;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#TruckBody
+{
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	width: 282px;
+	height: 133px;
+	background-image: url("/Demos/FireTruck/truckBody.png");
+	background-position: left top;
+}
+
+#RearTireDiv, #FrontTireDiv
+{
+	position: absolute;
+	width: 45px;
+	height: 43px;
+	background-position-x: 0px;
+}
+
+#RearTireDiv
+{
+	left: 62px;
+	top: 93px;
+	background-image: url("/Demos/FireTruck/rearTireSprites.png");
+}
+
+#FrontTireDiv
+{
+	left: 202px;
+	top: 93px;
+	background-image: url("/Demos/FireTruck/frontTireSprites.png");
+}

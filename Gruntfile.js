@@ -66,9 +66,9 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html", "!Tutorial/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "www.concertjs.com/Build/Assembly/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!Tutorial/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.css", "!Tutorial/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "www.concertjs.com/Build/Assembly/" }
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "www.concertjs.com/Build/Assembly/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.css", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "www.concertjs.com/Build/Assembly/" }
 					]
 				},
 
@@ -98,6 +98,16 @@ module.exports = function(grunt)
 						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Components/" }
 					]
 				},
+
+				deployDemos:
+				{
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Source/Demos/", src: "**/*", dest: "www.concertjs.com/Build/Dev/Demos/" },
+						{ expand: true, cwd: "www.concertjs.com/Source/Demos/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Demos/" }
+					]
+				},
+
 
 				deployTutorial:
 				{
@@ -272,7 +282,7 @@ module.exports = function(grunt)
 	grunt.registerTask(
 		"build_www",
 		[
-			"copy:assembleNonTemplatedSourceFiles", // copy non-templated source files into assembly directory, excluding tutorial files
+			"copy:assembleNonTemplatedSourceFiles", // copy non-templated source files into assembly directory, excluding demo and tutorial files
 			"processTemplates:assembleTemplateResults", // process templates into assembly directory
 			"copy:copyOriginalToFull", // copy all .js and .css files in assembly directory to *.full.js and *.full.css
 			"clean:removeAssembledOriginalJSandCSS", // remove all original .js and css files from assembly directory
@@ -282,6 +292,7 @@ module.exports = function(grunt)
 			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
 			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
 			"copy:deployComponents", // copy components directory into dev and prod directories
+			"copy:deployDemos", // copy demos directory into dev and prod directories
 			"copy:deployTutorial" // copy tutorials directory into dev and prod directories
 		]);
 	grunt.registerTask("build_all", ["build_www"]);

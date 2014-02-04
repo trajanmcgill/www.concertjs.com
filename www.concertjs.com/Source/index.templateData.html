@@ -1,6 +1,9 @@
 ﻿<template:targetDef target="index.html" template="ConcertJSPage.template.html"></template:targetDef>
 
 <template:data target="index.html" section="HeadContent">
+	<link rel="stylesheet" type="text/css" href="Styles/index.css" />
+
+	<script type="text/javascript" src="Components/requestAnimationFrame/requestAnimationFrame.min.js"></script>
 	<script type="text/javascript" src="Components/Concert.js/1.0.0/Concert.min.js"></script>
 </template:data>
 
@@ -13,6 +16,12 @@
 
 <template:data target="index.html" section="MainContent">
 	<div>
-		This is the index page.
+		<div class="DemoDiv">
+			<h4>1) What does a simple Concert.js animation look like?</h4>
+			<div class="DemoFrameContainer">
+				<iframe class="DemoFrame" src="Demos/FireTruck/FireTruck.html"></iframe>
+				<div class="DemoFrameCaption"><a href="CodeViewer.html?url=Demos/FireTruck/FireTruck.html" target="_blank">See Full Source Code</a></div>
+			</div>
+		</div>
 	</div>
 </template:data>

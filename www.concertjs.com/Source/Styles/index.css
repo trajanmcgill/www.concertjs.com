@@ -1,0 +1,43 @@
+﻿/*
+h3
+{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+h4
+{
+	border-top: 1px solid black;
+	margin-bottom: 10px;
+}
+*/
+
+div.DemoDiv:first-child h4
+{
+	border-top-style: none;
+}
+
+#ContentDescription
+{
+	font-size: 18px;
+}
+
+.DemoFrameContainer
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 802px;
+	border: 1px solid #d7ba7d;
+}
+
+.DemoFrame
+{
+	width: 800px;
+	height: 400px;
+	border: 1px solid black;
+}
+
+.DemoFrameCaption
+{
+	font-size: 13px;
+}
