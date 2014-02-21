@@ -1,12 +1,15 @@
 ﻿body
 {
 	color: #d7ba7d;
-	background-color: #1e1e1e;
 	font-family: Calibri, "Lucida Grande", sans-serif;
 }
 
 button
 {
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 1000;
 	color: #fff;
 	background-color: #3276b1;
 	border: 1px solid #285e8e;
@@ -14,14 +17,67 @@ button
 	cursor: pointer;
 }
 
+.ParallaxLayer
+{
+	position: absolute;
+	left: 0;
+	width: 800px;
+	background-position: left top;
+	background-repeat: repeat-x;
+}
+
+#WholePicture
+{
+	top: 0px;
+	width: 800px;
+	height: 400px;
+	z-index: 0;
+}
+
+#Clouds
+{
+	top: 0px;
+	height: 300px;
+	background-image: url("/Demos/FireTruck/clouds.png");
+	z-index: 1;
+}
+
+#City
+{
+	top: 150px;
+	height: 150px;
+	background-image: url("/Demos/FireTruck/skyLine.png");
+	z-index: 2;
+}
+
+#Road
+{
+	top: 300px;
+	height: 100px;
+	background-image: url("/Demos/FireTruck/road.png");
+	z-index: 3;
+}
+
 #TruckBody
 {
 	position: absolute;
 	left: 100px;
-	top: 100px;
+	top: 240px;
 	width: 282px;
 	height: 133px;
 	background-image: url("/Demos/FireTruck/truckBody.png");
+	background-position: left top;
+	z-index: 4;
+}
+
+#Lights
+{
+	position: absolute;
+	left: 206px;
+	top: 2px;
+	width: 28px;
+	height: 14px;
+	background-image: url("/Demos/FireTruck/lights.png");
 	background-position: left top;
 }
 

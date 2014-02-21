@@ -39,3 +39,18 @@ Tutorial things to cover:
 -calculators (built-in and custom)
 -easing functions (built-in and custom)
 -discussion of more advanced uses
+
+
+synchronization:
+-popcorn
+-[captioning tools?]
+-[other media synchronization tools?]
+
+animation:
+-greensock
+-jquery animation
+-[parallax scripts?]
+-[other animation tools?]
+
+
+http://microjs.com/#animation

@@ -4,33 +4,63 @@
 {
 	"use strict";
 
-	var sequence = new Concert.Sequence(),
-		keyFrameTimes = [], keyFrameValues = [],
-		wheelRotationsPerSecond = 2,
-		spritesPerLoop = 60,
-		frameLength_ms = 1000 / (spritesPerLoop * wheelRotationsPerSecond),
-		wheelSpriteWidth = 45,
-		i, frameStartTime, spriteLocation;
+	var wheelSpriteWidth = 45, wheelFramesPerRotation = 60,
+		wheelCircumference = Math.PI * wheelSpriteWidth,
+		totalWheelRotations = 57,
+		totalDistance = wheelCircumference * totalWheelRotations,
+		finalWheelFrame = totalWheelRotations * wheelFramesPerRotation - 1,
+		roadSpeed = 1, skylineSpeed = 0.6, skySpeed = 0.15,
+		roadRepeatLength = 1007, skylineRepeatLength = 1209,
+		totalSequenceTime = 20000,
+		lightsSpriteWidth = 28, flashesPerSecond = 1,
+		finalLightsFrame = totalSequenceTime / 1000 * flashesPerSecond * 2;
 
-	for (i = 0; i < 60; i++)
-	{
-		frameStartTime = Math.round(i * frameLength_ms);
-		spriteLocation = -1 * i * wheelSpriteWidth;
-		
-		keyFrameTimes.push(frameStartTime);
-		keyFrameValues.push([spriteLocation, spriteLocation]);
-	}
+	var mainSequence = new Concert.Sequence();
 
-	sequence.addTransformations(
-		{
-			targets: [document.getElementById("RearTireDiv"), document.getElementById("FrontTireDiv")],
-			feature: ["background-position-x", "background-position-x"],
-			unit: "px",
-			applicator: Concert.Applicators.Style,
-			calculator: Concert.Calculators.Discrete,
-			easing: Concert.EasingFunctions.ConstantRate,
-			keyframes: { times: keyFrameTimes, values: keyFrameValues }
-		});
+	mainSequence.setDefaults({ unit: "px", applicator: Concert.Applicators.Style, easing: Concert.EasingFunctions.QuadInOut });
 
-	document.getElementById("GoButton").onclick = function () { sequence.begin({ after: Concert.Repeating.Loop(10) }); };
+	mainSequence.addTransformations(
+		[
+			// Spinning tires
+			{
+				targets: [document.getElementById("RearTireDiv"), document.getElementById("FrontTireDiv")],
+				feature: ["background-position-x", "background-position-x"],
+				userProperties: { multiply: -1 * wheelSpriteWidth, round: wheelSpriteWidth, modulo: wheelSpriteWidth * wheelFramesPerRotation },
+				keyframes: { times: [0, totalSequenceTime], values: [[0, 0], [finalWheelFrame, finalWheelFrame]] }
+			},
+
+			// Flashing lights
+			{
+				target: document.getElementById("Lights"),
+				feature: "background-position-x",
+				userProperties: { multiply: -1 * lightsSpriteWidth, round: lightsSpriteWidth, modulo: lightsSpriteWidth * 2 },
+				easing: Concert.EasingFunctions.ConstantRate,
+				keyframes: { times: [0, totalSequenceTime], values: [0, finalLightsFrame] }
+			},
+
+			// Moving road
+			{
+				target: document.getElementById("Road"),
+				feature: "background-position-x",
+				userProperties: { modulo: roadRepeatLength },
+				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * roadSpeed] }
+			},
+
+			// Moving skyline
+			{
+				target: document.getElementById("City"),
+				feature: "background-position-x",
+				userProperties: { modulo: skylineRepeatLength },
+				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * skylineSpeed] }
+			},
+
+			// Clouds
+			{
+				target: document.getElementById("Clouds"),
+				feature: "background-position-x",
+				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * skySpeed] }
+			}
+		]);
+
+	document.getElementById("GoButton").onclick = function () { mainSequence.begin({ after: Concert.Repeating.Loop(4) }); };
 })();
