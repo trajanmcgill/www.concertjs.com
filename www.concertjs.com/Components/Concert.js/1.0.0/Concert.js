@@ -92,6 +92,22 @@ var Concert = (function ()
 				}, // end coalesceUndefined()
 
 
+				correctFeatureNames: function (featureNames, applicator)
+				{
+					function camelizeFeatureName(fullMatch, captured) { return captured.toUpperCase(); }
+
+					var i, correctedFeatureNames = [];
+
+					if (applicator !== _Concert.Applicators.Style)
+						return featureNames;
+
+					for (i = 0; i < featureNames.length; i++)
+						correctedFeatureNames.push(featureNames[i].replace(/^-ms/, "ms").replace(/-(\w)/g, camelizeFeatureName));
+
+					return correctedFeatureNames;
+				}, // end correctFeatureNames
+
+
 				isArray: function (testVar)
 				{
 					return ((typeof testVar === "object") && (Object.prototype.toString.call(testVar) === "[object Array]"));
@@ -1888,9 +1904,9 @@ var Concert = (function ()
 							curTargetSequence = new _Concert.TargetSequence(curGroupTarget);
 							existingTargetSequences.push(curTargetSequence);
 						}
-
-						curGroupFeatures = _Concert.Util.isArray(curTransformationGroup.feature) ? curTransformationGroup.feature : [curTransformationGroup.feature];
+						
 						curGroupApplicator = _Concert.Util.coalesceUndefined(curTransformationGroup.applicator, defaults.applicator);
+						curGroupFeatures = _Concert.Util.correctFeatureNames(_Concert.Util.isArray(curTransformationGroup.feature) ? curTransformationGroup.feature : [curTransformationGroup.feature], curGroupApplicator);
 						curGroupUnit = _Concert.Util.coalesceUndefined(curTransformationGroup.unit, defaults.unit);
 						curGroupCalculator = _Concert.Util.coalesceUndefined(curTransformationGroup.calculator, defaults.calculator);
 						curGroupEasing = _Concert.Util.coalesceUndefined(curTransformationGroup.easing, defaults.easing);

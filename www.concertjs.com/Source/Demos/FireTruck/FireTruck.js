@@ -24,7 +24,7 @@
 			// Spinning tires
 			{
 				targets: [document.getElementById("RearTireDiv"), document.getElementById("FrontTireDiv")],
-				feature: ["background-position-x", "background-position-x"],
+				feature: ["background-position", "background-position"],
 				userProperties: { multiply: -1 * wheelSpriteWidth, round: wheelSpriteWidth, modulo: wheelSpriteWidth * wheelFramesPerRotation },
 				keyframes: { times: [0, totalSequenceTime], values: [[0, 0], [finalWheelFrame, finalWheelFrame]] }
 			},
@@ -32,7 +32,7 @@
 			// Flashing lights
 			{
 				target: document.getElementById("Lights"),
-				feature: "background-position-x",
+				feature: "background-position",
 				userProperties: { multiply: -1 * lightsSpriteWidth, round: lightsSpriteWidth, modulo: lightsSpriteWidth * 2 },
 				easing: Concert.EasingFunctions.ConstantRate,
 				keyframes: { times: [0, totalSequenceTime], values: [0, finalLightsFrame] }
@@ -41,7 +41,8 @@
 			// Moving road
 			{
 				target: document.getElementById("Road"),
-				feature: "background-position-x",
+				feature: "background-position",
+				unit: "px",
 				userProperties: { modulo: roadRepeatLength },
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * roadSpeed] }
 			},
@@ -49,7 +50,7 @@
 			// Moving skyline
 			{
 				target: document.getElementById("City"),
-				feature: "background-position-x",
+				feature: "background-position",
 				userProperties: { modulo: skylineRepeatLength },
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * skylineSpeed] }
 			},
@@ -57,7 +58,7 @@
 			// Clouds
 			{
 				target: document.getElementById("Clouds"),
-				feature: "background-position-x",
+				feature: "background-position",
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * skySpeed] }
 			}
 		]);

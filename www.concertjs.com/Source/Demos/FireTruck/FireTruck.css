@@ -22,7 +22,7 @@ button
 	position: absolute;
 	left: 0;
 	width: 800px;
-	background-position: left top;
+	background-position: left center;
 	background-repeat: repeat-x;
 }
 
