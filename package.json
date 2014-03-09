@@ -1,21 +1,21 @@
 {
-	"name": "www.concertjs.com",
-	"version": "1.0.0",
-	"description": "Concert.js Web Site",
-	"homepage": "http://www.concertjs.com/",
-	"author":
-	{
-		"name": "Trajan McGill",
-		"email": "code@trajanmcgill.com"
-	},
-	"devDependencies":
-	{
-		"grunt": "~0.4.2",
-		"grunt-contrib-clean": "~0.5.0",
-		"grunt-contrib-concat": "~0.3.0",
-		"grunt-contrib-copy": "~0.5.0",
-		"grunt-contrib-cssmin": "~0.7.0",
-		"grunt-contrib-jshint": "~0.8.0",
-		"grunt-contrib-uglify": "~0.3.2"
-	}
+  "name": "www.concertjs.com",
+  "version": "1.0.0",
+  "description": "Concert.js Web Site",
+  "homepage": "http://www.concertjs.com/",
+  "author": {
+    "name": "Trajan McGill",
+    "email": "code@trajanmcgill.com"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.7.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-uglify": "~0.3.2",
+    "grunt-contrib-compress": "~0.7.0",
+    "grunt-debug-task": "~0.1.3"
+  }
 }

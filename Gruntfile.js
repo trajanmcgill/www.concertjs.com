@@ -56,6 +56,11 @@ module.exports = function(grunt)
 						"www.concertjs.com/Build/Prod/**/*.full.*",
 						"www.concertjs.com/Build/Prod/**/*.min.*"
 					]
+				},
+
+				removeIntermediateTarFiles:
+				{
+					src: ["www.concertjs.com/Build/Assembly/**/*.tar"]
 				}
 			}, // end clean task definitions
 
@@ -108,7 +113,6 @@ module.exports = function(grunt)
 					]
 				},
 
-
 				deployTutorial:
 				{
 					files:
@@ -150,7 +154,45 @@ module.exports = function(grunt)
 
 				minifyAssembledJS: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
 				deminifyAssembledJS: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.max.js" }
-			} // end uglify task definitions
+			}, // end uglify task definitions
+
+
+			compress:
+			{
+				zip:
+				{
+					options:
+					{
+						archive: "www.concertjs.com/Build/Assembly/Downloads/Concert.js-1.0.0.zip",
+						mode: "zip"
+					},
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "www.concertjs.com/Components/requestAnimationFrame/", src: "**", dest: "/" }
+					]
+				},
+
+				tar:
+				{
+					options:
+					{
+						archive: "www.concertjs.com/Build/Assembly/Downloads/Concert.js-1.0.0.tar",
+						mode: "tar"
+					},
+					files:
+					[
+						{ expand: true, cwd: "www.concertjs.com/Components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "www.concertjs.com/Components/requestAnimationFrame/", src: "**", dest: "/" }
+					]
+				},
+
+				gzip:
+				{
+					options: { mode: "gzip" },
+					files: [{ expand: true, cwd: "www.concertjs.com/Build/Assembly/Downloads/", src: "**/*.tar", dest: "www.concertjs.com/Build/Assembly/Downloads/" }]
+				}
+			} // end compress task definitions
 		});
 	
 	
@@ -160,7 +202,9 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
+	grunt.loadNpmTasks("grunt-contrib-compress");
 	
+
 	// Define tasks
 	grunt.registerMultiTask(
 		"processTemplates",
@@ -275,6 +319,7 @@ module.exports = function(grunt)
 				});
 		}); // end call to grunt.registerMultiTask("processTemplates"...)
 
+
 	grunt.registerTask("lint_all", ["jshint:checkSource"]);
 
 	grunt.registerTask("clean_all", ["clean:www"]);
@@ -288,6 +333,10 @@ module.exports = function(grunt)
 			"clean:removeAssembledOriginalJSandCSS", // remove all original .js and css files from assembly directory
 			"uglify:minifyAssembledJS", // minify all .full.js files in assembly directory into .min.js
 			"cssmin:minifyAssembledCSS", // minify all .full.css files in assembly directory into .min.css
+			"compress:zip", // build zip download archives
+			"compress:tar", // build (intermediate) tar download archives
+			"compress:gzip", // build gzip download archives
+			"clean:removeIntermediateTarFiles", // remove all intermediate tar archives
 			"copy:deployAssembledFiles", // copy all assembly files into dev and prod directories
 			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
 			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
@@ -295,6 +344,7 @@ module.exports = function(grunt)
 			"copy:deployDemos", // copy demos directory into dev and prod directories
 			"copy:deployTutorial" // copy tutorials directory into dev and prod directories
 		]);
+
 	grunt.registerTask("build_all", ["build_www"]);
 
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
