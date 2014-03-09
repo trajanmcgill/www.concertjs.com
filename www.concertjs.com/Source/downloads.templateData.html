@@ -8,36 +8,27 @@
 	<h3>Downloading Concert.js</h3>
 	<p>Full and minified forms of each release of Concert.js are available for download below.</p>
 	<h4>Using Concert.js in Your Own Projects</h4>
-	<ul>
-		<li>Concert.js is freely available for use in any project, including commercial projects, under the MIT License. Find out more <a href="license.html">here</a>.</li>
-		<li>Using Concert.js: Please do not link directly to the below files. Instead, download and include them in your own project. Why?
-			<ul>
-				<li>
-					Making your web site depend on someone else's web site is a poor idea.
-					If you link here instead of hosting the file on your own site, then whenever my site is slow or unavailable, your site is broken.
-					You have no control over the reliability of my site. Don't make your site's reliability dependent on things you can't control.
-				</li>
-				<li>
-					It is possible (if unlikely&mdash; this depends on how you are using the library) that you could run into errors caused by cross-site scripting restrictions
-					when trying to pull the script from one place and use it on a web site hosted on another. Because XSS restrictions are implemented differently per browser,
-					this could be happening to your users without your being aware.
-				</li>
-				<li>
-					It is more courteous to me and to other users of Concert.js: I can have a better idea of how many people are downloading this library,
-					and this site won't get bogged down by having to use its bandwidth to serve to every user of every single application out there using Concert.js.
-				</li>
-			</ul>
-		</li>
-	</ul>
+	<p>Concert.js is freely available for use in any project, including commercial projects, under the MIT License. Find out more <a href="license.html">here</a>.</p>
 </template:data>
 
 
 <template:data target="downloads.html" section="MainContent">
-	<div>
-		<h3>Version 1.0.0 (Latest release)</h3>
-		<ul>
-			<li><a href="Components/Concert.js/1.0.0/Concert.js">Concert.js</a> - Full (141 KB, for development or exploring the code)</li>
-			<li><a href="Components/Concert.js/1.0.0/Concert.min.js">Concert.min.js</a> - Minified (22.5 KB, for production use)</li>
-		</ul>
+	<div class="DownloadVersionSectionDiv">
+		<h3>
+			Version 1.0.0 (Latest release):
+		</h3>
+		<div class="DownloadFileDiv">
+			<p><a href="Downloads/Concert.js-1.0.0.zip">Concert.js-1.0.0.zip</a></p>
+			<p><a href="Downloads/Concert.js-1.0.0.tar.gz">Concert.js-1.0.0.tar.gz</a></p>
+		</div><div class="DownloadDescriptionDiv">
+			<h4>Each download contains the following:</h4>
+			<ul class="DownloadComponentList">
+				<li>Concert.min.js (for production use) - 23 KB</li>
+				<li>Concert.js (for debugging and code exploration) - 143 KB</li>
+				<li>Reference documentation in HTML form</li>
+				<li>requestAnimationFrame.min.js (requestAnimationFrame polyfill; recommended for older browser support) - 1 KB</li>
+				<li>requestAnimationFrame.js (non-minified version of requestAnimationFrame polyfill) - 4 KB</li>
+			</ul>
+		</div>
 	</div>
 </template:data>

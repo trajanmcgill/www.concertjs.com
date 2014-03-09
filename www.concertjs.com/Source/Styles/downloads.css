@@ -9,18 +9,43 @@ p
 	margin-top: 5px;
 }
 
-ul
+.DownloadVersionSectionDiv
+{}
+
+.DownloadFileDiv
 {
-	margin-top: 5px;
+	display: inline-block;
+	width: 200px;
+	vertical-align: top;
+	padding-top: 30px;
 }
 
-li
+.DownloadFileDiv p
 {
 	font-size: 20px;
-	margin-bottom: 10px;
 }
 
-li li
+.DownloadDescriptionDiv
 {
-	font-size: 18px;
+	display: inline-block;
+	width: 720px;
+	vertical-align: top;
+}
+
+.DownloadDescriptionDiv h4
+{
+	margin-top: 0px;
+}
+
+.DownloadComponentList
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-left: 20px;
+}
+
+.DownloadComponentList li
+{
+	font-size: 15px;
+	margin-bottom: 2px;
 }
