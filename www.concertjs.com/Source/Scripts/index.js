@@ -95,7 +95,7 @@ var Index;
 			demoChoice3.onclick = function () { scrollToDemoFrame(3); };
 			demoChoice4.onclick = function () { scrollToDemoFrame(4); };
 
-			window.setTimeout(function () { scrollToDemoFrame(1); }, 1000);
+			window.setTimeout(function () { scrollToDemoFrame(Math.floor(Math.random() * 4 + 1)); }, 1000);
 		};
 
 	var PublicInterface = {};
