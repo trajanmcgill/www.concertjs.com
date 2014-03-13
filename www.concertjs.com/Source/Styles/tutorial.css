@@ -31,7 +31,7 @@ div.TutorialStep:first-child h4
 	border: 1px solid black;
 }
 
-.TutorialDemoFrameContainer
+.TutorialSingleDemoContainer
 {
 	float: right;
 	width: 482px;

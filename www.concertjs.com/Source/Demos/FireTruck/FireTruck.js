@@ -1,5 +1,7 @@
 ﻿/// <reference path="~/Components/Concert.js/1.0.0/Concert.js" />
+/* exported demoSequence */
 
+var demoSequence =
 (function ()
 {
 	"use strict";
@@ -64,4 +66,6 @@
 		]);
 
 	document.getElementById("GoButton").onclick = function () { mainSequence.begin({ after: Concert.Repeating.Loop(4) }); };
+
+	return mainSequence;
 })();

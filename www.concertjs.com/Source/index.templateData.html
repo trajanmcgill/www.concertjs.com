@@ -17,11 +17,35 @@
 <template:data target="index.html" section="MainContent">
 	<div>
 		<div class="DemoDiv">
-			<h4>1) What does a simple Concert.js animation look like?</h4>
-			<div class="DemoFrameContainer">
-				<iframe class="DemoFrame" src="Demos/FireTruck/FireTruck.html"></iframe>
-				<div class="DemoFrameCaption"><a href="CodeViewer.html?url=Demos/FireTruck/FireTruck.html" target="_blank">See Full Source Code</a></div>
+			<h4>A few examples of easy Concert.js animations of several types:</h4>
+			<div id="DemoChoicesDiv">
+				<div id="DemoChoiceMarker"></div>
+				<ul id="DemoChoiceList">
+					<li id="DemoChoice1">Parallax, Sprites</li><li id="DemoChoice2">Video Sync, Captions</li><li id="DemoChoice3">Audio Sync, Canvas</li><li id="DemoChoice4">Very Large Number of Elements</li>
+				</ul>
+				<div id="DemoChoiceUnderLine"></div>
+			</div>
+			<div id="DemoFrameArea">
+				<div id="DemoAllFramesContainer">
+					<div id="DemoFrameContainer0" class="SingleDemoContainer">
+					</div>
+					<div id="DemoFrameContainer1" class="SingleDemoContainer">
+						<iframe id="DemoFrame1" class="DemoFrame" src="Demos/FireTruck/FireTruck.html"></iframe>
+						<div class="DemoFrameCaption"><a href="CodeViewer.html?url=Demos/FireTruck/FireTruck.html" target="_blank">See Full Source Code</a></div>
+					</div>
+					<div id="DemoFrameContainer2" class="SingleDemoContainer">
+						Frame 2
+					</div>
+					<div id="DemoFrameContainer3" class="SingleDemoContainer">
+						Frame 3
+					</div>
+					<div id="DemoFrameContainer4" class="SingleDemoContainer">
+						Frame 4
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript" src="Scripts/index.js"></script>
 </template:data>

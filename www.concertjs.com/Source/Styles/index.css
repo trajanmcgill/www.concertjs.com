@@ -1,20 +1,64 @@
-﻿/*
-h3
+﻿.DemoDiv
 {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	width: 802px;
+	margin-left: auto;
+	margin-right: auto;
 }
-
-h4
-{
-	border-top: 1px solid black;
-	margin-bottom: 10px;
-}
-*/
 
 div.DemoDiv:first-child h4
 {
 	border-top-style: none;
+}
+
+#DemoChoicesDiv
+{
+	position: relative;
+	overflow: hidden;
+}
+
+#DemoChoiceList
+{
+	list-style-type: none;
+	margin: 0;
+	padding-left: 2px;
+	padding-right: 0;
+	padding-top: 2px;
+}
+
+#DemoChoiceList li
+{
+	display: inline;
+	background-color: rgb(86, 156, 214);
+	color: #1e1e1e;
+	cursor: pointer;
+	font-size: 16px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	z-index: 1;
+}
+
+#DemoChoiceMarker
+{
+	position: absolute;
+	top: 0px;
+	left: -8px;
+	width: 0px;
+	z-index: 2;
+	border-left: 4px solid black;
+	border-right: 4px solid black;
+	border-top: 2px solid black;
+	border-bottom: 2px solid black;
+	box-sizing: content-box;
+}
+
+#DemoChoiceUnderLine
+{
+	width: 100%;
+	height: 2px;
+	background-color: rgb(86, 156, 214);
 }
 
 #ContentDescription
@@ -22,22 +66,48 @@ div.DemoDiv:first-child h4
 	font-size: 18px;
 }
 
-.DemoFrameContainer
+#DemoFrameArea
 {
 	margin-left: auto;
 	margin-right: auto;
 	width: 802px;
 	border: 1px solid #d7ba7d;
+	overflow: hidden;
+}
+
+#DemoAllFramesContainer
+{
+	width: 4010px;
+	height: 402px;
+}
+
+#DemoFrameContainer0
+{
+	background-color: black;
+}
+
+.SingleDemoContainer
+{
+	float: left;
+	width: 802px;
+	height: 422px;
 }
 
 .DemoFrame
 {
-	width: 800px;
-	height: 400px;
+	display: block;
+	width: 802px;
+	height: 402px;
 	border: 1px solid black;
+	box-sizing: border-box;
 }
 
 .DemoFrameCaption
 {
-	font-size: 13px;
+	width: 802px;
+	height: 20px;
+	box-sizing: border-box;
+	margin: 0 0 0 0;
+	padding: 2px 2px 2px 2px;
+	font-size: 16px;
 }
