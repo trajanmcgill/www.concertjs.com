@@ -23,7 +23,7 @@ var demoSequence =
 
 	mainSequence.addTransformations(
 		[
-			// Spinning tires
+			// Spinning tires (tire rotation frames defined on sprite sheet)
 			{
 				targets: [document.getElementById("RearTireDiv"), document.getElementById("FrontTireDiv")],
 				feature: ["background-position", "background-position"],
@@ -31,7 +31,7 @@ var demoSequence =
 				keyframes: { times: [0, totalSequenceTime], values: [[0, 0], [finalWheelFrame, finalWheelFrame]] }
 			},
 
-			// Flashing lights
+			// Flashing lights ("on" sprite alternating with "off" sprite)
 			{
 				target: document.getElementById("Lights"),
 				feature: "background-position",
@@ -40,7 +40,7 @@ var demoSequence =
 				keyframes: { times: [0, totalSequenceTime], values: [0, finalLightsFrame] }
 			},
 
-			// Moving road
+			// Moving road (closest layer of parallax)
 			{
 				target: document.getElementById("Road"),
 				feature: "background-position",
@@ -49,7 +49,7 @@ var demoSequence =
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * roadSpeed] }
 			},
 
-			// Moving skyline
+			// Moving skyline (second layer of parallax)
 			{
 				target: document.getElementById("City"),
 				feature: "background-position",
@@ -57,7 +57,7 @@ var demoSequence =
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * skylineSpeed] }
 			},
 
-			// Clouds
+			// Moving clouds (furthest layer of parallax)
 			{
 				target: document.getElementById("Clouds"),
 				feature: "background-position",
