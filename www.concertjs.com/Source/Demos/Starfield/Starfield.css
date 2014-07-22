@@ -1,0 +1,37 @@
+﻿html, body
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border-width: 0 0 0 0;
+}
+
+button
+{
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 1000;
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#Background
+{
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 800px;
+	height: 400px;
+	background-color: black;
+}
+
+.Star
+{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	background-color: white;
+}
