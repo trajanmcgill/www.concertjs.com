@@ -23,7 +23,7 @@ module.exports = function(grunt)
 			{
 				options:
 				{
-					bitwise: true, browser: true, curly: false, eqeqeq: true, forin: true, immed: true, latedef: true, laxbreak: true, laxcomma: true, newcap: true,
+					bitwise: true, browser: true, curly: false, eqeqeq: true, forin: true, immed: true, latedef: "nofunc", laxbreak: true, laxcomma: true, newcap: true,
 					noarg: true, noempty: true, nonew: true, quotmark: "double", smarttabs: true, strict: true, trailing: true, undef: true, unused: true, validthis: true,
 					globals: { "Concert": false }
 				},
@@ -152,7 +152,7 @@ module.exports = function(grunt)
 			{
 				options: { sequences: false, verbose: true, warnings: true },
 
-				minifyAssembledJS: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
+				minifyAssembledJS: { options: { screwIE8: false }, expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
 				deminifyAssembledJS: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.max.js" }
 			}, // end uglify task definitions
 
@@ -190,7 +190,7 @@ module.exports = function(grunt)
 				gzip:
 				{
 					options: { mode: "gzip" },
-					files: [{ expand: true, cwd: "www.concertjs.com/Build/Assembly/Downloads/", src: "**/*.tar", dest: "www.concertjs.com/Build/Assembly/Downloads/" }]
+					files: [{ expand: true, cwd: "www.concertjs.com/Build/Assembly/Downloads/", src: "**/*.tar", dest: "www.concertjs.com/Build/Assembly/Downloads/", ext: ".tar.gzip" }]
 				}
 			} // end compress task definitions
 		});
