@@ -28,20 +28,20 @@ module.exports = function(grunt)
 					globals: { "Concert": false }
 				},
 
-				checkSource: { expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!**/*.template.js"] }
+				checkSource: { expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js"] }
 			}, // end jshint task definitions
 
 
 			clean:
 			{
-				www: ["www.concertjs.com/Build/**/*"],
+				www: ["dist/**/*"],
 
 				removeAssembledOriginalJSandCSS:
 				{
 					src:
 					[
-						"www.concertjs.com/Build/Assembly/**/*.js",
-						"www.concertjs.com/Build/Assembly/**/*.css",
+						"assembly/**/*.js",
+						"assembly/**/*.css",
 						"!**/*.full.js",
 						"!**/*.full.css"
 					]
@@ -51,16 +51,16 @@ module.exports = function(grunt)
 				{
 					src:
 					[
-						"www.concertjs.com/Build/Dev/**/*.full.*",
-						"www.concertjs.com/Build/Dev/**/*.min.*",
-						"www.concertjs.com/Build/Prod/**/*.full.*",
-						"www.concertjs.com/Build/Prod/**/*.min.*"
+						"dist/Dev/**/*.full.*",
+						"dist/Dev/**/*.min.*",
+						"dist/Prod/**/*.full.*",
+						"dist/Prod/**/*.min.*"
 					]
 				},
 
 				removeIntermediateTarFiles:
 				{
-					src: ["www.concertjs.com/Build/Assembly/**/*.tar"]
+					src: ["assembly/**/*.tar"]
 				}
 			}, // end clean task definitions
 
@@ -71,9 +71,9 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.html", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "www.concertjs.com/Build/Assembly/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.js", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/", src: ["**/*.css", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "www.concertjs.com/Build/Assembly/" }
+						{ expand: true, cwd: "src/", src: ["**/*.html", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "assembly/" },
+						{ expand: true, cwd: "src/", src: ["**/*.js", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "assembly/" },
+						{ expand: true, cwd: "src/", src: ["**/*.css", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "assembly/" }
 					]
 				},
 
@@ -81,8 +81,8 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.js" },
-						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.css"], dest: "www.concertjs.com/Build/Assembly/", ext: ".full.css" },
+						{ expand: true, cwd: "assembly/", src: ["**/*.js"], dest: "assembly/", ext: ".full.js" },
+						{ expand: true, cwd: "assembly/", src: ["**/*.css"], dest: "assembly/", ext: ".full.css" },
 					]
 				},
 
@@ -90,8 +90,8 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Dev/" },
-						{ expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*", dest: "www.concertjs.com/Build/Prod/" }
+						{ expand: true, cwd: "assembly/", src: "**/*", dest: "dist/Dev/" },
+						{ expand: true, cwd: "assembly/", src: "**/*", dest: "dist/Prod/" }
 					]
 				},
 
@@ -99,8 +99,8 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Dev/Components/" },
-						{ expand: true, cwd: "www.concertjs.com/Components/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Components/" }
+						{ expand: true, cwd: "Components/", src: "**/*", dest: "dist/Dev/Components/" },
+						{ expand: true, cwd: "Components/", src: "**/*", dest: "dist/Prod/Components/" }
 					]
 				},
 
@@ -108,8 +108,8 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Source/Demos/", src: "**/*", dest: "www.concertjs.com/Build/Dev/Demos/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/Demos/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Demos/" }
+						{ expand: true, cwd: "src/Demos/", src: "**/*", dest: "dist/Dev/Demos/" },
+						{ expand: true, cwd: "src/Demos/", src: "**/*", dest: "dist/Prod/Demos/" }
 					]
 				},
 
@@ -117,8 +117,8 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Source/Tutorial/", src: "**/*", dest: "www.concertjs.com/Build/Dev/Tutorial/" },
-						{ expand: true, cwd: "www.concertjs.com/Source/Tutorial/", src: "**/*", dest: "www.concertjs.com/Build/Prod/Tutorial/" }
+						{ expand: true, cwd: "src/Tutorial/", src: "**/*", dest: "dist/Dev/Tutorial/" },
+						{ expand: true, cwd: "src/Tutorial/", src: "**/*", dest: "dist/Prod/Tutorial/" }
 					]
 				},
 
@@ -126,11 +126,11 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Build/Dev/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Dev/", rename: stripMinOrFull },
-						{ expand: true, cwd: "www.concertjs.com/Build/Dev/", src: "**/*.full.js", dest: "www.concertjs.com/Build/Dev/", rename: stripMinOrFull },
+						{ expand: true, cwd: "dist/Dev/", src: "**/*.full.css", dest: "dist/Dev/", rename: stripMinOrFull },
+						{ expand: true, cwd: "dist/Dev/", src: "**/*.full.js", dest: "dist/Dev/", rename: stripMinOrFull },
 
-						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.css", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull },
-						{ expand: true, cwd: "www.concertjs.com/Build/Prod/", src: "**/*.min.js", dest: "www.concertjs.com/Build/Prod/", rename: stripMinOrFull }
+						{ expand: true, cwd: "dist/Prod/", src: "**/*.min.css", dest: "dist/Prod/", rename: stripMinOrFull },
+						{ expand: true, cwd: "dist/Prod/", src: "**/*.min.js", dest: "dist/Prod/", rename: stripMinOrFull }
 					]
 				}
 			}, // end copy task defitions
@@ -138,13 +138,13 @@ module.exports = function(grunt)
 
 			processTemplates:
 			{
-				assembleTemplateResults: { expand: true, cwd: "www.concertjs.com/Source", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "www.concertjs.com/Build/Assembly/" }
+				assembleTemplateResults: { expand: true, cwd: "src", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "assembly/" }
 			}, // end processTemplates task definitions
 
 
 			cssmin:
 			{
-				minifyAssembledCSS: { expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: "**/*.full.css", dest: "www.concertjs.com/Build/Assembly/", ext: ".min.css" }
+				minifyAssembledCSS: { expand: true, cwd: "assembly/", src: "**/*.full.css", dest: "assembly/", ext: ".min.css" }
 			}, // end cssmin task definitions
 
 
@@ -152,8 +152,8 @@ module.exports = function(grunt)
 			{
 				options: { sequences: false, verbose: true, warnings: true },
 
-				minifyAssembledJS: { options: { screwIE8: false }, expand: true, cwd: "www.concertjs.com/Build/Assembly/", src: ["**/*.full.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.js" },
-				deminifyAssembledJS: { expand: true, options: { beautify: true }, cwd: "www.concertjs.com/Build/Assembly/", src: ["*.min.js"], dest: "www.concertjs.com/Build/Assembly/", ext: ".min.max.js" }
+				minifyAssembledJS: { options: { screwIE8: false }, expand: true, cwd: "assembly/", src: ["**/*.full.js"], dest: "assembly/", ext: ".min.js" },
+				deminifyAssembledJS: { expand: true, options: { beautify: true }, cwd: "assembly/", src: ["*.min.js"], dest: "assembly/", ext: ".min.max.js" }
 			}, // end uglify task definitions
 
 
@@ -163,13 +163,13 @@ module.exports = function(grunt)
 				{
 					options:
 					{
-						archive: "www.concertjs.com/Build/Assembly/Downloads/Concert.js-1.0.0.zip",
+						archive: "assembly/Downloads/Concert.js-1.0.0.zip",
 						mode: "zip"
 					},
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Components/Concert.js/1.0.0/", src: "**", dest: "/" },
-						{ expand: true, cwd: "www.concertjs.com/Components/requestAnimationFrame/", src: "**", dest: "/" }
+						{ expand: true, cwd: "Components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "Components/requestAnimationFrame/", src: "**", dest: "/" }
 					]
 				},
 
@@ -177,20 +177,20 @@ module.exports = function(grunt)
 				{
 					options:
 					{
-						archive: "www.concertjs.com/Build/Assembly/Downloads/Concert.js-1.0.0.tar",
+						archive: "assembly/Downloads/Concert.js-1.0.0.tar",
 						mode: "tar"
 					},
 					files:
 					[
-						{ expand: true, cwd: "www.concertjs.com/Components/Concert.js/1.0.0/", src: "**", dest: "/" },
-						{ expand: true, cwd: "www.concertjs.com/Components/requestAnimationFrame/", src: "**", dest: "/" }
+						{ expand: true, cwd: "Components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "Components/requestAnimationFrame/", src: "**", dest: "/" }
 					]
 				},
 
 				gzip:
 				{
 					options: { mode: "gzip" },
-					files: [{ expand: true, cwd: "www.concertjs.com/Build/Assembly/Downloads/", src: "**/*.tar", dest: "www.concertjs.com/Build/Assembly/Downloads/", ext: ".tar.gzip" }]
+					files: [{ expand: true, cwd: "assembly/Downloads/", src: "**/*.tar", dest: "assembly/Downloads/", ext: ".tar.gz", extDot: "last" }]
 				}
 			} // end compress task definitions
 		});
