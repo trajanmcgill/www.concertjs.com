@@ -1,4 +1,4 @@
-﻿/// <reference path="../../Components/google-code-prettify/prettify.js" />
+﻿/// <reference path="../../components/google-code-prettify/prettify.js" />
 
 /* global prettyPrint */
 /* exported CodeViewer */
