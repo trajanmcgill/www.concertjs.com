@@ -31,7 +31,7 @@ Visit [http://www.concertjs.com/](http://www.concertjs.com/) for information on 
     - [git](https://git-scm.com/)
     - [npm](https://www.npmjs.com/)
 - Setup
-	1. First, fork this project and then `git clone` clone from GitHub:
+	1. First, fork this project and then `git clone` from GitHub:
 	2. Next, to get all the dependencies, move inside the newly created project directory and run `npm install`.
 - Folder structure:
 	- `components` directory contains some third-party components included in the web site.
