@@ -99,8 +99,8 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "Components/", src: "**/*", dest: "dist/Dev/Components/" },
-						{ expand: true, cwd: "Components/", src: "**/*", dest: "dist/Prod/Components/" }
+						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Dev/components/" },
+						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Prod/components/" }
 					]
 				},
 
@@ -168,8 +168,8 @@ module.exports = function(grunt)
 					},
 					files:
 					[
-						{ expand: true, cwd: "Components/Concert.js/1.0.0/", src: "**", dest: "/" },
-						{ expand: true, cwd: "Components/requestAnimationFrame/", src: "**", dest: "/" }
+						{ expand: true, cwd: "components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" }
 					]
 				},
 
@@ -182,8 +182,8 @@ module.exports = function(grunt)
 					},
 					files:
 					[
-						{ expand: true, cwd: "Components/Concert.js/1.0.0/", src: "**", dest: "/" },
-						{ expand: true, cwd: "Components/requestAnimationFrame/", src: "**", dest: "/" }
+						{ expand: true, cwd: "components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" }
 					]
 				},
 
