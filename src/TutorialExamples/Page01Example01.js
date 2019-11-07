@@ -10,9 +10,7 @@
 			feature: "height",
 			unit: "px",
 			applicator: Concert.Applicators.Style,
-			calculator: Concert.Calculators.Linear,
-			easing: Concert.EasingFunctions.ConstantRate,
-			keyframes: { times: [0, 1000], values: [0, 24] }
+			keyframes: { times: [0, 2000], values: [0, 24] }
 		});
 
 	document.getElementById("GoButton").onclick = function () { sequence.begin(); };

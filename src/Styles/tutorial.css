@@ -20,9 +20,23 @@ div.TutorialStep:first-child h4
 	font-size: 18px;
 }
 
+.TutorialNavigation
+{
+	box-sizing: border-box;
+	width: 50%;
+	float: left;
+}
+
+.TutorialIntroSection
+{
+	box-sizing: border-box;
+	width: 50%;
+	float: left;
+}
+
 .TutorialStep
 {
-
+	clear: both;
 }
 
 .TutorialDemoFrame
