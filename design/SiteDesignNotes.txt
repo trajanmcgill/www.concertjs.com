@@ -24,6 +24,18 @@ Things that ought to be on there:
 
 
 Tutorial things to cover:
+1. Sequences and Transformations
+2. Easing Functions
+3. Calculators
+4. Applicators
+5. Setting Defaults
+6. Starting, Stopping, and Seeking
+7. Synchronizing
+8. Repeating
+9. Custom Easing Functions, Calculators, and Applicators
+10. Cloning and Retargeting
+11. Indexing, Value Generator Functions
+
 -Sequences
 -Transformations (and transformation sets)
 -Downloading and including in a web page
@@ -33,11 +45,11 @@ Tutorial things to cover:
 -seeking
 -repeating: behavior after the end and before the beginning of a sequence
 -starting and stopping, different ways of running: begin, run, follow, and syncTo
--indexing (automatic and manual)
--getting properties of a sequence
 -applicators (built-in and custom)
 -calculators (built-in and custom)
 -easing functions (built-in and custom)
+-indexing (automatic and manual)
+-getting properties of a sequence
 -discussion of more advanced uses
 
 

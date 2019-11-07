@@ -34,6 +34,8 @@ module.exports = function(grunt)
 
 			clean:
 			{
+				assembly: ["assembly/**/*"],
+
 				www: ["dist/**/*"],
 
 				removeAssembledOriginalJSandCSS:
@@ -71,9 +73,9 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "src/", src: ["**/*.html", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "assembly/" },
-						{ expand: true, cwd: "src/", src: ["**/*.js", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "assembly/" },
-						{ expand: true, cwd: "src/", src: ["**/*.css", "!Tutorial/**/*", "!Demos/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "assembly/" }
+						{ expand: true, cwd: "src/", src: ["**/*.html", "!TutorialExamples/**/*", "!Demos/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "assembly/" },
+						{ expand: true, cwd: "src/", src: ["**/*.js", "!TutorialExamples/**/*", "!Demos/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "assembly/" },
+						{ expand: true, cwd: "src/", src: ["**/*.css", "!TutorialExamples/**/*", "!Demos/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "assembly/" }
 					]
 				},
 
@@ -113,12 +115,12 @@ module.exports = function(grunt)
 					]
 				},
 
-				deployTutorial:
+				deployTutorialExamples:
 				{
 					files:
 					[
-						{ expand: true, cwd: "src/Tutorial/", src: "**/*", dest: "dist/Dev/Tutorial/" },
-						{ expand: true, cwd: "src/Tutorial/", src: "**/*", dest: "dist/Prod/Tutorial/" }
+						{ expand: true, cwd: "src/TutorialExamples/", src: "**/*", dest: "dist/Dev/TutorialExamples/" },
+						{ expand: true, cwd: "src/TutorialExamples/", src: "**/*", dest: "dist/Prod/TutorialExamples/" }
 					]
 				},
 
@@ -322,7 +324,7 @@ module.exports = function(grunt)
 
 	grunt.registerTask("lint_all", ["jshint:checkSource"]);
 
-	grunt.registerTask("clean_all", ["clean:www"]);
+	grunt.registerTask("clean_all", ["clean:assembly", "clean:www"]);
 
 	grunt.registerTask(
 		"build_www",
@@ -342,7 +344,7 @@ module.exports = function(grunt)
 			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
 			"copy:deployComponents", // copy components directory into dev and prod directories
 			"copy:deployDemos", // copy demos directory into dev and prod directories
-			"copy:deployTutorial" // copy tutorials directory into dev and prod directories
+			"copy:deployTutorialExamples" // copy tutorial examples directory into dev and prod directories
 		]);
 
 	grunt.registerTask("build_all", ["build_www"]);
