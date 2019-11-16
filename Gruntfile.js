@@ -29,7 +29,7 @@ module.exports = function(grunt)
 					globals: { "Concert": false }
 				},
 
-				checkSource: { expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js"] }
+				checkSource: { expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"] }
 			}, // end jshint task definitions
 
 
@@ -41,7 +41,7 @@ module.exports = function(grunt)
 					options:
 					{
 						destination: "assembly/Reference/",
-						template: "node_modules/jsdoc/templates/default"
+						template: "src/DocTemplates/concertjs"
 					}
 				}
 			}, // end jsdoc task definitions
@@ -88,9 +88,9 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "src/", src: ["**/*.html", "!TutorialExamples/**/*", "!Demos/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "assembly/" },
-						{ expand: true, cwd: "src/", src: ["**/*.js", "!TutorialExamples/**/*", "!Demos/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "assembly/" },
-						{ expand: true, cwd: "src/", src: ["**/*.css", "!TutorialExamples/**/*", "!Demos/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "assembly/" }
+						{ expand: true, cwd: "src/", src: ["**/*.html", "!TutorialExamples/**/*", "!Demos/**/*", "!DocTemplates/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "assembly/" },
+						{ expand: true, cwd: "src/", src: ["**/*.js", "!TutorialExamples/**/*", "!Demos/**/*", "!DocTemplates/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "assembly/" },
+						{ expand: true, cwd: "src/", src: ["**/*.css", "!TutorialExamples/**/*", "!Demos/**/*", "!DocTemplates/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "assembly/" }
 					]
 				},
 
@@ -158,7 +158,7 @@ module.exports = function(grunt)
 
 			processTemplates:
 			{
-				assembleTemplateResults: { expand: true, cwd: "src", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js"], dest: "assembly/" }
+				assembleTemplateResults: { expand: true, cwd: "src", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js", "!DocTemplates/**/*"], dest: "assembly/" }
 			}, // end processTemplates task definitions
 
 
@@ -189,7 +189,8 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**", dest: "/" },
-						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" }
+						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" },
+						{ expand: true, cwd: "assembly/Reference/", src: "**", dest: "/Reference/" }
 					]
 				},
 
@@ -203,7 +204,8 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**", dest: "/" },
-						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" }
+						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" },
+						{ expand: true, cwd: "assembly/Reference/", src: "**", dest: "/Reference/" }
 					]
 				},
 
@@ -354,11 +356,11 @@ module.exports = function(grunt)
 			"clean:removeAssembledOriginalJSandCSS", // remove all original .js and css files from assembly directory
 			"uglify:minifyAssembledJS", // minify all .full.js files in assembly directory into .min.js
 			"cssmin:minifyAssembledCSS", // minify all .full.css files in assembly directory into .min.css
+			"jsdoc:assemble", // build reference documentation
 			"compress:zip", // build zip download archives
 			"compress:tar", // build (intermediate) tar download archives
 			"compress:gzip", // build gzip download archives
 			"clean:removeIntermediateTarFiles", // remove all intermediate tar archives
-			"jsdoc:assemble", // build reference documentation
 			"copy:deployAssembledFiles", // copy all assembly files into dev and prod directories
 			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
 			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
