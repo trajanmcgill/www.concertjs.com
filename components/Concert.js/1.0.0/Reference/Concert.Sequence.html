@@ -1,2556 +1,0 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Concert.js Reference: Class: Sequence</title>
-    
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css?ver=3">
-</head>
-
-<body>
-
-<div id="main">
-    <h1 class="page-title">Class: Sequence</h1>
-    
-    
-
-
-
-<section>
-    
-<header>
-    <h2>
-        <span class="ancestors"><a href="Concert.html">Concert</a>.</span>
-    
-    Sequence
-    </h2>
-    
-</header>  
-
-<article>
-    <div class="container-overview">
-    
-    
-    
-        
-<dt>
-    <h4 class="name" id="Sequence"><span class="type-signature"></span>new Sequence<span class="signature">(<span class="optional">transformationSet</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Represents an animation sequence, or, more broadly, a series of changes which are applied to a collection of objects over time.A sequence contains a set of transformations that are applied to DOM Elements, JavaScript objects, or anything else that can be manipulated with JavasScript.It contains methods that allow defining those transformations, seeking to any point in the sequence timeline, and running the sequence in various ways.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>transformationSet</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">An object defining an initial set of transformations to add to the sequence. The layout of this object is the same as used in the <a href="Concert.Sequence.html#addTransformations">addTransformations method</a>.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 1041
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    A new Sequence object.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">Object</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-    
-    </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="addTransformations"><span class="type-signature"></span>addTransformations<span class="signature">(transformationSet)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Adds a set of transformations (i.e., changes applied to objects over time) to the sequence.<br><p class="ExplanationParagraph"><strong>Terminology:</strong></p><p class="ExplanationParagraph">-A <em>transformation</em> is a single change applied over time to a single feature of a single object. Its properties include which object to modify and what feature of it will be altered, a start time and starting value, and end time and ending value. For instance, a transformation may represent changing the "width" style of a DIV element from "100px" at time 1000 to "200px" at time 2000.</p><p class="ExplanationParagraph">-A <em>sequence</em> is a collection of transformations that are to be applied together as a group.</p><p class="ExplanationParagraph">-A <em>target object</em> is anything that will be modified by a transformation (e.g., a DOM element or a JavaScript object).</p><p class="ExplanationParagraph">-A <em>target feature</em> is the aspect of the target object that will be modified (e.g., for a DOM element this might be "width").</p><p class="ExplanationParagraph">-A <em>unit</em> is an optional (initially defaults to <code>null</code>) string appended to a calculated value when applying it to a target feature(e.g., for a DOM style property this might be "px").</p><p class="ExplanationParagraph">-A <em>calculator</em> is a function that looks at the start and end values of a target feature and calculates a current value to applybased on the current distance along the timeline. Ordinarily this is set to one of the pre-defined calculator functions in the <a href="Concert.Calculators.html">Concert.Calculators</a> namespace(initially defaulting to <code>Concert.Calculators.Linear</code>), but can also be a custom function, as explained further below.</p><p class="ExplanationParagraph">-An <em>applicator</em> is a function that takes the values computed by the calculator function and applies them to the target feature.For instance, different applicators would be used for setting JavaScript object properties, DOM element styles, or SVG element attributes.Ordinarily this is set to one of the pre-defined applicator functions in the <a href="Concert.Applicators.html">Concert.Applicators</a> namespace(initially defaulting to <code>Concert.Applicators.Property</code>), but can also be a custom function, as explained further below.</p><p class="ExplanationParagraph">-An <em>easing</em> is a function which modifies the rate at which a transformation moves from beginning to end.For instance, it may progress steadily from the start time to the end time, or it may accelerate and decelerate to make motion appear smoother.Ordinarily this is set to one of the pre-defined easing functions in the <a href="Concert.EasingFunctions.html">Concert.EasingFunctions</a> namespace(initially defaulting to <code>Concert.EasingFunctions.ConstantRate</code>) but can also be a custom function, as explained further below.</p><p class="ExplanationParagraph">Note: The easing function could easily be confused with the calculator function, because many animation libraries combine these two concepts.Here, however, they can be set independently. Essentially, a calculator function, given a start value, an end value, and the current time (in the form of a fractional distancebetween the start time and end time of the transformation), calculates a current value to apply. The easing function is what computes the current time that will be passed intothe calculator function, allowing the rate at which a transformation proceeds to change over time. The reason for separating these becomes apparent when we consider that differenttypes of calculation are necessary for different types of features. A function calculating an animated transition from one RGB color value to another uses a different algorithm thanone calculating the animation of a simple, numeric value, for instance, or a complex calculator function that takes multiple inputs and calculates rotational movement.Because Concert.js allows anything at all to be animated, it supports the ability to choose any method of calculating values, and then (regardless of which one is used)specifying any easing function to alter the rate at which the animation takes place. Easing functions are specified at the level of the transformation (not the full sequence,although it is possible to set a default easing function for a sequence), so a single sequence can contain different transformations using a different easing functions.</p>
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>transformationSet</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">An object or array describing a set of changes which will be applied at specified times to specified target objects.(A target object being anything that will be modified by the sequence, such as a DOM element or a JavaScript object.)The <code>transformationSet</code> parameter is either a single object whose properties define a set of transformations, or an array of such objects.Certain of the properties (as indicated below) are optional, and each sequence maintains its own settings for what default values will be applied to transformationswhen the optional properties are not defined. (Note: these defaults are applied at the time the transformations are added, not at run-time, so changing the defaultsfor a sequence will never alter transformations which have already been added to that sequence.)<br><br>The expected layout of the object passed into this method is defined as follows (also see examples below):<pre><strong>transformationSet</strong> = <em>TransformationsObject</em>OR<strong>transformationSet</strong> = [<em>TransformationsObject<sub>1</sub></em>, <em>TransformationsObject<sub>2</sub></em>, ...]<strong><em>TransformationsObject</em></strong> =  {      target: <em>TargetObjectDefinition</em>,      AND/OR      targets: [<em>TargetObjectDefinition<sub>1</sub></em>, <em>TargetObjectDefinition<sub>2</sub></em>, ...]      feature: <em>FeatureDefinition</em>,      [unit: <em>UnitDefinition</em>,] // If absent, uses sequence's default value      [applicator: <em>ApplicatorFunction</em>,] // If absent, uses sequence's default value      [calculator: <em>CalculatorFunction</em>,] // If absent, uses sequence's default value      [easing: <em>EasingFunction</em>,] // If absent, uses sequence's default value      keyframes: <em>KeyframesDefinition</em>      OR      segments: <em>SegmentDefinition</em> OR [<em>SegmentDefinition<sub>1</sub></em>, <em>SegmentDefinition<sub>2</sub></em>, ...]  };<strong><em>TargetObjectDefinition</em></strong> = The object to be modified by these transformations.Often this will be a DOM object, but it can be anything at all. Multiple targets canbe specified, by using the <code>targets</code> (plural) property, as a shorthand method ofduplicating the transformation definitions to target all the included target objects.<strong><em>FeatureDefinition</em></strong> = The feature of the target object which will be modified, OR anarray of such features. In most cases, this will be a string (for example, whenanimating a DOM style, this might be "width") or an array of strings. Arrays areallowed as a shorthand method of defining multiple features, values, and unitstogether in a more compact notation. The first feature in the array will bematched with the first unit and the first value in those arrays, and so on. Seebelow samples for an example of using arrays in this way.<strong><em>UnitDefinition</em></strong> = A string to be appended to calculated values before they are appliedto the target (for example, when animating a DOM style, this might be "px"), OR anarray of such strings. Arrays are allowed as a shorthand method of defining multiplefeatures, values, and units together in a more compact notation. The first unit inthe array will be matched with the first feature and the first value in those arrays,and so on. See below samples for an example of using arrays in this way. Use <em>null</em>if nothing should be appended to the calculated values for this transformation.<strong><em>ApplicatorFunction</em></strong> = Function used to apply the calculated current value to thefeature. Because different types of features (e.g., DOM element styles as contrastedto plain JavaScript object properties) are applied in different ways, differentapplicator functions are needed. This can be set to one of the functions defined inthe <a href="Concert.Applicators.html">Concert.Applicators</a> namespace, or to any function with the signature:  <em>function applicatorFunction(target, feature, value, unit)</em>See below examples for a sample of a custom applicator.<strong><em>CalculatorFunction</em></strong> = Function used to calculate a current value to apply to the targetfeature. This can be set to one of the functions defined in the <a href="Concert.Calculators.html">Concert.Calculators</a>namespace, or to any function returning an approprate value for this transformation'starget feature and having the signature:  <em>function calculatorFunction(distanceFraction, startValue, endValue, addlProperties)</em>See below examples for a sample of a custom calculator.<strong><em>EasingFunction</em></strong> = Function used to compute the current time (as a fractionalproportion of the distance traversed, from 0 to 1, between the start time andend time of the transformation). This can be set to one of the functions definedin the <a href="Concert.EasingFunctions.html">Concert.EasingFunctions</a> namespace, or toany function returning a value from 0 to 1 and having the signature:  <em>function easingFunction(startTime, endTime, currentTime)</em>See below examples for a sample of a custom easing function.<strong><em>KeyframesDefinition</em></strong> =  {      times: <em>KeyframeTimesArray</em>,      [values: <em>KeyframeValuesArray</em>,]      OR      [valueGenerators: <em>ValueGeneratorsArray</em>]  };<strong><em>SegmentDefinition</em></strong> =   {      t0: <em>TimeDefinition</em>, // Start time of this transformation      t1: <em>TimeDefinition</em>, // End time of this transformation      v0: <em>ValueDefinition</em>, // Value applied at the start time      v1: <em>ValueDefinition</em>, // Value applied at the end time      OR      v0Generator: <em>ValueGenerator</em>, // Function to calculate v0      v1Generator: <em>ValueGenerator</em>, // Function to calculate v1      [calculator: <em>CalculatorFunction</em>,] // If absent, falls back to the calculator      // defined at the <em>TransformationsObject</em> level; if also absent there, to the      // sequence's default calculator.      [easing: <em>EasingFunction</em>,] // If absent, falls back to the easing function      // defined at the <em>TransformationsObject</em> level; if also absent there, to the      // sequence's default easing.      [unit: <em>UnitDefinition</em>,] // If absent, falls back to the unit defined at the      // <em>TransformationsObject</em> level; if also absent there, to the sequence's      // default unit.  };<strong><em>KeyframeTimesArray</em></strong> = An array of the form [<em>TimeDefinition<sub>1</sub></em>, <em>TimeDefinition<sub>2</sub></em>, ...].This defines the timeline points used as keyframes for this transformation series,to be matched up with the values in the corresponding <em>KeyframeValuesArray</em>. A nullelement has the effect of breaking the keyframe string into two segments. For example,the array [0, 100, 1000, 2000] defines a constant flow of transition with fourkeyframes. The array [0, 100, null, 1000, 2000], on the other hand, defines a flowthat is broken in two pieces: one animated segment with keyframes at time 0 and 100,then no further animation at all until until time 1000, followed by another periodof animation between the keyframes at times 1000 and 2000.<strong><em>KeyframeValuesArray</em></strong> = An array of the form [<em>ValueDefinition<sub>1</sub></em>, <em>ValueDefinition<sub>2</sub></em>, ...].This defines the values applied at each keyframe point, as matched up with the keyframepoints defined in the corresponding <em>KeyframeTimesArray</em>. Note that null valuesappearing in this array work exactly the same way (and should match up with) nullvalues in the <em>KeyframeTimesArray</em>. Both arrays must have the same number of elements.<strong><em>ValueGeneratorsArray</em></strong> = An array of the form [<em>ValueGenerator<sub>1</sub></em>, <em>ValueGenerator<sub>2</sub></em>, ...].This defines the functions that calculate values applied at each keyframe point, asmatched up with the keyframe points defined in the corresponding <em>KeyframeTimesArray</em>.<strong><em>TimeDefinition</em></strong> = A number indicating a point along the sequence timeline. Whensynchronizing to a media object or running by the system clock, this should ordinarilybe specified as a number of milliseconds (1/1000's of a second). Otherwise, there is norestriction; it simply indicates a numeric point on the overall timeline, with noparticular unit implied. For instance, a sequence could be synchronized to the valueof a slider or other user control, in which case this number would just be anythingfrom the minimum to the maximum values of that control.<strong><em>ValueDefinition</em></strong> = A value to be applied to the target object feature, or an array ofsuch values. This value can be of any type, although it needs to be one appropriate tothe target feature, calculator, and applicator being used. If a unit is specified, thevalue will be treated as a string and the unit will be appended to it beforeapplication. Arrays are allowed as a shorthand method of defining multiple features,values, and units together in a more compact notation. The first value in the arraywill be matched with the first unit and the first feature in those arrays, and so on.See below samples for an example of using arrays in this way.<strong><em>ValueGenerator</em></strong> = A function which returns a valid <em>ValueDefinition</em> and has the signature:  <em>function generatorFunction(sequence)</em>This is a mechanism that allows specifying functions that will calculate start and endvalues for a transformation, instead of using fixed values determined at the time thetransformation is initially specified. This can be helpful if the same transformationwill be run more than once with different start and end values, such as a motion thatmight be repeated in more than one place on the screen at different times, or if thetransformation is being added to the sequence before the actual start and end valuesare yet known. This is not to be confused with a Calculator function. A Calculatortakes a start and end value along with the current time and calculates the currentvalue. This function, by contrast, is called prior to running the sequence anddetermines what the start and end values are that the Calculator will look at duringrun-time of the sequence. All of the value generator functions for an entire sequenceare called at once, either manually by calling the sequence's <a href="Concert.Sequence.html#generateValues">generateValues</a> method,or at the time the sequence is run, by specifying <code>true</code> for the <code>generateValues</code> optionwhen calling the <a href="Concert.Sequence.html#run">run</a>, <a href="Concert.Sequence.html#begin">begin</a>, <a href="Concert.Sequence.html#follow">follow</a>, or <a href="Concert.Sequence.html#syncTo">syncTo</a> methods.The generator function will be passed a reference to the sequence object containing thetransformation whose values are currently being generated.</pre></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 1499
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-        <h5>Examples</h5>
-        
-        <p class="code-caption">Example 1 Below: Single target object and feature, using keyframes, not relying on defaults. This would move a DOM object with id "someObject"by changing its "left" style value from "0px" to "60px" over the timeline period from time 1000 to 2000.</p>
-    
-    <pre class="prettyprint"><code>sequence.addTransformations({    target: document.getElementById("someObject"),    feature: "left",    unit: "px",    applicator: Concert.Applicators.Style,    calculator: Concert.Calculators.Linear,    easing: Concert.EasingFunctions.ConstantRate,    keyframes: { times: [1000, 2000], values: [0, 60] }  });    </code></pre>
-
-        <p class="code-caption">Example 2 Below: This example demonstrates adding transformations for more than one target at a time, using both the"keyframes" and "segments" styles of definition, and using arrays for the target features and values. (An array could also have beenspecified for the "unit" property, but that isn't necessary if the same unit is being used for all the features as it is here.) Alsonote that the setDefaults method is being used to avoid having to specify common properties over and over again.This code would move the DOM object with id "someObject1" from position (0, 0) to (100, 200) from time 0 to 1000,and would change the width on the object with id "someObject2" from 75 to 150 and back to 75 again over the same time period.</p>
-    
-    <pre class="prettyprint"><code>sequence.setDefaults(  {    applicator: Concert.Applicators.Style,    calculator: Concert.Calculators.Linear,    easing: Concert.EasingFunctions.ConstantRate,    unit: "px"  });sequence.addTransformations(  [    {      target: document.getElementById("someObject1"),      feature: ["left", "top"],      keyframes: { times: [0, 1000], values: [[0, 0], [100, 200]] }    },    {      target: document.getElementById("someObject2"),      feature: "width",      segments:        [          { t0:   0, t1:  500,    v0:  75, v1: 150 },          { t0: 500, t1: 1000,    v0: 150, v1:  75 },        ]    }  ]);    </code></pre>
-
-        <p class="code-caption">Example 3 Below: This example demonstrates using value generator functions instead of fixed values.This could would create a single transformation that animates the "left" property of the DOM element with ID "PhotonTorpedoBox".The animation runs from time 0 to time 1000, but the actual values are not yet known. Imagining that we're animating the firingof a torpedo from a ship whose location at the time the torpedo will be fired is not yet known, we set up functions that candetermine the proper start and end locations later. Then, whenever it is appropriate to determine and fix the actual numbers,we would call generateValues(), which calls the generator functions and stores the values returned to be used when the sequenceis run. (Or, if the generateValues option is specified with a value of true when running the sequence, generateValues() will becalled automatically at that time.) Also note, the QuadIn easing function is used here, which will cause the motion to speedup as it proceeds from beginning to end.</p>
-    
-    <pre class="prettyprint"><code>sequence.setDefaults(  {    applicator: Concert.Applicators.Style,    calculator: Concert.Calculators.Linear,    easing: Concert.EasingFunctions.QuadIn,    unit: "px"  });sequence.addTransformations(  {    target: document.getElementById("PhotonTorpedoBox"),    feature: "left",    segments:      [{        t0: 0,        t1: 1000,        v0Generator:          function ()          {            var ship = document.getElementById("SpaceshipBox");            return (ship.offsetLeft + ship.offsetWidth);          },        v1Generator:          function ()          {            var ship = document.getElementById("SpaceshipBox");            return (ship.offsetLeft + ship.offsetWidth + 1000);          }      }]  });// ... sometime later:sequence.generateValues();</code></pre>
-
-        <p class="code-caption">Example 3b Below: Shown here is the relevant portion of the last example modified to use keyframes notation instead ofsegments notation.</p>
-    
-    <pre class="prettyprint"><code>sequence.addTransformations(  {    target: document.getElementById("PhotonTorpedoBox"),    feature: "left",    keyframes:      {        times: [0, 1000],        valueGenerators:        [          function ()          {            var ship = document.getElementById("SpaceshipBox");            return (ship.offsetLeft + ship.offsetWidth);          },          function ()          {            var ship = document.getElementById("SpaceshipBox");            return (ship.offsetLeft + ship.offsetWidth + 1000);          }        ]      }  });</code></pre>
-
-        <p class="code-caption">Example 4 Below: This example demonstrates using custom applicator, calculator, and easing functionsto manipulate the width of a DOM object. The code shows a custom applicator function that could be used if we wanted touse a jQuery object containing multiple elements as a target object. <strong>Note that Concert.js does NOT depend in anyway on jQuery; this example merely showsusing the two libraries in conjunction.</strong> The custom calculator function also makes use of jQuery, and shows howa custom calculator could be used to generate truly dynamic values- in this case, it keeps the calculated value lockedto the width of a particular DOM element. The custom easing function shown here causes the animation to proceed athalf-speed for two thirds of the time, then double-speed for the final third of the time.</p>
-    
-    <pre class="prettyprint"><code>function customApplicator(target, feature, value, unit){  target.each(function () { $(this).css(feature, value + unit); });}function customCalculator(distanceFraction, startValue, endValue, addlProperties){  var outerBoxWidth = $("#OuterBox").innerWidth();  return (distanceFraction * (endValue - startValue) * outerBoxWidth);}function customEasing(startTime, endTime, currentTime){  var fractionComplete = (currentTime - startTime) / (endTime - startTime);  if (fractionComplete < 2 / 3)    return (fractionComplete / 2);  else    return (1 / 3 + 2 * (fractionComplete - 2 / 3));}sequence.addTransformations(  {    target: $(".InnerBox"),    feature: "width",    applicator: customApplicator,    calculator: customCalculator,    easing: customEasing,    unit: "px",    keyframes:    {      times: [0, 1000],      values: [0, 0.5]    }  });</code></pre>
-
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="begin"><span class="type-signature"></span>begin<span class="signature">(<span class="optional">parameters</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Runs a transformation starting from the beginning, locked to the system clock and automatically stopping upon reaching the end.This is really just a shortcut method provided for a common usage scenario; it is exactly the same as calling the <a href="Concert.Sequence.html#run">run</a> method with the parameters<code>{ synchronizeTo: null, initialSeek: 0, timeOffset: null, autoStopAtEnd: true }</code>. Note that these parameter values can still be overridden, or any of the other parametersaccepted by the <a href="Concert.Sequence.html#run">run</a> method can be specified in the <code>parameters</code> argument passed into this method.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>parameters</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">An object with property values setting options for how to run the sequence.See the <a href="Concert.Sequence.html#run">run</a> method for information on allowable properties and values in this object.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2022
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="clone"><span class="type-signature"></span>clone<span class="signature">(targetLookupFunction, <span class="optional">matchRunningStatus</span>, <span class="optional">doInitialSeek</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Creates a duplicate of a sequence, allowing a sequence to be defined once and then cloned to apply to any number of different sets of target objects.For example, the same series of animated motions might be applied to numerous on-screen elements.Since each sequence may contain transformations targeting numerous different objects, this is accomplished by passing in a function that,when passed a transformation target from the original sequence, returns the corresponding object to be targeted in the new sequence.(Note that one useful way of doing this easily is to set the targets of the original sequence to be strings or integers instead of actual objects. The original sequence then just becomes essentially a dummy sequence with placeholder targets that your function can easily identify and use for looking up substitute target objects.)This method is capable of duplicating nearly every aspect of the original sequence, including jumping to the same current point in time and evencloning its running or non-running status if desired. (To change the target objects of a sequence without creating a new one, see the <a href="Concert.Sequence.html#retarget">retarget</a> method.)
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		<th>Default</th>
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>targetLookupFunction</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-                <td class="default">
-                
-                </td>
-            
-            
-            <td class="description last">A function taking a single parameter. The value passed in will be one of the transformation targets of the original sequence. The function must return the equivalent object which should be targeted by the equivalent transformation in the new sequence.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>matchRunningStatus</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-            
-            <td class="description last">If <code>true</code>, and the sequence being cloned is currently running, the new sequence will jump to the same point on the timeline and run as well. Otherwise, the new sequence will not automatically start running.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>doInitialSeek</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-            
-            <td class="description last">If <code>true</code>, the new sequence will immediately seek to the same point on the timeline as the original sequence. Otherwise, the new sequence will merely be created, but will not immediately perform any action (unless the matchRunningStatus parameter is <code>true</code>).</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2042
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    A new <a href="Concert.Sequence.html">Sequence</a> object, with the same properties and duplicates of all the same transformations that were in the original sequence, but with new target objects of those transformations substituted in as controlled by the <code>targetLookupFunction</code> parameter.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">Object</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-        <h5>Example</h5>
-        
-        <p class="code-caption">One possible method of using this function easily for replicating a sequence definition onto any number of targets is shown below. The initial sequence here is defined with two transformations that are given strings ("UpperElement" and "LowerElement") as targets. The initial sequence is thus just a dummy from which we can clone easily and repeatedly, and the strings make helpful placeholders for the function passed into the clone method to use for matching up to real DOM elements or other intended target objects which we may have created dynamically at a later time. Note further that if you index a sequence before cloning it, resulting cloned sequences will already be indexed and can be run instantly without any indexing lag.</p>
-    
-    <pre class="prettyprint"><code>var originalSequence = new Concert.Sequence();originalSequence.setDefaults(  {    applicator: Concert.Applicators.Style,    calculator: Concert.Calculators.Linear,    easing: Concert.EasingFunctions.ConstantRate,    unit: "px"  });originalSequence.addTransformations(  [    {      target: "UpperElement", feature: "left",      keyframes: { times: [0, 1000], values: [100, 200] }    },    {      target: "LowerElement", feature: "left",      keyframes: { times: [0, 1000], values: [100, 200] }    }  ]);//...some time later, having creating DOM elements with id values// like "UpperElement1", "LowerElement1", "UpperElement2", ...var newSequence1 = originalSequence.clone(    function (originalTarget)    { return document.getElementById(originalTarget + "1"); });var newSequence2 = originalSequence.clone(    function (originalTarget)    { return document.getElementById(originalTarget + "2"); });</code></pre>
-
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="follow"><span class="type-signature"></span>follow<span class="signature">(syncSource, <span class="optional">parameters</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Runs a transformation starting from the current timeline position, locked to the specified synchronization source. This differs from the <a href="Concert.Sequence.html#syncTo">syncTo</a> methodin that <code>follow</code> causes the sequence to run exactly in time with the synchronization source and in the same direction, but starting at the current timeline position, whereaswith <a href="Concert.Sequence.html#syncTo">syncTo</a> the sequence will first jump to a timeline position matching the current value of the synchronization source and then do the same.This is really just a shortcut method provided for a common usage scenario; it is exactly the same as calling the <a href="Concert.Sequence.html#run">run</a> method with the parameters<code>{ synchronizeTo: <em>syncSource</em>, initialSeek: null, timeOffset: null }</code>. Note that these parameter values can still be overridden, or any of the other parametersaccepted by the <a href="Concert.Sequence.html#run">run</a> method can be specified in the <code>parameters</code> argument passed into this method.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>syncSource</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Varies</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">A synchronization source. Can take any of the following different types of values:<pre>  null: locks sequence to the system clock.  function object: the passed-in function is called every time the polling      interval is reached, and the return value is used as the seek time.      Using a custom function here allows you to synchronize the sequence to      anything you want (for instance, locking it to the current value of a UI      element, such as a slider, or to another Concert.Sequence object.)  html audio or video DOM object: locks the sequence to the currentTime property      of the media element. This allows the sequence to remain synchronized to      the media even when it is paused, scrubbed, or the user skips around.</pre></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>parameters</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">An object with property values setting options for how to run the sequence.See the <a href="Concert.Sequence.html#run">run</a> method for information on allowable properties and values in this object.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2191
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="generateValues"><span class="type-signature"></span>generateValues<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Calls the value generation functions attached to transformations that have value generators instead of fixed start and end values.<br><em>It may be useful at times to define transformations whose start and end values are not fixed at the time the transformations are first defined,but which instead are calculated dynamically at some later time prior to running the sequence. This is accomplished by specifying functions insteadof start and end values, as explained in the documentation for the <a href="Concert.Sequence.html#addTransformations">addTransformations</a> method.Those functions (for all such transformations in a sequence) are then called, and their return values stored as the start and end values of theirrespective transformations, either at the time the sequence is run by specifying the appropriate option when calling the <a href="Concert.Sequence.html#run">run</a>,<a href="Concert.Sequence.html#begin">begin</a>, <a href="Concert.Sequence.html#follow">follow</a>, or <a href="Concert.Sequence.html#syncTo">syncTo</a> methods, or at any time bycalling <code>generateValues</code>.</em>
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2223
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getCurrentTime"><span class="type-signature"></span>getCurrentTime<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Gets the current position along a sequence's timeline.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2248
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The sequence's current timeline position.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">number</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getEndTime"><span class="type-signature"></span>getEndTime<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Gets the end time of a sequence's timeline. This end time of a sequence is considered to be the last end time of any transformation within that sequence.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2264
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The end time of the sequence's timeline.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">number</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getID"><span class="type-signature"></span>getID<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Returns a unique integer identifying this sequence.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2283
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The sequence ID.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">number</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getStartTime"><span class="type-signature"></span>getStartTime<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Gets the start time of a sequences timeline. The start time of a sequence is considered to be the first start time of any transformation within that sequence.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2299
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The start time of the sequence's timeline.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">number</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="index"><span class="type-signature"></span>index<span class="signature">(completionCallback, isAsynchronous)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Indexes a sequence. This function is run automatically (if necessary) any time a sequence is run or the <a href="Concert.Sequence.html#seek">seek</a> method is called.However, for very large sequences (large enough that indexing would cause a noticable lag), it may be desirable to manually control when indexing takes place(that is, to pre-index the sequence), so that seeking or running will begin instantly. Once indexed, a sequence (or any sequences cloned from it) will not needto be indexed again unless new transformations are added to it.<br><br><strong>Explanation of Indexing:</strong> Concert.js sequences can consist of very large numbers of transformations applied to numerous target objects,with the ability to seek extremely quickly to any point in the sequence. This is what makes it useful for synchronizing to other things (such as audio or video)and for other situations that require arbitrary seeking, running at different speeds or in either direction, or other uses that don't conform to a simple,run-once-forward-only-at-normal-speed scenario. What makes this possible is an internal data structure that optimizes for quickly finding the correct valueto apply to every target feature of every one of the objects being animated, at any point along the timeline. This internal structure involves a set of pre-built indexesof timeline segments. Much like indexes on database tables, this vastly speeds up run-time lookup performance by doing some processing ahead of time to analyze and organize the data.Every sequence needs to be indexed once (or again after any new transformations are added). Running or seeking to any point in an un-indexed sequence will cause indexing to take placeautomatically, or indexing can be run manually with this method. In many cases, the automatic indexing will run fast enough that manually running the indexer is not necessary.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>completionCallback</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">This function will be executed upon completion of indexing. It is especially useful if the <code>isAsynchronous</code>parameter is set to <code>true</code>. The function specified here should have a signature of the form <code>someCallBackFunction(sequenceObject)</code>.That is, the function will be called with a single argument, which will be the sequence object whose indexing has completed. (For purposes of handling thiscallback when there are multiple sequences being manipulated, it may also be helpful to remember that every <a href="Concert.Sequence.html">Sequence</a> object has aunique  integer ID which can be retrieved using the <a href="Concert.Sequence.html#getID">getID</a> method.)</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>isAsynchronous</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">If <code>true</code>, the indexing process will not be run all at once, but will instead be broken intosmaller chunks of work and scheduled using calls to <code>window.setTimeout</code>. This is useful for very large sequences, to help reduceor eliminate any noticable pause in browser responsiveness while indexing is taking place.<br><em>For the current version, the indexer makes a best effort to keep each processing chunk under 100 ms. Future versions may allow theprogrammer to adjust this value, and may also be able to incorporate web workers as a way of pushing most of the work into a completely separate,concurrent thread.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2318
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="isRunning"><span class="type-signature"></span>isRunning<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Gets a value indicating whether the sequence is currently running or not.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2374
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    <code>true</code> if the sequence is currently running, <code>false</code> otherwise.
-</div>
-
-
-
-<dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">boolean</span>
-
-
-	</dd>
-</dl>
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="retarget"><span class="type-signature"></span>retarget<span class="signature">(targetLookupFunction)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Changes the target objects for all the transformations in a sequence. This could be useful if a sequence is being defined before its targets are created.For instance, if it will be used to animate DOM elements that don't yet exist at the time the sequence is being created, a sequence can be created withplaceholder targets (such as strings or integers), and then the real targets substituted in later with this method.(If you wish to apply the same sequence to multiple sets of targets, or to more than one set of targets simultaneously, you may wish to see the <a href="Concert.Sequence.html#clone">clone</a> method.)
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>targetLookupFunction</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">A function that, when passed a transformation target from the sequence as currently defined, returns the new object to be targeted.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2390
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="run"><span class="type-signature"></span>run<span class="signature">(<span class="optional">parameters</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Runs the sequence, with the options defined in the <code>parameters</code> object.For many purposes, one of the other run methods (<a href="Concert.Sequence.html#begin">begin</a>, <a href="Concert.Sequence.html#follow">follow</a>, or <a href="Concert.Sequence.html#syncTo">syncTo</a>)may be easier, because they assume certain default options that are correct in most usage scenarios, but this method is the general-purpose way to run a sequencewith any set of behavioral options, and is in fact used behind the scenes by those other methods. Except for <code>generateValues</code>, <code>initialSeek</code>, and<code>timeOffset</code> (the last of which is automatically re-calculated if null), options specified in the <code>parameters</code> object are remembered and will be retainedas the default values. This means for restarting stopped sequences, it is not always necessary to explicitly re-state all the options, and it also means that this method can becalled on an already-running sequence to change run-time options on the fly.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>parameters</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">An object with property values setting options for how to run the sequence. Defined as follows below. Any or all of the below options may be specified:<pre><code>parameters ={  // --------  // Function; Defines how the sequence behaves when the sequence end time is  // reached and exceeded.(Can also be set using the <a href="Concert.Sequence.html#setAfter">setAfter</a> method.)  // Takes one of the functions defined in the <a href="Concert.Repeating.html">Concert.Repeating</a> namespace, or a  // custom function. For instance, a value of Concert.Repeating.Loop(2) will cause  // the sequence to loop back to the beginning twice (thus running a total of three  // times) before ceasing. See <a href="Concert.Repeating.html">Concert.Repeating</a> for information on the pre-defined  // values, or see <a href="Concert.Sequence.html#setAfter">setAfter</a> for more information on using a custom function.  <strong>after</strong>: VALUE, // Initial default: Concert.Repeating.None  // --------  // Boolean; Whether or not to automatically call stop() upon hitting the end.  // (Note that "the end" means after all looping, bouncing, etc. is taken into  // account.)  <strong>autoStopAtEnd</strong>: VALUE, // Initial default: true  // --------  // Function; Defines how the sequence behaves when the calculated current time  // is at or less than the sequence start time. (Can also be set using the  // <a href="Concert.Sequence.html#setBefore">setBefore</a> method.) Takes one of the functions defined in the <a href="Concert.Repeating.html">Concert.Repeating</a>  // namespace, or a custom function. For instance, a value of  // Concert.Repeating.Loop(2) will cause the sequence to loop back to the end twice  // (thus running a total of three times) before ceasing. See <a href="Concert.Repeating.html">Concert.Repeating</a> for  // information on the pre-defined values, or see <a href="Concert.Sequence.html#setBefore">setBefore</a> for more information on  // using a custom function.  <strong>before</strong>: VALUE, // Initial default: Concert.Repeating.None  // --------  // If the sequence has any transformations whose start and end values are dynamic  // rather than fixed (see <a href="Concert.Sequence.html#addTransformations">addTransformations</a> for details), the actual values  // to use will have to be calculated at some point in order to run the sequence.  // This can be accomplished by calling <a href="Concert.Sequence.html#generateValues">generateValues</a> manually, or it will happen  // automatically just before run-time if this parameter is set to true.  <strong>generateValues</strong>: VALUE, // Default value: true  // --------  // Numeric; If specified, sequence will seek to this time before commencing  // the run.  <strong>initialSeek</strong>: VALUE, // Default: null  // --------  // Function; Callback function invoked just after automatically stopping at the  end of the sequence (only will be called if autoStopAtEnd is true).  <strong>onAutoStop</strong>: VALUE, // Initial default: null  // --------  // Numeric; How far apart (in milliseconds) to calculate and seek to a new  // timeline position. Set to any value > 0 for manual control, or set to 0  // (or anything < 1) to let Concert determine this automatically. (It does  // this by using requestAnimationFrame() for if the browser supports  it,  // or a fixed interval of 16 ms otherwise.  <strong>pollingInterval</strong>: VALUE, // Initial default: 0  // --------  // Numeric; Run speed multiplier (0.5 = half-speed, 2 = double-speed, ...)  <strong>speed</strong>: VALUE, // Initial default: 1  // --------  // Boolean; Indicates whether to treat the sequence start time as 0 even if the  // first transformation in the sequence starts at a time greater than 0. This  // prevents a sequence whose first animations begin some time into the timeline  // from auto-stopping or triggering its <em>before</em> behavior when it is run from  // time 0. To define the beginning of the sequence timeline as the beginning of  // the first transformation in the timeline no matter what, set to <em>false</em>.  <strong>stretchStartTimeToZero</strong>: VALUE // Initial default: true  // --------  // Variable type; Sets a synchronization source for this sequence. Can take any  // of the following different types of values:  //   null: locks sequence to the system clock.  //   function object: the passed-in function is called every time the polling  //       interval is reached, and the return value is used as the seek time.  //       Using a custom function here allows you to synchronize the sequence to  //       anything you want (for instance, locking it to the current value of a UI  //       element, such as a slider, or to another Concert.Sequence object.)  //   html audio or video DOM object: locks the sequence to the currentTime  //       property of the media element. This allows the sequence to remain  //       synchronized to the media even when it is paused, scrubbed, or the  //       user skips around.  <strong>synchronizeTo</strong>: VALUE, // Initial default: null  // --------  // Numeric; An offset value that is added to the current time before seeking  // every time the polling interval comes around. This is useful if you want  // your sequence to run fixed amount ahead of, or behind, your synchronization  // source. If null, this value is automatically calculated assuming that you  // want the current sequence time (or the sequence start time if no calls to  // seek() have yet been made) to match up with the current return value of the  // synchronization source. For instance, you may have a sequence that runs,  // locked to the system clock, from time 0 to time 10000 (i.e., for 10 seconds).  // But the raw value coming from the system clock is never between 0 and 10000;  // it is the number of milliseconds since January 1, 1970 00:00:00 UTC, which  // is a very high number. The timeOffset value is therefore added in order to  // translate the raw starting clock value to the start time of the sequence.  // But because this automatic translation may not always be the desired  // behavior, it can be explicitly set here.  <strong>timeOffset</strong>: VALUE, // Default value: null  // --------  // Boolean; Whether or not to optimize based on the assumption that none of the  // object properties being modified by this sequence are also being touched by  // anything else. See <a href="Concert.Sequence.html#seek">seek</a> method for details. (Note that regardless of the value  // specified here, the seek method can be called manually at any point with its  //  useSoleControlOptimization parameter set to either true or false.)  <strong>useSoleControlOptimization</strong>: VALUE, // Initial default: true}</code></pre></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2414
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="seek"><span class="type-signature"></span>seek<span class="signature">(time, <span class="optional">useSoleControlOptimization</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Seeks to the specified point along the sequence timeline. If the <code>time</code> value is less than the sequence's start time or greater than the sequence's end time,the resulting behavior will be defined by the sequence's "before" or "after" repeating behavior settings, as controlled by the <a href="Concert.Sequence.html#setBefore">setBefore</a> and<a href="Concert.Sequence.html#setAfter">setAfter</a> methods or by the options passed into the <a href="Concert.Sequence.html#run">run</a>, <a href="Concert.Sequence.html#begin">begin</a>,<a href="Concert.Sequence.html#follow">follow</a>, or <a href="Concert.Sequence.html#syncTo">syncTo</a> methods. The default behavior, if none has explicitly been specified, is<a href="Concert.Repeating.html">Concert.Repeating.None</a>, which seeks to the sequence start time for any <code>time</code> value less than or equal to the sequence'sstart time, and to the end time for any <code>time</code> value greater than or equal to the sequence's end time. The <code>useSoleControlOptimization</code> option,when set to true, enhances run-time performance, but should only be used if nothing other than the Concert sequence will be modifying any target object properties that are modifiedby transformations in the sequence. Essentially it skips updating target object properties any time a newly calculated value is the same as the last one applied, which speeds upseek times especially when doing relatively slow things such as DOM updates, but which will not work if the target object property's value has been changed by something elsesince the last time the sequence object touched it.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>time</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">The intended seek point.</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>useSoleControlOptimization</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">Whether or not the sequence can optimize by assuming sole control over the target objects.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2586
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="setAfter"><span class="type-signature"></span>setAfter<span class="signature">(newAfter)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the behavior of the sequence when asked to seek after its end time. For instance, it may halt, loop, or bounce.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>newAfter</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">One of the functions defined in <a href="Concert.Repeating.html">Concert.Repeating</a>, or a custom function.For any sequence where this is not explicitly set, the "after" behavior defaults to <code>Concert.Repeating.None</code>.Any function passed in here should have a signature of the form <code>function (sequenceStart, sequenceEnd, unadjustedTime)</code> and must returnan object of the form <code>{ adjustedTime: XXX, hitFinalBoundary: YYY }</code>, where <code>XXX</code> is the actual time to use in the seek, and<code>YYY</code> is a boolean value indicating whether this seek will put the sequence at one of its final boundary points. For instance, a loopingbehavior function could take an <code>unadjustedTime</code> value past the end of the sequence and map it to a resulting value somewhere between thesequence start and end times, and if it does not loop infinitely, a high enough input would result in hitting the final boundary beyond which loopingdoes not continue. The <code>hitFinalBoundary</code> property value is what is used to determine whether to automatically call the<a href="Concert.Sequence.html#stop">stop</a> method if running with <code>autoStopAtEnd</code> set to <code>true</code>.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2667
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="setBefore"><span class="type-signature"></span>setBefore<span class="signature">(newBefore)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Sets the behavior of the sequence when asked to seek before its start time. For instance, it may halt, loop, or bounce.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>newBefore</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">One of the functions defined in <a href="Concert.Repeating.html">Concert.Repeating</a>, or a custom function.For any sequence where this is not explicitly set, the "after" behavior defaults to <code>Concert.Repeating.None</code>.Any function passed in here should have a signature of the form <code>function (sequenceStart, sequenceEnd, unadjustedTime)</code> and must returnan object of the form <code>{ adjustedTime: XXX, hitFinalBoundary: YYY }</code>, where <code>XXX</code> is the actual time to use in the seek, and<code>YYY</code> is a boolean value indicating whether this seek will put the sequence at one of its final boundary points. For instance, a loopingbehavior function could take an <code>unadjustedTime</code> value past the end of the sequence and map it to a resulting value somewhere between thesequence start and end times, and if it does not loop infinitely, a high enough input would result in hitting the final boundary beyond which loopingdoes not continue. The <code>hitFinalBoundary</code> property value is what is used to determine whether to automatically call the<a href="Concert.Sequence.html#stop">stop</a> method if running with <code>autoStopAtEnd</code> set to <code>true</code>.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2691
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="setDefaults"><span class="type-signature"></span>setDefaults<span class="signature">(newDefaults)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        When adding transformations to a sequence, several properties have default values and can therefore be left unspecified in the objects passed into the<a href="Concert.Sequence.html#addTransformations">addTransformations</a> method. This can be very helpful in avoiding repetition if most or all of the transformationshave the same values for these properties. This method sets those default values for new transformations added to the sequence.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>newDefaults</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-            
-            
-            
-            <td class="description last">An object with property values setting default options for new transformations. Defined as follows.Any or all of the below options may be specified.<pre><code>newDefaults ={  // --------  // Function; One of the <a href="Concert.Applicators.html">Concert.Applicators</a> functions, or a custom function.  // See <a href="Concert.Applicators.html">Concert.Applicators</a> and <a href="Concert.Sequence.html#addTransformations">addTransformations</a> for more information about the  // meaning of this property and its allowable values.  <strong>applicator</strong>: VALUE, // Initial default value: Concert.Applicators.Property  // --------  // Function; One of the <a href="Concert.Calculators.html">Concert.Calculators</a> functions, or a custom function.  // See <a href="Concert.Calculators.html">Concert.Calculators</a> and <a href="Concert.Sequence.html#addTransformations">addTransformations</a> for more information about the  // meaning of this property and its allowable values.  <strong>calculator</strong>: VALUE, // Initial default value: Concert.Calculators.Linear  // --------  // Function; One of the <a href="Concert.EasingFunctions.html">Concert.EasingFunctions</a> functions, or a custom function.  // See <a href="Concert.EasingFunctions.html">Concert.EasingFunctions</a> and <a href="Concert.Sequence.html#addTransformations">addTransformations</a> for more information about  // the meaning of this property and its allowable values.  <strong>easing</strong>: VALUE, // Initial default value: Concert.EasingFunctions.ConstantRate  // --------  // String; The unit, if there is one, is appended to the end of a calculated value  // before it is applied. Common values would include "px", "%", "em", and so on.  <strong>unit</strong>: VALUE, // Initial default value: null (no unit at all)}</code></pre></td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2715
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="stop"><span class="type-signature"></span>stop<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Stops a currently running sequence. Calling this function, whether explicitly or by setting <code>autoStopAtEnd</code> to <code>true</code>,is recommended when you wish the sequence to stop running or synchronizing, because otherwise the timers which continually update the sequence will continue to run.This may be the desired behavior if the sequence is being synchronized to a value which may continue to change, but in many cases it would be a waste of processorcycles to continue running a completed sequence. (Note that <code>autoStopAtEnd</code> is automatically enabled if the sequence is run using the<a href="Concert.Sequence.html#begin">begin</a> method.)
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2766
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="syncTo"><span class="type-signature"></span>syncTo<span class="signature">(syncSource, <span class="optional">parameters</span>)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Runs a transformation locked to the specified synchronization source and matching its position. This differs from the <a href="Concert.Sequence.html#follow">follow</a> methodin that <a href="Concert.Sequence.html#follow">follow</a> causes the sequence to run exactly in time with the synchronization source and in the same direction, but starting at the currenttimeline position, whereas with <code>syncTo</code> the sequence will first jump to a timeline position matching the current value of the synchronization source and then do the same.This is really just a shortcut method provided for a common usage scenario; it is exactly the same as calling the <a href="Concert.Sequence.html#run">run</a> method with the parameters<code>{ synchronizeTo: syncSource, initialSeek: null, timeOffset: 0, autoStopAtEnd: false }</code>. Note that these parameter values can still be overridden,or any of the other parameters accepted by the <a href="Concert.Sequence.html#run">run</a> method can be specified in the <code>parameters</code> argument passed into this method.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>syncSource</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Varies</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">A synchronization source. Can take any of the following different types of values:<pre>  null: locks sequence to the system clock.  function object: the passed-in function is called every time the polling      interval is reached, and the return value is used as the seek time.      Using a custom function here allows you to synchronize the sequence to      anything you want (for instance, locking it to the current value of a UI      element, such as a slider, or to another Concert.Sequence object.)  html audio or video DOM object: locks the sequence to the currentTime property      of the media element. This allows the sequence to remain synchronized to      the media even when it is paused, scrubbed, or the user skips around.</pre></td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>parameters</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-            
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-                    
-                
-                    
-                
-                </td>
-            
-            
-            
-            
-            <td class="description last">An object with property values setting options for how to run the sequence.See the <a href="Concert.Sequence.html#run">run</a> method for information on allowable properties and values in this object.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Concert.js.html">Concert.js</a>, line 2790
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        </dl>
-    
-    
-    
-    
-    
-</article>
-
-</section>  
-
-
-
-
-</div>
-
-<nav>
-    <a id="HomePageLink" href="http://www.concertjs.com/">Concert.js Home</a>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Concert.Sequence.html">Sequence</a></li></ul><h3>Namespaces</h3><ul><li><a href="Concert.html">Concert</a></li><li><a href="Concert.Applicators.html">Applicators</a></li><li><a href="Concert.Calculators.html">Calculators</a></li><li><a href="Concert.EasingFunctions.html">EasingFunctions</a></li><li><a href="Concert.Repeating.html">Repeating</a></li></ul>
-</nav>
-
-<br clear="both">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Thu Mar 06 2014 13:10:06 GMT-0600 (CST)
-</footer>
-
-<script> prettyPrint(); </script>
-</body>
-</html>

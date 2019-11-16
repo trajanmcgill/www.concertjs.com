@@ -1,4 +1,4 @@
-﻿/// <reference path="~/components/Concert.js/1.0.0/Concert.js" />
+﻿/// <reference path="~/components/Concert.js/Concert.js" />
 /* exported demoSequence */
 
 var demoSequence =

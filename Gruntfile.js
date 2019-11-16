@@ -12,6 +12,7 @@ module.exports = function(grunt)
 		return outputFile;
 	} // end stripMinOrFull()
 
+	let concertPkg = grunt.file.readJSON("node_modules\\concert.js\\package.json"); // get info about the included concert.js package
 
 	// Project configuration.
 	grunt.initConfig(
@@ -30,6 +31,20 @@ module.exports = function(grunt)
 
 				checkSource: { expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js"] }
 			}, // end jshint task definitions
+
+
+			jsdoc:
+			{
+				assemble:
+				{
+					src: ["node_modules/concert.js/dist/Concert.js"],
+					options:
+					{
+						destination: "assembly/Reference/",
+						template: "node_modules/jsdoc/templates/default"
+					}
+				}
+			}, // end jsdoc task definitions
 
 
 			clean:
@@ -102,7 +117,10 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Dev/components/" },
-						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Prod/components/" }
+						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Dev/components/Concert.js/" },
+
+						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Prod/components/" },
+						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Prod/components/Concert.js/" }
 					]
 				},
 
@@ -124,7 +142,7 @@ module.exports = function(grunt)
 					]
 				},
 
-				selectEnvironment:
+				selectEnvironment: // ADD CODE HERE: probably need to exclude the reference docs from this process
 				{
 					files:
 					[
@@ -165,12 +183,12 @@ module.exports = function(grunt)
 				{
 					options:
 					{
-						archive: "assembly/Downloads/Concert.js-1.0.0.zip",
+						archive: "assembly/Downloads/Concert.js-" + concertPkg.version + ".zip",
 						mode: "zip"
 					},
 					files:
 					[
-						{ expand: true, cwd: "components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**", dest: "/" },
 						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" }
 					]
 				},
@@ -179,12 +197,12 @@ module.exports = function(grunt)
 				{
 					options:
 					{
-						archive: "assembly/Downloads/Concert.js-1.0.0.tar",
+						archive: "assembly/Downloads/Concert.js-" + concertPkg.version + ".tar",
 						mode: "tar"
 					},
 					files:
 					[
-						{ expand: true, cwd: "components/Concert.js/1.0.0/", src: "**", dest: "/" },
+						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**", dest: "/" },
 						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" }
 					]
 				},
@@ -205,6 +223,7 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks("grunt-contrib-jshint");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-compress");
+	grunt.loadNpmTasks("grunt-jsdoc");
 	
 
 	// Define tasks
@@ -339,6 +358,7 @@ module.exports = function(grunt)
 			"compress:tar", // build (intermediate) tar download archives
 			"compress:gzip", // build gzip download archives
 			"clean:removeIntermediateTarFiles", // remove all intermediate tar archives
+			"jsdoc:assemble", // build reference documentation
 			"copy:deployAssembledFiles", // copy all assembly files into dev and prod directories
 			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
 			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
