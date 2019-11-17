@@ -116,13 +116,13 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Dev/components/" },
-						{ expand: true, cwd: "node_modules/@trajanmcgill/requestanimationframe/dist/", src: "**/*", dest: "dist/Dev/components/requestAnimationFrame/" },
-						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Dev/components/Concert.js/" },
+						{ expand: true, cwd: "vendor/", src: "**/*", dest: "dist/Dev/Components/" },
+						{ expand: true, cwd: "node_modules/@trajanmcgill/requestanimationframe/dist/", src: "**/*", dest: "dist/Dev/Components/requestAnimationFrame/" },
+						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Dev/Components/Concert.js/" },
 
-						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Prod/components/" },
-						{ expand: true, cwd: "node_modules/@trajanmcgill/requestanimationframe/dist/", src: "**/*", dest: "dist/Prod/components/requestAnimationFrame/" },
-						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Prod/components/Concert.js/" }
+						{ expand: true, cwd: "vendor/", src: "**/*", dest: "dist/Prod/Components/" },
+						{ expand: true, cwd: "node_modules/@trajanmcgill/requestanimationframe/dist/", src: "**/*", dest: "dist/Prod/Components/requestAnimationFrame/" },
+						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Prod/Components/Concert.js/" }
 					]
 				},
 
@@ -366,7 +366,7 @@ module.exports = function(grunt)
 			"copy:deployAssembledFiles", // copy all assembly files into dev and prod directories
 			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
 			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
-			"copy:deployComponents", // copy components directory into dev and prod directories
+			"copy:deployComponents", // copy external components into dev and prod directories
 			"copy:deployDemos", // copy demos directory into dev and prod directories
 			"copy:deployTutorialExamples" // copy tutorial examples directory into dev and prod directories
 		]);
@@ -389,6 +389,6 @@ module.exports = function(grunt)
 -copy all assembly files into dev and prod directories
 -copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
 -clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
--copy components directory into dev and prod directories
+-copy external components into dev and prod directories
 -copy tutorials directory into dev and prod directories
 */

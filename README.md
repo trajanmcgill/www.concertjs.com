@@ -34,7 +34,7 @@ Visit [http://www.concertjs.com/](http://www.concertjs.com/) for information on 
 	1. First, fork this project and then `git clone` from GitHub:
 	2. Next, to get all the dependencies, move inside the newly created project directory and run `npm install`.
 - Folder structure:
-	- `components` directory contains some third-party components included in the web site.
+	- `vendor` directory contains third-party components included in the web site.
 	- `design` directory has some design notes files.
     - `src` directory contains all the source code.
 - Additional folders (not tracked by git):

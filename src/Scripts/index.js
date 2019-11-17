@@ -1,4 +1,4 @@
-﻿/// <reference path="~/components/Concert.js/Concert.js" />
+﻿/// <reference path="~/Components/Concert.js/Concert.js" />
 
 var Index;
 
