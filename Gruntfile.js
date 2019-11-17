@@ -12,7 +12,7 @@ module.exports = function(grunt)
 		return outputFile;
 	} // end stripMinOrFull()
 
-	let concertPkg = grunt.file.readJSON("node_modules\\concert.js\\package.json"); // get info about the included concert.js package
+	let concertPkg = grunt.file.readJSON("node_modules/concert.js/package.json"); // get info about the included concert.js package
 
 	// Project configuration.
 	grunt.initConfig(
