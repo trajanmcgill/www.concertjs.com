@@ -117,9 +117,11 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Dev/components/" },
+						{ expand: true, cwd: "node_modules/@trajanmcgill/requestanimationframe/dist/", src: "**/*", dest: "dist/Dev/components/requestAnimationFrame/" },
 						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Dev/components/Concert.js/" },
 
 						{ expand: true, cwd: "components/", src: "**/*", dest: "dist/Prod/components/" },
+						{ expand: true, cwd: "node_modules/@trajanmcgill/requestanimationframe/dist/", src: "**/*", dest: "dist/Prod/components/requestAnimationFrame/" },
 						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**/*", dest: "dist/Prod/components/Concert.js/" }
 					]
 				},
@@ -189,7 +191,7 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**", dest: "/" },
-						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" },
+						{ expand: true, cwd: "node_modules/@trajanmcgill/requestAnimationFrame/dist/", src: "**", dest: "/" },
 						{ expand: true, cwd: "assembly/Reference/", src: "**", dest: "/Reference/" }
 					]
 				},
@@ -204,7 +206,7 @@ module.exports = function(grunt)
 					files:
 					[
 						{ expand: true, cwd: "node_modules/concert.js/dist/", src: "**", dest: "/" },
-						{ expand: true, cwd: "components/requestAnimationFrame/", src: "**", dest: "/" },
+						{ expand: true, cwd: "node_modules/@trajanmcgill/requestAnimationFrame/dist/", src: "**", dest: "/" },
 						{ expand: true, cwd: "assembly/Reference/", src: "**", dest: "/Reference/" }
 					]
 				},
