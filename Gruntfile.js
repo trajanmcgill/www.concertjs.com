@@ -88,9 +88,24 @@ module.exports = function(grunt)
 				{
 					files:
 					[
-						{ expand: true, cwd: "src/", src: ["**/*.html", "!TutorialExamples/**/*", "!Demos/**/*", "!DocTemplates/**/*", "!**/*.template.html", "!**/*.templateData.html"], dest: "assembly/" },
-						{ expand: true, cwd: "src/", src: ["**/*.js", "!TutorialExamples/**/*", "!Demos/**/*", "!DocTemplates/**/*", "!**/*.template.js", "!**/*.templateData.js"], dest: "assembly/" },
-						{ expand: true, cwd: "src/", src: ["**/*.css", "!TutorialExamples/**/*", "!Demos/**/*", "!DocTemplates/**/*", "!**/*.template.css", "!**/*.templateData.css"], dest: "assembly/" }
+						{
+							expand: true,
+							cwd: "src/",
+							src:
+							[
+								"**/*",
+								"!Demos/**/*",
+								"!DocTemplates/**/*",
+								"!TutorialExamples/**/*",
+								"!**/*.template.html",
+								"!**/*.template.js",
+								"!**/*.template.css",
+								"!**/*.templateData.html",
+								"!**/*.templateData.js",
+								"!**/*.templateData.css"
+							],
+							dest: "assembly/"
+						}
 					]
 				},
 
