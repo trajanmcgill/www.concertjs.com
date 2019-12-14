@@ -331,7 +331,7 @@ module.exports = function(grunt)
 							originalFileContents = grunt.file.read(curFileName),
 							newFileContents;
 
-						grunt.log.writeln("Examining file:" + curFileName);
+						// grunt.log.writeln("Examining file:" + curFileName);
 
 						matchFound = false;
 						newFileContents = originalFileContents.replace(
@@ -341,16 +341,16 @@ module.exports = function(grunt)
 									let target = [p1, p2, p3].find(element => typeof(element) === "string"),
 										matchReplacement = htmlTagWithBuildNumberURL(match, target, cacheBusterVariableName, buildNumber);
 									matchFound = true;
-									grunt.log.writeln("  found entry at position " + offset + ":" + match);
-									grunt.log.writeln("    target=" + target);
-									grunt.log.writeln("    replacement entry=" + matchReplacement);
+									// grunt.log.writeln("  found entry at position " + offset + ":" + match);
+									// grunt.log.writeln("    target=" + target);
+									// grunt.log.writeln("    replacement entry=" + matchReplacement);
 									return matchReplacement;
 								});
 
 						if(matchFound)
 							grunt.file.write(curFileName, newFileContents);
-						else
-							grunt.log.writeln("  No build numbers needed in this file.");
+						// else
+						// 	grunt.log.writeln("  No build numbers needed in this file.");
 					}
 				}) // end forEach loop over all files
 
