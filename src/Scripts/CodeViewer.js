@@ -7,14 +7,14 @@ var CodeViewer = (function ()
 {
 	"use strict";
 
-	var paneLoadStatus =
+	let paneLoadStatus =
 		{
 			html: false,
 			script: false,
 			css: false
 		};
 
-	var fontSizes =
+	let fontSizes =
 		{
 			HTMLView: 12,
 			ScriptView: 12,
@@ -24,7 +24,9 @@ var CodeViewer = (function ()
 
 	function getQueryParams()
 	{
-		var i, assignmentHalves, varName, valueString, paramArray, queryParams = {}, queryText = window.location.search;
+		let i, assignmentHalves, varName, valueString, paramArray,
+			queryParams = {},
+			queryText = window.location.search;
 
 		if (queryText.length > 0)
 			queryText = queryText.substr(1);
@@ -49,7 +51,8 @@ var CodeViewer = (function ()
 
 	function setupPage()
 	{
-		var queryParams = getQueryParams(), url = queryParams.url, preName;
+		const url = getQueryParams().url;
+		let viewName;
 
 		function onLargerClickHandlerCreator(preName)
 		{ return function () { fontSizes[preName]++; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
@@ -57,11 +60,11 @@ var CodeViewer = (function ()
 		function onSmallerClickHandlerCreator(preName)
 		{ return function () { fontSizes[preName]--; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
 
-		for (preName in fontSizes) if (fontSizes.hasOwnProperty(preName))
+		for (viewName in fontSizes) if (fontSizes.hasOwnProperty(viewName))
 		{
-			document.getElementById(preName).style.fontSize = fontSizes[preName] + "px";
-			document.getElementById(preName + "LargerFontButton").onclick = onLargerClickHandlerCreator(preName);
-			document.getElementById(preName + "SmallerFontButton").onclick = onSmallerClickHandlerCreator(preName);
+			document.getElementById(viewName).style.fontSize = fontSizes[viewName] + "px";
+			document.getElementById(viewName + "LargerFontButton").onclick = onLargerClickHandlerCreator(viewName);
+			document.getElementById(viewName + "SmallerFontButton").onclick = onSmallerClickHandlerCreator(viewName);
 		}
 
 		sizeCodePanes();
@@ -77,7 +80,7 @@ var CodeViewer = (function ()
 		if (!window.XMLHttpRequest && "ActiveXObject" in window)
 			window.XMLHttpRequest = function () { return new window.ActiveXObject("MSXML2.XMLHttp"); };
 
-		var request = new XMLHttpRequest();
+		let request = new XMLHttpRequest();
 		request.open("GET", url, true);
 		request.onreadystatechange =
 			(function(capturedURL, capturedRequest, capturedViewContainerName)
@@ -90,9 +93,6 @@ var CodeViewer = (function ()
 
 	function onLoadCodeStateChange(url, request, viewContainerName)
 	{
-		var responseText, styleSheetExp, scriptExp, styleSheetExpResult, scriptExpResult, styleSheetURL, scriptURL,
-			targetViewContainer = document.getElementById(viewContainerName), scriptSearchFinished = false;
-
 		if (request.readyState !== 4)
 			return;
 		if (request.status !== 200 && request.status !== 304)
@@ -101,25 +101,31 @@ var CodeViewer = (function ()
 			return;
 		}
 
-		responseText = request.responseText;
+		const responseText = request.responseText;
+		let scriptURL,
+			targetViewContainer = document.getElementById(viewContainerName);
 
 		if (viewContainerName === "HTMLView")
 		{
-			styleSheetExp = /<link\s+.*?(?:rel="stylesheet"\s+.*?href="([^"]+)")|(?:href="([^"]+)"\s+.*?rel="stylesheet").*?>/i;
-			styleSheetExpResult = styleSheetExp.exec(responseText);
+			const styleSheetExp = /<link\s+.*?(?:rel="stylesheet"\s+.*?href="([^"]+)")|(?:href="([^"]+)"\s+.*?rel="stylesheet").*?>/i,
+				scriptExp = /<script\s+.*?(?:type="text\/javascript"\s+.*?src="([^"]+)")|(?:src="([^"]+)"\s+.*?type="text\/javascript").*?>/gi,
+				requestAnimationFrameUrlExp = /(?:.*\/)*requestanimationframe\.(?:[^\n\r\.\/]*\.)*js(?:#|\?|$)/i,
+				concertUrlExp = /(?:.*\/)*concert\.(?:[^\n\r\.\/]*\.)*js(?:#|\?|$)/i;
+			
+			let styleSheetExpResult = styleSheetExp.exec(responseText);
 			if (styleSheetExpResult)
 			{
-				styleSheetURL = styleSheetExpResult[1] ? styleSheetExpResult[1] : styleSheetExpResult[2];
+				let styleSheetURL = styleSheetExpResult[1] ? styleSheetExpResult[1] : styleSheetExpResult[2];
 				loadCode(styleSheetURL, "CSSView");
 			}
-
-			scriptExp = /<script\s+.*?(?:type="text\/javascript"\s+.*?src="([^"]+)")|(?:src="([^"]+)"\s+.*?type="text\/javascript").*?>/gi;
-			scriptExpResult = scriptExp.exec(responseText);
+			
+			let scriptExpResult = scriptExp.exec(responseText),
+				scriptSearchFinished = false;
 			while (scriptExpResult && !scriptSearchFinished)
 			{
 				scriptURL = scriptExpResult[1] ? scriptExpResult[1] : scriptExpResult[2];
-				if (/requestanimationframe\.(?:.*?\.)?js$/i.test(scriptURL)
-					|| /concert\.(?:.*?\.)?js$/i.test(scriptURL))
+				if (requestAnimationFrameUrlExp.test(scriptURL)
+					|| concertUrlExp.test(scriptURL))
 				{
 					scriptURL = null;
 					scriptExpResult = scriptExp.exec(responseText);
@@ -139,19 +145,21 @@ var CodeViewer = (function ()
 
 		targetViewContainer.innerHTML = document.createElement("pre").appendChild(document.createTextNode(responseText)).parentNode.innerHTML;
 
+		let argLocation = url.indexOf("?"),
+			displayUrl = (argLocation > -1 ? url.substring(0, argLocation) : url);
 		if (viewContainerName === "HTMLView")
 		{
-			document.getElementById("HTMLViewFileName").innerHTML = url;
+			document.getElementById("HTMLViewFileName").innerHTML = displayUrl;
 			paneLoadStatus.html = true;
 		}
 		else if (viewContainerName === "CSSView")
 		{
-			document.getElementById("CSSViewFileName").innerHTML = url;
+			document.getElementById("CSSViewFileName").innerHTML = displayUrl;
 			paneLoadStatus.css = true;
 		}
 		else if (viewContainerName === "ScriptView")
 		{
-			document.getElementById("ScriptViewFileName").innerHTML = url;
+			document.getElementById("ScriptViewFileName").innerHTML = displayUrl;
 			paneLoadStatus.script = true;
 		}
 
@@ -162,7 +170,7 @@ var CodeViewer = (function ()
 
 	function sizeCodePanes()
 	{
-		var i, viewWindowElements = ["PageView", "CodeView1", "CodeView2", "CodeView3"],
+		let i, viewWindowElements = ["PageView", "CodeView1", "CodeView2", "CodeView3"],
 			preElements = ["ScriptView", "HTMLView", "CSSView"],
 			titleHeight = document.getElementById("PageTitle").offsetHeight,
 			newPaneHeight = (typeof window.innerHeight === "undefined") ? 300 : ((window.innerHeight - titleHeight) / 2 - 4),
@@ -179,7 +187,7 @@ var CodeViewer = (function ()
 	} // end sizeCodePanes()
 
 
-	var publicInterface =
+	const publicInterface =
 		{
 			setupPage: setupPage
 		};

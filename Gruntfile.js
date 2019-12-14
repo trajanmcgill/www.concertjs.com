@@ -86,8 +86,10 @@ module.exports = function(grunt)
 			{
 				options:
 				{
-					bitwise: true, browser: true, curly: false, eqeqeq: true, forin: true, immed: true, latedef: "nofunc", laxbreak: true, laxcomma: true, newcap: true,
-					noarg: true, noempty: true, nonew: true, quotmark: "double", smarttabs: true, strict: true, trailing: true, undef: true, unused: true, validthis: true,
+					bitwise: true, browser: true, curly: false, eqeqeq: true, forin: true, immed: true,
+					latedef: "nofunc", laxbreak: true, laxcomma: true, newcap: true, noarg: true, noempty: true,
+					nonew: true, quotmark: "double", smarttabs: true, strict: true, trailing: true, undef: true,
+					unused: true, validthis: true, esversion: 6,
 					globals: { "Concert": false }
 				},
 
@@ -240,6 +242,7 @@ module.exports = function(grunt)
 				allOutputHTML: { expand: true, cwd: "dist", src: "**/*.html" }
 			}, // end addBuildNumbers task definitions
 
+
 			processTemplates:
 			{
 				assembleTemplateResults: { expand: true, cwd: "src", src: ["**/*.templateData.html", "**/*.templateData.css", "**/*.templateData.js", "!DocTemplates/**/*"], dest: "assembly/" }
@@ -252,13 +255,25 @@ module.exports = function(grunt)
 			}, // end cssmin task definitions
 
 
-			uglify:
+			terser:
 			{
-				options: { sequences: false, verbose: true, warnings: true },
+				options:
+				{
+					safari10: true,
+					warnings: "verbose",
+					parse: { ecma: 6 },
+					compress:
+					{
+						sequences: false,
+						typeofs: false,
+						warnings: true
+					},
+					mangle: {},
+					output: { comments: /^!/ }
+				},
 
-				minifyAssembledJS: { options: { screwIE8: false }, expand: true, cwd: "assembly/", src: ["**/*.full.js"], dest: "assembly/", ext: ".min.js" },
-				deminifyAssembledJS: { expand: true, options: { beautify: true }, cwd: "assembly/", src: ["*.min.js"], dest: "assembly/", ext: ".min.max.js" }
-			}, // end uglify task definitions
+				minifyAssembledJS: { expand: true, cwd: "assembly/", src: ["**/*.full.js"], dest: "assembly/", ext: ".min.js" }
+			}, // end terser task definitions
 
 
 			compress:
@@ -307,7 +322,7 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
-	grunt.loadNpmTasks("grunt-contrib-uglify");
+	grunt.loadNpmTasks("grunt-terser");
 	grunt.loadNpmTasks("grunt-contrib-compress");
 	grunt.loadNpmTasks("grunt-jsdoc");
 	
@@ -483,7 +498,7 @@ module.exports = function(grunt)
 			"processTemplates:assembleTemplateResults", // process templates into assembly directory
 			"copy:copyOriginalToFull", // copy all .js and .css files in assembly directory to *.full.js and *.full.css
 			"clean:removeAssembledOriginalJSandCSS", // remove all original .js and css files from assembly directory
-			"uglify:minifyAssembledJS", // minify all .full.js files in assembly directory into .min.js
+			"terser:minifyAssembledJS", // minify all .full.js files in assembly directory into .min.js
 			"cssmin:minifyAssembledCSS", // minify all .full.css files in assembly directory into .min.css
 			"jsdoc:assemble", // build reference documentation
 			"compress:zip", // build zip download archives
