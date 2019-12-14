@@ -1,6 +1,6 @@
 # www.concertjs.com
 - Web site for Concert.js, a Javascript component for easily animating and synchronizing in the browser.
-- The web site is deployed here: [http://www.concertjs.com/](http://www.concertjs.com/)
+- The web site is deployed here: [https://www.concertjs.com/](https://www.concertjs.com/)
 - The GitHub project for Concert.js itself is here: [https://github.com/trajanmcgill/concert.js](https://github.com/trajanmcgill/concert.js)
 
 
@@ -18,7 +18,7 @@
 Concert.js is a JavaScript component for easily defining sequences of changes to CSS styles, DOM objects, or anything else that can be manipulated with JavaScript, and playing these sequences or synchronizing them with media playback, user interaction, or your own components. In short, it animates things, and if you want, it will precisely synchronize those animations with other things.
 
 ### How do I get and use Concert.js?
-Visit [http://www.concertjs.com/](http://www.concertjs.com/) for information on Concert.js itself. The project you are looking at right now is the code for the Concert.js web site.
+Visit [https://www.concertjs.com/](https://www.concertjs.com/) for information on Concert.js itself. The project you are looking at right now is the code for the Concert.js web site.
 
 ## Bug Reports and Suggested Enhancements
 ***

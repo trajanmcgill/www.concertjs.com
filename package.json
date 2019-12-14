@@ -11,7 +11,7 @@
 	"bugs": {
 		"url": "https://github.com/trajanmcgill/www.concertjs.com/issues"
 	},
-	"homepage": "http://www.concertjs.com/",
+	"homepage": "https://www.concertjs.com/",
 	"devDependencies": {
 		"@trajanmcgill/requestanimationframe": "^1.0.1",
 		"concert.js": "^1.0.0-alpha.4",
