@@ -60,7 +60,7 @@ var CodeViewer = (function ()
 		function onSmallerClickHandlerCreator(preName)
 		{ return function () { fontSizes[preName]--; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
 
-		for (viewName in fontSizes) if (fontSizes.hasOwnProperty(viewName))
+		for (viewName in fontSizes) if (Object.prototype.hasOwnProperty.call(fontSizes, viewName))
 		{
 			document.getElementById(viewName).style.fontSize = fontSizes[viewName] + "px";
 			document.getElementById(viewName + "LargerFontButton").onclick = onLargerClickHandlerCreator(viewName);
@@ -109,8 +109,8 @@ var CodeViewer = (function ()
 		{
 			const styleSheetExp = /<link\s+.*?(?:rel="stylesheet"\s+.*?href="([^"]+)")|(?:href="([^"]+)"\s+.*?rel="stylesheet").*?>/i,
 				scriptExp = /<script\s+.*?(?:type="text\/javascript"\s+.*?src="([^"]+)")|(?:src="([^"]+)"\s+.*?type="text\/javascript").*?>/gi,
-				requestAnimationFrameUrlExp = /(?:.*\/)*requestanimationframe\.(?:[^\n\r\.\/]*\.)*js(?:#|\?|$)/i,
-				concertUrlExp = /(?:.*\/)*concert\.(?:[^\n\r\.\/]*\.)*js(?:#|\?|$)/i;
+				requestAnimationFrameUrlExp = /(?:.*\/)*requestanimationframe\.(?:[^\n\r./]*\.)*js(?:#|\?|$)/i,
+				concertUrlExp = /(?:.*\/)*concert\.(?:[^\n\r./]*\.)*js(?:#|\?|$)/i;
 			
 			let styleSheetExpResult = styleSheetExp.exec(responseText);
 			if (styleSheetExpResult)

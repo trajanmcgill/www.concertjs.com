@@ -1,7 +1,5 @@
 ﻿/// <reference path="~/Components/Concert.js/Concert.js" />
 
-var Index;
-
 (function ()
 {
 	"use strict";
@@ -97,8 +95,4 @@ var Index;
 
 			window.setTimeout(function () { scrollToDemoFrame(Math.floor(Math.random() * 4 + 1)); }, 1000);
 		};
-
-	var PublicInterface = {};
-
-	Index = PublicInterface;
 })();

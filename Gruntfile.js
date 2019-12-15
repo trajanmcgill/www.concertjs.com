@@ -82,19 +82,12 @@ module.exports = function(grunt)
 			pkg: grunt.file.readJSON("package.json"),
 
 
-			jshint:
+			eslint:
 			{
-				options:
-				{
-					bitwise: true, browser: true, curly: false, eqeqeq: true, forin: true, immed: true,
-					latedef: "nofunc", laxbreak: true, laxcomma: true, newcap: true, noarg: true, noempty: true,
-					nonew: true, quotmark: "double", smarttabs: true, strict: true, trailing: true, undef: true,
-					unused: true, validthis: true, esversion: 6,
-					globals: { "Concert": false }
-				},
+				options: { configFile: "eslint.json" },
 
 				checkSource: { expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"] }
-			}, // end jshint task definitions
+			}, // end eslint task definitions
 
 
 			jsdoc:
@@ -321,7 +314,7 @@ module.exports = function(grunt)
 	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
-	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-eslint");
 	grunt.loadNpmTasks("grunt-terser");
 	grunt.loadNpmTasks("grunt-contrib-compress");
 	grunt.loadNpmTasks("grunt-jsdoc");
@@ -487,7 +480,7 @@ module.exports = function(grunt)
 		}); // end call to grunt.registerMultiTask("processTemplates"...)
 
 
-	grunt.registerTask("lint_all", ["jshint:checkSource"]);
+	grunt.registerTask("lint_all", ["eslint:checkSource"]);
 
 	grunt.registerTask("clean_all", ["clean:assembly", "clean:www"]);
 
