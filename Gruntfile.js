@@ -84,9 +84,44 @@ module.exports = function(grunt)
 
 			eslint:
 			{
-				options: { configFile: "eslint.json" },
+				projectStandards:
+				{
+					options: { configFile: "eslint.projectStandards.json" },
+					files:
+					[
+						{
+							expand: true,
+							cwd: "src/",
+							src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"]
+						}
+					]
+				},
 
-				checkSource: { expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"] }
+				browserAPIs_src:
+				{
+					options: { configFile: "eslint.browserAPIs.json" },
+					files:
+					[
+						{
+							expand: true,
+							cwd: "src/",
+							src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"]
+						}
+					]
+				},
+
+				browserAPIs_dist:
+				{
+					options: { configFile: "eslint.browserAPIs.json" },
+					files:
+					[
+						{
+							expand: true,
+							cwd: "dist/",
+							src: ["**/*.js"]
+						}
+					]
+				}
 			}, // end eslint task definitions
 
 
@@ -480,12 +515,16 @@ module.exports = function(grunt)
 		}); // end call to grunt.registerMultiTask("processTemplates"...)
 
 
-	grunt.registerTask("lint_all", ["eslint:checkSource"]);
-
 	grunt.registerTask("clean_all", ["clean:assembly", "clean:www"]);
 
+	grunt.registerTask("lint_src_styles", ["eslint:projectStandards"]);
+	grunt.registerTask("lint_src_browserAPIs", ["eslint:browserAPIs_src"]);
+	grunt.registerTask("lint_src", ["lint_src_styles", "lint_src_browserAPIs"]);
+	grunt.registerTask("lint_dist_browserAPIs", ["eslint:browserAPIs_dist"]);
+	grunt.registerTask("lint_dist", ["lint_dist_browserAPIs"]);
+
 	grunt.registerTask(
-		"build_www",
+		"build_all",
 		[
 			"copy:assembleNonTemplatedSourceFiles", // copy non-templated source files into assembly directory, excluding demo and tutorial files
 			"processTemplates:assembleTemplateResults", // process templates into assembly directory
@@ -507,11 +546,9 @@ module.exports = function(grunt)
 			"addBuildNumbers:allOutputHTML" // add a build number url parameter to all src and href parameters in all the finished html files, for browser cache-busting purposes
 		]);
 
-	grunt.registerTask("build_all", ["build_www"]);
-
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
 
-	grunt.registerTask("default", ["lint_all", "rebuild_all"]);
+	grunt.registerTask("default", ["lint_src", "rebuild_all", "lint_dist"]);
 };
 
 /*

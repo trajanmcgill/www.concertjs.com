@@ -1,0 +1,15 @@
+{
+	"env":
+	{
+		"browser": true,
+		"es6": true
+    },
+
+	"plugins": ["compat"],
+
+	"globals": { "Concert": "readonly" },
+
+	"rules": { "compat/compat": "error" },
+
+	"settings": { "polyfills": ["window.cancelAnimationFrame", "window.requestAnimationFrame"] }
+}

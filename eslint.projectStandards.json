@@ -1,21 +1,15 @@
 {
 	"env":
 	{
-        "browser": true,
-        "es6": true
+		"browser": true,
+		"es6": true
     },
 	
 	"extends": "eslint:recommended",
 	
-	"globals":
-	{
-		"Concert": "readonly"
-	},
+	"globals": { "Concert": "readonly" },
 	
-	"parserOptions":
-	{
-        "ecmaVersion": 2018
-    },
+	"parserOptions": { "ecmaVersion": 2018 },
 	
 	"rules":
 	{
