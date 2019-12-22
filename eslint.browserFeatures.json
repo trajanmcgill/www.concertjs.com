@@ -1,0 +1,11 @@
+{
+	"root": true,
+	"plugins": ["ecmascript-compat"],
+	"parserOptions": { "ecmaVersion": 2020 },
+	"env":
+	{
+		"browser": true,
+		"es2020": true
+    },
+	"rules": { "ecmascript-compat/compat": "error" }
+}

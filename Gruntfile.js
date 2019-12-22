@@ -100,27 +100,25 @@ module.exports = function(grunt)
 				browserAPIs_src:
 				{
 					options: { configFile: "eslint.browserAPIs.json" },
-					files:
-					[
-						{
-							expand: true,
-							cwd: "src/",
-							src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"]
-						}
-					]
+					files: [{ expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"] }]
 				},
 
 				browserAPIs_dist:
 				{
 					options: { configFile: "eslint.browserAPIs.json" },
-					files:
-					[
-						{
-							expand: true,
-							cwd: "dist/",
-							src: ["**/*.js"]
-						}
-					]
+					files: [{ expand: true, cwd: "dist/", src: ["**/*.js"] }]
+				},
+
+				browserFeatures_src:
+				{
+					options: { configFile: "eslint.browserFeatures.json" },
+					files: [{ expand: true, cwd: "src/", src: ["**/*.js", "!**/*.template.js", "!DocTemplates/**/*"] }]
+				},
+
+				browserFeatures_dist:
+				{
+					options: { configFile: "eslint.browserFeatures.json" },
+					files: [{ expand: true, cwd: "dist/", src: ["**/*.js"] }]
 				}
 			}, // end eslint task definitions
 
@@ -519,9 +517,11 @@ module.exports = function(grunt)
 
 	grunt.registerTask("lint_src_styles", ["eslint:projectStandards"]);
 	grunt.registerTask("lint_src_browserAPIs", ["eslint:browserAPIs_src"]);
-	grunt.registerTask("lint_src", ["lint_src_styles", "lint_src_browserAPIs"]);
+	grunt.registerTask("lint_src_browserFeatures", ["eslint:browserFeatures_src"]);
+	grunt.registerTask("lint_src", ["lint_src_styles", "lint_src_browserAPIs", "lint_src_browserFeatures"]);
+	grunt.registerTask("lint_dist_browserFeatures", ["eslint:browserFeatures_dist"]);
 	grunt.registerTask("lint_dist_browserAPIs", ["eslint:browserAPIs_dist"]);
-	grunt.registerTask("lint_dist", ["lint_dist_browserAPIs"]);
+	grunt.registerTask("lint_dist", ["lint_dist_browserAPIs", "lint_dist_browserFeatures"]);
 
 	grunt.registerTask(
 		"build_all",

@@ -1,15 +1,13 @@
 {
+	"root": true,
+	"plugins": ["compat"],
+	"parserOptions": { "ecmaVersion": 2020 },
 	"env":
 	{
 		"browser": true,
-		"es6": true
+		"es2020": true
     },
-
-	"plugins": ["compat"],
-
 	"globals": { "Concert": "readonly" },
-
 	"rules": { "compat/compat": "error" },
-
 	"settings": { "polyfills": ["window.cancelAnimationFrame", "window.requestAnimationFrame"] }
 }
