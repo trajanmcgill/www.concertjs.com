@@ -27,7 +27,7 @@ var demoSequence =
 			{
 				targets: [document.getElementById("RearTireDiv"), document.getElementById("FrontTireDiv")],
 				feature: ["background-position", "background-position"],
-				userProperties: { multiply: -1 * wheelSpriteWidth, round: wheelSpriteWidth, modulo: wheelSpriteWidth * wheelFramesPerRotation },
+				calculatorModifiers: { multiply: -1 * wheelSpriteWidth, round: wheelSpriteWidth, modulo: wheelSpriteWidth * wheelFramesPerRotation },
 				keyframes: { times: [0, totalSequenceTime], values: [[0, 0], [finalWheelFrame, finalWheelFrame]] }
 			},
 
@@ -35,7 +35,7 @@ var demoSequence =
 			{
 				target: document.getElementById("Lights"),
 				feature: "background-position",
-				userProperties: { multiply: -1 * lightsSpriteWidth, round: lightsSpriteWidth, modulo: lightsSpriteWidth * 2 },
+				calculatorModifiers: { multiply: -1 * lightsSpriteWidth, round: lightsSpriteWidth, modulo: lightsSpriteWidth * 2 },
 				easing: Concert.EasingFunctions.ConstantRate,
 				keyframes: { times: [0, totalSequenceTime], values: [0, finalLightsFrame] }
 			},
@@ -45,7 +45,7 @@ var demoSequence =
 				target: document.getElementById("Road"),
 				feature: "background-position",
 				unit: "px",
-				userProperties: { modulo: roadRepeatLength },
+				calculatorModifiers: { modulo: roadRepeatLength },
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * roadSpeed] }
 			},
 
@@ -53,7 +53,7 @@ var demoSequence =
 			{
 				target: document.getElementById("City"),
 				feature: "background-position",
-				userProperties: { modulo: skylineRepeatLength },
+				calculatorModifiers: { modulo: skylineRepeatLength },
 				keyframes: { times: [0, totalSequenceTime], values: [0, -1 * totalDistance * skylineSpeed] }
 			},
 
