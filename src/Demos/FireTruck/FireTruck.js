@@ -4,6 +4,7 @@ var demoSequence =
 {
 	"use strict";
 
+	// Set up values and parameters needed for this demo animation.
 	const wheelSpriteWidth = 45, wheelFramesPerRotation = 60,
 		wheelCircumference = Math.PI * wheelSpriteWidth,
 		totalWheelRotations = 57,
@@ -69,5 +70,8 @@ var demoSequence =
 
 	document.getElementById("GoButton").onclick = function () { mainSequence.begin({ after: Concert.Repeating.Loop(animationLoopCount) }); };
 
+	// There isn't actually any need in this case to return the sequence object and set (as we do above)
+	// a global (window) variable to it. We just do this here so that if the user of this demo wants to
+	// open a console and play with the sequence object, it will be globally available within its frame.
 	return mainSequence;
 })();
