@@ -12,8 +12,8 @@ var demoSequence =
 		var i, j, star, startLeft, startTop,
 			background = document.getElementById("Background"),
 			backgroundRect = background.getBoundingClientRect(),
-			maxLeft = backgroundRect.right - backgroundRect.left,
-			maxTop = backgroundRect.bottom - backgroundRect.top,
+			maxLeft = backgroundRect.right - backgroundRect.left - 1,
+			maxTop = backgroundRect.bottom - backgroundRect.top - 1,
 			times, values, transformationSet = [],
 			sequence = new Concert.Sequence();
 
