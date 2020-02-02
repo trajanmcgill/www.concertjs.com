@@ -7,14 +7,14 @@ var CodeViewer = (function ()
 {
 	"use strict";
 
-	let paneLoadStatus =
+	const paneLoadStatus =
 		{
 			html: false,
 			script: false,
 			css: false
 		};
 
-	let fontSizes =
+	const fontSizes =
 		{
 			HTMLView: 12,
 			ScriptView: 12,
@@ -24,19 +24,17 @@ var CodeViewer = (function ()
 
 	function getQueryParams()
 	{
-		let i, assignmentHalves, varName, valueString, paramArray,
-			queryParams = {},
-			queryText = window.location.search;
-
+		let queryText = window.location.search;
 		if (queryText.length > 0)
 			queryText = queryText.substr(1);
 
-		paramArray = queryText.split("&");
-		for (i = 0; i < paramArray.length; i++)
+		let queryParams = {}, paramArray = queryText.split("&");
+		for (let i = 0; i < paramArray.length; i++)
 		{
-			assignmentHalves = paramArray[i].split("=");
-			varName = assignmentHalves[0];
-			valueString = decodeURIComponent(assignmentHalves[1]);
+			let assignmentHalves = paramArray[i].split("="),
+				varName = assignmentHalves[0],
+				valueString = decodeURIComponent(assignmentHalves[1]);
+			
 			if (typeof queryParams[varName] === "undefined")
 				queryParams[varName] = valueString;
 			else if (typeof queryParams[varName] === "string")
@@ -52,7 +50,6 @@ var CodeViewer = (function ()
 	function setupPage()
 	{
 		const url = getQueryParams().url;
-		let viewName;
 
 		function onLargerClickHandlerCreator(preName)
 		{ return function () { fontSizes[preName]++; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
@@ -60,7 +57,7 @@ var CodeViewer = (function ()
 		function onSmallerClickHandlerCreator(preName)
 		{ return function () { fontSizes[preName]--; document.getElementById(preName).style.fontSize = fontSizes[preName] + "px"; }; }
 
-		for (viewName in fontSizes) if (Object.prototype.hasOwnProperty.call(fontSizes, viewName))
+		for (let viewName in fontSizes) if (Object.prototype.hasOwnProperty.call(fontSizes, viewName))
 		{
 			document.getElementById(viewName).style.fontSize = fontSizes[viewName] + "px";
 			document.getElementById(viewName + "LargerFontButton").onclick = onLargerClickHandlerCreator(viewName);
@@ -102,8 +99,6 @@ var CodeViewer = (function ()
 		}
 
 		const responseText = request.responseText;
-		let scriptURL,
-			targetViewContainer = document.getElementById(viewContainerName);
 
 		if (viewContainerName === "HTMLView")
 		{
@@ -112,6 +107,8 @@ var CodeViewer = (function ()
 				requestAnimationFrameUrlExp = /(?:.*\/)*requestanimationframe\.(?:[^\n\r./]*\.)*js(?:#|\?|$)/i,
 				concertUrlExp = /(?:.*\/)*concert\.(?:[^\n\r./]*\.)*js(?:#|\?|$)/i;
 			
+			let scriptURL = null;
+
 			let styleSheetExpResult = styleSheetExp.exec(responseText);
 			if (styleSheetExpResult)
 			{
@@ -141,8 +138,9 @@ var CodeViewer = (function ()
 				document.getElementById("ScriptView").innerHTML = "";
 				paneLoadStatus.script = true;
 			}
-		}
+		} // end if (viewContainerName === "HTMLView")
 
+		let targetViewContainer = document.getElementById(viewContainerName);
 		targetViewContainer.innerHTML = document.createElement("pre").appendChild(document.createTextNode(responseText)).parentNode.innerHTML;
 
 		let argLocation = url.indexOf("?"),

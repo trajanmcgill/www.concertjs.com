@@ -2,7 +2,7 @@
 {
 	"use strict";
 
-	var sequence = new Concert.Sequence();
+	let sequence = new Concert.Sequence();
 
 	sequence.addTransformations(
 		{
