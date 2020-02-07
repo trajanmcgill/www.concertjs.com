@@ -1,0 +1,36 @@
+body
+{
+	color: #d7ba7d;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#BackgroundArea
+{
+	position: relative;
+	width: 300px;
+	height: 100px;
+	background-color: gray;
+}
+
+#Box1
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 35px;
+	height: 35px;
+	background-color: yellow;
+	font-weight: bold;
+	font-size: 20px;
+	color: black;
+}

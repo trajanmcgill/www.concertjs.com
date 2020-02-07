@@ -1,16 +1,52 @@
 ﻿<template:targetDef target="tutorial01.html" template="ConcertJSPage.template.html"></template:targetDef>
 <template:targetDef target="tutorial02.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial03.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial04.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial05.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial06.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial07.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial08.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial09.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial10.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial11.html" template="ConcertJSPage.template.html"></template:targetDef>
 
 <template:data target="tutorial01.html" section="HeadContent">
 <template:data target="tutorial02.html" section="HeadContent">
-		<link rel="stylesheet" type="text/css" href="Styles/tutorial.css" />
+<template:data target="tutorial03.html" section="HeadContent">
+<template:data target="tutorial04.html" section="HeadContent">
+<template:data target="tutorial05.html" section="HeadContent">
+<template:data target="tutorial06.html" section="HeadContent">
+<template:data target="tutorial07.html" section="HeadContent">
+<template:data target="tutorial08.html" section="HeadContent">
+<template:data target="tutorial09.html" section="HeadContent">
+<template:data target="tutorial10.html" section="HeadContent">
+<template:data target="tutorial11.html" section="HeadContent">
+	<link rel="stylesheet" type="text/css" href="Styles/tutorial.css" />
 
 	<script type="text/javascript" src="Scripts/tutorial.js"></script>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
 </template:data>
 </template:data>
 
 <template:data target="tutorial01.html" section="DescriptionAreaContent">
 <template:data target="tutorial02.html" section="DescriptionAreaContent">
+<template:data target="tutorial03.html" section="DescriptionAreaContent">
+<template:data target="tutorial04.html" section="DescriptionAreaContent">
+<template:data target="tutorial05.html" section="DescriptionAreaContent">
+<template:data target="tutorial06.html" section="DescriptionAreaContent">
+<template:data target="tutorial07.html" section="DescriptionAreaContent">
+<template:data target="tutorial08.html" section="DescriptionAreaContent">
+<template:data target="tutorial09.html" section="DescriptionAreaContent">
+<template:data target="tutorial10.html" section="DescriptionAreaContent">
+<template:data target="tutorial11.html" section="DescriptionAreaContent">
 	<h3>Getting Started With Concert.js</h3>
 	<div>
 		The below series of examples teaches the concepts and usage of Concert.js
@@ -19,19 +55,21 @@
 
 		See the <a href="Reference/index.html">reference documentation</a> for all the details
 		of everything mentioned here and more.
-
-		<!--
-		Other sources of information you may find helpful are the
-		<a href="Reference/index.html">reference documentation</a>, useful for
-		looking up details of everything mentioned here, and the
-		<a href="forums.html">Concert.js forums</a>, if you have questions these
-		two pages do not answer.
-		-->
 	</div>
 </template:data>
 </template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
+</template:data>
 
-
+<!-- ================================================================= -->
+<!-- TUTORIAL 01 -->
 <template:data target="tutorial01.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -65,6 +103,7 @@
 				Anything we do with Concert.js will involve creating and working with a <code>Sequence</code> object.
 			</p>
 		</div>
+
 		<div class="TutorialStep">
 			<h4>What does a simple Concert.js animation look like?</h4>
 			<div class="TutorialSingleDemoContainer">
@@ -124,11 +163,213 @@ sequence.begin();
 		</div>
 
 		<div class="TutorialStep">
-			<h4>What is the next thing?</h4>
+
+			<h4>How about a sequence with more than one transformation?</h4>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page01Example02.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page01Example02.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>let sequence = new Concert.Sequence(),
+  box1 = document.getElementById("Box1");
+				
+let box1Transformations = 
+  [
+    {
+      target: box1,
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+	  keyframes:
+      {
+		times: [0, 1000], values: [0, 265]
+      }
+	},
+	
+    {
+      target: box1,
+      feature: "top",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+	  keyframes:
+      {
+		times: [0, 1000], values: [0, 65]
+      }
+    }
+  ];
+
+sequence.addTransformations(box1Transformations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				As can be seen above, <code>addTransformations()</code> can take an entire array of transformation objects.
+				Here we transform two different features (the top and left style properties of the target object),
+				each one having its own independent movement.
+				Note that the same could have been accomplished by calling <code>addTransformations()</code> once with each transformation object.
+			</p>
+			<p>
+				<strong>Shortcut:</strong>
+				Multiple target features can be specified together in an array. This requires passing arrays of values as well.
+				For instance, the below code would work exactly the same as the above, but is much more concise.
+				Note that the value at time zero (as well as at time 1000) is an array.
+				The first value is paired with the first feature ("left"), and the second value is paired with the second feature ("top").
+			</p>
+			<p><pre><code>let sequence = new Concert.Sequence(),
+  box1 = document.getElementById("Box1");
+				
+let box1Transformations = 
+  {
+    target: box1,
+    feature: ["left", "top"],
+    unit: "px",
+    applicator: Concert.Applicators.Style,
+    keyframes:
+    {
+      times: [0, 1000], values: [[0, 0], [265, 65]]
+    }
+  };
+
+sequence.addTransformations(box1Transformations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre></p>
 		</div>
+
+		<div class="TutorialStep">
+			<h4>What about gaps in motion?</h4>
+			<p>
+				Normally, values are interpolated in between keyframes.
+				If the goal instead is to have one animation segment, then a period of time with no animation, then another animation segment,
+				that is possible as well. Watch how the two boxes behave differently:
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page01Example03.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page01Example03.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>let sequence = new Concert.Sequence(),
+  box1 = document.getElementById("Box1"),
+  box2 = document.getElementById("Box2");
+
+let boxTransformations = 
+  [
+    {
+      target: box1,
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      keyframes: { times: [0, 750, 1500, 2250], values: [0, 90, 180, 270] }
+    },
+
+    {
+      target: box2,
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      keyframes: { times: [0, 750, null, 1500, 2250], values: [0, 90, null, 180, 270] }
+    }
+  ];
+
+sequence.addTransformations(boxTransformations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				Inserting a null in between keyframes has the effect of breaking the animation into separate segments.
+				In the example above, the first box has continuous value interpolation between every keyframe and the one after it.
+				The second box is animated continuously from time 0 to time 750, but then no new values are calculated and applied
+				until hitting time 1500, at which point another animation segment begins.
+				Do note that the <code>times</code> and <code>values</code> arrays do need to be the same length,
+				and any nulls in one need to match nulls in the other.
+			</p>
+			<p>
+				If you want a lot of discontinous segments, however, you may wish to look at an alternate method of describing transformations:
+			</p>
+		</div>
+
+		<div class="TutorialStep">
+			<h4>Specifying Segments Rather Than Keyframes</h4>
+			<p>
+				For some purposes, it is more useful to think of animations as a series of segments,
+				rather than as a continuous series of keyframes and corresponding values.
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page01Example04.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page01Example04.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>let sequence = new Concert.Sequence(),
+  box1 = document.getElementById("Box1");
+	
+let boxTransformations = 
+  [
+    {
+      target: box1,
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      segments:
+        [
+          { t0: 0, t1: 1000, v0: 0, v1: 270 },
+          { t0: 3000, t1: 4000, v0: 270, v1: 0 }
+        ]
+	},
+
+    {
+      target: box1,
+      feature: "top",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      keyframes: { times: [1000, 2000, 3000], values: [0, 70, 0] }
+    }
+  ];
+
+sequence.addTransformations(boxTransformations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				The first object in the <code>boxTransformations</code> array above uses a new notation.
+				Instead of using <code>keyframes</code>, it specifies <code>segments</code>.
+				Each segment object in the array represents one single start and end point of animation.
+				It contains two properties corresponding to start and end times, <code>t0</code> and <code>t1</code>, respectively;
+				and it contains two properties corresponding to start and end values, <code>v0</code> and <code>v1</code>, respectively.
+				As demonstrated above, it is perfectly fine to mix segment notation and keyframe notation in the same sequence.
+			</p>
+			<p>
+				One handy feature of segment notation is that various additional properties can be specified at the segment level,
+				allowing each segment to have different characteristics, such as using different easing functions.
+				(Easing functions are covered in the next step of this tutorial.)
+			</p>
+			<p>
+				Whether you use keyframe or segment notation makes no difference in how the animation runs.
+				Choosing one or the other is mainly a function of which one is easier for the task at hand.
+				This choice can be especially useful when programmatically generating animations, where objects and arrays are being assembled by code,
+				and one of these notations may fit better than the other for any given application.
+			</p>
+			<p>
+				Note: Whether using keyframe or segment notation, do not try to add overlapping segments applying to the same object feature.
+				For instance, consider an animation in which you've added a segment causing an element's "left" property to increase
+				from 0 to 100 between time 0 and time 1000. Adding a second segment (whether by keyframe or segment notation) that differently
+				adjusts the same element's "left" property between, say, time 500 and time 1500 does not make sense and results in undefined behavior.
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial02.html">Next: 02 - Easing Functions</a>
+		</p>
 	</div>
 </template:data>
 
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 02 -->
 <template:data target="tutorial02.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -148,6 +389,267 @@ sequence.begin();
 		</div>
 		<div class="TutorialIntroSection">
 			Tutorial page #2
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 03 -->
+<template:data target="tutorial03.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><strong>Calculators</strong></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #3
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 04 -->
+<template:data target="tutorial04.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><strong>Applicators</strong></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #4
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 05 -->
+<template:data target="tutorial05.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><strong>Setting Defaults</strong></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #5
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 06 -->
+<template:data target="tutorial06.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><strong>Starting, Stopping, and Seeking</strong></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #6
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 07 -->
+<template:data target="tutorial07.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><strong>Synchronizing</strong></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #7
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 08 -->
+<template:data target="tutorial08.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><strong>Repeating</strong></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #8
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 09 -->
+<template:data target="tutorial09.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><strong>Custom Easing Functions, Calculators, and Applicators</strong></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #9
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 10 -->
+<template:data target="tutorial10.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><strong>Cloning and Retargeting</strong></li>
+				<li><a href="tutorial11.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #10
+		</div>
+		<div class="TutorialStep">
+			Here is where the instructions go.
+		</div>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 11 -->
+<template:data target="tutorial11.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial07.html">Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
+				<li><a href="tutorial10.html">Cloning and Retargeting</a></li>
+				<li><strong>Indexing, Value Generator Functions</strong></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			Tutorial page #11
 		</div>
 		<div class="TutorialStep">
 			Here is where the instructions go.

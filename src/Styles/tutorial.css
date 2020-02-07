@@ -7,7 +7,13 @@
 h4
 {
 	border-top: 1px solid black;
+	padding-top: 10px;
 	margin-bottom: 10px;
+}
+
+pre
+{
+	background-color: #aaaaaa;
 }
 
 div.TutorialStep:first-child h4
@@ -47,7 +53,6 @@ div.TutorialStep:first-child h4
 
 .TutorialSingleDemoContainer
 {
-	float: right;
 	width: 482px;
 	border: 1px solid #d7ba7d;
 }
@@ -55,4 +60,18 @@ div.TutorialStep:first-child h4
 .TutorialDemoFrameCaption
 {
 	font-size: 13px;
+}
+
+.PreviousTutorialLink
+{
+	display: inline-block;
+	width: 49%;
+	text-align: left;
+}
+
+.NextTutorialLink
+{
+	display: inline-block;
+	width: 50%;
+	text-align: right;
 }
