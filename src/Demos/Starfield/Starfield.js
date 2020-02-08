@@ -6,10 +6,10 @@ var demoSequence =
 	"use strict";
 
 	// Set up the parameters for this demo animation.
-	const StarCount = 650, MovementSegmentCount = 10, SegmentDurationMS = 2000,
+	const StarCount = 650, MovementSegmentCount = 10, TotalDurationMS = 20000,
 		EasingToUse = Concert.EasingFunctions.QuadInOut;
 
-	function buildAnimation(containingDiv, numStars, numSegmentsPerStar, segmentDuration, easingFunction)
+	function buildAnimation(containingDiv, numStars, numSegmentsPerStar, totalDuration, easingFunction)
 	{
 		const backgroundRect = containingDiv.getBoundingClientRect(),
 			maxLeft = backgroundRect.right - backgroundRect.left - 1, // right-most left-position that remains inside the background area
@@ -37,7 +37,7 @@ var demoSequence =
 			while(keyframeTimes.length < numSegmentsPerStar + 1)
 			{
 				// Choose a random moment within the timeline
-				let newRandomTime = Math.floor(Math.random() * (MovementSegmentCount * SegmentDurationMS + 1));
+				let newRandomTime = Math.floor(Math.random() * (totalDuration + 1));
 				
 				// But make sure it is unique before adding it as a keyframe time,
 				// since specifying different values for the same keyframe time doesn't make sense.
@@ -82,7 +82,7 @@ var demoSequence =
 	// Call the above function to build an animation.
 	let mainSequence = buildAnimation(
 			document.getElementById("Background"),
-			StarCount, MovementSegmentCount, SegmentDurationMS, EasingToUse);
+			StarCount, MovementSegmentCount, TotalDurationMS, EasingToUse);
 
 	// Wire the "Go" button to the sequence's begin() method.
 	document.getElementById("GoButton").onclick = function () { mainSequence.begin(); };
