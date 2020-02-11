@@ -1,0 +1,44 @@
+html, body
+{
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border-width: 0 0 0 0;
+}
+
+body
+{
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+#Everything
+{
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 800px;
+	height: 380px;
+	color: #eeeeee;
+	background-color: black;
+	display: grid;
+	grid-template-columns: 200px 400px 200px;
+	padding-top: 20px;
+}
+
+video
+{
+	width: 320px;
+	height: 180px;
+}
+
+button
+{
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 1000;
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
