@@ -6,13 +6,9 @@ var demoSequence =
 	"use strict";
 
 	// Set up the parameters for this demo animation.
-	const lyricsTiming =
-		[
-			0, 5683, 6283, 8267, 8600, 8917, 10933, 11583, 12883, 13250, 13600,
-			16183, 16833, 18133, 18483, 18833, 21333, 21683, 22017, 23683, 24317,
-			24633, 26450
-		];
-	// ADD CODE HERE;
+	const beatTiming = [1267, 1883, 2533, 3183, 3800, 4450, 5033, 5717, 6333, 6983, 7583, 8283, 8917, 9583, 10200, 10933, 11583, 12300, 12867, 13617, 14233, 14900, 15517, 16200, 16850, 17533, 18150, 18850, 19483, 20150, 20750, 21417, 22050, 22750, 23333, 24000, 24650, 25267, 25967];
+	const clapTiming = [1267, 1417, 1883, 2533, 2683, 3183, 3800, 3950, 4450, 5033, 5217, 5717, 6333, 6483, 6983, 7583, 7767, 8283, 8917, 9100, 9583, 10200, 10417, 10933, 11583, 11750, 12300, 12867, 13033, 13617, 14233, 14400, 14900, 15517, 15683, 16200, 16850, 17017, 17533, 18150, 18317, 18850, 19483, 19650, 20150, 20750, 20917, 21417, 22050, 22233, 22750, 23333, 24000, 24650, 25267, 25600, 25967];
+	const lyricsTiming = [0, 5683, 6283, 8267, 8600, 8917, 10933, 11583, 12883, 13250, 13600, 16183, 16833, 18133, 18483, 18833, 21333, 21683, 22017, 23683, 24317, 24633, 26450];
 
 	// extractWordPositions: Run a depth-first search on the tree below (and including) the passed-in HTML node,
 	// returning an array of all the nodes and start and end positions of all the words within the text nodes in that node tree.
@@ -76,7 +72,7 @@ var demoSequence =
 	} // end selectionApplicator()
 
 
-	function getLyricsSelectionTransformation()
+	function getLyricsSelectionTransformations()
 	{
 		const textArea = document.getElementById("TextArea"),
 			wordPositions = extractWordPositions(textArea);
@@ -107,18 +103,59 @@ var demoSequence =
 				}
 			};
 		
-		return transformation;
-	} // end getLyricsSelectionTransformation()
+		return [transformation];
+	} // end getLyricsSelectionTransformations()
+
+
+	function getConductorTransformations()
+	{
+		let beatPositions = [[80, 140], [160, 80], [0, 80], [80, 0]],
+			animationTimes = [beatTiming[0] - (beatTiming[1] - beatTiming[0])],
+			movementValues = [beatPositions[3]],
+			textValues = ["0"];
+		
+		for(let i = 0; i < beatTiming.length; i++)
+		{
+			let beatNumber = i % beatPositions.length;
+			animationTimes.push(beatTiming[i]);
+			movementValues.push(beatPositions[beatNumber]);
+			textValues.push((beatNumber + 1).toString());
+		}
+
+		let movementTransformation =
+			{
+				target: document.getElementById("Conductor"),
+				feature: ["left", "top"],
+				unit: "px",
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Linear,
+				easing: Concert.EasingFunctions.QuadIn,
+				keyframes: { times: animationTimes, values: movementValues }
+			};
+		
+		let textTransformation =
+		{
+			target: document.getElementById("Conductor"),
+			feature: ["innerHTML"],
+			unit: null,
+			applicator: Concert.Applicators.Property,
+			calculator: Concert.Calculators.Discrete,
+			easing: Concert.EasingFunctions.ConstantRate,
+			keyframes: { times: animationTimes, values: textValues }
+		};
+	
+		return [movementTransformation, textTransformation];
+	} // end getConductorTransformations()
 
 
 	function buildAnimation()
 	{
 		const video = document.getElementById("MusicVideo");
 
-		let transformationSet = [];
+		let transformationSet =
+			getLyricsSelectionTransformations()
+			.concat(getConductorTransformations());
 
-		transformationSet.push(getLyricsSelectionTransformation());
-		
 		// Create a sequence object. This is the basic object used for everything.
 		let sequence = new Concert.Sequence();
 		
