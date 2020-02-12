@@ -59,7 +59,7 @@ var demoSequence =
 	} // end extractWordPositions()
 
 
-	function selectionApplicator(target, feature, value, unit)
+	function selectionApplicator(target, feature, value)
 	{
 		let selection = window.getSelection(),
 			range = document.createRange();
@@ -130,7 +130,7 @@ var demoSequence =
 
 		video.onplay = function() { sequence.syncTo(video); };
 		video.onpause = video.onended = function() { sequence.stop(); };
-		video.onseeked = function() { sequence.seek(video.currentTime); }; // CHANGE CODE HERE: this isn't working for some reason. Fix it.
+		video.onseeked = function() { sequence.seek(video.currentTime * 1000); };
 
 		return sequence;
 	} // end buildAnimation()
@@ -145,5 +145,5 @@ var demoSequence =
 	// There isn't actually any need in this case to return the sequence object and set (as we do above)
 	// a global (window) variable to it. We just do this here so that if the user of this demo wants to
 	// open a console and play with the sequence object, it will be globally available within its frame.
-	//return mainSequence;
+	return mainSequence;
 })();
