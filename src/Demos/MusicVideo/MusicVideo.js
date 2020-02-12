@@ -72,7 +72,7 @@ var demoSequence =
 	} // end selectionApplicator()
 
 
-	function getLyricsSelectionTransformations()
+	function getLyricsTransformations()
 	{
 		const textArea = document.getElementById("TextArea"),
 			wordPositions = extractWordPositions(textArea);
@@ -88,7 +88,7 @@ var demoSequence =
 		}
 		selectionAnimationValues.push({ start: null, end: null });
 
-		let transformation =
+		let lyricsTransformations =
 			{
 				target: null,
 				feature: null,
@@ -103,13 +103,13 @@ var demoSequence =
 				}
 			};
 		
-		return [transformation];
-	} // end getLyricsSelectionTransformations()
+		return [lyricsTransformations];
+	} // end getLyricsTransformations()
 
 
-	function getConductorTransformations()
+	function getBeatTransformations()
 	{
-		let beatPositions = [[80, 140], [160, 80], [0, 80], [80, 0]],
+		let beatPositions = [[100, 140], [200, 80], [0, 80], [100, 0]],
 			animationTimes = [beatTiming[0] - (beatTiming[1] - beatTiming[0])],
 			movementValues = [beatPositions[3]],
 			textValues = ["0"];
@@ -122,7 +122,7 @@ var demoSequence =
 			textValues.push((beatNumber + 1).toString());
 		}
 
-		let movementTransformation =
+		let movementTransformations =
 			{
 				target: document.getElementById("Conductor"),
 				feature: ["left", "top"],
@@ -133,7 +133,7 @@ var demoSequence =
 				keyframes: { times: animationTimes, values: movementValues }
 			};
 		
-		let textTransformation =
+		let textTransformations =
 		{
 			target: document.getElementById("Conductor"),
 			feature: ["innerHTML"],
@@ -144,8 +144,64 @@ var demoSequence =
 			keyframes: { times: animationTimes, values: textValues }
 		};
 	
-		return [movementTransformation, textTransformation];
-	} // end getConductorTransformations()
+		return [movementTransformations, textTransformations];
+	} // end getBeatTransformations()
+
+
+	function getClapTransformations()
+	{
+		const fadeTime = 1000;
+
+		let box0Segments = [], box1Segments = [], box2Segments = [];
+
+		for(let i = 0; i < clapTiming.length; i++)
+		{
+			let currentClapTime = clapTiming[i],
+				currentBox = i % 3,
+				currentSegment = { t0: currentClapTime, t1: currentClapTime + fadeTime, v0: "#ffffff", v1: "#000000" };
+			if(currentBox === 0)
+				box0Segments.push(currentSegment);
+			else if(currentBox === 1)
+				box1Segments.push(currentSegment);
+			else
+				box2Segments.push(currentSegment);
+		}
+
+		let box0Transformations =
+			{
+				target: document.getElementById("ClapBox0"),
+				feature: "background-color",
+				unit: null,
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Color,
+				easing: Concert.EasingFunctions.QuadInOut,
+				segments: box0Segments
+			};
+
+		let box1Transformations =
+			{
+				target: document.getElementById("ClapBox1"),
+				feature: "background-color",
+				unit: null,
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Color,
+				easing: Concert.EasingFunctions.QuadInOut,
+				segments: box1Segments
+			};
+		
+		let box2Transformations =
+			{
+				target: document.getElementById("ClapBox2"),
+				feature: "background-color",
+				unit: null,
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Color,
+				easing: Concert.EasingFunctions.QuadInOut,
+				segments: box2Segments
+			};
+
+		return [box0Transformations, box1Transformations, box2Transformations];
+	} // end getClapTransformations()
 
 
 	function buildAnimation()
@@ -153,8 +209,9 @@ var demoSequence =
 		const video = document.getElementById("MusicVideo");
 
 		let transformationSet =
-			getLyricsSelectionTransformations()
-			.concat(getConductorTransformations());
+			getLyricsTransformations()
+			.concat(getBeatTransformations())
+			.concat(getClapTransformations());
 
 		// Create a sequence object. This is the basic object used for everything.
 		let sequence = new Concert.Sequence();

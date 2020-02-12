@@ -20,7 +20,7 @@ body
 	color: #eeeeee;
 	background-color: black;
 	display: grid;
-	grid-template-columns: 200px 400px 200px;
+	grid-template-columns: 240px 320px 240px;
 	padding-top: 20px;
 }
 
@@ -33,7 +33,7 @@ video
 #Conductor
 {
 	position: relative;
-	left: 80px;
+	left: 100px;
 	top: 0px;
 	width: 40px;
 	height: 40px;
@@ -47,4 +47,35 @@ video
 #TextArea
 {
 	font-size: 20px;
+}
+
+#ClapAnimationArea
+{
+	position: relative;
+}
+
+.ClapBox
+{
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background-color: black;
+}
+
+#ClapBox0
+{
+	left: 100px;
+	top: 0px;
+}
+
+#ClapBox1
+{
+	left: 100px;
+	top: 70px;
+}
+
+#ClapBox2
+{
+	left: 100px;
+	top: 140px;
 }
