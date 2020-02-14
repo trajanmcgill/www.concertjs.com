@@ -6,52 +6,69 @@ var demoSequence =
 	"use strict";
 
 	// Set up the parameters for this demo animation.
-	const beatTiming = [1267, 1883, 2533, 3183, 3800, 4450, 5033, 5717, 6333, 6983, 7583, 8283, 8917, 9583, 10200, 10933, 11583, 12300, 12867, 13617, 14233, 14900, 15517, 16200, 16850, 17533, 18150, 18850, 19483, 20150, 20750, 21417, 22050, 22750, 23333, 24000, 24650, 25267, 25967];
-	const clapTiming = [1267, 1417, 1883, 2533, 2683, 3183, 3800, 3950, 4450, 5033, 5217, 5717, 6333, 6483, 6983, 7583, 7767, 8283, 8917, 9100, 9583, 10200, 10417, 10933, 11583, 11750, 12300, 12867, 13033, 13617, 14233, 14400, 14900, 15517, 15683, 16200, 16850, 17017, 17533, 18150, 18317, 18850, 19483, 19650, 20150, 20750, 20917, 21417, 22050, 22233, 22750, 23333, 24000, 24650, 25267, 25600, 25967];
-	const lyricsTiming = [0, 5683, 6283, 8267, 8600, 8917, 10933, 11583, 12883, 13250, 13600, 16183, 16833, 18133, 18483, 18833, 21333, 21683, 22017, 23683, 24317, 24633, 26450];
+	const beatTiming = [1267, 1883, 2533, 3183, 3800, 4450, 5033, 5717, 6333, 6983, 7583, 8283, 8917, 9583, 10200, 10933, 11583, 12300, 12867, 13617, 14233, 14900, 15517, 16200, 16850, 17533, 18150, 18850, 19483, 20150, 20750, 21417, 22050, 22750, 23333, 24000, 24650, 25267, 25967],
+		clapTiming = [1267, 1417, 1883, 2533, 2683, 3183, 3800, 3950, 4450, 5033, 5217, 5717, 6333, 6483, 6983, 7583, 7767, 8283, 8917, 9100, 9583, 10200, 10417, 10933, 11583, 11750, 12300, 12867, 13033, 13617, 14233, 14400, 14900, 15517, 15683, 16200, 16850, 17017, 17533, 18150, 18317, 18850, 19483, 19650, 20150, 20750, 20917, 21417, 22050, 22233, 22750, 23333, 24000, 24650, 25267, 25600, 25967],
+		lyricsTiming = [0, 5683, 6283, 8267, 8600, 8917, 10933, 11583, 12883, 13250, 13600, 16183, 16833, 18133, 18483, 18833, 21333, 21683, 22017, 23683, 24317, 24633, 26450],
+		box0StartColor = "#00000000", box0HitColor = "#ffffffff", box0FadeColor = "#ff000000",
+		box1StartColor = "#00000000", box1HitColor = "#ffffffff", box1FadeColor = "#00ff0000",
+		box2StartColor = "#00000000", box2HitColor = "#ffffffff", box2FadeColor = "#0000ff00",
+		fadeTime = 1000;
+
+
+	function getWordPositions(textNode)
+	{
+		let wordRegEx = /[a-z'-]+/gi,
+			textContent = textNode.textContent,
+			currentMatch, wordPositions = [];
+	
+		while((currentMatch = wordRegEx.exec(textContent)) !== null)
+		{
+			wordPositions.push(
+				{
+					node: textNode,
+					start: wordRegEx.lastIndex - currentMatch[0].length,
+					end: wordRegEx.lastIndex
+				});
+		}
+
+		return wordPositions;
+	} // end getWordPositions()
+
 
 	// extractWordPositions: Run a depth-first search on the tree below (and including) the passed-in HTML node,
 	// returning an array of all the nodes and start and end positions of all the words within the text nodes in that node tree.
-	function extractWordPositions(htmlNode)
+	function extractWordPositions(rootNode)
 	{
-		let wordPositions = [],
-			extracting = (htmlNode.childNodes.length > 0),
-			currentNode = htmlNode;
-
-		while(extracting)
+		let allWordPositions = [], extracting = true,
+			currentNode = rootNode, currentNodeExhausted = false;
+		
+		while (extracting)
 		{
-			if(currentNode.nodeType === Node.TEXT_NODE)
+			if (currentNodeExhausted)
 			{
-				let wordRegEx = /[a-z'-]+/gi,
-					textContent = currentNode.textContent,
-					currentMatch;
-				
-				while((currentMatch = wordRegEx.exec(textContent)) !== null)
+				if (currentNode === rootNode)
+					extracting = false;
+				else if (currentNode.nextSibling !== null)
 				{
-					wordPositions.push(
-						{
-							node: currentNode,
-							start: wordRegEx.lastIndex - currentMatch[0].length,
-							end: wordRegEx.lastIndex
-						});
+					currentNode = currentNode.nextSibling;
+					currentNodeExhausted = false;
 				}
+				else
+					currentNode = currentNode.parentNode;
 			}
-			
-			if(currentNode.childNodes.length > 0)
-				currentNode = currentNode.childNodes[0];
-			else if(currentNode === htmlNode)
-				extracting = false;
-			else if(currentNode.nextSibling !== null)
-				currentNode = currentNode.nextSibling;
-			else if(currentNode.parentNode === htmlNode)
-				extracting = false;
-			else if(currentNode.parentNode.nextSibling === null)
-				extracting = false;
 			else
-				currentNode = currentNode.parentNode.nextSibling;
-		} // end while(extracting)
+			{
+				if (currentNode.nodeType === Node.TEXT_NODE)
+					getWordPositions(currentNode).forEach(function(wordPosition) { allWordPositions.push(wordPosition); });
+				
+				if (currentNode.childNodes.length > 0)
+					currentNode = currentNode.childNodes[0];
+				else
+					currentNodeExhausted = true;
+			}
+		} // end while (extracting)
 
-		return wordPositions;
+		return allWordPositions;
 	} // end extractWordPositions()
 
 
@@ -150,21 +167,21 @@ var demoSequence =
 
 	function getClapTransformations()
 	{
-		const fadeTime = 1000;
-
-		let box0Segments = [], box1Segments = [], box2Segments = [];
+		let box0Segments = [{ t0: 0, t1: 0, v0: box0StartColor, v1: box0StartColor }],
+			box1Segments = [{ t0: 0, t1: 0, v0: box1StartColor, v1: box1StartColor }],
+			box2Segments = [{ t0: 0, t1: 0, v0: box2StartColor, v1: box2StartColor }];
 
 		for(let i = 0; i < clapTiming.length; i++)
 		{
 			let currentClapTime = clapTiming[i],
-				currentBox = i % 3,
-				currentSegment = { t0: currentClapTime, t1: currentClapTime + fadeTime, v0: "#ffffff", v1: "#000000" };
+				currentBox = i % 3;
+			
 			if(currentBox === 0)
-				box0Segments.push(currentSegment);
+				box0Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box0HitColor, v1: box0FadeColor });
 			else if(currentBox === 1)
-				box1Segments.push(currentSegment);
+				box1Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box1HitColor, v1: box1FadeColor });
 			else
-				box2Segments.push(currentSegment);
+				box2Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box2HitColor, v1: box2FadeColor });
 		}
 
 		let box0Transformations =
