@@ -12,9 +12,12 @@ var demoSequence =
 		box0StartColor = "#00000000", box0HitColor = "#ffffffff", box0FadeColor = "#ff000000",
 		box1StartColor = "#00000000", box1HitColor = "#ffffffff", box1FadeColor = "#00ff0000",
 		box2StartColor = "#00000000", box2HitColor = "#ffffffff", box2FadeColor = "#0000ff00",
-		fadeTime = 1000;
+		fadeTime = 1000,
+		beatBatonPositions = [[100, 140], [200, 80], [0, 80], [100, 0]];
 
 
+	// getWordPositions: Pull all the individual words out of a text node.
+	// Returns an array of objects corresponding to the words found and their locations.
 	function getWordPositions(textNode)
 	{
 		let wordRegEx = /[a-z'-]+/gi,
@@ -46,21 +49,30 @@ var demoSequence =
 		{
 			if (currentNodeExhausted)
 			{
+				// This node and all its descendents have been searched already.
+
 				if (currentNode === rootNode)
-					extracting = false;
+					extracting = false; // If the root node is fully searched, there isn't any more searching to be done. Quit searching.
 				else if (currentNode.nextSibling !== null)
 				{
+					// Otherwise, move on to searching the next sibling if there is one.
 					currentNode = currentNode.nextSibling;
 					currentNodeExhausted = false;
 				}
 				else
-					currentNode = currentNode.parentNode;
+					currentNode = currentNode.parentNode; // Otherwise, pop back up a level to the parent.
+				// Note that since we only move up a level when all the siblings at this level are done, moving up means
+				// the immediate parent is done as well, so in that case we leave currentNodeExhausted set to true.
 			}
 			else
 			{
+				// This node isn't exhausted yet.
+
+				// Get all the words in the current node if it is a text node, and add them to the array of all word positions.
 				if (currentNode.nodeType === Node.TEXT_NODE)
 					getWordPositions(currentNode).forEach(function(wordPosition) { allWordPositions.push(wordPosition); });
 				
+				// Move to the next child level down and continue the search. If there is none, this node is exhausted.
 				if (currentNode.childNodes.length > 0)
 					currentNode = currentNode.childNodes[0];
 				else
@@ -72,15 +84,21 @@ var demoSequence =
 	} // end extractWordPositions()
 
 
+	// selectionApplicator: Custom applicator function for use by Concert.js transformations.
+	// This one sets the windows's selected text based on the passed in value object,
+	// which is expected to contain start and end points for the text to be selected.
 	function selectionApplicator(target, feature, value)
 	{
 		let selection = window.getSelection(),
 			range = document.createRange();
 
-		selection.removeAllRanges();
+		selection.removeAllRanges(); // Remove any present text selections in the window.
 		
-		if(value.start !== null)
+		if(value.start !== null) // Allow for passing in a null value; treat that as selecting nothing at all.
 		{
+			// Extract the start and end points for the selection from the value object,
+			// define the range based on those, and select that range.
+
 			range.setStart(value.start.node, value.start.position);
 			range.setEnd(value.end.node, value.end.position);
 
@@ -89,11 +107,18 @@ var demoSequence =
 	} // end selectionApplicator()
 
 
+	// getLyricsTransformations: Define and return a transformation set for the selection of lyrics in time with the video.
+	// Returns an array of transformations ready to add to a Concert.js sequence.
 	function getLyricsTransformations()
 	{
-		const textArea = document.getElementById("TextArea"),
-			wordPositions = extractWordPositions(textArea);
+		// Get all the individual word positions that exist inside the TextArea element on the page.
+		const wordPositions = extractWordPositions(document.getElementById("TextArea"));
 
+		// Create an array to store the values that will be applied in the animation.
+		// Loop through all the words, for each one adding a value that corresponds
+		// to that word's text position.
+		// The very first and last selections should be nothing at all, since each word
+		// is only being selected while being sung.
 		let i, selectionAnimationValues = [{ start: null, end: null }];
 		for(i = 0; i < wordPositions.length; i++)
 		{
@@ -105,77 +130,103 @@ var demoSequence =
 		}
 		selectionAnimationValues.push({ start: null, end: null });
 
+		// Create the object defining the lyrics selection animation.
 		let lyricsTransformations =
 			{
+				// Target, feature, and unit aren't really applicable to the lyrics animation,
+				// and its custom applicator function doesn't need them.
 				target: null,
 				feature: null,
 				unit: null,
-				applicator: selectionApplicator,
-				calculator: Concert.Calculators.Discrete,
-				easing: Concert.EasingFunctions.ConstantRate,
+
+				applicator: selectionApplicator, // Use our custom applicator function to set the text selection.
+				calculator: Concert.Calculators.Discrete, // Anything other than Discrete wouldn't make sense-- we aren't interpolating values but applying one then another in succession.
+				easing: Concert.EasingFunctions.ConstantRate, // With no interpolation happening at all, it doesn't really matter what we use here.
 				keyframes:
 				{
-					times: lyricsTiming,
-					values: selectionAnimationValues
+					times: lyricsTiming, // The selections change at the moments defined in this array, which contains the times when each word is sung.
+					values: selectionAnimationValues // Use the array we just constructed of word positions corresponding to the times in lyricsTiming.
 				}
 			};
 		
-		return [lyricsTransformations];
+		return [lyricsTransformations]; // For consistency's sake, all the transformation construction functions return arrays.
 	} // end getLyricsTransformations()
 
 
+	// getBeatTransformations: Define and return a transformation set for the movement of the beat marker.
+	// Returns an array of transformations ready to add to a Concert.js sequence.
 	function getBeatTransformations()
 	{
-		let beatPositions = [[100, 140], [200, 80], [0, 80], [100, 0]],
-			animationTimes = [beatTiming[0] - (beatTiming[1] - beatTiming[0])],
-			movementValues = [beatPositions[3]],
-			textValues = ["0"];
+		let animationTimes = [beatTiming[0] - (beatTiming[1] - beatTiming[0])], // Array of keyframe times. Define the first one so motion starts one beat's worth of time before the initial downbeat. 
+			movementValues = [beatBatonPositions[3]], // Array of positional values for the beat marker. Define the first one so that we start in the up-beat position (beat 4, a.k.a. array position 3).
+			textValues = ["0"], // Array of text values for the beat marker. Define the first one so it starts by indicating "0" prior to the rhythm and music starting.
+			beatMarker = document.getElementById("Conductor");
 		
+		// Build the full array of keyframe times and values for movement of the beat marker,
+		// using the earlier-defined constants beatTiming (the moments in time where the beats occur in the music)
+		// and beatBatonPositions (the position values to apply for each of the four beats in each measure).
+		// Also build the full array of text values that will show on the beat marker at each of those times.
 		for(let i = 0; i < beatTiming.length; i++)
 		{
-			let beatNumber = i % beatPositions.length;
-			animationTimes.push(beatTiming[i]);
-			movementValues.push(beatPositions[beatNumber]);
-			textValues.push((beatNumber + 1).toString());
+			let beatNumber = i % beatBatonPositions.length; // Figure out which beat of the measure this beat is.
+			animationTimes.push(beatTiming[i]); // Add a keyframe time for this beat.
+			movementValues.push(beatBatonPositions[beatNumber]); // Add the beat marker position value for this keyframe.
+			textValues.push((beatNumber + 1).toString()); // Add the beat marker text value for this keyframe.
 		}
 
+		// Create the object defining the beat marker movement animation.
 		let movementTransformations =
 			{
-				target: document.getElementById("Conductor"),
+				target: beatMarker,
+
+				// We're animating two features at once.
+				// Note that each position value (as ultimately defined in the constant beatBatonPositions)
+				// is also actually an array of two values, so at each frame, the array of values will be
+				// applied to the array of features.
 				feature: ["left", "top"],
+
 				unit: "px",
-				applicator: Concert.Applicators.Style,
+				applicator: Concert.Applicators.Style, // "left" and "top" are CSS styles of the beatMarker object, so use the Style applicator.
 				calculator: Concert.Calculators.Linear,
 				easing: Concert.EasingFunctions.QuadIn,
 				keyframes: { times: animationTimes, values: movementValues }
 			};
 		
+		// Create the object defining the beat marker text animation.
 		let textTransformations =
 		{
-			target: document.getElementById("Conductor"),
+			target: beatMarker,
 			feature: ["innerHTML"],
 			unit: null,
-			applicator: Concert.Applicators.Property,
-			calculator: Concert.Calculators.Discrete,
-			easing: Concert.EasingFunctions.ConstantRate,
+			applicator: Concert.Applicators.Property, // "innerHTML" is a plain javascript property of the beatMarker object, so use the Property applicator.
+			calculator: Concert.Calculators.Discrete, // No interpolation; just apply the current value.
+			easing: Concert.EasingFunctions.ConstantRate, // Which easing function used is irrelevant when using the Discrete calculator.
 			keyframes: { times: animationTimes, values: textValues }
 		};
 	
-		return [movementTransformations, textTransformations];
+		return [movementTransformations, textTransformations]; // Return both of these objects to add to the sequence.
 	} // end getBeatTransformations()
 
 
+	// getClapTransformations: Define and return a transformation set for the color changes on the clap markers.
+	// Returns an array of transformations ready to add to a Concert.js sequence.
 	function getClapTransformations()
 	{
+		// Create three arrays, one for the animation segments of each of the three clap marker boxes.
+		// For each one, add a segment at the very beginning to set up the starting color values (as defined in constants above).
 		let box0Segments = [{ t0: 0, t1: 0, v0: box0StartColor, v1: box0StartColor }],
 			box1Segments = [{ t0: 0, t1: 0, v0: box1StartColor, v1: box1StartColor }],
 			box2Segments = [{ t0: 0, t1: 0, v0: box2StartColor, v1: box2StartColor }];
 
+		// Build the full array of animation segment times and start/end values,
+		// corresponding to the moments of each clap as defined in the clapTiming constant.
 		for(let i = 0; i < clapTiming.length; i++)
 		{
-			let currentClapTime = clapTiming[i],
-				currentBox = i % 3;
+			let currentClapTime = clapTiming[i], // Get the time this clap occurs.
+				currentBox = i % 3; // Which box indicates the clap rotates, so each box gets every third clap.
 			
+			// For whichever is the current box, add a segment definition indicating a start and end time (t0 and t1)
+			// and a start and end value (v0 and v1).
 			if(currentBox === 0)
 				box0Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box0HitColor, v1: box0FadeColor });
 			else if(currentBox === 1)
@@ -184,47 +235,53 @@ var demoSequence =
 				box2Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box2HitColor, v1: box2FadeColor });
 		}
 
+		// Create the transformation set definition for the first clap marker box.
 		let box0Transformations =
 			{
 				target: document.getElementById("ClapBox0"),
 				feature: "background-color",
 				unit: null,
 				applicator: Concert.Applicators.Style,
-				calculator: Concert.Calculators.Color,
+				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values (including alpha channel)
 				easing: Concert.EasingFunctions.QuadInOut,
 				segments: box0Segments
 			};
 
+		// Create the transformation set definition for the first clap marker box.
 		let box1Transformations =
 			{
 				target: document.getElementById("ClapBox1"),
 				feature: "background-color",
 				unit: null,
 				applicator: Concert.Applicators.Style,
-				calculator: Concert.Calculators.Color,
+				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values (including alpha channel)
 				easing: Concert.EasingFunctions.QuadInOut,
 				segments: box1Segments
 			};
 		
+		// Create the transformation set definition for the first clap marker box.
 		let box2Transformations =
 			{
 				target: document.getElementById("ClapBox2"),
 				feature: "background-color",
 				unit: null,
 				applicator: Concert.Applicators.Style,
-				calculator: Concert.Calculators.Color,
+				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values (including alpha channel)
 				easing: Concert.EasingFunctions.QuadInOut,
 				segments: box2Segments
 			};
 
-		return [box0Transformations, box1Transformations, box2Transformations];
+		return [box0Transformations, box1Transformations, box2Transformations]; // Return the transformation set objects to add to the sequence.
 	} // end getClapTransformations()
 
 
+	// buildAnimation: Assemble the entire video synchronization demo animation from all of its pieces.
+	// Returns the Concert.Sequence object, fully set up and wired to events so that it runs and seeks at the appropriate times.
 	function buildAnimation()
 	{
-		const video = document.getElementById("MusicVideo");
+		const video = document.getElementById("MusicVideo"); // Get the element to which the animation is being synchronized.
 
+		// Assemble an array of all the transformations in the entire animation.
 		let transformationSet =
 			getLyricsTransformations()
 			.concat(getBeatTransformations())
@@ -233,12 +290,13 @@ var demoSequence =
 		// Create a sequence object. This is the basic object used for everything.
 		let sequence = new Concert.Sequence();
 		
-		// All the animation segments added below will use these settings.
-		//sequence.setDefaults({ unit: "px", applicator: Concert.Applicators.Style, calculator: Concert.Calculators.Linear, easing: easingFunction });
-
-		// Add the now-fully-generated transformation set to the sequence.
+		// Add the transformation set to the sequence.
 		sequence.addTransformations(transformationSet);
 
+		// Wire up the event handlers.
+		// We want the animation to be running whenever the video is running,
+		// stopped whenever the video is stopped (including reeaching its end),
+		// and to jump to the appropriate spot whenever the user seeks to a new position.
 		video.onplay = function() { sequence.syncTo(video); };
 		video.onpause = video.onended = function() { sequence.stop(); };
 		video.onseeked = function() { sequence.seek(video.currentTime * 1000); };
@@ -250,10 +308,7 @@ var demoSequence =
 	// Call the above function to build an animation.
 	let mainSequence = buildAnimation();
 
-	// Wire the "Go" button to the sequence's begin() method.
-	//document.getElementById("GoButton").onclick = function () { mainSequence.begin(); };
-
-	// There isn't actually any need in this case to return the sequence object and set (as we do above)
+	// There isn't actually any need in this case to return the sequence object and set (as we do at the very top)
 	// a global (window) variable to it. We just do this here so that if the user of this demo wants to
 	// open a console and play with the sequence object, it will be globally available within its frame.
 	return mainSequence;
