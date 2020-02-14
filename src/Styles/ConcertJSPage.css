@@ -26,47 +26,44 @@
 		{
 			font-size: 30px;
 			font-weight: bold;
-			margin-left: 30px;
+			margin-left: 0;
 			margin-top: 35px;
 		}
 
 		#MenuBar
 		{
 			width: 870px;
-			height: 24px;
+			height: 28px;
 			position: relative;
-			left: 30px; 
+			left: 0; 
 			clear: both;
 			font-size: 18px;
 		}
 
 			a.MenuItem
 			{
-				height: 24px;
+				height: 26px;
 				float: left;
 				background-color: #569cd6;
 				color: #1e1e1e;
-				padding-left: 5px;
-				padding-right: 5px;
+				padding-left: 8px;
+				padding-right: 8px;
+				padding-top: 2px;
 				margin-left: 1px;
 				margin-right: 1px;
 				cursor: pointer;
 			}
 
-			a.MenuItem.CurrentMenuItem
+			a.MenuItem:first-child
 			{
-				background-color: #eee;
-				cursor: default;
+				border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;
 			}
 
-			div.MenuItem:hover
+			a.MenuItem:last-child
 			{
-				background-color: #c8c8c8;
-			}
-
-			div.MenuItem.CurrentMenuItem:hover
-			{
-				background-color: #eee;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
 			}
 
 	#HeaderRight
