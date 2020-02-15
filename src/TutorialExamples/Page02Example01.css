@@ -1,0 +1,51 @@
+body
+{
+	color: black;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.MovingBlock
+{
+	position: relative;
+	font-weight: bold;
+	font-size: 18px;
+	width: 100px;
+	padding-left: 2px;
+	padding-right: 2px;
+	height: 22px;
+}
+
+#Block_ConstantRate
+{
+	background-color: rgb(197, 116, 116);
+}
+
+#Block_QuadIn
+{
+	background-color: rgb(226, 181, 98);
+}
+
+#Block_QuadInOut
+{
+	background-color: rgb(221, 221, 81);
+}
+
+#Block_QuadOut
+{
+	background-color: rgb(108, 219, 108);
+}
+
+#Block_Smoothstep
+{
+	background-color: rgb(238, 130, 238);
+}

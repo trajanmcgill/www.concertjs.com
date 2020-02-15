@@ -69,7 +69,7 @@
 </template:data>
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 01 -->
+<!-- TUTORIAL 01: Sequences and Transformations -->
 <template:data target="tutorial01.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -104,7 +104,7 @@
 			</p>
 		</div>
 
-		<div class="TutorialStep">
+		<div class="TutorialStep"> <!-- Page 01 Example 01: What does a simple Concert.js animation look like? -->
 			<h4>What does a simple Concert.js animation look like?</h4>
 			<div class="TutorialSingleDemoContainer">
 				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page01Example01.html"></iframe>
@@ -112,6 +112,7 @@
 			</div>
 			<p>
 				<pre><code>let sequence = new Concert.Sequence();
+
 sequence.addTransformations(
   {
     target: document.getElementById("HelloDiv"),
@@ -120,16 +121,17 @@ sequence.addTransformations(
     applicator: Concert.Applicators.Style,
     keyframes: { times: [0, 2000], values: [0, 24] }
   });
-sequence.begin();
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
-				The above code, run when the "Go" button is clicked:
-				<ul>
-					<li>Creates a single new <code>Sequence</code> object.</li>
+				The above code does the following:
+				<ul class="TutorialBullets">
+					<li>Creates a single new <code>Concert.Sequence</code> object.</li>
 					<li>Passes an object defining a single animated transformation into the sequence's <code>addTransformations()</code> method.</li>
 					<li>
-						Calls the <code>begin()</code> method to run the animated sequence.
+						Upon clicking the "Go" button, calls the sequence's <code>begin()</code> method to run the animated sequence.
 						We'll see later that there are several ways to run an animation or synchronize it to something else happening on the page,
 						but <code>begin()</code> is the simplest-- it just runs the sequence from beginning to end, synchronized to the system clock.
 					</li>
@@ -138,7 +140,7 @@ sequence.begin();
 			<p>
 				Let's look at each of the properties of the object that defines a single animated feature (a <code>Transformation</code>).
 				Later we'll see that it is not always necessary to specify every one of these properties, because we can set default values for them.
-				<ul>
+				<ul class="TutorialBullets">
 					<li><em>target</em>: The object that will be modified by the animation. In this case, it is a <code>div</code> with <code>id</code> "HelloDiv" which we want to slowly reveal.</li>
 					<li><em>feature</em>: Which property of the target object will be modified. In this case, it is the <code>height</code> property (of the above-mentioned <code>div</code> object).</li>
 					<li><em>unit</em>: What unit is being applied with the property's numeric value when. Here it is "px", but it could be anything else applicable, such as "em", "%", or even <code>null</code> for animating things which don't require an appended unit string.</code></li>
@@ -162,7 +164,7 @@ sequence.begin();
 			</p>
 		</div>
 
-		<div class="TutorialStep">
+		<div class="TutorialStep"> <!-- Page 01 Example 02: How about a sequence with more than one transformation? -->
 
 			<h4>How about a sequence with more than one transformation?</h4>
 			<div class="TutorialSingleDemoContainer">
@@ -180,21 +182,15 @@ let box1Transformations =
       feature: "left",
       unit: "px",
       applicator: Concert.Applicators.Style,
-	  keyframes:
-      {
-		times: [0, 1000], values: [0, 265]
-      }
-	},
+	  keyframes: { times: [0, 1000], values: [0, 265] }
+    },
 	
     {
       target: box1,
       feature: "top",
       unit: "px",
       applicator: Concert.Applicators.Style,
-	  keyframes:
-      {
-		times: [0, 1000], values: [0, 65]
-      }
+	  keyframes: { times: [0, 1000], values: [0, 65] }
     }
   ];
 
@@ -225,10 +221,7 @@ let box1Transformations =
     feature: ["left", "top"],
     unit: "px",
     applicator: Concert.Applicators.Style,
-    keyframes:
-    {
-      times: [0, 1000], values: [[0, 0], [265, 65]]
-    }
+    keyframes: { times: [0, 1000], values: [[0, 0], [265, 65]] }
   };
 
 sequence.addTransformations(box1Transformations);
@@ -237,7 +230,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 </code></pre></p>
 		</div>
 
-		<div class="TutorialStep">
+		<div class="TutorialStep"> <!-- Page 01 Example 03: What about gaps in motion? -->
 			<h4>What about gaps in motion?</h4>
 			<p>
 				Normally, values are interpolated in between keyframes.
@@ -290,7 +283,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 			</p>
 		</div>
 
-		<div class="TutorialStep">
+		<div class="TutorialStep"> <!-- Page 01 Example 04: Specifying Segments Rather Than Keyframes -->
 			<h4>Specifying Segments Rather Than Keyframes</h4>
 			<p>
 				For some purposes, it is more useful to think of animations as a series of segments,
@@ -316,7 +309,7 @@ let boxTransformations =
           { t0: 0, t1: 1000, v0: 0, v1: 270 },
           { t0: 3000, t1: 4000, v0: 270, v1: 0 }
         ]
-	},
+    },
 
     {
       target: box1,
@@ -369,7 +362,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 02 -->
+<!-- TUTORIAL 02: Easing Functions -->
 <template:data target="tutorial02.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -388,17 +381,236 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #2
+			<h2>Easing Functions</h2>
+			<p>
+				Nice-looking, realistic motion requires more than just abrupt starts and stops
+				with constant-rate motion in between. This is where easing functions come into play.
+			</p>
+			<p>
+				An easing function causes the animation to proceed at a varying rate over time.
+				For instance, it may start quickly, and then gradually come to a stop.
+			</p>
+			<p>
+				Concert.js has five built-in easing functions, covering much of the sort of motion commonly seen in animations.
+				It also easily allows you to supply your own, custom easing functions as well.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- What do the built-in easing functions look like, and how do I use them? -->
+			<h4>What do the built-in easing functions look like, and how do I use them?</h4>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page02Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page02Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>const LeftPosition = 0, RightPosition = 360, EndTime = 1500;
+
+let animations =
+  [
+    {
+      target: document.getElementById("Block_ConstantRate"),
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      easing: Concert.EasingFunctions.ConstantRate,
+      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+    },
+
+    {
+      target: document.getElementById("Block_QuadIn"),
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      easing: Concert.EasingFunctions.QuadIn,
+      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+    },
+
+    {
+      target: document.getElementById("Block_QuadInOut"),
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      easing: Concert.EasingFunctions.QuadInOut,
+      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+    },
+
+    {
+      target: document.getElementById("Block_QuadOut"),
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      easing: Concert.EasingFunctions.QuadOut,
+      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+    },
+
+    {
+      target: document.getElementById("Block_Smoothstep"),
+      feature: "left",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      easing: Concert.EasingFunctions.Smoothstep,
+      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+    }
+  ];
+
+let sequence = new Concert.Sequence();
+sequence.addTransformations(animations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				The above code creates five nearly identical transformation set objects,
+				each applying to a different <code>div</code> element.
+				Each one specifies animating the element's CSS <code>left</code> style
+				from 0 to 360px over a period of 1500 ms.
+				The difference in each is the value specified for the <code>easing</code> property.
+				These pre-defined easing functions allow for a smooth start and/or end to an animation.
+			</p>
+			<p>
+				(If this looks like a lot of code for just a little bit of action, don't worry.
+				Later in the tutorial we'll cover setting default values so that not every
+				common property of every transformation set object needs to be repeated again and again.)
+			</p>
 		</div>
+
+		<div class="TutorialStep"> <!-- Custom Easing Functions -->
+			<h4>Custom Easing Functions</h4>
+			<p>
+				Sometimes it is necessary to use an easing function other than those already defined.
+				Let's examine how that can be accomplished.
+			</p>
+			<p>
+				First, let's look at what an easing function does, and what one looks like.
+				An easing is a function which modifies the rate at which a transformation moves from beginning to end.
+				For instance, it may progress steadily from the start time to the end time, or it may accelerate
+				and decelerate to make motion appear smoother.
+			</p>
+			<p>
+				Important to note is that an easing function does not change the total time of the animation at all.
+				The start and end times remain the same; what changes is the rate of the motion in between those times.
+			</p>
+			<p>
+				Besides the pre-defined easing functions we just saw above, Concert.js can also use a custom easing function.
+				An easing function is any function which takes the form <code>function easingFunction(startTime, endTime, currentTime)</code>
+				and returns a value from 0 to 1. <em>(At least, ordinarily. There do exist easing functions which involve travel beyond
+				the start and end points, such as a slight out-of-bounds bounce-type movement, but most times you'll want to ensure
+				your easing functions never go below 0 or above 1 to avoid unexpected behavior.)</em>
+			</p>
+			<p>
+				The inputs represent the start time of the transition, the end time, and the current position
+				along that timeline.
+				<em>
+					(Strictly speaking, these don't need to be times; if you were synchronizing your animation to, say,
+					the position of a scroll bar rather than the system clock, the beginning and end would not be measured in microseconds.
+					But in any case, there are a start point and an end point and a current place along that "timeline".)
+				</em>
+			</p>
+			<p>
+				The return value is a fraction representing the portion of the total distance the animation should have traversed
+				in the time passed so far. This fraction is used to interpolate the current position in an animation segement.
+			</p>
+			<p>
+				For instance, for a simple, constant rate of motion, you would want a function that just calculated the fraction of the timeline
+				traveled, and returned the same fraction. That is, if start time is 0, end time is 100, and current time is 50,
+				then 50% of the time has passed and therefore 50% of the animated transition should have occurred,
+				so the value returned would be 0.5. And indeed, here is the code for the build-in ConstantRate easing function:
+			</p>
+			<p>
+				<pre><code>ConstantRate:
+  function (startTime, endTime, currentTime)
+  {
+    if (currentTime >= endTime)
+      return 1;
+    else if (currentTime < startTime)
+      return 0;
+    else
+      return ((currentTime - startTime) / (endTime - startTime));
+  }
+</code></pre>
+			</p>
+			<p>
+				All it does is return 1 (the full distance has been reached) if the end time is reached or passed, return 0 if the current time is at or before the start time,
+				and for any current time value in between start time and end time, return the fraction of the total time that has so far gone by.
+				This will result in animated motion that starts abruptly at the start time, moves at exactly the same rate as time progresses,
+				and ends abruptly at the end time.
+			</p>
+			<p>
+				Feel free to examine the Concert.js code to see how the other build-in easing functions are defined.
+				They are all reasonably simple functions.
+			</p>
+			<p>
+				But what if none of them meets your needs? Simply build your own, and as long as it has the right function signature
+				and returns a fractional value indicating how far the animation should be considered to have progressed,
+				you can pass that function in wherever you would use a built-in easing function.
+				Here is an example:
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page02Example02.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page02Example02.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				The above demonstrates an easing function which creates motion that accelerates to full speed and then decelerates to a pause
+				three times over the course of its travel from beginning to end. Below is the code which accomplishes this.
+			</p>
+			<p>
+				<pre><code>function triplePiston(startTime, endTime, currentTime)
+{
+  const Segments = 3,
+    s = (endTime - startTime) / Segments,
+    t = currentTime - startTime,
+    distanceFraction =
+      (Math.floor(t / s) + ((Math.cos(Math.PI * (s - (t % s)) / s) + 1) / 2)) / Segments;
+  return Math.max(Math.min(distanceFraction, 1), 0);
+}
+
+let animation =
+  {
+    target: document.getElementById("Block_CustomEasing"),
+    feature: "left",
+    unit: "px",
+    applicator: Concert.Applicators.Style,
+    easing: triplePiston,
+    keyframes: { times: [0, 1500], values: [0, 360] }
+  };
+
+var sequence = new Concert.Sequence();
+sequence.addTransformations(animation);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				Don't worry about the mathematics used to calculate the distance fraction.
+				The point here isn't to understand how this particular easing function works,
+				but to understand how custom easing functions can be constructed and used.
+				Simply note that the function <code>triplePiston</code> takes a start time,
+				and end time, and a current time, and from that it calculates a return value
+				which is a fraction representing the proportion of the total distance the box
+				should have moved during the time which has passed so far.
+			</p>
+			<p>
+				How is it used? As you can see above, everything is exactly the same as in previous
+				examples except that the transformation set definition's <code>easing</code> property
+				is now set to the custom <code>triplePiston</code> function. Then we simply set
+				the animation in motion as usual, and our custom function gets used internally
+				by Concert.js during the animation for determining where to place the sliding box.
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial01.html">Previous: 01 - Sequences and Transformations</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial03.html">Next: 03 - Applicators</a>
+		</p>
+
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 03 -->
+<!-- TUTORIAL 03: Calculators -->
 <template:data target="tutorial03.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -427,7 +639,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 04 -->
+<!-- TUTORIAL 04: Applicators -->
 <template:data target="tutorial04.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -456,7 +668,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 05 -->
+<!-- TUTORIAL 05: Setting Defaults -->
 <template:data target="tutorial05.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -485,7 +697,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 06 -->
+<!-- TUTORIAL 06: Starting, Stopping, and Seeking -->
 <template:data target="tutorial06.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -514,7 +726,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 07 -->
+<!-- TUTORIAL 07: Synchronizing -->
 <template:data target="tutorial07.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -543,7 +755,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 08 -->
+<!-- TUTORIAL 08: Repeating -->
 <template:data target="tutorial08.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -572,7 +784,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 09 -->
+<!-- TUTORIAL 09: Custom Easing Functions, Calculators, and Applicators -->
 <template:data target="tutorial09.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -601,7 +813,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 10 -->
+<!-- TUTORIAL 10: Cloning and Retargeting -->
 <template:data target="tutorial10.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -630,7 +842,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 11 -->
+<!-- TUTORIAL 11: Indexing, Value Generator Functions -->
 <template:data target="tutorial11.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">

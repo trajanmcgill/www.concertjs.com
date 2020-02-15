@@ -1,0 +1,27 @@
+body
+{
+	color: black;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#Block_CustomEasing
+{
+	position: relative;
+	font-weight: bold;
+	font-size: 18px;
+	width: 100px;
+	padding-left: 2px;
+	padding-right: 2px;
+	height: 22px;
+	background-color: rgb(197, 116, 116);
+}

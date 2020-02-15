@@ -14,6 +14,7 @@ h4
 pre
 {
 	background-color: #aaaaaa;
+	padding: 4px;
 }
 
 div.TutorialStep:first-child h4
@@ -74,4 +75,9 @@ div.TutorialStep:first-child h4
 	display: inline-block;
 	width: 50%;
 	text-align: right;
+}
+
+ul.TutorialBullets > li
+{
+	margin-top: 5px;
 }

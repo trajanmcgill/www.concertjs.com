@@ -545,6 +545,17 @@ module.exports = function(grunt)
 			"copy:deployTutorialExamples", // copy tutorial examples directory into dev and prod directories
 			"addBuildNumbers:allOutputHTML" // add a build number url parameter to all src and href parameters in all the finished html files, for browser cache-busting purposes
 		]);
+	
+	grunt.registerTask(
+		"fastDevTutorialRebuild",
+		[
+			"processTemplates:assembleTemplateResults", // process templates into assembly directory
+			"copy:copyOriginalToFull", // copy all .js and .css files in assembly directory to *.full.js and *.full.css
+			"copy:deployAssembledFiles", // copy all assembly files into dev and prod directories
+			"copy:selectEnvironment",  // copy, in prod directory, *.min.js to *.js and *.min.css to *.css, and in dev directory, *.full.js to *.js and *.full.css to *.css
+			"clean:removeFullAndMinFiles", // clean all .min.css, .min.js, .full.css, and .full.js files from dev and prod directories
+			"copy:deployTutorialExamples" // copy tutorial examples directory into dev and prod directories
+		]);
 
 	grunt.registerTask("rebuild_all", ["clean_all", "build_all"]);
 
