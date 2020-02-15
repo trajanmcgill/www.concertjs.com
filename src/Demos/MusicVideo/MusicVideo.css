@@ -16,7 +16,7 @@ body
 	top: 0;
 	left: 0;
 	width: 800px;
-	height: 380px;
+	height: 350px;
 	color: #eeeeee;
 	background-color: black;
 	display: grid;
@@ -80,4 +80,14 @@ video
 {
 	left: 100px;
 	top: 130px;
+}
+
+#Caution
+{
+	height: 26px;
+	padding-top: 4px;
+	font-style: italic;
+	font-size: 15px;
+	background-color: #222222;
+	color: #d7ba7d;
 }

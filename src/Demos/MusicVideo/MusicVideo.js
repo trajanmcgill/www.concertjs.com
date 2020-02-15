@@ -200,7 +200,7 @@ var demoSequence =
 			unit: null,
 			applicator: Concert.Applicators.Property, // "innerHTML" is a plain javascript property of the beatMarker object, so use the Property applicator.
 			calculator: Concert.Calculators.Discrete, // No interpolation; just apply the current value.
-			easing: Concert.EasingFunctions.ConstantRate, // Which easing function used is irrelevant when using the Discrete calculator.
+			easing: Concert.EasingFunctions.ConstantRate, // With no interpolation happening at all, it doesn't really matter what we use here.
 			keyframes: { times: animationTimes, values: textValues }
 		};
 	
