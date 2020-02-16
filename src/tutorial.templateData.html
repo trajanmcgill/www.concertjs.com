@@ -844,6 +844,31 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 			</p>
 		</div>
 
+		<div class="TutorialStep"> <!-- Custom Calculator Functions-->
+			<h4>Custom Calculator Functions</h4>
+			<p>
+				You are not limited to the built-in calculator functions.
+				As with easing functions, user-provided calculator functions are easy to integrate with Concert.js.
+				If you wish to calculate and apply complex numbers, object values, arrays of values,
+				calculate values based on dynamically obtained values from user input, 
+				or accomplish some other task needed for your animation,
+				you can supply your own function used for calculations.
+			</p>
+			<p>
+				A calculator function is any function with the following signature:
+				<br>
+				<code>calculatorFunction(distanceFraction, startValue, endValue, addlProperties)</code>
+				<br>
+				The distance fraction is a numeric value where 0 is the starting point (where the start value should be returned),
+				and 1 is end ending point (where the end value should be returned). Use any method you like for generating
+				the in-between value; just make sure that the value returned is one that the applicator function in use handles properly.
+				(Applicator functions are discussed in the next step of this tutorial.)
+				It is also possible to attach additional, custom properties to a sequence object or to the transformations within it,
+				in the case where some kind of extra data is needed to carry out the animation.
+				Those additional properties, if present, will be passed into any custom calculator function using the <code>addlProperties</code> argument.
+			</p>
+		</div>
+
 		<p class="PreviousTutorialLink">
 			<a href="tutorial02.html">Previous: 02 - Easing Functions</a>
 		</p>
