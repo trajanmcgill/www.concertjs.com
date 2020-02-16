@@ -602,7 +602,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 			<a href="tutorial01.html">Previous: 01 - Sequences and Transformations</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial03.html">Next: 03 - Applicators</a>
+			<a href="tutorial03.html">Next: 03 - Calculators</a>
 		</p>
 
 	</div>
@@ -629,11 +629,227 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #3
+			<h2>Calculators</h2>
+			<p>
+				A <em>calculator</em> is a function which looks at the start and end values of a target feature
+				and calculates the current value to apply.
+			</p>
+			<p>
+				In other words, the calculator function is what determines interpolated values to apply between keyframes.
+			</p>
+			<p>
+				Concert.js has four built-in calculator functions, allowing animation of several types of values.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- A Basic Explanation of Calculators -->
+			<h4>A Basic Explanation of Calculators</h4>
+			<p>
+				The first thing to understand about calculator functions is that they are
+				not the same thing as easing functions. Some animation libraries combine these two concepts,
+				but they are really two separate things.
+				<ul>
+					<li>
+						<strong>Easing Functions:</strong>
+						An easing function takes the start time, the end time, and the current time,
+						and it decides how far along the animation path the transformation has proceeded.
+						<br>
+						For instance, the <code>Concert.EasingFunctions.ConstantRate</code> function would calculate that
+						if 25% of the time has passed, then the animation should be 25% of the way along,
+						and therefore return 0.25.
+					</li>
+					<li>
+						<strong>Calculator Functions:</strong>
+						A calculator function then takes the distance fraction calculated by the easing function,
+						along with a start and end value (and optionally additional properties that we don't need
+						to worry about here), and figures out what the actual interpolated value is which should be
+						applied to the target object feature.
+						<br>
+						For instance, the simplest one, <code>Concert.Calculators.Linear</code>
+						(which is also the default if none is specified), just takes two numbers as the start and end values,
+						and returns a value in between according to the specified distance fraction.
+						That is, if the distance fraction calculated by the easing function is 0.5, the start value is 6,
+						and the end value is 8, then the Linear calculator will return 7 (halfway between the start and end).
+					</li>
+				</ul>
+			</p>
+			<p>
+				Why does this have a separate function? Because not all things animated are simple numeric values.
+				Concert.js can animate more complex things as well, like text content, or color values, which are not
+				simple points along a number line.
+			</p>
 		</div>
+
+		<div class="TutorialStep"> <!-- The Built-in Calculator Functions -->
+			<h4>The Built-in Calculator Functions</h4>
+			<p>
+				There are four pre-built calculator functions:
+				<ul>
+					<li>
+						<code>Concert.Calculators.Color</code>:
+						The Color calculator allows for smoothly animating color transitions, including alpha channel (transparency) values.
+						This function takes start and end values in the form of CSS color style value strings, specified
+						in any of hex, rgb, rgba, hsl, or hsla format (start and end values must be in the same format as each other).
+						It returns a color string in the same format, interpolated between the start and end values.
+					</li>
+					<li>
+						<code>Concert.Calculators.Discrete</code>:
+						The Discrete calculator can take any type of start and end value. It does no interpolation at all,
+						simply returning the start value if the transformation hasn't reached the end yet,
+						or the end value if it has. This calculator is good for things like changing text strings,
+						where interpolation makes no sense, or for animating numeric values that are meant to jump
+						from one value to another rather than be interpolated.
+					</li>
+					<li>
+						<code>Concert.Calculators.Linear</code>:
+						The Linear calculator simply calculates a linear interpolation between two numeric values.
+					</li>
+					<li>
+						<code>Concert.Calculators.Rotational</code>:
+						The Rotational calculator calculates a set of coordinates resulting from rotational motion.
+						Its start and end values are objects that define the start and end points of rotational motion,
+						and the calculator function will interpolate between those, returning coordinates in the form <code>[left, top]</code>.
+					</li>
+				</ul>
+			</p>
+			<p>
+				Below is an example that uses all four:
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame TallDemoFrame" src="TutorialExamples/Page03Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page03Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>const Sun = document.getElementById("Sun"),
+  Neptune = document.getElementById("Neptune"),
+  OrbitTime = 2000, Orbits = 4,
+  CaptionBox = document.getElementById("Caption");
+
+let animations =
+[
+  {
+    target: Neptune,
+    feature: ["left", "top"],
+    unit: "px",
+    applicator: Concert.Applicators.Style,
+    calculator: Concert.Calculators.Rotational,
+    keyframes:
+    {
+      times: [0, Orbits * OrbitTime],
+      values:
+      [
+        {
+          centerX: 240, centerY: 130,
+          radius: 100, angle: 0,
+          offsetX: -10, offsetY: -10
+        },
+        {
+          centerX: 240, centerY: 130,
+          radius: 100, angle: Orbits * 2 * Math.PI,
+          offsetX: -10, offsetY: -10
+        }
+      ]
+    }
+  },
+
+  {
+    target: Sun,
+    feature: ["left", "top", "width", "height"],
+    unit: "px",
+    applicator: Concert.Applicators.Style,
+    calculator: Concert.Calculators.Linear,
+    keyframes:
+    {
+      times: [OrbitTime, 2 * OrbitTime, 3 * OrbitTime],
+      values:
+      [
+        [215, 105, 50, 50],
+        [220, 110, 40, 40],
+        [185, 75, 110, 110]
+      ]
+    }
+  },
+
+  {
+    target: Sun,
+    feature: "background-color",
+    unit: null,
+    applicator: Concert.Applicators.Style,
+    calculator: Concert.Calculators.Color,
+    keyframes:
+    {
+      times: [OrbitTime, 2 * OrbitTime, 3 * OrbitTime],
+      values: ["#ffff00", "#ffffcc", "#aa0000"]
+    }
+  },
+
+  {
+    target: CaptionBox,
+    feature: "innerHTML",
+    applicator: Concert.Applicators.Property,
+    calculator: Concert.Calculators.Discrete,
+    keyframes:
+    {
+      times: [0, OrbitTime, 3 * OrbitTime],
+      values: ["Main Sequence Star", "Transition", "Red Giant"]
+    }
+  }
+];
+
+let sequence = new Concert.Sequence();
+sequence.addTransformations(animations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				The above code defines four distinct animations.
+			</p>
+			<p>
+				The first applies to a <code>div</code> with the ID "Neptune".
+				It modifies the <code>left</code> and <code>top</code> CSS properties,
+				and it does so using the <code>Rotational</code> calculator.
+				When run, this causes the div to move in a rotational pattern around the defined center point.
+				You may have noticed that the keyframe values given to it include 6 properties.
+				All of them can be animated. Here we only are animating the angle,
+				but it is possible to animate the center point, the radius, and the offset values as well.
+				(The offsetX and offsetY values are adjustments added to the final, calculated coordinates.
+				Remember that CSS positions define an element's top, left corner. Often what you really want
+				in rotational motion is not to orbit the top, left corner of an object around a center point,
+				but to orbit the center of that object around the center point. The offset values move the calculator's
+				output over and therefore can adjust for that problem.)
+			</p>
+			<p>
+				The second animation uses the <code>Linear</code> calculator to adjust four style properties
+				of the "Sun" object: <code>left</code>, <code>top</code>, <code>width</code>, and <code>height</code>.
+				This is very similar to animations we've seen in previous steps of this tutorial.
+			</p>
+			<p>
+				The third animation introduces the <code>Color</code> calculator.
+				This one modifies the <code>background-color</code> style of the "Sun" object.
+				Three keyframes are defined. At the first, the color is "#ffff00" (yellow).
+				Between the first and second keyframes, the color will gradually fade to the second value: "#ffffcc" (whitish-yellow),
+				and then finally between the second and third keyframes the color fades to "#aa0000" (red).
+				If we preferred, we could have used "rgb(255, 255, 0)" or rgba, hsl, or hsla equivalents instead.
+			</p>
+			<p>
+				The fourth animation uses the <code>Discrete</code> calculator.
+				This simply maintains each value unchanged until the next keyframe hits,
+				then applies the next value and maintains that, and so on.
+				<br>
+				Note: If you're paying attention closely, you'll have spotted that this transformation definition
+				also uses a new applicator, <code>Concert.Applicators.Property</code>.
+				This is needed for reasons that will become clear in the next tutorial step,
+				where applicator functions are discussed.
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial02.html">Previous: 02 - Easing Functions</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial04.html">Next: 04 - Applicators</a>
+		</p>
 	</div>
 </template:data>
 

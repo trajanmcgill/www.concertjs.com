@@ -1,0 +1,56 @@
+body
+{
+	color: black;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+	margin: 0;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#SolarSystem
+{
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 480px;
+	height: 260px;
+}
+
+#Sun
+{
+	background-color: #ffff00;
+	position: absolute;
+	left: 215px;
+	top: 105px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+#Neptune
+{
+	background-color: #0088ff;
+	position: absolute;
+	left: 330px;
+	top: 120px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+}
+
+#Caption
+{
+	width: 480px;
+	height: 20px;
+	font-size: 18px;
+	text-align: center;
+	color: white;
+}
