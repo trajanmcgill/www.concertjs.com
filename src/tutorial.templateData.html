@@ -596,6 +596,11 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				the animation in motion as usual, and our custom function gets used internally
 				by Concert.js during the animation for determining where to place the sliding box.
 			</p>
+			<p>
+				Custom easing functions can work any way you like.
+				Just remember that they can be called many times per second in a running animation,
+				so how quickly they run can have an effect on how smoothly your animation runs.
+			</p>
 		</div>
 
 		<p class="PreviousTutorialLink">
@@ -604,7 +609,6 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 		<p class="NextTutorialLink">
 			<a href="tutorial03.html">Next: 03 - Calculators</a>
 		</p>
-
 	</div>
 </template:data>
 
@@ -867,6 +871,10 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				in the case where some kind of extra data is needed to carry out the animation.
 				Those additional properties, if present, will be passed into any custom calculator function using the <code>addlProperties</code> argument.
 			</p>
+			<p>
+				Custom calculators can work any way you like. Just remember that they can be called many times per second in a running animation,
+				so how quickly they run can have an effect on how smoothly your animation runs.
+			</p>
 		</div>
 
 		<p class="PreviousTutorialLink">
@@ -899,11 +907,181 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #4
+			<h2>Applicators</h2>
+			<p>
+				An <em>applicator</em> is a function which takes whatever value is calculated by the combination of the
+				easing function and the calculator function, and actually applies it to the target.
+			</p>
+			<p>
+				That is, if a sequence is animating the <code>left</code> style property of a moving object,
+				the applicator function is what actually sets the <code>left</code> value.
+			</p>
+			<p>
+				Concert.js has three built-in applicators for use in the most common situations.
+				As with easing functions and calculator functions, custom applicators can be used as well.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- A Basic Explanation of Applicators -->
+			<h4>A Basic Explanation of Applicators</h4>
+			<p>
+				The purpose of an applicator function is to take the value applicable to the present frame
+				and apply it to the object being manipulated by the animation.
+			</p>
+			<p>
+				Because Concert.js can be used to animate just about anything, it is necessary to be able to
+				apply all kinds of values to all kinds of objects. The values might be CSS styles, or innerHTML text content,
+				for instance, or some kind of complex, user-defined object that needs to be mapped in a custom way
+				to whatever is being manipulated in the animation sequence.
+			</p>
 		</div>
+
+		<div class="TutorialStep"> <!-- The Built-in Applicator Functions -->
+			<h4>The Built-in Applicator Functions</h4>
+			<p>
+				There are three built-in applicator functions:
+				<ul>
+					<li>
+						<code>Concert.Applicators.Property</code>:
+						The Property applicator simply takes whatever value is passed to it and applies it to the target object
+						feature, treating the feature as a <em>property</em> of the object.
+						That is, if the object being animated is an object <code>captionDiv</code>,
+						the target feature is <code>"innerHTML"</code>, and the value being applied is <code>"caption text"</code>,
+						it will simply result in the equivalent of the following value assignment:<br>
+						<code>captionDiv.innerHTML = "caption text";</code><br>
+						The Property applicator is the default, used if none is specified and the default isn't changed.
+					</li>
+					<li>
+						<code>Concert.Calculators.Style</code>:
+						The Style applicator takes the value passed to it and applies it to the target object feature,
+						treating the feature as a <em>CSS style property</em>.
+						That is, if the object being animated is is an object <code>colorDiv</code>,
+						the target feature is <code>"background-color"</code>,
+						and the value being applied is <code>"rgb(255, 0, 0)"</code>,
+						it will result in the equivalent of the following value assignment:<br>
+						<code>colorDiv.style.backgroundColor = "rgb(255, 0, 0)";</code><br>
+						Note that style properties are normalized automatically, so you can specify target features
+						which are styles using either their CSS-style name (e.g. <code>background-color</code>)
+						or the equivlant JavaScript property-style name (e.g. <code>backgroundColor</code>).
+					</li>
+					<li>
+						<code>Concert.Calculators.SVG_ElementAttribute</code>:
+						The SVG_ElementAttribute applicator takes the value passed to it and applies it to the target object feature,
+						treating the feature as an <em>attribute</em> of the object.
+						That is, if the object being animated is an object <code>svgRect</code>,
+						the target feature is <code>width</code>, and the value being applied is <code>90</code>,
+						it will result in the equivalent of the following value assignment:<br>
+						<code>svgRect.setAttribute("width", 90);</code>
+					</li>
+				</ul>
+			</p>
+			<p>
+				Below is an example where you can see all three in use:
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page04Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page04Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>const WideningDiv = document.getElementById("WideningDiv"),
+  WideningSvgRect = document.getElementById("WideningSvgRect"),
+  CaptionBox = document.getElementById("Caption");
+
+let animations =
+  [
+    {
+      target: WideningDiv,
+      feature: "width",
+      unit: "px",
+      applicator: Concert.Applicators.Style,
+      calculator: Concert.Calculators.Linear,
+      keyframes: { times: [0, 1500], values: [100, 480] }
+    },
+
+    {
+      target: WideningSvgRect,
+      feature: "width",
+      unit: "px",
+      applicator: Concert.Applicators.SVG_ElementAttribute,
+      calculator: Concert.Calculators.Linear,
+      keyframes: { times: [0, 1500], values: [100, 480] }
+    },
+
+    {
+      target: CaptionBox,
+      feature: "innerHTML",
+      unit: null,
+      applicator: Concert.Applicators.Property,
+      calculator: Concert.Calculators.Discrete,
+      keyframes:
+      {
+        times: [0, 750, 1500],
+        values: ["Start Value", "Midpoint Value", "End Value"]
+      }
+    }
+  ];
+
+let sequence = new Concert.Sequence();
+sequence.addTransformations(animations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				The first two transformation definitions above are nearly identical.
+				The first is just like many we have seen in earlier steps of this tutorial.
+				But SVG objects don't get altered in quite the same way as regular HTML elements,
+				so to accomplish the same width-altering animation with the SVG <code>rect</code>,
+				we use a different applicator: <code>Concert.Applicators.SVG_ElementAttribute</code>.
+				Everything else about this transformation works exactly the same.
+			</p>
+			<p>
+				The third transformation is on the caption box. To change the text inside the <code>div</code> element,
+				we're just changing the <code>innerHTML</code> property. This is not a style, but a direct property of the
+				<code>div</code> object, so the applicator used in most of the examples up to now does not apply.
+				Instead, we use the <code>Concert.Applicators.Property</code> applicator.
+				(You will probably also note that we used the <code>Concert.Calculators.Discrete</code> calculator here,
+				because our usual calculator, <code>Concert.Calculators.Linear</code>, tries to interpolate between
+				start and end values, which makes no sense in the case of wholesale text replacement.)
+			</p>
+		</div>
+	
+		<div class="TutorialStep"> <!-- Custom Applicator Functions-->
+			<h4>Custom Applicator Functions</h4>
+			<p>
+				You are not limited to the built-in applicator functions.
+				As with easing functions, and calculator functions,
+				user-provided applicator functions are easy to integrate with Concert.js.
+				If you wish to apply complex numbers, object values, arrays of values,
+				or make use of any other type of value or target object and feature other than those
+				handled by the defaults, you can supply your own function that will be called
+				on each frame when it is time to apply a new value to the animated target.
+			</p>
+			<p>
+				An applicator function is any function with the following signature:
+				<br>
+				<code>function applicatorFunction(target, feature, value, unit)</code>
+				<br>
+				The target passed in is the object being modified by the animation sequence.<br>
+				The feature passed in is the property being manipulated on that object.<br>
+				The value passed in is the new thing the applicator function should apply to the target object.<br>
+				The unit passed in is the unit which should be attached to the value.
+				(For example, for CSS styles, this is often "px", or "%", or some other unit applicable to element styles.
+				But in many cases, a unit isn't applicable at all, and this value may be null.)<br>
+				No return value is expected.
+			</p>
+			<p>
+				Your custom function should be able to handle the values passed it by the sequence you define and apply them to the target objects.<br>
+				It can do whatever you like; just do be aware that this function may get called many times per second, and so its speed does matter.
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial03.html">Previous: 03 - Calculators</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial05.html">Next: 05 - Setting Defaults</a>
+		</p>
 	</div>
 </template:data>
 
