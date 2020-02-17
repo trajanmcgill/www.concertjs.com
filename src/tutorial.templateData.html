@@ -1106,11 +1106,125 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #5
+			<h2>Setting Defaults</h2>
+			<p>
+				It is often the case that many transformation sets need to be added to a sequence all or most of which
+				share many settings. More efficient than specifying the same values over and over again is using
+				default values.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- How to Set and Use Defaults -->
+			<h4>How to Set and Use Defaults</h4>
+			<p>
+				The <code>Concert.Sequence</code> object provides a method called <code>setDefaults()</code>,
+				which allows setting a sequence's default applicator, calculator, easing function, and unit.
+				Those defaults are applied to all subsequently added transformations that do not explicitly specify those things
+				in their own definitions.
+			</p>
+			<p>
+				<code>setDefaults</code> takes a single argument, an object which looks like this:<code><pre>
+{
+  applicator: VALUE,
+  calculator: VALUE,
+  easing: VALUE,
+  unit: VALUE
+}</pre></code>
+			</p>
+			<p>
+				Any or all of the above properties can be specified, and only those specified are set.
+				(That is, if the default calculator is already <code>Concert.Calculators.Rotational</code>,
+				and <code>setDefaults</code> is called again to change the default easing function but
+				a new default calculator is not specified, then the sequence's default calculator
+				will remain set to <code>Concert.Calculators.Rotational</code>.)
+			</p>
+			<p>
+				<strong>Important note:</strong>
+				Transformations are given their applicator, calculator, easing function, and unit
+				<em>at the time they are added to the sequence</em>. Setting new defaults therefore
+				will only affect transformations added to the sequence <em>after</em> the new defaults
+				are set. The <code>setDefaults()</code> method never changes transformations already added.
+			</p>
+			<p>
+				Below see an example of setting defaults to avoid code duplication:
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page05Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page05Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>const WideningDiv1 = document.getElementById("WideningDiv1"),
+  WideningDiv2 = document.getElementById("WideningDiv2"),
+  WideningDiv3 = document.getElementById("WideningDiv3");
+
+let sequence = new Concert.Sequence();
+
+sequence.setDefaults(
+  {
+    applicator: Concert.Applicators.Style,
+    calculator: Concert.Calculators.Linear,
+    easing: Concert.EasingFunctions.QuadInOut,
+    unit: "px",
+  });
+
+let animations =
+  [
+    {
+      target: WideningDiv1, feature: "width",
+      keyframes: { times: [0, 1500], values: [120, 480] }
+    },
+
+    {
+      target: WideningDiv2, feature: "width",
+      keyframes: { times: [0, 1500], values: [120, 480] }
+    },
+
+    {
+      target: WideningDiv3, feature: "width",
+      unit: "%",
+      keyframes: { times: [0, 1500], values: [25, 100] }
+    }
+  ];
+
+sequence.addTransformations(animations);
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+</code></pre>
+			</p>
+			<p>
+				The above defines three transformations. But because the call to <code>setDefaults()</code>
+				has defined default values for applicator, calculator, easing function, and unit,
+				none of those three things need to be declared in the transformation definitions themselves
+				if those default values are what is needed. Note that the third transformation above
+				(which specifies a "%" unit instead of using "px" like the others) demonstrates
+				how it is perfectly possible to use values other than the defaults if you want.
+			</p>
 		</div>
+
+		<div class="TutorialStep"> <!-- Pre-defined Defaults -->
+			<h4>Pre-defined Defaults</h4>
+			<p>
+				We have been explicitly declaring values for most of these parameters in this tutorial sequence so far,
+				but that was just to show how things work. There are initial default values which you can rely upon
+				as well, specifying only those parameters which differ from those defaults.
+			</p>
+			<p>
+				Here is what the defaults are set to automatically in a newly created Concert.Sequence object:
+			</p>
+			<p>
+				<code>applicator: Concert.Applicators.Property</code><br>
+				<code>calculator: Concert.Calculators.Linear</code><br>
+				<code>easing: Concert.EasingFunctions.ConstantRate</code><br>
+				<code>unit: null</code>
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial04.html">Previous: 04 - Applicators</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial06.html">Next: 06 - Starting, Stopping, and Seeking</a>
+		</p>
 	</div>
 </template:data>
 

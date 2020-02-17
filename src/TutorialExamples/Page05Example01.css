@@ -1,0 +1,33 @@
+body
+{
+	color: black;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+	margin: 0;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.WideningDiv
+{
+	position: relative;
+	left: 0;
+	width: 120px;
+	height: 30px;
+}
+
+#WideningDiv1
+{ background-color: yellow; }
+
+#WideningDiv2
+{ background-color: red; }
+
+#WideningDiv3
+{ background-color: green; }
