@@ -79,7 +79,7 @@
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -372,7 +372,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -624,7 +624,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><strong>Calculators</strong></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -898,7 +898,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><strong>Applicators</strong></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -1097,7 +1097,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><strong>Setting Defaults</strong></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -1223,14 +1223,14 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 			<a href="tutorial04.html">Previous: 04 - Applicators</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial06.html">Next: 06 - Starting, Stopping, and Seeking</a>
+			<a href="tutorial06.html">Next: 06 - Starting, Stopping, Seeking, and Synchronizing</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 06: Starting, Stopping, and Seeking -->
+<!-- TUTORIAL 06: Starting, Stopping, Seeking, and Synchronizing -->
 <template:data target="tutorial06.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
@@ -1240,7 +1240,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><strong>Starting, Stopping, and Seeking</strong></li>
+				<li><strong>Starting, Stopping, Seeking, and Synchronizing</strong></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -1249,11 +1249,287 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #6
+			<h2>Starting, Stopping, Seeking, and Synchronizing</h2>
+			<p>
+				There are a number of options for how to start and move around in an animation sequence,
+				including the possibility of synchronizing it to other things (e.g., video or audio,
+				other Concert.js sequences, or user controls).
+			</p>
+			<p>
+				See below to learn how to use some of these possibilities.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- The Basics of Running Sequences -->
+			<h4>The Basics of Running Sequences</h4>
+			<p>
+				So far, we've run sequences using the <code>begin()</code> method.
+				We will examine that function shortly.
+				First let's take a step back and look at a more general function for running Concert.js sequences.
+			</p>
+			<p>
+				The fundamental method for making a sequence go is the <code>run()</code> method.
+				The <code>run()</code> method takes a single, optional parameter, an object which can have
+				any or all of a number of properties. For a full explanation, see the <a href="Reference/index.html">Reference documentation</a>.
+				But here is a rough overview of them all.
+			</p>
+			<p>
+				<ul>
+					<li>
+						<code>after</code>:
+						This specifies what to do upon reaching the end of the sequence timeline.
+						It will be covered in the <a href="tutorial07.html">tutorial step on Repeating</a>.</li>
+					<li>
+						<code>autoStopAtEnd</code>:
+						This specifies whether to automatically stop running the sequence when it hits the end.
+						Defaults to <code>true</code>.
+					</li>
+					<li>
+						<code>before</code>:
+						This specifies what to do when encountering time values before the beginning of the sequence timeline.
+						It will be covered in the <a href="tutorial07.html">tutorial step on Repeating</a>.</li>
+					</li>
+					<li>
+						<code>generateValues</code>:
+						Transformations can have start and end values that are dynamically generated at some later point rather than
+						being fixed at the time they are added to the sequence. This parameter specifies whether the sequence should
+						calculate all those values automatically just before running the animation.
+						This feature is covered in <a href="tutorial08.html">tutorial step on Indexing and Value Generators</a>.
+						Defaults to <code>true</code>.
+					</li>
+					<li>
+						<code>initialSeek</code>:
+						Numeric value indicating an intial seek point along the timeline.
+						This allows starting a sequence from some point other than the beginning.
+						If a non-null value is given for this parameter, the sequence will seek to the specified time before commencing the run.
+					</li>
+					<li>
+						<code>onAutoStop</code>:
+						This allows you to specify a callback function that will be invoked just after automatically stopping at the end of the sequence.
+						Note that it will only ever be called if the <code>autoStopAtEnd</code> parameter mentioned above is set to <code>true</code>.
+					</li>
+					<li>
+						<code>pollingInterval</code>:
+						Numeric value indicating the time in between animation updates. This allows you to manually set how far apart (in milliseconds)
+						the beginnings of successive frames of the animation are. When set to any value below 1 (0 is the default),
+						Concert will handle this automatically using <code>window.requestAnimationFrame()</code>.
+					</li>
+					<li>
+						<code>speed</code>:
+						Numeric value indicating a run speed multiplier (0.5 = half-speed, 2 = double-speed, and so on).
+					</li>
+					<li>
+						<code>stretchStartTimeToZero</code>:
+						As will be explained in the <a href="tutorial07.html">tutorial step on Repeating</a>, various behaviors can be set to occur
+						when the time goes past the end of the timeline, or before it reaches the beginning of it.
+						If the first segment of animation begins at some time later than 0, however, this can bring about unexpected triggering of
+						the sequence's "before" behavior or auto-stop when the sequence is run from time 0, since that is technically before the beginning
+						of the sequence. Sometimes it is therefore useful for the sequence to behave as if the start point of the whole sequence is at time 0,
+						even when the first segment of animation actually begins later than this.
+						If <code>stretchStartTimeToZero</code> is set to <code>true</code>, the sequence will act as though its overall start is at time 0.
+					</li>
+					<li>
+						<code>synchronizeTo</code>:
+						This allows setting a synchronization source for the sequence. It can take any of the following:
+						<ul>
+							<li><code>null</code>: The sequence will be locked to the system clock.</li>
+							<li>
+								A <code>function</code> object:
+								The sequence will call this function every time the polling interval is reached, and the function's
+								return value will be used as the current time to seek to.
+								Using a custom function here allows you to synchronize the sequence to anything you want
+								(for instance, locking it to the current value of a UI element, such as a slider,
+								or to another <code>Concert.Sequence</code> object.)
+							</li>
+							<li>
+								An HTML <code>audio</code> or <code>video</code> DOM object:
+								The sequence will be locked to the <code>currentTime</code> property of the media element (converted to milliseconds).
+								This allows the sequence to remain synchronized to a media element even when it is paused, scrubbed, or the user skips around.
+							</li>
+						</ul>
+					</li>
+					<li>
+						<code>timeOffset</code>:
+						Numeric value indicating a constant value to be added to the current time before seeking.
+						This is useful if you want your sequence to run a fixed amount ahead of or behind your synchronization source.
+						If it is <code>null</code>, the value is calculated automatically, assuming you intend for the current sequence seek time
+						to be matched to the current position of the synchronization source.
+					</li>
+					<li>
+						<code>useSoleControlOptimization</code>:
+						Boolean value, indicating whether the sequence can assume it is the only thing controlling
+						all the object properties it is modifying while running.
+						Setting it to <code>true</code> allows Concert.js to make optimizations that speed up seek times and therefore improve performance.
+						But if anything else will be touching the features being animated, this should be set to <code>false</code>.
+					</li>
+				</ul>
+			</p>
 		</div>
+		<div class="TutorialStep"> <!-- The Auxiliary Control Methods -->
+			<h4>The Auxiliary Control Methods</h4>
+			<p>
+				There are several shortcut methods which can be used for making a sequence run, along with several other useful, related functions.
+				These can be seen in the below example. If you experiment with the buttons on this demo, you can see how the different functions work.
+				<ul>
+					<li>
+						<strong>begin</strong>:
+						Try clicking this button at any time. You'll see the yellow box start at the beginning and move to the end,
+						without regard for whether the video is running.
+					</li>
+					<li>
+						<strong>follow</strong>:
+						Try starting the video, and then clicking the "follow" button.
+						You'll notice that the yellow box moves in sync with the video, but offset by whatever position the video was in when
+						the follow button was clicked.
+					</li>
+					<li>
+						<strong>syncTo</strong>:
+						Try clicking the "syncTo" button before or after starting the video.
+						You'll see that the yellow box moves in sync with the video as with "follow", except that it jumps
+						to the position the video is in (that is, it is like "follow" with an offset of 0).
+					</li>
+					<li>
+						<strong>stop</strong>: The <code>stop()</code> method will stop a sequence at any time.
+					</li>
+					<li>
+						<strong>seek</strong>:
+						Try entering a time value in millseconds (0-5000 is the range of this animation),
+						then hitting the "seek" button. You'll see the yellow box immediately jump to whatever time position you specified--
+						unless the animation is already running, in which case your seek will be overridden so fast you probably won't see
+						it happen at all.
+					</li>
+				</ul>
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame TallDemoFrame" src="TutorialExamples/Page06Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page06Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				You also may notice that in this case the sequence does not stop running automatically when using <code>syncTo</code>
+				or <code>follow</code>. This allows you to scrub the video back and forth even after it is finished, or restart it, and
+				the sequence is still locked to it. It does mean that the poller is still running, though, and continually updating
+				the position of the yellow box. In many cases that is an unnecessary waste of processing, and it is only done here to
+				demonstrate how these functions work. Often a better route would be to set <code>onplay</code>, <code>onpause</code>,
+				and <code>onseeked</code> event handlers to run the sequence's <code>syncTo()</code>, <code>stop()</code>,
+				and <code>seek()</code> methods, respectively.
+			</p>
+			<p>
+				Below is the source code for this example. In comments it shows how the various sequence start methods are all just shortcuts
+				for common ways of calling the <code>run()</code> method.
+				<pre><code>const BeginButton = document.getElementById("BeginButton"),
+  FollowButton = document.getElementById("FollowButton"),
+  SyncToButton = document.getElementById("SyncToButton"),
+  StopButton =  document.getElementById("StopButton"),
+  VideoElement = document.getElementById("MovingBoxVideo"),
+  MovingBox = document.getElementById("MovingBox"),
+  StatusBox = document.getElementById("StatusBox"),
+  SeekInput = document.getElementById("SeekInput"),
+  SeekButton =  document.getElementById("SeekButton");
+
+function showStatus(isRunning)
+{ StatusBox.innerHTML = "Running: " + (isRunning === true); }
+
+let sequence = new Concert.Sequence();
+sequence.setDefaults({ applicator: Concert.Applicators.Style, unit: "px" });
+
+let animation =
+{
+  target: MovingBox, feature: "left",
+  keyframes: { times: [0, 5000], values: [0, 270] }
+};
+
+let params = { onAutoStop: function() { showStatus(false); } };
+
+sequence.addTransformations(animation);
+
+BeginButton.onclick =
+  function ()
+  {
+    showStatus(true);
+
+    sequence.begin(params);
+    // equivalent to:
+    //   sequence.run(
+    //   {
+    //     synchronizeTo: null, initialSeek: 0,
+    //     timeOffset: null, autoStopAtEnd: true,
+    //     [plus whatever properties are set in the params variable]
+    //   });
+  };
+
+FollowButton.onclick =
+  function ()
+  {
+    showStatus(true);
+
+    sequence.follow(VideoElement, params);
+    // equivalent to:
+    //   sequence.run(
+    //	 {
+    //     synchronizeTo: VideoElement, initialSeek: null,
+    //     timeOffset: null, autoStopAtEnd: false,
+    //     [plus whatever properties are set in the params variable]
+    //   });
+  };
+
+SyncToButton.onclick =
+  function ()
+  {
+    showStatus(true);
+    
+    sequence.syncTo(VideoElement, params);
+    // equivalent to:
+    //   sequence.run(
+    //	 {
+    //     synchronizeTo: VideoElement, initialSeek: null,
+    //     timeOffset: 0, autoStopAtEnd: false,
+    //     [plus whatever properties are set in the params variable]
+    //   });
+  };
+
+StopButton.onclick = function () { sequence.stop(); showStatus(false); };
+
+SeekButton.onclick =
+  function ()
+  {
+    let position = parseInt(SeekInput.value);
+    sequence.seek(isNaN(position) ? 0 : position);
+  };
+
+SeekInput.onkeyup =
+  function (event)
+  {
+    if (event.keyCode === 13)
+      SeekButton.click();
+  };</code></pre>
+			</p>
+			<p>
+				A few more functions that may come in handy occasionally are:
+	 			<ul>
+					 <li>
+						 <code>getCurrentTime()</code>, which gets the current position along a sequence's timeline.
+					 </li>
+					 <li>
+						 <code>getStartTime()</code>, which gets the start time of a sequence's timeline.
+						 (The start time of a sequence is considered to be the first start time of any transformation within that sequence.)
+					 </li>
+					 <li>
+						<code>getEndTime()</code>, which gets the end time of a sequence's timeline.
+						(The end time of a sequence is considered to be the last end time of any transformation within that sequence.)
+					 </li>
+					 <li>
+						<code>isRunning()</code>, which returns a Boolean value indicating whether the sequence is presently running.
+					 </li>
+				</ul>
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial05.html">Previous: 05 - Setting Defaults</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial07.html">Next: 07 - Synchronizing</a>
+		</p>
 	</div>
 </template:data>
 
@@ -1269,7 +1545,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><strong>Synchronizing</strong></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -1298,7 +1574,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><strong>Repeating</strong></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -1327,7 +1603,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><strong>Custom Easing Functions, Calculators, and Applicators</strong></li>
@@ -1356,7 +1632,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>
@@ -1385,7 +1661,7 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 				<li><a href="tutorial03.html">Calculators</a></li>
 				<li><a href="tutorial04.html">Applicators</a></li>
 				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, and Seeking</a></li>
+				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><a href="tutorial07.html">Synchronizing</a></li>
 				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><a href="tutorial09.html">Custom Easing Functions, Calculators, and Applicators</a></li>

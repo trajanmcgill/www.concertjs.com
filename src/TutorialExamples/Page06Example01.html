@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <title>Concert.js Tutorial Step 3</title>
+	<link rel="stylesheet" type="text/css" href="/TutorialExamples/Page06Example01.css" />
+</head>
+<body>
+	<div id="AllLayout">
+		<div id="LeftPanel">
+			<div><button id="BeginButton" type="button">begin</button></div>
+			<div><button id="FollowButton" type="button">follow</button></div>
+			<div><button id="SyncToButton" type="button">syncTo</button></div>
+			<div><button id="StopButton" type="button">stop</button></div>
+		</div>
+		<div id="CenterPanel">
+			<video id="MovingBoxVideo" controls src="Moving Box.mp4"></video>
+			<div id="MovingBox"></div>
+			<div id="StatusBox">Running: false</div>
+		</div>
+		<div id="RightPanel">
+			<div><input id="SeekInput" type="number" value="0" min="0" max="5000"></div>
+			<div><button id="SeekButton" type="button">seek</button></div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="/Components/Concert.js/Concert.js"></script>
+	<script type="text/javascript" src="/TutorialExamples/Page06Example01.js"></script>
+</body>
+</html>
