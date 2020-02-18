@@ -1,0 +1,50 @@
+body
+{
+	color: #d7ba7d;
+	background-color: #1e1e1e;
+	font-family: Calibri, "Lucida Grande", sans-serif;
+}
+
+button
+{
+	color: #fff;
+	background-color: #3276b1;
+	border: 1px solid #285e8e;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+#BackgroundArea
+{
+	position: relative;
+	width: 300px;
+	height: 100px;
+	background-color: gray;
+}
+
+.BoxDiv
+{
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 60px;
+	height: 26px;
+	padding-top: 4px;
+	font-size: 18px;
+	font-weight: bold;
+	color: black;
+	border-radius: 2px;
+	text-align: center;
+}
+
+#Box1
+{
+	top: 0px;
+	background-color: yellow;
+}
+
+#Box2
+{
+	top: 60px;
+	background-color: orange;
+}

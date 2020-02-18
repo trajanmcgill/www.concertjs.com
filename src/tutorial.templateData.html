@@ -1531,11 +1531,119 @@ SeekInput.onkeyup =
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #7
+			<h2>Repeating</h2>
+			<p>
+				It may be desireable for a sequence to keep doing something past its end, or before its beginning (for instance, loop a certain number of times).
+			</p>
+			<p>
+				See below to learn how.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- Repeat Behaviors -->
+			<h4>Repeat Behaviors</h4>
+			<p>
+				All the animations we've seen so far just run from the beginning to the end.
+				But what if you'd like the same thing to happen more than once, or bounce back and forth,
+				without having to suplicate all the more segments or keyframes again and again?
+			</p>
+			<p>
+				A sequence has two behavioral properties you can set to define how it acts past the end
+				and before the beginning of the defined timeline. Each of these can be set to three different values.
+			</p>
+			<p>
+				See these in action in the below example:
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page07Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page07Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>const SegmentDuration = 1250, MovementDistance = 240,
+  Box1 = document.getElementById("Box1"),
+  Box2 = document.getElementById("Box2"),
+  Defaults =
+  {
+    applicator: Concert.Applicators.Style,
+    easing: Concert.EasingFunctions.ConstantRate,
+    unit: "px"
+  };
+
+let bounceSequence = new Concert.Sequence(),
+  loopSequence = new Concert.Sequence();
+
+bounceSequence.setDefaults(Defaults);
+loopSequence.setDefaults(Defaults);
+
+bounceSequence.addTransformations(
+  {
+    target: Box1,
+    feature: "left",
+    keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
+  });
+
+loopSequence.addTransformations(
+  {
+    target: Box2,
+    feature: "left",
+    keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
+  });
+
+document.getElementById("GoButton").onclick =
+  function ()
+  {
+    bounceSequence.begin({ after: Concert.Repeating.Bounce(4) });
+    loopSequence.begin({ after: Concert.Repeating.Loop(4) });
+  };</code></pre>
+			</p>
+			<p>
+				The above code creates two Concert.Sequence objects.
+				Each has an identical animation, but one is begun with an <code>after</code> parameter of
+				<code>Concert.Repeating.Bounce(4)</code>, and the other is given an <code>after</code> value of
+				<code>Concert.Repeating.Loop(4)</code>.
+			</p>
+			<p>
+				Let's see what the different possible values mean that can be specified here.
+				<ul>
+					<li>
+						<code>Concert.Repeating.None</code>: This is the default. If the current time is before the start time,
+						the value set is the start value. If the current time is after the end time, the value set is the end value.
+					</li>
+					<li>
+						<code>Concert.Repeating.Bounce(bounceCount)</code>: This causes the sequence to alternate between running
+						forward and running in reverse. The <code>bounceCount</code> parameter tells it how many times to bounce
+						back the other way. (That is, a value of 0 would mean nothing extra happens at all, a value of 1 would
+						mean a single run-through in the opposite direction, and so on.)
+					</li>
+					<li>
+						<code>Concert.Repeating.Loop(loopbackCount)</code>: This causes the sequence to repeat in the forward direction
+						the specified number of times. The <code>loopbackCount</code> is the number of times it loops back. (So a value
+						of 0 would mean no looping, just playing through once. A value of 1 would mean it plays once then loops back once,
+						for 2 total play-throughs, and so on.)
+					</li>
+				</ul>
+			</p>
+			<p>
+				These values can be specified in two different ways.
+			</p>
+			<p>
+				First, they can be passed in a parameters object to any of the <code>run()</code>-type methods
+				(<code>run()</code>, <code>begin()</code>, <code>follow()</code>, or <code>syncTo()</code>),
+				as a value given to the <code>before</code> or <code>after</code> properties.
+				This is how it is done in the example above.
+			</p>
+			<p>
+				Alternatively, they can be passed ahead of time to the <code>setBefore()</code> or <code>setAfter()</code>
+				methods of the sequence object, and then those settings will be used whenever the sequence is run.
+			</p>
 		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial06.html">Previous: 06 - Starting, Stopping, Seeking, and Synchronizing</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial08.html">Next: 08 - Cloning and Retargeting</a>
+		</p>
 	</div>
 </template:data>
 
