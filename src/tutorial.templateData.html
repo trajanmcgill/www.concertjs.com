@@ -1560,14 +1560,14 @@ SeekInput.onkeyup =
 			</div>
 			<p>
 				<pre><code>const SegmentDuration = 1250, MovementDistance = 240,
-  Box1 = document.getElementById("Box1"),
-  Box2 = document.getElementById("Box2"),
-  Defaults =
-  {
-    applicator: Concert.Applicators.Style,
-    easing: Concert.EasingFunctions.ConstantRate,
-    unit: "px"
-  };
+    Box0 = document.getElementById("Box0"),
+    Box1 = document.getElementById("Box1"),
+    Defaults =
+    {
+      applicator: Concert.Applicators.Style,
+      easing: Concert.EasingFunctions.ConstantRate,
+      unit: "px"
+    };
 
 let bounceSequence = new Concert.Sequence(),
   loopSequence = new Concert.Sequence();
@@ -1577,14 +1577,14 @@ loopSequence.setDefaults(Defaults);
 
 bounceSequence.addTransformations(
   {
-    target: Box1,
+    target: Box0,
     feature: "left",
     keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
   });
 
 loopSequence.addTransformations(
   {
-    target: Box2,
+    target: Box1,
     feature: "left",
     keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
   });
@@ -1666,11 +1666,199 @@ document.getElementById("GoButton").onclick =
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #08
+			<h2>Cloning and Retargeting</h2>
+			<p>
+				Often it may be useful to define a sequence and then apply it to a new object later,
+				or to apply the same sequence to multiple objects.
+			</p>
+			<p>
+				See below to learn how.
+			</p>		</div>
+
+		<div class="TutorialStep"> <!-- Retargeting -->
+			<h4>Retargeting</h4>
+			<p>
+				A sequence can be created to animate some feature or set of features on one target object,
+				and then later changed so that it animates those features on another.
+			</p>
+			<p>
+				In the below example, try clicking the "Go" button, then clicking the "Retarget" button
+				and clicking "Go" again. You will see the sequence is retargeted back and forth between
+				the two boxes and the "Go" button causes animation of whichever object is currently
+				the sequence's target.
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame" src="TutorialExamples/Page08Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page08Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>const Box0 = document.getElementById("Box0"),
+  Box1 = document.getElementById("Box1");
+
+function newTargetLookup(oldTarget)
+{
+  let newTarget = (oldTarget.id.slice(-1) === "0") ? Box1 : Box0;
+  return newTarget;
+}
+
+let sequence = new Concert.Sequence();
+sequence.addTransformations(
+  {
+    target: Box0,
+    feature: "top",
+    applicator: Concert.Applicators.Style,
+    easing: Concert.EasingFunctions.QuadInOut,
+    unit: "px",
+    keyframes: { times: [0, 1000], values: [0, 100] }
+  });
+
+document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("RetargetButton").onclick = function () { sequence.retarget(newTargetLookup); };
+</code></pre>
+			</p>
+			<p>
+				The above code creates a single <code>Concert.Sequence</code> object,
+				and adds a transformation which changes the value of the "top" style property of Box1
+				from 0 to 100 over a time period of 1 second (1000 ms).
+			</p>
+			<p>
+				The <code>onclick</code> event of the "Go" button is set to begin the animation sequence.
+			</p>
+			<p>
+				The <code>onclick</code> event of the "Retarget" button is set to call the sequence's
+				<code>retarget()</code> method, passing in the <code>newTargetLookup</code> function.
+				The return value of that function is an object which <code>retarget()</code> then assigns
+				as the sequence's new target object. All other properties of the sequence remain the same.
+				Everything the sequence now does will apply to the new target instead of the old.
+			</p>
+			<p>
+				The <code>newTargetLookup()</code> function gets passed the current target object and can
+				therefore use that to decide what the new target should be. In this case, it just checks
+				to see which of the two boxes is presently targeted and returns the other one.
+			</p>
+			<p>
+				<strong>Likely Usage:</strong>
+				One useful application for the <code>retarget()</code> method is the case where it is desireable
+				to define a sequence before the object to which it will apply yet exists.
+				This may be handy for dynamically generated page content. You can create a sequence with a dummy target
+				object and then later retarget it when the HTML element or other object needed exists.
+				(Just make sure, of course, that you don't try to run a transformation that doesn't have a valid
+				target object; that could obviously result in run-time errors.)
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- Cloning -->
+			<h4>Cloning</h4>
+			<p>
+				A single sequence can be defined and then cloned so that the same transformations are applied to other target objects.
+			</p>
+			<p>
+				In the below example, when the "Go" button is first clicked, a sequence is begun that moves the two white dots.
+				One second later, the sequence is cloned into a new sequence targeting the two yellow boxes.
+				On subsequent clicks of the "Go" button, both sequences are run side-by-side from the beginning
+				(Until the "Reset" button is clicked, at which point the demonstration is set back to its initial state).
+				This also demonstrates that a sequence can even be cloned while it is already running and the new (cloned) sequence can
+				(if desired) automatically jump to the same position and start running also.
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame TallDemoFrame" src="TutorialExamples/Page08Example02.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page08Example02.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				The important part of the code is listed below.
+			</p>
+			<p>
+				<pre><code>const GoButton = document.getElementById("GoButton"),
+  ResetButton = document.getElementById("ResetButton");
+
+function doCloning(sequence)
+{
+  let newSequence = sequence.clone(
+    function (originalTargetObject)
+    {
+      return document.getElementById(originalTargetObject.id.replace("Dot", "Box"));
+    },
+    true);
+  return newSequence;
+}
+
+let originalSequence = new Concert.Sequence(),
+  clonedSequence = null;
+originalSequence.setDefaults(
+  {
+    applicator: Concert.Applicators.Style,
+    easing: Concert.EasingFunctions.QuadIn,
+    unit: "px"
+  });
+originalSequence.addTransformations(
+  [
+    {
+      target: document.getElementById("Dot0"),
+      feature: "top",
+      keyframes: { times: [0, 2000], values: [0, 230] }
+    },
+    {
+      target: document.getElementById("Dot1"),
+      feature: "top",
+      keyframes: { times: [0, 2000], values: [230, 0] }
+    }
+  ]);
+
+GoButton.onclick =
+  function ()
+  {
+    if (clonedSequence instanceof Concert.Sequence)
+      clonedSequence.begin();
+    else
+    {
+      GoButton.disabled = true;
+      window.setTimeout(
+        function()
+        {
+          clonedSequence = doCloning(originalSequence);
+          GoButton.disabled = false;
+        }, 1000);
+    }
+    originalSequence.begin();
+  };</code></pre>
+			</p>
+			<p>
+				The above code creates a single <code>Concert.Sequence</code> object to start with,
+				and adds two transformations to it: one moving Dot0 downward and one moving Dot1 upward.
+			</p>
+			<p>
+				When the user clicks the "Go" button, that sequence is begun. But a timeout is also set up to
+				fire 1 second later (while the animation is underway). When it does, it calls the
+				<code>doCloning()</code> function.
+			</p>
+			<p>
+				The <code>doCloning()</code> function takes the original sequence and clones it into a new sequence.
+				It calls the sequence's <code>clone()</code> method, which takes as its first argument a function used
+				to figure out what the target objects should be for each transformation in the new sequence.
+				In this case, it finds a corresponding element with the same <code>id</code> value except with the string "Box" replacing "Dot".
+				(So for all transformations in the original sequence targeting the element "Dot0", there will be corresponding
+				transformations in the cloned sequence targeting the element "Box0", and so on.)
+			</p>
+			<p>
+				The second (and optional) argument to a sequence's <code>clone()</code> method tells it
+				whether to match the original sequence's <em>running</em> status.
+				Here it is set to <code>true</code>, at a time when the original sequence is indeed running,
+				so the new clone sequence will, upon creation, immediately jump to the same position
+				as the one it is cloned from and begin running as well.
+			</p>
+			<p>
+				There is also allowed a third (optional) argument to this method, only meaningful when the second argument is <code>false</code>:
+				another Boolean value, indicating whether the new sequence should do an initial seek to the same position as the original sequence
+				but <em>without</em> necessarily starting to run.
+			</p>
 		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial07.html">Previous: 07 - Repeating</a>
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial09.html">Next: 09 - Indexing, Value Generator Functions</a>
+		</p>
 	</div>
 </template:data>
 

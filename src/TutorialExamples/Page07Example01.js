@@ -3,8 +3,8 @@
 	"use strict";
 
 	const SegmentDuration = 1250, MovementDistance = 240,
+		Box0 = document.getElementById("Box0"),
 		Box1 = document.getElementById("Box1"),
-		Box2 = document.getElementById("Box2"),
 		Defaults =
 		{
 			applicator: Concert.Applicators.Style,
@@ -20,14 +20,14 @@
 		
 	bounceSequence.addTransformations(
 		{
-			target: Box1,
+			target: Box0,
 			feature: "left",
 			keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
 		});
 
 	loopSequence.addTransformations(
 		{
-			target: Box2,
+			target: Box1,
 			feature: "left",
 			keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
 		});

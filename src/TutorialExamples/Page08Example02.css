@@ -3,6 +3,7 @@ body
 	color: #d7ba7d;
 	background-color: #1e1e1e;
 	font-family: Calibri, "Lucida Grande", sans-serif;
+	margin: 0;
 }
 
 button
@@ -17,34 +18,30 @@ button
 #BackgroundArea
 {
 	position: relative;
-	width: 300px;
-	height: 100px;
+	width: 480px;
+	height: 250px;
 	background-color: gray;
+}
+
+.DotDiv
+{
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	background-color: white;
+	border-radius: 10px;
 }
 
 .BoxDiv
 {
 	position: absolute;
-	left: 0px;
-	top: 0px;
-	width: 60px;
-	height: 26px;
-	padding-top: 4px;
-	font-size: 18px;
-	font-weight: bold;
-	color: black;
-	border-radius: 2px;
-	text-align: center;
-}
-
-#Box0
-{
-	top: 0px;
+	width: 20px;
+	height: 20px;
 	background-color: yellow;
+	border-radius: 0;
 }
 
-#Box1
-{
-	top: 60px;
-	background-color: orange;
-}
+#Dot0 {	left: 80px; top: 0px; }
+#Dot1 {	left: 180px; top: 230px; }
+#Box0 {	left: 280px; top: 0px; }
+#Box1 {	left: 380px; top: 230px; }
