@@ -1673,7 +1673,8 @@ document.getElementById("GoButton").onclick =
 			</p>
 			<p>
 				See below to learn how.
-			</p>		</div>
+			</p>
+		</div>
 
 		<div class="TutorialStep"> <!-- Retargeting -->
 			<h4>Retargeting</h4>
@@ -1881,10 +1882,233 @@ GoButton.onclick =
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
-			Tutorial page #09
+			<h2>Indexing and Value Generator Functions</h2>
+			<p>
+				A couple of features of Concert.js are good to know about for complex or pre-built animation sequences.
+			</p>
+			<p>
+				See below to learn more about indexing and value generators.
+			</p>
 		</div>
-		<div class="TutorialStep">
-			Here is where the instructions go.
+
+		<div class="TutorialStep"> <!-- Indexing -->
+			<h4>Indexing</h4>
+			<p>
+				A Concert.js sequence can contain large numbers of transformations, modifying numerous
+				different features of hundreds or thousands of objects. Concert.js animates all of these things
+				efficiently by using internal data structures that are well-tuned for quickly seeking to any point
+				along the animation timeline.
+			</p>
+			<p>
+				Similar to how an index is used in a relational database management system to allow
+				much quicker lookups, Concert.js sequences build their own indexes of the transformation segments
+				they contain, in order to allow much faster determination of which animation segments are active at any
+				point in the animation timeline and which objects and properties need to be touched to jump to that point.
+				Or, put simply, <em>Indexing</em> is the process by which a Concert.js sequence pre-builds various
+				data structures that help enable very short seek times when jumping to any point in the sequence timeline
+				This is useful for one-time jumps to any point, but much more important when doing a continuous run
+				of successive frame-by-frame seeks and updates while a sequence runs, in particular when it is trying
+				to stay in sync with something.
+			</p>
+			<p>
+				In most cases, indexing isn't something you need to worry about; it is automatically (and quickly) done
+				just before a sequence runs, if the sequence hasn't already been indexed since the last time new
+				transformations were added to it.
+			</p>
+			<p>
+				However, there may be occasions to invoke the indexer manually. For a very complex and large animation
+				sequence, if the automatic indexing creates noticable lag at the beginning before running starts,
+				it is possible to index the sequence at a time of your choosing so that it is already taken care of
+				when it comes time for the sequence to run.
+			</p>
+			<p>
+				This can be done using the sequence's <code>index()</code> method. This function takes two arguments.
+				The first is a function to call back when indexing is done. The second is a Boolean value indicating
+				whether to run the indexing asynchronously rather than all at once.
+				For more details on this method, see the <a href="/Reference/Concert.Sequence.html#index">reference documentation</a>.
+			</p>
 		</div>
+
+		<div class="TutorialStep"> <!-- Value Generators -->
+			<h4>Value Generators</h4>
+			<p>
+				Sometimes the overall path of an animation is known, but the actual values to apply are not determined until a later time.
+				It is possible to pre-build a sequence and add all its transformations, and at some other moment fill in the specific
+				keyframe or segment start and end values to use.
+			</p>
+			<p>
+				This is accomplished by having the sequence use <em>value generator functions</em> instead of actual values.
+			</p>
+			<p>
+				Below is an example of this technique being used hand-in-hand with the cloning functionality described
+				in the last step of this tutorial.
+			</p>
+			<div class="TutorialSingleDemoContainer">
+				<iframe class="TutorialDemoFrame TallDemoFrame" src="TutorialExamples/Page09Example01.html"></iframe>
+				<div class="TutorialDemoFrameCaption"><a href="CodeViewer.html?url=TutorialExamples/Page09Example01.html" target="_blank">See Full Source Code</a></div>
+			</div>
+			<p>
+				<pre><code>// Define sizes and rates and such.
+const MissileHeight = 15, ShipNoseOffset = 19, ShipWidth = 75,
+  ShipMovementDuration = 1500, ShipMovementAmount = 224,
+  MissileLeftRightDuration = 1000,
+  Directions = { Up: -1, None: 0, Down: 1 };
+
+// Grab references to page elements for use throughout the code.
+const BackgroundArea = document.getElementById("BackgroundArea"),
+  Ship = document.getElementById("Ship"),
+  GoButton = document.getElementById("GoButton"),
+  FireButton = document.getElementById("FireButton"),
+  StopButton = document.getElementById("StopButton");
+
+// Variable to store the present movement direction of the spaceship.
+let currentDirection = Directions.None;
+
+// Define a sequence which animates the ship moving downward.
+let shipDownSequence = new Concert.Sequence();
+shipDownSequence.addTransformations(
+  {
+    target: Ship,
+    feature: "top",
+    applicator: Concert.Applicators.Style,
+    unit: "px",
+    keyframes: { times: [0, ShipMovementDuration], values: [0, ShipMovementAmount] }
+  });
+
+// Define a sequence which animates the ship moving upward.
+let shipUpSequence = new Concert.Sequence();
+shipUpSequence.addTransformations(
+  {
+    target: Ship,
+    feature: "top",
+    applicator: Concert.Applicators.Style,
+    unit: "px",
+    keyframes: { times: [0, ShipMovementDuration], values: [ShipMovementAmount, 0] }
+  });
+
+// Define a sequence which animates a missile object with two transformations:
+//    1) A left-to-right movement with a known start and end point
+//    2) An up-or-down movement whose start and end values will have to be generated later
+// Note that this sequence has no target. It will never actually be used; only cloned
+// onto HTML element objects created later.
+let missileSequence = new Concert.Sequence();
+missileSequence.setDefaults({ applicator: Concert.Applicators.Style, unit: "px" });
+missileSequence.addTransformations(
+  [
+    {
+      target: null,
+      feature: "left",
+      easing: Concert.EasingFunctions.QuadIn,
+      keyframes: { times: [0, MissileLeftRightDuration], values: [ShipWidth, 480]}
+    },
+    {
+      target: null,
+      feature: "top",
+      easing: Concert.EasingFunctions.ConstantRate,
+      keyframes:
+      {
+        times: [0, ShipMovementDuration],
+
+        // Here we see the new thing introduced in this tutorial step.
+        // getMissileStartTop and getMissileEndTop are functions defined below.
+        // At the moment this sequence is begun, these functions will be called
+        // to generate start and end values for the transformation.
+        valueGenerators: [getMissileStartTop, getMissileEndTop]
+      }
+    }
+  ]);
+
+// Function which runs the downward-moving ship sequence specifying that upon completion
+// it should run the upward-moving ship sequence.
+function runShipDownSequence()
+{
+  currentDirection = Directions.Down;
+  shipDownSequence.begin({ onAutoStop: runShipUpSequence });
+}
+
+// Function which runs the upward-moving ship sequence specifying that upon completion
+// it should run the downward-moving ship sequence.
+function runShipUpSequence()
+{
+  currentDirection = Directions.Up;
+  shipUpSequence.begin({ onAutoStop: runShipDownSequence });
+}
+
+// Function which calculates the vertical position at which a new missile should appear,
+// based on the current position of the spaceship.
+function getMissileStartTop()
+{
+  let shipBoundingRect = Ship.getBoundingClientRect();
+  return Math.round(shipBoundingRect.top + ShipNoseOffset - MissileHeight / 2);
+}
+
+// Function which calculates the vertical position at which a new missile's animation
+// would end due to the upward or downward momentum imparted by the motion of the
+// ship from which it is fired. If the ship is moving when the missile is fired,
+// we want the missile's end point to reflect vertical movement at the same rate
+// and in the same direction.
+function getMissileEndTop()
+{
+  let startTop = getMissileStartTop();
+  if (currentDirection === Directions.Up)
+    return startTop - ShipMovementAmount;
+  else if (currentDirection === Directions.Down)
+    return startTop + ShipMovementAmount;
+  else
+    return startTop;
+}
+
+// Function to create a new missile, clone the missile movement sequence onto it,
+// and begin its animation.
+// The missile gets removed at the end point of its animation (which is offscreen)
+// to avoid piling up lots of extra useless divs and sequences and wasting memory.
+function fireMissile()
+{
+  let missileTopPosition = getMissileStartTop(),
+  missileDiv = document.createElement("div");
+  missileDiv.className = "Missile";
+  missileDiv.style.left = ShipWidth + "px";
+  missileDiv.style.top = missileTopPosition + "px";
+  BackgroundArea.appendChild(missileDiv);
+
+  let newMissileSequence = missileSequence.clone(function() { return missileDiv; });
+  newMissileSequence.begin({ onAutoStop: function() { missileDiv.remove(); } });
+}
+
+// Wire up the event handlers.
+GoButton.onclick = runShipDownSequence;
+FireButton.onclick = fireMissile;
+StopButton.onclick =
+  function()
+  {
+    shipDownSequence.stop();
+    shipUpSequence.stop();
+    currentDirection = Directions.None;
+  };</code></pre>
+			</p>
+			<p>
+				Value generators are described further in the documentation for the
+				<a href="/Reference/Concert.Sequence.html#addTransformations">addTransformations()</a> method of the
+				<code>Concert.Sequence</code> object.
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- Further Exploration -->
+			<h4>Further Exploration</h4>
+			<p>
+				This tutorial has described most of the basics of how to use Concert.js.
+			</p>
+			<p>
+				You are encouraged to explore all the features and details of Concert.js in depth by
+				perusing the <a href="/Reference/index.html">reference documentation</a>.
+			</p>
+			<p>
+				Happy animating!
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+			<a href="tutorial08.html">Previous: 08 - Cloning and Retargeting</a>
+		</p>
 	</div>
 </template:data>
