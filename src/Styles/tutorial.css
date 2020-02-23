@@ -74,6 +74,7 @@ div.TutorialStep:first-child h4
 	display: inline-block;
 	width: 49%;
 	text-align: left;
+	font-weight: bold;
 }
 
 .NextTutorialLink
@@ -81,6 +82,7 @@ div.TutorialStep:first-child h4
 	display: inline-block;
 	width: 50%;
 	text-align: right;
+	font-weight: bold;
 }
 
 ul.TutorialBullets > li
