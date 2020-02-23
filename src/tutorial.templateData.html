@@ -7,6 +7,7 @@
 <template:targetDef target="tutorial07.html" template="ConcertJSPage.template.html"></template:targetDef>
 <template:targetDef target="tutorial08.html" template="ConcertJSPage.template.html"></template:targetDef>
 <template:targetDef target="tutorial09.html" template="ConcertJSPage.template.html"></template:targetDef>
+<template:targetDef target="tutorial10.html" template="ConcertJSPage.template.html"></template:targetDef>
 
 <template:data target="tutorial01.html" section="HeadContent">
 <template:data target="tutorial02.html" section="HeadContent">
@@ -17,9 +18,11 @@
 <template:data target="tutorial07.html" section="HeadContent">
 <template:data target="tutorial08.html" section="HeadContent">
 <template:data target="tutorial09.html" section="HeadContent">
-	<link rel="stylesheet" type="text/css" href="Styles/tutorial.css" />
+<template:data target="tutorial10.html" section="HeadContent">
+		<link rel="stylesheet" type="text/css" href="Styles/tutorial.css" />
 
 	<script type="text/javascript" src="Scripts/tutorial.js"></script>
+</template:data>
 </template:data>
 </template:data>
 </template:data>
@@ -39,7 +42,8 @@
 <template:data target="tutorial07.html" section="DescriptionAreaContent">
 <template:data target="tutorial08.html" section="DescriptionAreaContent">
 <template:data target="tutorial09.html" section="DescriptionAreaContent">
-	<h3>Getting Started With Concert.js</h3>
+<template:data target="tutorial10.html" section="DescriptionAreaContent">
+		<h3>Getting Started With Concert.js</h3>
 	<div>
 		The below series of examples teaches the concepts and usage of Concert.js
 		through working sample code with explanations, starting with the most
@@ -57,22 +61,85 @@
 </template:data>
 </template:data>
 </template:data>
+</template:data>
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 01: Sequences and Transformations -->
+<!-- TUTORIAL 01: Getting Started -->
 <template:data target="tutorial01.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
+				<li><strong>Getting Started</strong></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
+				</ol>
+		</div>
+		<div class="TutorialIntroSection">
+			<h2>Getting Started</h2>
+			<p>
+				ADD
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- ADD -->
+			<h4>ADD</h4>
+			<p>
+				ADD
+			</p>
+			<p>
+				<pre><code>ADD CODE
+</code></pre>
+			</p>
+			<p>
+				ADD
+			</p>
+		</div>
+
+
+		<div class="TutorialStep"> <!-- Want more details? -->
+			<h4>Want more details?</h4>
+			<p>
+				Reference documentation links for items covered in this step of the tutorial:
+				<ul>
+					ADD / CHANGE
+					<li><a href="/Reference/Concert.Sequence.html">Concert.Sequence class</a></li>
+					<li><a href="/Reference/Concert.Sequence.html#addTransformations">Concert.Sequence.addTransformations() method</a></li>
+				</ul>
+			</p>
+		</div>
+
+		<p class="PreviousTutorialLink">
+		</p>
+		<p class="NextTutorialLink">
+			<a href="tutorial02.html">Next: 02 - Sequences and Transformations</a>
+		</p>
+	</div>
+</template:data>
+
+
+<!-- ================================================================= -->
+<!-- TUTORIAL 02: Sequences and Transformations -->
+<template:data target="tutorial02.html" section="MainContent">
+	<div>
+		<div class="TutorialNavigation">
+			<ol>
+				<li><a href="tutorial01.html">Getting Started</a></li>
 				<li><strong>Sequences and Transformations</strong></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -354,27 +421,28 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 		<p class="PreviousTutorialLink">
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial02.html">Next: 02 - Easing Functions</a>
+			<a href="tutorial03.html">Next: 03 - Easing Functions</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 02: Easing Functions -->
-<template:data target="tutorial02.html" section="MainContent">
+<!-- TUTORIAL 03: Easing Functions -->
+<template:data target="tutorial03.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
 				<li><strong>Easing Functions</strong></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -615,30 +683,31 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial01.html">Previous: 01 - Sequences and Transformations</a>
+			<a href="tutorial02.html">Previous: 02 - Sequences and Transformations</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial03.html">Next: 03 - Calculators</a>
+			<a href="tutorial04.html">Next: 03 - Calculators</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 03: Calculators -->
-<template:data target="tutorial03.html" section="MainContent">
+<!-- TUTORIAL 04: Calculators -->
+<template:data target="tutorial04.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
 				<li><strong>Calculators</strong></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -901,30 +970,31 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial02.html">Previous: 02 - Easing Functions</a>
+			<a href="tutorial03.html">Previous: 03 - Easing Functions</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial04.html">Next: 04 - Applicators</a>
+			<a href="tutorial05.html">Next: 05 - Applicators</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 04: Applicators -->
-<template:data target="tutorial04.html" section="MainContent">
+<!-- TUTORIAL 05: Applicators -->
+<template:data target="tutorial05.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
 				<li><strong>Applicators</strong></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -1112,30 +1182,31 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial03.html">Previous: 03 - Calculators</a>
+			<a href="tutorial04.html">Previous: 04 - Calculators</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial05.html">Next: 05 - Setting Defaults</a>
+			<a href="tutorial06.html">Next: 06 - Setting Defaults</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 05: Setting Defaults -->
-<template:data target="tutorial05.html" section="MainContent">
+<!-- TUTORIAL 06: Setting Defaults -->
+<template:data target="tutorial06.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
 				<li><strong>Setting Defaults</strong></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -1265,30 +1336,31 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial04.html">Previous: 04 - Applicators</a>
+			<a href="tutorial05.html">Previous: 05 - Applicators</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial06.html">Next: 06 - Starting, Stopping, Seeking, and Synchronizing</a>
+			<a href="tutorial07.html">Next: 07 - Starting, Stopping, Seeking, and Synchronizing</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 06: Starting, Stopping, Seeking, and Synchronizing -->
-<template:data target="tutorial06.html" section="MainContent">
+<!-- TUTORIAL 07: Starting, Stopping, Seeking, and Synchronizing -->
+<template:data target="tutorial07.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
 				<li><strong>Starting, Stopping, Seeking, and Synchronizing</strong></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -1584,30 +1656,31 @@ SeekInput.onkeyup =
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial05.html">Previous: 05 - Setting Defaults</a>
+			<a href="tutorial06.html">Previous: 06 - Setting Defaults</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial07.html">Next: 07 - Repeating</a>
+			<a href="tutorial08.html">Next: 08 - Repeating</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 07: Repeating -->
-<template:data target="tutorial07.html" section="MainContent">
+<!-- TUTORIAL 08: Repeating -->
+<template:data target="tutorial08.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
 				<li><strong>Repeating</strong></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -1738,30 +1811,31 @@ document.getElementById("GoButton").onclick =
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial06.html">Previous: 06 - Starting, Stopping, Seeking, and Synchronizing</a>
+			<a href="tutorial07.html">Previous: 07 - Starting, Stopping, Seeking, and Synchronizing</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial08.html">Next: 08 - Cloning and Retargeting</a>
+			<a href="tutorial09.html">Next: 09 - Cloning and Retargeting</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 08: Cloning and Retargeting -->
-<template:data target="tutorial08.html" section="MainContent">
+<!-- TUTORIAL 09: Cloning and Retargeting -->
+<template:data target="tutorial09.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
 				<li><strong>Cloning and Retargeting</strong></li>
-				<li><a href="tutorial09.html">Indexing, Value Generator Functions</a></li>
+				<li><a href="tutorial10.html">Indexing, Value Generator Functions</a></li>
 				</ol>
 		</div>
 		<div class="TutorialIntroSection">
@@ -1965,29 +2039,30 @@ GoButton.onclick =
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial07.html">Previous: 07 - Repeating</a>
+			<a href="tutorial08.html">Previous: 08 - Repeating</a>
 		</p>
 		<p class="NextTutorialLink">
-			<a href="tutorial09.html">Next: 09 - Indexing, Value Generator Functions</a>
+			<a href="tutorial10.html">Next: 10 - Indexing, Value Generator Functions</a>
 		</p>
 	</div>
 </template:data>
 
 
 <!-- ================================================================= -->
-<!-- TUTORIAL 09: Indexing, Value Generator Functions -->
-<template:data target="tutorial09.html" section="MainContent">
+<!-- TUTORIAL 10: Indexing, Value Generator Functions -->
+<template:data target="tutorial10.html" section="MainContent">
 	<div>
 		<div class="TutorialNavigation">
 			<ol>
-				<li><a href="tutorial01.html">Sequences and Transformations</a></li>
-				<li><a href="tutorial02.html">Easing Functions</a></li>
-				<li><a href="tutorial03.html">Calculators</a></li>
-				<li><a href="tutorial04.html">Applicators</a></li>
-				<li><a href="tutorial05.html">Setting Defaults</a></li>
-				<li><a href="tutorial06.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
-				<li><a href="tutorial07.html">Repeating</a></li>
-				<li><a href="tutorial08.html">Cloning and Retargeting</a></li>
+				<li><a href="tutorial01.html">Getting Started</a></li>
+				<li><a href="tutorial02.html">Sequences and Transformations</a></li>
+				<li><a href="tutorial03.html">Easing Functions</a></li>
+				<li><a href="tutorial04.html">Calculators</a></li>
+				<li><a href="tutorial05.html">Applicators</a></li>
+				<li><a href="tutorial06.html">Setting Defaults</a></li>
+				<li><a href="tutorial07.html">Starting, Stopping, Seeking, and Synchronizing</a></li>
+				<li><a href="tutorial08.html">Repeating</a></li>
+				<li><a href="tutorial09.html">Cloning and Retargeting</a></li>
 				<li><strong>Indexing, Value Generator Functions</strong></li>
 				</ol>
 		</div>
@@ -2230,7 +2305,7 @@ StopButton.onclick =
 		</div>
 
 		<p class="PreviousTutorialLink">
-			<a href="tutorial08.html">Previous: 08 - Cloning and Retargeting</a>
+			<a href="tutorial09.html">Previous: 09 - Cloning and Retargeting</a>
 		</p>
 	</div>
 </template:data>
