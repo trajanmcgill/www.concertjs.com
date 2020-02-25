@@ -84,34 +84,151 @@
 		<div class="TutorialIntroSection">
 			<h2>Getting Started</h2>
 			<p>
-				ADD
+				How to install and set up Concert.js:
+				<ul>
+					<li>Prerequisites</li>
+					<li>Simple Download</li>
+					<li>Installation with npm</li>
+					<li>Use with a standard script tag</li>
+					<li>Use as a module</li>
+				</ul>
 			</p>
 		</div>
 
-		<div class="TutorialStep"> <!-- ADD -->
-			<h4>ADD</h4>
+		<div class="TutorialStep"> <!-- Prerequisites -->
+			<h4>Prerequisites</h4>
 			<p>
-				ADD
+				<em>Browser Compatibility:</em> Concert.js should work well on
+				almost any browser currently in use. Presently, the code is linted against
+				a feature and API set going back to major browser versions from roughly 2011.
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- Simple Download -->
+			<h4>Simple Download</h4>
+			<p>
+				Everything you need can be downloaded from the
+				<a href="/downloads.html">downloads page</a>.
 			</p>
 			<p>
-				<pre><code>ADD CODE
+				The zipped archive found there contains the following:
+				<ul>
+					<li>Concert.min.js (for production use)</li>
+					<li>Concert.min.mjs (for production use as an EMCAScript Module)</li>
+					<li>Concert.js (for debugging and code exploration)</li>
+					<li>Concert.mjs (for debugging and code exploration, in the form of an EMCAScript Module)</li>
+					<li>Reference documentation in HTML form</li>
+					<li>requestAnimationFrame.min.js (requestAnimationFrame polyfill; recommended for older browser support)</li>
+					<li>requestAnimationFrame.js (non-minified version of requestAnimationFrame polyfill)</li>
+				</ul>
+			</p>
+			<p>
+				If you need an older version, visit the
+				<a href="https://github.com/trajanmcgill/concert.js/releases">releases page on GitHub</a>.
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- Installation with npm -->
+			<h4>Installation with npm</h4>
+			<p>
+				If you'd prefer to install and keep Concert.js up-to-date using npm,
+				you can. From within your project directory, run:
+			</p>
+			<p>
+				<pre><code>npm install concert.js --save-dev</code></pre>
+			</p>
+			<p>
+				(Or without the <code>--save-dev</code> if you want the concert.js package
+				installed as a regular dependency instead of a dev dependency of your project.)
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- General Usage Note -->
+			<h4>General Usage Note</h4>
+			<p>
+				Concert.js is easy to include as a regular script or with any of the common module formats (AMD, CommonJS, and ES Modules).
+			</p>
+			<p>
+				There are two versions of the code: 1) A minified version, much smaller and obfuscated, for production use;
+				and 2) A full-sized version useful for debugging, exploring code, or demonstrating.
+			</p>
+			<p>
+				Anywhere below the file <code>Concert.js</code> or <code>Concert.mjs</code> is referenced,
+				you'll want to substitute <code>Concert.min.js</code> or <code>Concert.min.mjs</code>
+				in order to use the minified version.
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- Use with a standard script tag -->
+			<h4>Use with a standard script tag</h4>
+			<p>
+				Not much to it; just include the script:
+			</p>
+			<p>
+				<pre><code>&lt;script src="/YOUR_SCRIPT_PATH/Concert.js">&lt;/script></code></pre>
+			</p>
+		</div>
+
+		<div class="TutorialStep"> <!-- Use as an AMD module -->
+			<h4>Use as an AMD module</h4>
+			<p>
+				If you're using an AMD loader, you'd do something like this:
+			</p>
+			<p>
+				<pre><code>require(["PATH_TO_CONCERT/Concert"],
+  function(Concert)
+  {
+    // Your code here
+  }
+);
 </code></pre>
 			</p>
+		</div>
+		
+		<div class="TutorialStep"> <!-- Use as a CommonJS module -->
+			<h4>Use as a CommonJS module</h4>
 			<p>
-				ADD
+				For a CommonJS loader (e.g., Browserify) using a direct path (if you downloaded Concert.js source directly):
+			</p>
+			<p>
+				<pre><code>let Concert = require("PATH_TO_CONCERT/Concert");
+
+// Your code here</code></pre>
+			</p>
+			<p>
+				For a CommonJS loader (e.g., Browserify) if you installed the concert.js npm package:
+			</p>
+			<p>
+				<pre><code>let Concert = require("concert.js"); // The npm package name is all lowercase
+
+// Your code here</code></pre>
 			</p>
 		</div>
 
-
-		<div class="TutorialStep"> <!-- Want more details? -->
-			<h4>Want more details?</h4>
+		<div class="TutorialStep"> <!-- Use as an ES Module -->
+			<h4>Use as an ES Module</h4>
 			<p>
-				Reference documentation links for items covered in this step of the tutorial:
-				<ul>
-					ADD / CHANGE
-					<li><a href="/Reference/Concert.Sequence.html">Concert.Sequence class</a></li>
-					<li><a href="/Reference/Concert.Sequence.html#addTransformations">Concert.Sequence.addTransformations() method</a></li>
-				</ul>
+				If you can rely on users having only recent browsers, you can even use ES Module imports.
+				In your HTML:
+			</p>
+			<p>
+				<pre><code>&lt;script type="module" src="/YOUR_JS_CODE_MODULE.js">&lt;/script></code></pre>
+			</p>
+			<p>
+				In your JavaScript:
+			</p>
+			<p>
+				<pre><code>import {Concert} from "/PATH_TO_CONCERT/Concert.mjs"; // Be aware of valid ES Module path syntax
+
+// Your code here...
+				</code></pre>
+			</p>
+			<p>
+				<em>Important note:</em> If you get a MIME type error, you can solve this by:
+				<ol>
+					<li>Setting up your server to use the <code>text/javascript</code> MIME type for <code>.mjs</code> files; OR</li>
+					<li>Renaming <code>Concert.mjs</code> to something like ConcertModule.js so the server knows to serve it up with the right MIME type.</li>
+				</ol>
 			</p>
 		</div>
 
