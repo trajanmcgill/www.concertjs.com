@@ -18,6 +18,8 @@ body
 	left: 0;
 	width: 800px;
 	height: 400px;
+	overflow: hidden;
+	background-color: #6b92ff;
 }
 
 #Fish
@@ -28,4 +30,12 @@ body
 	width: 30px;
 	height: 30px;
 	background-color: tomato;
+}
+
+.FishFood
+{
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background-color: orange;
 }
