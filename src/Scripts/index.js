@@ -63,16 +63,16 @@
 
 	
 	// scrollToDemoFrame(): Animates movement shifting from one demo frame to another.
-	function scrollToDemoFrame(targetDemoFrame)
+	function scrollToDemoFrame(targetDemoFrameNumber)
 	{
 		const demoFrames = window.frames;
 
 		// If any demo is running, stop it.
 		for (let i = 0; i < demoFrames.length; i++)
 		{
-			let currentFrameDemoSequence = demoFrames[i].demoSequence;
-			if (currentFrameDemoSequence)
-				currentFrameDemoSequence.stop();
+			let currentFrameDemoController = demoFrames[i].demoController;
+			if (currentFrameDemoController)
+				currentFrameDemoController.stop();
 		}
 
 		// If we're already scrolling from one demo to another, stop
@@ -81,7 +81,7 @@
 
 		// Figure out where the current-selection marker is moving from, and where it is moving to.
 		let demoChoiceMarkerCurrentRect = demoChoiceMarker.getBoundingClientRect();
-		let demoChoiceMarkerTargetRect = demoChoiceRects[targetDemoFrame];
+		let demoChoiceMarkerTargetRect = demoChoiceRects[targetDemoFrameNumber];
 
 		// Create the animation to scroll to the selected demo.
 		currentDemoScrollSequence = new Concert.Sequence();
@@ -95,7 +95,7 @@
 					keyframes:
 						{
 							times: [0, DemoScrollSequenceTime],
-							values: [entireDemoFramesArea.scrollLeft, demoFrameWidth * targetDemoFrame]
+							values: [entireDemoFramesArea.scrollLeft, demoFrameWidth * targetDemoFrameNumber]
 						}
 				},
 
@@ -128,7 +128,17 @@
 			]);
 
 		// Run the animation
-		currentDemoScrollSequence.begin({ onAutoStop: function () { currentDemoScrollSequence = null; } });
+		let targetDemoFrame = demoFrames[targetDemoFrameNumber-1];
+		currentDemoScrollSequence.begin(
+			{
+				onAutoStop:
+					function ()
+					{
+						currentDemoScrollSequence = null;
+						if(targetDemoFrame.demoController)
+							targetDemoFrame.demoController.enable();
+					}
+			});
 	} // end scrollToDemoFrame()
 
 

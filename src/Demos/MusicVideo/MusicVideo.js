@@ -1,6 +1,5 @@
-/* exported demoSequence */
-
-var demoSequence =
+/* exported demoController */
+var demoController =
 (function ()
 {
 	"use strict";
@@ -15,6 +14,7 @@ var demoSequence =
 		fadeTime = 1000,
 		beatBatonPositions = [[100, 140], [200, 80], [0, 80], [100, 0]];
 
+	const video = document.getElementById("MusicVideo"); // Get the element to which the animation is being synchronized.
 
 	// getWordPositions: Pull all the individual words out of a text node.
 	// Returns an array of objects corresponding to the words found and their locations.
@@ -279,8 +279,6 @@ var demoSequence =
 	// Returns the Concert.Sequence object, fully set up and wired to events so that it runs and seeks at the appropriate times.
 	function buildAnimation()
 	{
-		const video = document.getElementById("MusicVideo"); // Get the element to which the animation is being synchronized.
-
 		// Assemble an array of all the transformations in the entire animation.
 		let transformationSet =
 			getLyricsTransformations()
@@ -308,8 +306,21 @@ var demoSequence =
 	// Call the above function to build an animation.
 	let mainSequence = buildAnimation();
 
-	// There isn't actually any need in this case to return the sequence object and set (as we do at the very top)
-	// a global (window) variable to it. We just do this here so that if the user of this demo wants to
-	// open a console and play with the sequence object, it will be globally available within its frame.
-	return mainSequence;
+
+	// Object for the main Concert.js page to be able to stop or enable this demo
+	// when shifting between demo tabs.
+	const controllerObject =
+		{
+			enable: function () { },
+			
+			stop: function ()
+			{
+				video.pause();
+				video.fastSeek(0);
+				mainSequence.stop();
+				mainSequence.seek(0);
+			}
+		}
+
+	return controllerObject;
 })();
