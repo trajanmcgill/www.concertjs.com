@@ -316,8 +316,8 @@ var demoController =
 			stop: function ()
 			{
 				video.pause();
-				video.fastSeek(0);
 				mainSequence.stop();
+				video.currentTime = 0;
 				mainSequence.seek(0);
 			}
 		}
