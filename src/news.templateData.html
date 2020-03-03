@@ -1,12 +1,56 @@
 ﻿<template:targetDef target="news.html" template="ConcertJSPage.template.html"></template:targetDef>
 
 <template:data target="news.html" section="HeadContent">
+	<link rel="stylesheet" type="text/css" href="Styles/news.css" />
 </template:data>
 
 <template:data target="news.html" section="DescriptionAreaContent">
 	<h3>Concert.js News</h3>
+	<p id="Subtitle">Releases, updates, and information</p>
 </template:data>
 
 
 <template:data target="news.html" section="MainContent">
+	<h4>Concert.js 1.0.2 Released</h4>
+	<p id="Subtitle">02-17-2020</p>
+	<p>
+		Changes in this release:
+		<ul>
+			<li>Fixed: <code>follow()</code> method did not set autoStopAtEnd to false as it should (and like <code>syncTo()</code> does).</li>
+		</ul>
+	</p>
+
+	<h4>Concert.js 1.0.1 Released</h4>
+	<p id="Subtitle">02-14-2020</p>
+	<p>
+		Changes in this release:
+		<ul>
+			<li>Fixed: specifying null or undefined calculator function failed quietly.</li>
+			<li>Fixed: specifying null or undefined applicator function failed quietly.</li>
+			<li>Fixed: specifying null or undefined easing function failed quietly.</li>
+		</ul>
+	</p>
+
+	<h4 class="major">Concert.js 1.0.0 Released</h4>
+	<p id="Subtitle">01-27-2020</p>
+	<p>
+		Concert.js should be considered ready for production use.
+	</p>
+	<p>
+		<em>What is Concert.js?</em>
+		Concert.js is a JavaScript component for easily defining sequences of changes to CSS styles, DOM objects,
+		or anything else that can be manipulated with JavaScript, and playing these sequences or synchronizing them
+		with media playback, user interaction, or your own components. In short, it animates things, and if you want,
+		it will precisely synchronize those animations with other things.
+	</p>
+
+	<h4>Concert.js Revived</h4>
+	<p id="Subtitle">10-14-2019</p>
+	<p>
+		NOTE: This project, which was dormant for several years and managed previously in a different code repository,
+		is currently in the process of being imported/migrated to GitHub and optimized for modern browsers.
+		Not everything is present, documented, or updated yet.
+		It is recommended to wait until a release beyond the 1.0-alpha series before making use of this code on a production site.
+		The code is in an essentially functional state, however, and testing and playing with it is welcome and invited.
+	</p>
 </template:data>

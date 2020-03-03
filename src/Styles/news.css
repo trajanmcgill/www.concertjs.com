@@ -1,0 +1,21 @@
+﻿h3
+{
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+h4
+{
+	border-top: 1px solid black;
+	padding-top: 10px;
+	margin-bottom: 10px;
+}
+
+h4.major
+{
+	font-size: x-large;
+}
+
+p { margin-top: 5px; }
+
+#Subtitle { font-size: 14px; }
