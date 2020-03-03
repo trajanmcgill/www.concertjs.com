@@ -11,4 +11,64 @@
 
 
 <template:data target="faq.html" section="MainContent">
+	<h4>What is Concert.js?</h4>
+	<p>
+		Concert.js is a JavaScript component for easily defining sequences of changes to CSS styles, DOM objects,
+		or anything else that can be manipulated with JavaScript, and playing these sequences or synchronizing them
+		with media playback, user interaction, or your own components. In short, it animates things, and if you want,
+		it will precisely synchronize those animations with other things.
+	</p>
+
+	<h4>Why would I want to use this particular animation library?</h4>
+	<p>
+		Some of the things that make Concert.js handy include:
+		<ul>
+			<li>
+				It is easy to work into your code, whatever your project structure.
+				Concert.js supports simple script tag inclusion or any of the common module formats (AMD, CommonJS, and even ES Modules)
+			</li>
+			<li>
+				It has intuitive syntax that is quick to learn and implement.
+			</li>
+			<li>
+				Animation sequences are defined in ways which allow them to be easily programmatically generated and manipulated.
+				Throw together an array of keyframes and positions, or an array of individual movement segments, whichever is easier for the job at hand,
+				and drop it into the sequence object. Clone animations onto different targets. Create them before the objects they apply to even exist.
+			</li>
+			<li>
+				One place Concert.js shines as compared to some other methods of animating is when you need synchronization.
+				Want to manipulate the DOM in time with video, audio, or other animations happening simultaneously? No problem.
+				Concert.js is highly optimized for very quick seek times, even with large numbers of items being animated,
+				and its animations remain locked to their time source (whether that is the system clock or something else, such as an html video element).
+				No more setting two things in motion at the same time and only hoping they stay running at the same rate all the way to the end.
+			</li>
+			<li>
+				An MIT License means you can use it how you want.
+			</li>
+			<li>
+				All the usual things you'd expect (e.g., assorted easing functions), and some things you might not,
+				like rotational motion and animation of colors (including transparency).
+			</li>
+			<li>
+				The easy-to-use animation engine can easily be applied to new things.
+				Custom functions are supported for calculating complex values or applying them to any sort of target.
+			</li>
+		</ul>
+	</p>
+
+	<h4>How can I get started using it?</h4>
+	<p>
+		<ul>
+			<li>See <a href="tutorial01.html">the tutorial pages</a> for a walk-through of setup, basic functionality, and usage.</li>
+			<li>Or see the <a href="Reference/index.html">Reference documentation</a> for a full explanataion of all features.</li>
+		</ul>
+	</p>
+
+	<h4>Is Concert.js open source? Is it freely usable?</h4>
+	<p>
+		Yes. Concert.js is available under the <a href="license.html">MIT License</a> and can be used however you like.
+	</p>
+	<p>
+		Source is available at the <a href="https://github.com/trajanmcgill/concert.js">Concert.js GitHub page.</a>
+	</p>
 </template:data>
