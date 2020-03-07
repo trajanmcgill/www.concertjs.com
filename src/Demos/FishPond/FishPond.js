@@ -35,11 +35,6 @@ var demoController =
 		// ===============================================
 		// -- Fish Internal Variable Definitions
 		
-		// Used for extracting present svg attribute values.
-		const TransformParser = /\s*(?:translate\(([-0123456789.]+),([-0123456789.]+)\))?\s*(?:scale\(([-0123456789.]+),([-0123456789.]+)\))?\s*(?:rotate\(([-0123456789.]+),([-0123456789.]+),([-0123456789.]+)\))?\s*/,
-			ParseIndex_Translate_X = 1, ParseIndex_Translate_Y = 2,
-			ParseIndex_Scale_X = 3, ParseIndex_Scale_Y = 4,
-			ParseIndex_Rotate_Angle = 5, ParseIndex_Rotate_OffsetX = 6, ParseIndex_Rotate_OffsetY = 7;
 		const GroupTransformDefaultValues =
 			{
 				translateX: 0,
@@ -67,9 +62,9 @@ var demoController =
 		function buildFishTransformString(transformValues)
 		{
 			let newTransformString =
-				"translate(" + transformValues.translateX + "," + transformValues.translateY + ") "
-				+ "scale(" + transformValues.scaleX + "," + transformValues.scaleY + ") "
-				+ "rotate(" + transformValues.rotateAngle + "," + transformValues.rotateOffsetX + "," + transformValues.rotateOffsetY + ")";
+				"translate(" + transformValues.translateX + transformValues.delineator + transformValues.translateY + ") "
+				+ "scale(" + transformValues.scaleX + transformValues.delineator + transformValues.scaleY + ") "
+				+ "rotate(" + transformValues.rotateAngle + transformValues.delineator + transformValues.rotateOffsetX + transformValues.delineator + transformValues.rotateOffsetY + ")";
 			return newTransformString;
 		} // end buildFishTransformString()
 
@@ -122,6 +117,10 @@ var demoController =
 		// Calculate the current transform attribute values of the fish group element
 		function getCurrentGroupTransformValues()
 		{
+			const TranslateParser = /(?:translate\(([-0123456789.]+)(?:(,|\s+)([-0123456789.]+))?\))/,
+				ScaleParser = /(?:scale\(([-0123456789.]+)(?:(,|\s+)([-0123456789.]+))?\))/,
+				RotateParser = /(?:rotate\(([-0123456789.]+)(?:(,|\s+)([-0123456789.]+)(,|\s+)([-0123456789.]+))?\))/;
+
 			let valuesToReturn =
 				{
 					translateX: GroupTransformDefaultValues.translateX,
@@ -130,23 +129,37 @@ var demoController =
 					scaleY: GroupTransformDefaultValues.scaleY,
 					rotateAngle: GroupTransformDefaultValues.rotateAngle,
 					rotateOffsetX: GroupTransformDefaultValues.rotateOffsetX,
-					rotateOffsetY: GroupTransformDefaultValues.rotateOffsetY
+					rotateOffsetY: GroupTransformDefaultValues.rotateOffsetY,
+					delineator: ","
 				};
 
 			let currentTransform = fishGroupElement.getAttribute("transform");
 
 			if(typeof currentTransform === "string")
 			{
-				let parsedValues = TransformParser.exec(currentTransform);
-				if(parsedValues !== null)
+				let parsedTranslateValues = TranslateParser.exec(currentTransform);
+				if(parsedTranslateValues !== null)
 				{
-					valuesToReturn.translateX = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Translate_X], valuesToReturn.translateX));
-					valuesToReturn.translateY = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Translate_Y], valuesToReturn.translateY));
-					valuesToReturn.scaleX = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Scale_X], valuesToReturn.scaleX));
-					valuesToReturn.scaleY = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Scale_Y], valuesToReturn.scaleY));
-					valuesToReturn.rotateAngle = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Rotate_Angle], valuesToReturn.rotateAngle));
-					valuesToReturn.rotateOffsetX = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Rotate_OffsetX], valuesToReturn.rotateOffsetX));
-					valuesToReturn.rotateOffsetY = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Rotate_OffsetY], valuesToReturn.rotateOffsetY));
+					valuesToReturn.translateX = parsedTranslateValues[1];
+					valuesToReturn.delineator = coalesceUndefined(parsedTranslateValues[2], valuesToReturn.delineator);
+					valuesToReturn.translateY = coalesceUndefined(parsedTranslateValues[3], valuesToReturn.translateX); // If only one value is specified, use it for both X and Y.
+				}
+
+				let parsedScaleValues = ScaleParser.exec(currentTransform);
+				if(parsedScaleValues !== null)
+				{
+					valuesToReturn.scaleX = parsedScaleValues[1];
+					valuesToReturn.delineator = coalesceUndefined(parsedScaleValues[2], valuesToReturn.delineator);
+					valuesToReturn.scaleY = coalesceUndefined(parsedScaleValues[3], valuesToReturn.scaleX); // If only one value is specified, use it for both X and Y.
+				}
+
+				let parsedRotateValues = RotateParser.exec(currentTransform);
+				if(parsedRotateValues !== null)
+				{
+					valuesToReturn.rotateAngle = parsedRotateValues[1];
+					valuesToReturn.delineator = coalesceUndefined(parsedRotateValues[2], valuesToReturn.delineator);
+					valuesToReturn.rotateOffsetX = coalesceUndefined(parsedRotateValues[3], valuesToReturn.rotateOffsetX);
+					valuesToReturn.rotateOffsetY = coalesceUndefined(parsedRotateValues[5], valuesToReturn.rotateOffsetY);
 				}
 			}
 
@@ -231,7 +244,8 @@ var demoController =
 						y: currentDestination.position.y * ViewBoxScaleFactor - presentHalfFishViewBoxHeight
 					},
 				pathDistance = calculateDistance(currentCenter.worldCoordinates, currentDestination.position), // Figure out how far the fish is moving.
-				swimTime = pathDistance / swimRate; // Use the distance to figure out how long the animation should take.
+				swimTime = pathDistance / swimRate,  // Use the distance to figure out how long the animation should take.
+				transformDelineator = getCurrentGroupTransformValues().delineator;
 
 			// Flip and rotate the fish as needed to aim it at the new destination.
 			fishGroupElement.setAttribute(
@@ -244,7 +258,8 @@ var demoController =
 						scaleY: fishSizeMultiplier,
 						rotateAngle: finalAngle,
 						rotateOffsetX: StartingFishWidth / 2,
-						rotateOffsetY: StartingFishHeight / 2
+						rotateOffsetY: StartingFishHeight / 2,
+						delineator: transformDelineator
 					}));
 
 			// Create a new Concert.js sequence and add the movement to it that was just calculated above.
@@ -269,7 +284,8 @@ var demoController =
 										scaleY: currentTransformValues.scaleY,
 										rotateAngle: currentTransformValues.rotateAngle,
 										rotateOffsetX: currentTransformValues.rotateOffsetX,
-										rotateOffsetY: currentTransformValues.rotateOffsetY
+										rotateOffsetY: currentTransformValues.rotateOffsetY,
+										delineator: transformDelineator
 									});
 							return newTransformString;
 						},
