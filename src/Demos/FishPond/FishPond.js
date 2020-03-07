@@ -5,20 +5,21 @@ var demoController =
 	"use strict";
 
 	// Set up values and parameters needed for this demo animation.
-	const FishElement = document.getElementById("SVG_Fish"),
-		PectoralFinElement = document.getElementById("PectoralFin"),
+	const FishOuterElement = document.getElementById("SvgOuterElement"),
+		FishGroup = document.getElementById("SvgGroup"),
+		PectoralFinElement = document.getElementById("SvgElement_PectoralFin"),
 		SwimRate = .2, SwimSegmentEasing = Concert.EasingFunctions.QuadInOut,
 		RandomSwimInterval_Min = 5000, RandomSwimInterval_Max = 10000,
-		FishTotalWidth = 100, FishTotalHeight = 37, GrowthRate = 0.1,
-		FishCenterOffsetX = 50, FishCenterOffsetY = 18,
-		PectoralFinOffsetX = 80, PectoralFinOffsetY = 62, FinFlapTime = 250, FinFlapAngle = 45,
+		StartingFishWidth = 100, StartingFishHeight = 37, ViewBoxScaleFactor = 0.125,
+		StartingFishSizeMultiplier = 0.125, GrowthRate = 0.0125,
+		PectoralFinOffsetX = 67, PectoralFinOffsetY = 22, FinFlapTime = 250, FinFlapAngle = 45,
 		FinFlapEasing = Concert.EasingFunctions.QuadIn,
 		Background = document.getElementById("Pond"),
 		ResetButton = document.getElementById("ResetButton");
 
 
 	// Create a singleton object to represent the swimming fish and its behavior
-	const Fish = (function(fishElement, pectoralFinElement, swimRate)
+	const Fish = (function(fishOuterElement, fishGroupElement, pectoralFinElement, swimRate)
 	{
 		// ===============================================
 		// -- Fish Enum Definitions
@@ -34,16 +35,43 @@ var demoController =
 		// ===============================================
 		// -- Fish Internal Variable Definitions
 		
+		// Used for extracting present svg attribute values.
+		const TransformParser = /\s*(?:translate\(([-0123456789.]+),([-0123456789.]+)\))?\s*(?:scale\(([-0123456789.]+),([-0123456789.]+)\))?\s*(?:rotate\(([-0123456789.]+),([-0123456789.]+),([-0123456789.]+)\))?\s*/,
+			ParseIndex_Translate_X = 1, ParseIndex_Translate_Y = 2,
+			ParseIndex_Scale_X = 3, ParseIndex_Scale_Y = 4,
+			ParseIndex_Rotate_Angle = 5, ParseIndex_Rotate_OffsetX = 6, ParseIndex_Rotate_OffsetY = 7;
+		const GroupTransformDefaultValues =
+			{
+				translateX: 0,
+				translateY: 0,
+				scaleX: StartingFishSizeMultiplier,
+				scaleY: StartingFishSizeMultiplier,
+				rotateAngle: 0,
+				rotateOffsetX: 0,
+				rotateOffsetY: 0
+			};
+
+
 		// Variables representing where the fish is headed, the Concert.js sequence for its animation,
 		// a timer variable used for moving at random intervals, the present size of the fish,
 		// and an array of food objects queued for eating.
 		let currentDestination = null, futureDestinations = [],
 			movementSequence = null, currentRandomTimer = null,
-			fishSizeMultiplier = 1, uneatenFood = [];
+			fishSizeMultiplier = StartingFishSizeMultiplier, uneatenFood = [];
 		
 		
 		// ===============================================
 		// -- Fish Internal Function Definitions
+
+		// Generate and apply a new SVG transform attribute string value.
+		function buildFishTransformString(transformValues)
+		{
+			let newTransformString =
+				"translate(" + transformValues.translateX + "," + transformValues.translateY + ") "
+				+ "scale(" + transformValues.scaleX + "," + transformValues.scaleY + ") "
+				+ "rotate(" + transformValues.rotateAngle + "," + transformValues.rotateOffsetX + "," + transformValues.rotateOffsetY + ")";
+			return newTransformString;
+		} // end buildFishTransformString()
 
 		// Calculate the angle needed for the line from the specified start position to the specified end position.
 		function calculateAngle(startPosition, endPosition)
@@ -68,6 +96,12 @@ var demoController =
 			return Math.sqrt(Math.pow(endPosition.x - startPosition.x, 2) + Math.pow(endPosition.y - startPosition.y, 2));
 		} // end calculateDistance()
 
+		// Return the input value if it is defined, the default value if the input value is undefined
+		function coalesceUndefined(inputValue, defaultValue)
+		{
+			return ((typeof inputValue === "undefined") ? defaultValue : inputValue);
+		} // end coalesceUndefined()
+
 		// Come up with a random destination in the pond and swim to it.
 		function doRandomSwim()
 		{
@@ -84,13 +118,55 @@ var demoController =
 			currentRandomTimer = window.setTimeout(doRandomSwim, randomTimerDuration);
 		} // end generateRandomSwim()
 
+
+		// Calculate the current transform attribute values of the fish group element
+		function getCurrentGroupTransformValues()
+		{
+			let valuesToReturn =
+				{
+					translateX: GroupTransformDefaultValues.translateX,
+					translateY: GroupTransformDefaultValues.translateY,
+					scaleX: GroupTransformDefaultValues.scaleX,
+					scaleY: GroupTransformDefaultValues.scaleY,
+					rotateAngle: GroupTransformDefaultValues.rotateAngle,
+					rotateOffsetX: GroupTransformDefaultValues.rotateOffsetX,
+					rotateOffsetY: GroupTransformDefaultValues.rotateOffsetY
+				};
+
+			let currentTransform = fishGroupElement.getAttribute("transform");
+
+			if(typeof currentTransform === "string")
+			{
+				let parsedValues = TransformParser.exec(currentTransform);
+				if(parsedValues !== null)
+				{
+					valuesToReturn.translateX = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Translate_X], valuesToReturn.translateX));
+					valuesToReturn.translateY = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Translate_Y], valuesToReturn.translateY));
+					valuesToReturn.scaleX = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Scale_X], valuesToReturn.scaleX));
+					valuesToReturn.scaleY = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Scale_Y], valuesToReturn.scaleY));
+					valuesToReturn.rotateAngle = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Rotate_Angle], valuesToReturn.rotateAngle));
+					valuesToReturn.rotateOffsetX = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Rotate_OffsetX], valuesToReturn.rotateOffsetX));
+					valuesToReturn.rotateOffsetY = parseFloat(coalesceUndefined(parsedValues[ParseIndex_Rotate_OffsetY], valuesToReturn.rotateOffsetY));
+				}
+			}
+
+			return valuesToReturn;
+		} // end getCurrentGroupTransformValues()
+
 		// Calculate the present origin position of the fish (position of its upper left corner)
 		function getCurrentPosition()
 		{
-			let numberMatcher = /[-0123456789.]+/,
-				leftPosition = Math.round(fishElement.style.left.match(numberMatcher)[0]),
-				topPosition = Math.round(fishElement.style.top.match(numberMatcher)[0]);
-			return { x: leftPosition, y: topPosition };
+			let currentTransformValues = getCurrentGroupTransformValues(),
+				viewBoxCoordinates = { x: currentTransformValues.translateX, y: currentTransformValues.translateY },
+				worldCoordinates = { x: viewBoxCoordinates.x / ViewBoxScaleFactor, y: viewBoxCoordinates.y / ViewBoxScaleFactor },
+				currentPosition =
+					{
+						viewBoxCoordinates: viewBoxCoordinates,
+						worldCoordinates: worldCoordinates,
+						flip: (currentTransformValues.scaleX < 0) ? -1 : 1,
+						angle: currentTransformValues.rotateAngle
+					};
+			return currentPosition;
 		} // end getCurrentPosition()
 
 		// Grow the fish a little bit larger.
@@ -98,34 +174,21 @@ var demoController =
 		{
 			// Grow the fish by modifying its SVG transform attribute.
 
-			let currentTransform = fishElement.getAttribute("transform");
-			if(typeof currentTransform === "string")
-			{
-				// Parse out its present scale and rotate values.
-				let transformParser = /scale\(([-0123456789.]+),([-0123456789.]+)\)\srotate\(([-0123456789.,]+)\)/,
-					transformValues = transformParser.exec(currentTransform);
+			// Set the new fishSizeMultiplier value to the old one plus the growth amount (truncated to the nearest thousandth).
+			fishSizeMultiplier = Math.floor((fishSizeMultiplier + GrowthRate) * 1000) / 1000;
 
-				if(transformValues !== null)
-				{
-					// Set the new fishSizeMultiplier value to the old one plus the growth amount (truncated to the nearest tenth).
-					fishSizeMultiplier = Math.floor((fishSizeMultiplier + GrowthRate) * 10) / 10;
-
-					// Generate and apply a new SVG transform attribute string value, which should be built from all the pieces of the old one
-					// except with a larger fish size multiplier in the scale value.
-					let newTransform =
-						"scale(" + (transformValues[1].charAt(0) === "-" ? "-" : "") + fishSizeMultiplier + "," + fishSizeMultiplier + ") "
-						+ "rotate(" + transformValues[3] + ")";
-					fishElement.setAttribute("transform", newTransform);
-				}
-			}
+			// Get the current fish transform values, update the scale values, and apply the new set of values.
+			let transformValues = getCurrentGroupTransformValues();
+			transformValues.scaleX = ((transformValues.scaleX < 0) ? -1 : 1 ) * fishSizeMultiplier;
+			transformValues.scaleY = fishSizeMultiplier;
+			fishGroupElement.setAttribute("transform", buildFishTransformString(transformValues));
 		} // end grow()
 
 		// Set up initial values for the fish.
 		function initialize()
 		{
-			// Having these values explicitly set allows us to read them later.
-			fishElement.style.left = "0px";
-			fishElement.style.top = "0px";
+			// Set the starting location, scale, and rotation values for the fish.
+			fishGroupElement.setAttribute("transform", buildFishTransformString(GroupTransformDefaultValues));
 		} // initialize()
 
 		// Generate and kick off a Concert.js animation sequence for swimming to the next destination.
@@ -150,39 +213,71 @@ var demoController =
 			// Get the next destination in the queue.
 			currentDestination = futureDestinations.shift();
 
-			let startOriginPoint = getCurrentPosition(), // Figure out where we are starting from.
-				rawAngle = calculateAngle(getCurrentCenter(), currentDestination.position), // Figure out the angle from the center of the fish to the new destination.
-				flip = ((rawAngle > 90 || rawAngle < -90) ? -1 : 1), // Determine if the fish is facing right or needs to be flipped left with a -1 scale value on the x axis.
-				finalAngle = Math.abs(rawAngle) <= 90 ? rawAngle : 180 * (rawAngle < 0 ? -1 : 1) - rawAngle, // Transform rotation angle flips too, if the fish is flipped.
-				destinationOriginPoint = // Destination for the movement is actually the final upper-left-corner point, not the final center point. Calculate that.
-				{
-					x: currentDestination.position.x - ((flip === 1) ? FishCenterOffsetX : FishTotalWidth - FishCenterOffsetX),
-					y: currentDestination.position.y - ((flip === 1) ? FishCenterOffsetY : FishTotalHeight - FishCenterOffsetY)
-				},
-				pathDistance = calculateDistance(startOriginPoint, destinationOriginPoint), // Figure out how far the fish is moving.
+			let currentCenter = getCurrentCenter(), // Figure out where we are starting from.
+				rawAngle = calculateAngle(currentCenter.worldCoordinates, currentDestination.position), // Figure out the angle from the center of the fish to the new destination.
+				newFlip = ((rawAngle > 90 || rawAngle < -90) ? -1 : 1), // Determine if the fish is facing right or needs to be flipped left with a -1 scale value on the x axis.
+				finalAngle = Math.abs(rawAngle) <= 90 ? rawAngle : 180 * (rawAngle < 0 ? -1 : 1) - rawAngle, // Rotation angle gets flipped too, if the fish is flipped.
+				cumulativeGrowthRatio = fishSizeMultiplier / StartingFishSizeMultiplier,
+				presentHalfFishViewBoxWidth = ViewBoxScaleFactor * cumulativeGrowthRatio * StartingFishWidth / 2,
+				presentHalfFishViewBoxHeight = ViewBoxScaleFactor * cumulativeGrowthRatio * StartingFishHeight / 2,
+				startOriginPoint =
+					{
+						x: currentCenter.viewBoxCoordinates.x - newFlip * presentHalfFishViewBoxWidth,
+						y: currentCenter.viewBoxCoordinates.y - presentHalfFishViewBoxHeight
+					},
+				destinationOriginPoint =
+					{
+						x: currentDestination.position.x * ViewBoxScaleFactor - newFlip * presentHalfFishViewBoxWidth,
+						y: currentDestination.position.y * ViewBoxScaleFactor - presentHalfFishViewBoxHeight
+					},
+				pathDistance = calculateDistance(currentCenter.worldCoordinates, currentDestination.position), // Figure out how far the fish is moving.
 				swimTime = pathDistance / swimRate; // Use the distance to figure out how long the animation should take.
 
 			// Flip and rotate the fish as needed to aim it at the new destination.
-			fishElement.setAttribute(
+			fishGroupElement.setAttribute(
 				"transform",
-				"scale(" + flip * fishSizeMultiplier + "," + fishSizeMultiplier + ")"
-				+ " rotate(" + finalAngle + ",0,0)");
+				buildFishTransformString(
+					{
+						translateX: startOriginPoint.x,
+						translateY: startOriginPoint.y,
+						scaleX: newFlip * fishSizeMultiplier,
+						scaleY: fishSizeMultiplier,
+						rotateAngle: finalAngle,
+						rotateOffsetX: StartingFishWidth / 2,
+						rotateOffsetY: StartingFishHeight / 2
+					}));
 
 			// Create a new Concert.js sequence and add the movement to it that was just calculated above.
 			movementSequence = new Concert.Sequence();
 			movementSequence.addTransformations(
 				{
-					target: fishElement,
-					feature: ["left", "top"],
-					unit: "px",
-					applicator: Concert.Applicators.Style,
+					target: fishGroupElement,
+					feature: "transform",
+					unit: null,
+					applicator: Concert.Applicators.SVG_ElementAttribute,
 					easing: SwimSegmentEasing,
+
+					calculator:
+						function(distanceFraction, startValue, endValue)
+						{
+							let currentTransformValues = getCurrentGroupTransformValues(),
+								newTransformString = buildFishTransformString(
+									{
+										translateX: (endValue.x - startValue.x) * distanceFraction + startValue.x,
+										translateY: (endValue.y - startValue.y) * distanceFraction + startValue.y,
+										scaleX: currentTransformValues.scaleX,
+										scaleY: currentTransformValues.scaleY,
+										rotateAngle: currentTransformValues.rotateAngle,
+										rotateOffsetX: currentTransformValues.rotateOffsetX,
+										rotateOffsetY: currentTransformValues.rotateOffsetY
+									});
+							return newTransformString;
+						},
+
 					segments:
 						[{
-							t0: 0,
-							t1: swimTime,
-							v0: [startOriginPoint.x, startOriginPoint.y],
-							v1: [destinationOriginPoint.x, destinationOriginPoint.y]
+							t0: 0, t1: swimTime,
+							v0: startOriginPoint, v1: destinationOriginPoint
 						}]
 				});
 			
@@ -265,13 +360,19 @@ var demoController =
 		// Calculate the present center point of the fish.
 		function getCurrentCenter()
 		{
-			let origin = getCurrentPosition(),
-				centerPosition =
+			let currentPosition = getCurrentPosition(),
+				cumulativeGrowthRatio = fishSizeMultiplier / StartingFishSizeMultiplier,
+				centerByWorld =
 					{
-						x: origin.x + FishCenterOffsetX,
-						y: origin.y + FishCenterOffsetY
+						x: currentPosition.worldCoordinates.x + currentPosition.flip * StartingFishWidth * cumulativeGrowthRatio / 2,
+						y: currentPosition.worldCoordinates.y + StartingFishHeight * cumulativeGrowthRatio / 2
+					},
+				centerByViewBox =
+					{
+						x: centerByWorld.x * ViewBoxScaleFactor,
+						y: centerByWorld.y * ViewBoxScaleFactor
 					};
-			return centerPosition;
+			return { viewBoxCoordinates: centerByViewBox, worldCoordinates: centerByWorld };
 		} // end getCurrentCenter()
 
 		// Set everything back to its initial state.
@@ -296,7 +397,7 @@ var demoController =
 			currentDestination = null;
 
 			// Set the fish back to normal size.
-			fishSizeMultiplier = 1;
+			fishSizeMultiplier = StartingFishSizeMultiplier;
 
 			// Remove all food from the pond.
 			while(uneatenFood.length > 0)
@@ -306,9 +407,10 @@ var demoController =
 			}
 
 			// Set the actual style and SVG attributes back to their original values.
-			fishElement.setAttribute("transform", "scale(1,1) rotate(0,0,0)");
-			fishElement.style.left = "0px";
-			fishElement.style.top = "0px";
+			let scaleParmString = StartingFishSizeMultiplier + "," + StartingFishSizeMultiplier
+			fishGroupElement.setAttribute("transform", "scale(" + scaleParmString + ") rotate(0,0,0)");
+			fishOuterElement.style.left = "0px";
+			fishOuterElement.style.top = "0px";
 		} // end reset()
 
 		function swimTo(endPosition, path, afterAction)
@@ -355,7 +457,7 @@ var demoController =
 		initialize();
 
 		return publicInterface;
-	})(FishElement, PectoralFinElement, SwimRate); // end Fish singleton
+	})(FishOuterElement, FishGroup, PectoralFinElement, SwimRate); // end Fish singleton
 
 
 	// FishFood constructor: creates an object representing a single piece of fish food.
@@ -383,8 +485,8 @@ var demoController =
 			// Background (the pond) got clicked. Figure out where it was clicked.
 			// Create a new FishFood object and place it there, and tell the Fish object to eat it.
 			let clickLocation = { x: eventObject.clientX, y: eventObject.clientY },
-				currentLocation = Fish.getCurrentCenter();
-			if(clickLocation.x !== currentLocation.x || clickLocation.y !== currentLocation.y)
+				currentLocation = Fish.getCurrentCenter().worldCoordinates;
+			if(clickLocation.x !== Math.round(currentLocation.x) || clickLocation.y !== Math.round(currentLocation.y))
 				Fish.eat(new FishFood(clickLocation, Background), Fish.PathType.AppendPath);
 		}
 	ResetButton.onclick =
