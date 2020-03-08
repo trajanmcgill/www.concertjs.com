@@ -199,7 +199,8 @@
 				For a CommonJS loader (e.g., Browserify) if you installed the concert.js npm package:
 			</p>
 			<p>
-				<pre><code>let Concert = require("concert.js"); // The npm package name is all lowercase
+				<pre><code>let Concert = require("concert.js");
+// The npm package name is all lowercase
 
 // Your code here</code></pre>
 			</p>
@@ -218,7 +219,8 @@
 				In your JavaScript:
 			</p>
 			<p>
-				<pre><code>import {Concert} from "/PATH_TO_CONCERT/Concert.mjs"; // Be aware of valid ES Module path syntax
+				<pre><code>import {Concert} from "/PATH_TO_CONCERT/Concert.mjs";
+// Be aware of valid ES Module path syntax
 
 // Your code here...
 				</code></pre>
@@ -294,7 +296,8 @@ sequence.addTransformations(
     keyframes: { times: [0, 2000], values: [0, 24] }
   });
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -368,7 +371,8 @@ let box1Transformations =
 
 sequence.addTransformations(box1Transformations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -398,7 +402,8 @@ let box1Transformations =
 
 sequence.addTransformations(box1Transformations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre></p>
 		</div>
 
@@ -425,7 +430,11 @@ let boxTransformations =
       feature: "left",
       unit: "px",
       applicator: Concert.Applicators.Style,
-      keyframes: { times: [0, 750, 1500, 2250], values: [0, 90, 180, 270] }
+	  keyframes:
+      {
+        times: [0, 750, 1500, 2250],
+		values: [0, 90, 180, 270]
+      }
     },
 
     {
@@ -433,13 +442,18 @@ let boxTransformations =
       feature: "left",
       unit: "px",
       applicator: Concert.Applicators.Style,
-      keyframes: { times: [0, 750, null, 1500, 2250], values: [0, 90, null, 180, 270] }
+	  keyframes:
+      {
+		times: [0, 750, null, 1500, 2250],
+		values: [0, 90, null, 180, 270]
+      }
     }
   ];
 
 sequence.addTransformations(boxTransformations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -494,7 +508,8 @@ let boxTransformations =
 
 sequence.addTransformations(boxTransformations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -601,7 +616,11 @@ let animations =
       unit: "px",
       applicator: Concert.Applicators.Style,
       easing: Concert.EasingFunctions.ConstantRate,
-      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+	  keyframes:
+      {
+        times: [0, EndTime],
+        values: [LeftPosition, RightPosition]
+      }
     },
 
     {
@@ -610,7 +629,11 @@ let animations =
       unit: "px",
       applicator: Concert.Applicators.Style,
       easing: Concert.EasingFunctions.QuadIn,
-      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+	  keyframes:
+      {
+		times: [0, EndTime],
+		values: [LeftPosition, RightPosition]
+      }
     },
 
     {
@@ -619,7 +642,11 @@ let animations =
       unit: "px",
       applicator: Concert.Applicators.Style,
       easing: Concert.EasingFunctions.QuadInOut,
-      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+	  keyframes:
+      {
+		times: [0, EndTime],
+		values: [LeftPosition, RightPosition]
+      }
     },
 
     {
@@ -628,7 +655,11 @@ let animations =
       unit: "px",
       applicator: Concert.Applicators.Style,
       easing: Concert.EasingFunctions.QuadOut,
-      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+	  keyframes:
+      {
+		times: [0, EndTime],
+		values: [LeftPosition, RightPosition]
+      }
     },
 
     {
@@ -637,14 +668,19 @@ let animations =
       unit: "px",
       applicator: Concert.Applicators.Style,
       easing: Concert.EasingFunctions.Smoothstep,
-      keyframes: { times: [0, EndTime], values: [LeftPosition, RightPosition] }
+	  keyframes:
+      {
+		times: [0, EndTime],
+		values: [LeftPosition, RightPosition]
+      }
     }
   ];
 
 let sequence = new Concert.Sequence();
 sequence.addTransformations(animations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -748,7 +784,8 @@ document.getElementById("GoButton").onclick = function () { sequence.begin(); };
     s = (endTime - startTime) / Segments,
     t = currentTime - startTime,
     distanceFraction =
-      (Math.floor(t / s) + ((Math.cos(Math.PI * (s - (t % s)) / s) + 1) / 2)) / Segments;
+      (Math.floor(t / s)
+      + ((Math.cos(Math.PI * (s - (t % s)) / s) + 1) / 2)) / Segments;
   return Math.max(Math.min(distanceFraction, 1), 0);
 }
 
@@ -765,7 +802,8 @@ let animation =
 var sequence = new Concert.Sequence();
 sequence.addTransformations(animation);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -1004,7 +1042,8 @@ let animations =
 let sequence = new Concert.Sequence();
 sequence.addTransformations(animations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -1238,7 +1277,8 @@ let animations =
 let sequence = new Concert.Sequence();
 sequence.addTransformations(animations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -1415,7 +1455,8 @@ let animations =
 
 sequence.addTransformations(animations);
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
 </code></pre>
 			</p>
 			<p>
@@ -1669,7 +1710,8 @@ function showStatus(isRunning)
 { StatusBox.innerHTML = "Running: " + (isRunning === true); }
 
 let sequence = new Concert.Sequence();
-sequence.setDefaults({ applicator: Concert.Applicators.Style, unit: "px" });
+sequence.setDefaults(
+  { applicator: Concert.Applicators.Style, unit: "px" });
 
 let animation =
 {
@@ -1726,7 +1768,8 @@ SyncToButton.onclick =
     //   });
   };
 
-StopButton.onclick = function () { sequence.stop(); showStatus(false); };
+StopButton.onclick =
+  function () { sequence.stop(); showStatus(false); };
 
 SeekButton.onclick =
   function ()
@@ -1855,14 +1898,22 @@ bounceSequence.addTransformations(
   {
     target: Box0,
     feature: "left",
-    keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
+	keyframes:
+    {
+	  times: [0, SegmentDuration],
+	  values: [0, MovementDistance]
+    }
   });
 
 loopSequence.addTransformations(
   {
     target: Box1,
     feature: "left",
-    keyframes: { times: [0, SegmentDuration], values: [0, MovementDistance] }
+	keyframes:
+    {
+	  times: [0, SegmentDuration],
+	  values: [0, MovementDistance]
+    }
   });
 
 document.getElementById("GoButton").onclick =
@@ -2009,8 +2060,10 @@ sequence.addTransformations(
     keyframes: { times: [0, 1000], values: [0, 100] }
   });
 
-document.getElementById("GoButton").onclick = function () { sequence.begin(); };
-document.getElementById("RetargetButton").onclick = function () { sequence.retarget(newTargetLookup); };
+document.getElementById("GoButton").onclick =
+  function () { sequence.begin(); };
+document.getElementById("RetargetButton").onclick =
+  function () { sequence.retarget(newTargetLookup); };
 </code></pre>
 			</p>
 			<p>
@@ -2073,7 +2126,8 @@ function doCloning(sequence)
   let newSequence = sequence.clone(
     function (originalTargetObject)
     {
-      return document.getElementById(originalTargetObject.id.replace("Dot", "Box"));
+      return document.getElementById(
+        originalTargetObject.id.replace("Dot", "Box"));
     },
     true);
   return newSequence;
@@ -2280,7 +2334,11 @@ shipDownSequence.addTransformations(
     feature: "top",
     applicator: Concert.Applicators.Style,
     unit: "px",
-    keyframes: { times: [0, ShipMovementDuration], values: [0, ShipMovementAmount] }
+	keyframes:
+    {
+	  times: [0, ShipMovementDuration],
+	  values: [0, ShipMovementAmount]
+    }
   });
 
 // Define a sequence which animates the ship moving upward.
@@ -2291,23 +2349,34 @@ shipUpSequence.addTransformations(
     feature: "top",
     applicator: Concert.Applicators.Style,
     unit: "px",
-    keyframes: { times: [0, ShipMovementDuration], values: [ShipMovementAmount, 0] }
+	keyframes:
+    {
+	  times: [0, ShipMovementDuration],
+	  values: [ShipMovementAmount, 0]
+    }
   });
 
-// Define a sequence which animates a missile object with two transformations:
+// Define a sequence which animates a missile object
+// with two transformations:
 //    1) A left-to-right movement with a known start and end point
-//    2) An up-or-down movement whose start and end values will have to be generated later
-// Note that this sequence has no target. It will never actually be used; only cloned
-// onto HTML element objects created later.
+//    2) An up-or-down movement whose start and end values will have
+//       to be generated later
+// Note that this sequence has no target. It will never actually
+// be used; only cloned onto HTML element objects created later.
 let missileSequence = new Concert.Sequence();
-missileSequence.setDefaults({ applicator: Concert.Applicators.Style, unit: "px" });
+missileSequence.setDefaults(
+  { applicator: Concert.Applicators.Style, unit: "px" });
 missileSequence.addTransformations(
   [
     {
       target: null,
       feature: "left",
       easing: Concert.EasingFunctions.QuadIn,
-      keyframes: { times: [0, MissileLeftRightDuration], values: [ShipWidth, 480]}
+	  keyframes:
+      {
+		times: [0, MissileLeftRightDuration],
+		values: [ShipWidth, 480]
+      }
     },
     {
       target: null,
@@ -2318,42 +2387,48 @@ missileSequence.addTransformations(
         times: [0, ShipMovementDuration],
 
         // Here we see the new thing introduced in this tutorial step.
-        // getMissileStartTop and getMissileEndTop are functions defined below.
-        // At the moment this sequence is begun, these functions will be called
-        // to generate start and end values for the transformation.
+		// getMissileStartTop and getMissileEndTop
+		// are functions defined below.
+		// At the moment this sequence is begun, these functions
+		// will be called to generate start and end values
+		// for the transformation.
         valueGenerators: [getMissileStartTop, getMissileEndTop]
       }
     }
   ]);
 
-// Function which runs the downward-moving ship sequence specifying that upon completion
-// it should run the upward-moving ship sequence.
+// Function which runs the downward-moving ship sequence specifying
+// that upon completion it should run the upward-moving ship sequence.
 function runShipDownSequence()
 {
   currentDirection = Directions.Down;
   shipDownSequence.begin({ onAutoStop: runShipUpSequence });
 }
 
-// Function which runs the upward-moving ship sequence specifying that upon completion
-// it should run the downward-moving ship sequence.
+// Function which runs the upward-moving ship sequence specifying
+// that upon completion it should run the downward-moving
+// ship sequence.
 function runShipUpSequence()
 {
   currentDirection = Directions.Up;
   shipUpSequence.begin({ onAutoStop: runShipDownSequence });
 }
 
-// Function which calculates the vertical position at which a new missile should appear,
-// based on the current position of the spaceship.
+// Function which calculates the vertical position at which a
+// new missile should appear, based on the current position of
+// the spaceship.
 function getMissileStartTop()
 {
   let shipBoundingRect = Ship.getBoundingClientRect();
-  return Math.round(shipBoundingRect.top + ShipNoseOffset - MissileHeight / 2);
+  return Math.round(
+    shipBoundingRect.top + ShipNoseOffset - MissileHeight / 2);
 }
 
-// Function which calculates the vertical position at which a new missile's animation
-// would end due to the upward or downward momentum imparted by the motion of the
-// ship from which it is fired. If the ship is moving when the missile is fired,
-// we want the missile's end point to reflect vertical movement at the same rate
+// Function which calculates the vertical position at which a
+// new missile's animation would end due to the upward or downward
+// momentum imparted by the motion of the ship from which it is fired.
+// If the ship is moving when the missile is fired, we want the
+// missile's end point to reflect vertical movement at the same rate
 // and in the same direction.
 function getMissileEndTop()
 {
@@ -2366,10 +2441,11 @@ function getMissileEndTop()
     return startTop;
 }
 
-// Function to create a new missile, clone the missile movement sequence onto it,
-// and begin its animation.
-// The missile gets removed at the end point of its animation (which is offscreen)
-// to avoid piling up lots of extra useless divs and sequences and wasting memory.
+// Function to create a new missile, clone the missile movement
+// sequence onto it, and begin its animation.
+// The missile gets removed at the end point of its animation
+// (which is offscreen) to avoid piling up lots of extra useless
+// divs and sequences and wasting memory.
 function fireMissile()
 {
   let missileTopPosition = getMissileStartTop(),
@@ -2379,8 +2455,10 @@ function fireMissile()
   missileDiv.style.top = missileTopPosition + "px";
   BackgroundArea.appendChild(missileDiv);
 
-  let newMissileSequence = missileSequence.clone(function() { return missileDiv; });
-  newMissileSequence.begin({ onAutoStop: function() { missileDiv.remove(); } });
+  let newMissileSequence =
+    missileSequence.clone(function() { return missileDiv; });
+  newMissileSequence.begin(
+    { onAutoStop: function() { missileDiv.remove(); } });
 }
 
 // Wire up the event handlers.
