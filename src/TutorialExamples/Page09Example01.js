@@ -19,7 +19,7 @@
 			applicator: Concert.Applicators.Style,
 			easing: Concert.EasingFunctions.QuadInOut,
 			unit: "px",
-			keyframes: { times: [0, 1000], values: [0, 100] }
+			keyframes: { times: [0, 1000], values: [0, 87] }
 		});
 	
 	document.getElementById("GoButton").onclick = function () { sequence.begin(); };

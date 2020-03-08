@@ -56,11 +56,14 @@ button
 {
 	position: absolute;
 	left: 10px;
-	top: 370px;
+	top: 357px;
 	z-index: 1000;
 	color: #fff;
 	background-color: #3276b1;
 	border: 1px solid #285e8e;
 	border-radius: 4px;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 26px;
 	cursor: pointer;
 }
