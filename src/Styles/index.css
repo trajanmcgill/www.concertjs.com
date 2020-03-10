@@ -111,7 +111,7 @@ div.DemoDiv:first-child h4
 	display: block;
 	width: 802px;
 	height: 402px;
-	border: 1px solid black;
+	border: 1px solid #222222;
 	box-sizing: border-box;
 }
 
@@ -124,5 +124,10 @@ div.DemoDiv:first-child h4
 	padding: 2px 2px 2px 2px;
 	font-size: 16px;
 	text-align: center;
-	background-color: #eee;
+	background-color: #222222;
+}
+
+.DemoFrameCaption a
+{
+	color: #c8c8c8;
 }
