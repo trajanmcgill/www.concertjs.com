@@ -43,7 +43,8 @@ var demoController =
 				scaleY: StartingFishSizeMultiplier,
 				rotateAngle: 0,
 				rotateOffsetX: 0,
-				rotateOffsetY: 0
+				rotateOffsetY: 0,
+				delimiter: ","
 			};
 
 
@@ -62,9 +63,9 @@ var demoController =
 		function buildFishTransformString(transformValues)
 		{
 			let newTransformString =
-				"translate(" + transformValues.translateX + transformValues.delineator + transformValues.translateY + ") "
-				+ "scale(" + transformValues.scaleX + transformValues.delineator + transformValues.scaleY + ") "
-				+ "rotate(" + transformValues.rotateAngle + transformValues.delineator + transformValues.rotateOffsetX + transformValues.delineator + transformValues.rotateOffsetY + ")";
+				"translate(" + transformValues.translateX + transformValues.delimiter + transformValues.translateY + ") "
+				+ "scale(" + transformValues.scaleX + transformValues.delimiter + transformValues.scaleY + ") "
+				+ "rotate(" + transformValues.rotateAngle + transformValues.delimiter + transformValues.rotateOffsetX + transformValues.delimiter + transformValues.rotateOffsetY + ")";
 			return newTransformString;
 		} // end buildFishTransformString()
 
@@ -130,7 +131,7 @@ var demoController =
 					rotateAngle: GroupTransformDefaultValues.rotateAngle,
 					rotateOffsetX: GroupTransformDefaultValues.rotateOffsetX,
 					rotateOffsetY: GroupTransformDefaultValues.rotateOffsetY,
-					delineator: ","
+					delimiter: GroupTransformDefaultValues.delimiter
 				};
 
 			let currentTransform = fishGroupElement.getAttribute("transform");
@@ -141,7 +142,7 @@ var demoController =
 				if(parsedTranslateValues !== null)
 				{
 					valuesToReturn.translateX = parsedTranslateValues[1];
-					valuesToReturn.delineator = coalesceUndefined(parsedTranslateValues[2], valuesToReturn.delineator);
+					valuesToReturn.delimiter = coalesceUndefined(parsedTranslateValues[2], valuesToReturn.delimiter);
 					valuesToReturn.translateY = coalesceUndefined(parsedTranslateValues[3], valuesToReturn.translateX); // If only one value is specified, use it for both X and Y.
 				}
 
@@ -149,7 +150,7 @@ var demoController =
 				if(parsedScaleValues !== null)
 				{
 					valuesToReturn.scaleX = parsedScaleValues[1];
-					valuesToReturn.delineator = coalesceUndefined(parsedScaleValues[2], valuesToReturn.delineator);
+					valuesToReturn.delimiter = coalesceUndefined(parsedScaleValues[2], valuesToReturn.delimiter);
 					valuesToReturn.scaleY = coalesceUndefined(parsedScaleValues[3], valuesToReturn.scaleX); // If only one value is specified, use it for both X and Y.
 				}
 
@@ -157,7 +158,7 @@ var demoController =
 				if(parsedRotateValues !== null)
 				{
 					valuesToReturn.rotateAngle = parsedRotateValues[1];
-					valuesToReturn.delineator = coalesceUndefined(parsedRotateValues[2], valuesToReturn.delineator);
+					valuesToReturn.delimiter = coalesceUndefined(parsedRotateValues[2], valuesToReturn.delimiter);
 					valuesToReturn.rotateOffsetX = coalesceUndefined(parsedRotateValues[3], valuesToReturn.rotateOffsetX);
 					valuesToReturn.rotateOffsetY = coalesceUndefined(parsedRotateValues[5], valuesToReturn.rotateOffsetY);
 				}
@@ -245,7 +246,7 @@ var demoController =
 					},
 				pathDistance = calculateDistance(currentCenter.worldCoordinates, currentDestination.position), // Figure out how far the fish is moving.
 				swimTime = pathDistance / swimRate,  // Use the distance to figure out how long the animation should take.
-				transformDelineator = getCurrentGroupTransformValues().delineator;
+				transformDelimiter = getCurrentGroupTransformValues().delimiter;
 
 			// Flip and rotate the fish as needed to aim it at the new destination.
 			fishGroupElement.setAttribute(
@@ -259,7 +260,7 @@ var demoController =
 						rotateAngle: finalAngle,
 						rotateOffsetX: StartingFishWidth / 2,
 						rotateOffsetY: StartingFishHeight / 2,
-						delineator: transformDelineator
+						delimiter: transformDelimiter
 					}));
 
 			// Create a new Concert.js sequence and add the movement to it that was just calculated above.
@@ -285,7 +286,7 @@ var demoController =
 										rotateAngle: currentTransformValues.rotateAngle,
 										rotateOffsetX: currentTransformValues.rotateOffsetX,
 										rotateOffsetY: currentTransformValues.rotateOffsetY,
-										delineator: transformDelineator
+										delimiter: transformDelimiter
 									});
 							return newTransformString;
 						},
