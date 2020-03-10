@@ -7,18 +7,18 @@
 </head>
 <body>
 	<div id="AllLayout">
-		<div id="LeftPanel">
+		<div id="LeftPanel" class="GridColumn">
 			<div><button id="BeginButton" type="button">begin</button></div>
 			<div><button id="FollowButton" type="button">follow</button></div>
 			<div><button id="SyncToButton" type="button">syncTo</button></div>
 			<div><button id="StopButton" type="button">stop</button></div>
 		</div>
-		<div id="CenterPanel">
+		<div id="CenterPanel" class="GridColumn">
 			<video id="MovingBoxVideo" controls src="Moving Box.mp4"></video>
 			<div id="MovingBox"></div>
 			<div id="StatusBox">Running: false</div>
 		</div>
-		<div id="RightPanel">
+		<div id="RightPanel" class="GridColumn">
 			<div><input id="SeekInput" type="number" value="0" min="0" max="5000"></div>
 			<div><button id="SeekButton" type="button">seek</button></div>
 		</div>

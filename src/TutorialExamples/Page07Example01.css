@@ -20,18 +20,41 @@ button
 #AllLayout
 {
 	position: relative;
-	top: 0;
 	left: 0;
+	top: 0;
 	width: 480px;
 	height: 300px;
 	color: #eeeeee;
 	background-color: black;
 	display: grid;
-	grid-template-columns: 80px 320px 80px;
 }
 
-#LeftPanel, #RightPanel
-{ text-align: center; }
+.GridColumn
+{
+	position: absolute;
+	top: 0;
+	border: none;
+}
+
+#LeftPanel
+{
+	left: 0;
+	width: 80px;
+	text-align: center;
+}
+
+#CenterPanel
+{
+	left: 80px;
+	width: 320px;
+}
+
+#RightPanel
+{
+	left: 400px;
+	width: 80px;
+	text-align: center;
+}
 
 video
 {
