@@ -13,15 +13,34 @@ body
 #Everything
 {
 	position: relative;
-	top: 0;
 	left: 0;
+	top: 0;
 	width: 800px;
 	height: 350px;
 	color: #eeeeee;
 	background-color: black;
 	display: grid;
-	grid-template-columns: 240px 320px 240px;
 	padding-top: 20px;
+}
+
+.GridColumn
+{
+	position: absolute;
+	top: 0;
+	border: none;
+	height: 350px;
+}
+
+#MetronomeArea
+{
+	left: 0;
+	width: 240px;
+}
+
+#VideoArea
+{
+	left: 240px;
+	width: 320px;
 }
 
 video
@@ -52,7 +71,8 @@ video
 
 #ClapAnimationArea
 {
-	position: relative;
+	left: 560px;
+	width: 240px;
 }
 
 .ClapBox

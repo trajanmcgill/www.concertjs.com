@@ -8,9 +8,9 @@ var demoController =
 	const beatTiming = [1267, 1883, 2533, 3183, 3800, 4450, 5033, 5717, 6333, 6983, 7583, 8283, 8917, 9583, 10200, 10933, 11583, 12300, 12867, 13617, 14233, 14900, 15517, 16200, 16850, 17533, 18150, 18850, 19483, 20150, 20750, 21417, 22050, 22750, 23333, 24000, 24650, 25267, 25967],
 		clapTiming = [1267, 1417, 1883, 2533, 2683, 3183, 3800, 3950, 4450, 5033, 5217, 5717, 6333, 6483, 6983, 7583, 7767, 8283, 8917, 9100, 9583, 10200, 10417, 10933, 11583, 11750, 12300, 12867, 13033, 13617, 14233, 14400, 14900, 15517, 15683, 16200, 16850, 17017, 17533, 18150, 18317, 18850, 19483, 19650, 20150, 20750, 20917, 21417, 22050, 22233, 22750, 23333, 24000, 24650, 25267, 25600, 25967],
 		lyricsTiming = [0, 5683, 6283, 8267, 8600, 8917, 10933, 11583, 12883, 13250, 13600, 16183, 16833, 18133, 18483, 18833, 21333, 21683, 22017, 23683, 24317, 24633, 26450],
-		box0StartColor = "#00000000", box0HitColor = "#ffffffff", box0FadeColor = "#ff000000",
-		box1StartColor = "#00000000", box1HitColor = "#ffffffff", box1FadeColor = "#00ff0000",
-		box2StartColor = "#00000000", box2HitColor = "#ffffffff", box2FadeColor = "#0000ff00",
+		box0StartColor = "#000000", box0HitColor = "#ffffff", box0FadeColor = "#ff0000",
+		box1StartColor = "#000000", box1HitColor = "#ffffff", box1FadeColor = "#00ff00",
+		box2StartColor = "#000000", box2HitColor = "#ffffff", box2FadeColor = "#0000ff",
 		fadeTime = 1000,
 		beatBatonPositions = [[100, 140], [200, 80], [0, 80], [100, 0]];
 
@@ -212,11 +212,25 @@ var demoController =
 	// Returns an array of transformations ready to add to a Concert.js sequence.
 	function getClapTransformations()
 	{
+		// Note on this function: since the color calculator can perfectly well animate color values with alpha specified,
+		// there is really no good reason to animate opacity separately from color, except that IE 11 doesn't
+		// support RGBA values, and since Concert.js does work fine on Internet Explorer, I suppose its
+		// web site demos should, too. But in real life you probably don't care about IE and could do away
+		// with the extra code below that animates the opacity propery, including it in the color defintions themselves.
+
+		// Get the elements used for this animation.
+		const ClapBox0 = document.getElementById("ClapBox0"),
+			ClapBox1 = document.getElementById("ClapBox1"),
+			ClapBox2 = document.getElementById("ClapBox2");
+		
 		// Create three arrays, one for the animation segments of each of the three clap marker boxes.
 		// For each one, add a segment at the very beginning to set up the starting color values (as defined in constants above).
-		let box0Segments = [{ t0: 0, t1: 0, v0: box0StartColor, v1: box0StartColor }],
-			box1Segments = [{ t0: 0, t1: 0, v0: box1StartColor, v1: box1StartColor }],
-			box2Segments = [{ t0: 0, t1: 0, v0: box2StartColor, v1: box2StartColor }];
+		let box0ColorSegments = [{ t0: 0, t1: 0, v0: box0StartColor, v1: box0StartColor }],
+			box0OpacitySegments = [{ t0: 0, t1: 0, v0: 0, v1: 0 }],
+			box1ColorSegments = [{ t0: 0, t1: 0, v0: box1StartColor, v1: box1StartColor }],
+			box1OpacitySegments = [{ t0: 0, t1: 0, v0: 0, v1: 0 }],
+			box2ColorSegments = [{ t0: 0, t1: 0, v0: box2StartColor, v1: box2StartColor }],
+			box2OpacitySegments = [{ t0: 0, t1: 0, v0: 0, v1: 0 }];
 
 		// Build the full array of animation segment times and start/end values,
 		// corresponding to the moments of each clap as defined in the clapTiming constant.
@@ -225,53 +239,99 @@ var demoController =
 			let currentClapTime = clapTiming[i], // Get the time this clap occurs.
 				currentBox = i % 3; // Which box indicates the clap rotates, so each box gets every third clap.
 			
-			// For whichever is the current box, add a segment definition indicating a start and end time (t0 and t1)
-			// and a start and end value (v0 and v1).
+			// For whichever is the current box, add segment definitions indicating start and end times (t0 and t1)
+			// and start and end values (v0 and v1).
 			if(currentBox === 0)
-				box0Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box0HitColor, v1: box0FadeColor });
+			{
+				box0ColorSegments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box0HitColor, v1: box0FadeColor });
+				box0OpacitySegments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: 1.0, v1: 0 });
+			}
 			else if(currentBox === 1)
-				box1Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box1HitColor, v1: box1FadeColor });
+			{
+				box1ColorSegments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box1HitColor, v1: box1FadeColor });
+				box1OpacitySegments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: 1.0, v1: 0 });
+			}
 			else
-				box2Segments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box2HitColor, v1: box2FadeColor });
+			{
+				box2ColorSegments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: box2HitColor, v1: box2FadeColor });
+				box2OpacitySegments.push({ t0: currentClapTime, t1: currentClapTime + fadeTime, v0: 1.0, v1: 0 });
+			}
 		}
 
 		// Create the transformation set definition for the first clap marker box.
-		let box0Transformations =
+		let box0ColorTransformations =
 			{
-				target: document.getElementById("ClapBox0"),
+				target: ClapBox0,
 				feature: "background-color",
 				unit: null,
 				applicator: Concert.Applicators.Style,
-				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values (including alpha channel)
+				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values
 				easing: Concert.EasingFunctions.QuadInOut,
-				segments: box0Segments
+				segments: box0ColorSegments
+			};
+		let box0OpacityTransformations =
+			{
+				target: ClapBox0,
+				feature: "opacity",
+				unit: null,
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Linear,
+				easing: Concert.EasingFunctions.QuadInOut,
+				segments: box0OpacitySegments
 			};
 
-		// Create the transformation set definition for the first clap marker box.
-		let box1Transformations =
+		// Create the transformation set definition for the second clap marker box.
+		let box1ColorTransformations =
 			{
 				target: document.getElementById("ClapBox1"),
 				feature: "background-color",
 				unit: null,
 				applicator: Concert.Applicators.Style,
-				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values (including alpha channel)
+				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values
 				easing: Concert.EasingFunctions.QuadInOut,
-				segments: box1Segments
+				segments: box1ColorSegments
+			};
+		let box1OpacityTransformations =
+			{
+				target: ClapBox1,
+				feature: "opacity",
+				unit: null,
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Linear,
+				easing: Concert.EasingFunctions.QuadInOut,
+				segments: box1OpacitySegments
 			};
 		
-		// Create the transformation set definition for the first clap marker box.
-		let box2Transformations =
+		// Create the transformation set definition for the third clap marker box.
+		let box2ColorTransformations =
 			{
 				target: document.getElementById("ClapBox2"),
 				feature: "background-color",
 				unit: null,
 				applicator: Concert.Applicators.Style,
-				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values (including alpha channel)
+				calculator: Concert.Calculators.Color, // This calculator is used for interpolating color values
 				easing: Concert.EasingFunctions.QuadInOut,
-				segments: box2Segments
+				segments: box2ColorSegments
+			};
+		let box2OpacityTransformations =
+			{
+				target: ClapBox2,
+				feature: "opacity",
+				unit: null,
+				applicator: Concert.Applicators.Style,
+				calculator: Concert.Calculators.Linear,
+				easing: Concert.EasingFunctions.QuadInOut,
+				segments: box2OpacitySegments
 			};
 
-		return [box0Transformations, box1Transformations, box2Transformations]; // Return the transformation set objects to add to the sequence.
+		let allClapBoxTransformations =
+			[
+				box0ColorTransformations, box0OpacityTransformations,
+				box1ColorTransformations, box1OpacityTransformations,
+				box2ColorTransformations, box2OpacityTransformations
+			];
+
+		return allClapBoxTransformations; // Return the transformation set objects to add to the sequence.
 	} // end getClapTransformations()
 
 
