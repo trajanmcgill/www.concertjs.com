@@ -3,7 +3,7 @@
 	"description": "Concert.js Web Site",
 	"author": "Trajan McGill <code@trajanmcgill.com>",
 	"license": "MIT",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/trajanmcgill/www.concertjs.com.git"
